@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: black;
+  &_logo {
+    color: #ff8800;
+    text-transform: uppercase;
+    font-weight: 100;
+  }
+}
+
+.logo-image {
+  position: relative;
+  margin-left: 60px;
+  &::before {
+    position: absolute;
+    content: "";
+    left: -54px;
+    top: -6px;
+    width: 48px;
+    height: 48px;
+    background-image: url(../../assets/svg/battleship.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
