@@ -1,7 +1,98 @@
 .footer {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 120px;
   margin-top: auto;
-  min-height: 100px;
-  padding: 20px;
-  background-color: black;
+  color: #66cc66;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  border-top: 1px dotted #66cc66;
+  &_authors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px;
+  }
+  &_title {
+    font-weight: 100;
+    margin: 0;
+  }
+  &_school {
+    width: 100px;
+    height: 38px;
+    fill: #66cc66;
+    transition: ease-in-out 0.4s;
+    &:hover {
+      fill: #fff;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.authors-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  &_item {
+    position: relative;
+    margin: 0 15px 0 22px;
+    &::before {
+      position: absolute;
+      content: "";
+      left: -22px;
+      top: 0px;
+      width: 20px;
+      height: 20px;
+      background-image: url(../../assets/svg/github-mark-white.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    &:nth-child(3) {
+      margin-right: 0;
+    }
+  }
+  &_link {
+    color: #66cc66;
+    transition: ease-in-out 0.4s;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.title-accent {
+  color: #fff;
+}
+
+.title-copyright {
+  position: relative;
+  margin-left: 25px;
+  &::before {
+    position: absolute;
+    content: "copyright";
+    left: -26px;
+    top: -4px;
+    font-family: "Material Symbols Outlined";
+    font-size: 22px;
+    font-weight: 400;
+    color: #fff;
+  }
+}
+
+@media (max-width: 860px) {
+  .footer {
+    flex-direction: column;
+    min-height: 186px;
+    padding: 20px 0;
+  }
+
+  .footer_authors {
+    align-items: center;
+    order: 1;
+  }
 }
