@@ -40,13 +40,13 @@ function Footer() {
         </ul>
       </div>
 
-      <h4 className="footer_title">
-        BattleShip Online <span className="title-copyright">2023</span>
-      </h4>
-
       <a href="https://rs.school/js/" title="RSS">
         <Logo className="footer_school" />
       </a>
+
+      <h4 className="footer_title">
+        BattleShip Online <span className="title-copyright">2023</span>
+      </h4>
     </footer>
   );
 }
