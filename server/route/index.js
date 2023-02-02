@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { useController } from "../controllers/user-controller.js";
+import expressWs from "express-ws";
+import { userController } from "../controllers/user-controller.js";
+import { body } from "express-validator";
 
 const router = new Router();
+expressWs(router);
 
-router.post("/registration", useController.registration);
-router.post("/login", useController.logIn);
-router.post("/logout", useController.logOut);
-router.get("/refresh", useController.refreshToken);
-router.get("/users", useController.users);
+router.post("/login", body("name").isLength({ min: 3 }), userController.logIn);
+router.delete("/logout", userController.logOut);
+router.get("/refresh", userController.refreshToken);
+router.get("/getusers", userController.getUsers);
+router.get('/startgame', userController.startGame);
+router.ws("/game/:id", userController.game);
 
 export default router;
