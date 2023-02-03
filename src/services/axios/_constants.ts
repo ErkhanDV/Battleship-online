@@ -1,4 +1,4 @@
-export const CLONE_SERVER = "http://localhost:5000/api/";
+export const CLONE_SERVER = "http://localhost:5000/api";
 
 export enum STATUS {
   ok = 200,
