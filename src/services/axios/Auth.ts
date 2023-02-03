@@ -1,14 +1,12 @@
 import axios from "axios";
 import { axiosAPI } from "./_index";
-import { IUser } from "@/types/server/types";
+import { IUser } from "@/store/_types";
 import { STATUS } from "./_constants";
 
 export class AuthService {
   static async login(name: string): Promise<IUser | undefined> {
     try {
-      const { status, data } = await axiosAPI.post<IUser>("/login", {
-        name: name,
-      });
+      const { status, data } = await axiosAPI.post<IUser>("/login", { name });
 
       if (status === STATUS.ok && data) {
         return data;
