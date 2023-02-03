@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { AuthService } from "@/services/axios/Auth";
 
 const LoGInPage: FC = () => {
   const [name, setName] = useState("");
@@ -6,6 +7,14 @@ const LoGInPage: FC = () => {
   const inputHandler = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setName(target.value);
+
+  const logInHandler = async () => {
+    const user = await AuthService.login(name);
+  };
+
+  const logOutHandler = async () => {
+    await AuthService.logout()
+  }
 
   return (
     <div>
@@ -15,7 +24,8 @@ const LoGInPage: FC = () => {
         type="text"
         placeholder="Enter name"
       />
-      <button>Войти</button>
+      <button onClick={logInHandler}>Войти</button>
+      <button onClick={logOutHandler}>Выйти</button>
     </div>
   );
 };
