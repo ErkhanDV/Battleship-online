@@ -6,11 +6,10 @@
   padding: 15px 20px;
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, .9) 0%,
+    rgba(0, 0, 0, 0.9) 0%,
     $primaryColor-50 100%
   );
   border-bottom: 1px dotted $primaryColor-100;
-  z-index: 100;
   &:hover .logo-image::before {
     transform: scale(0.75);
   }
@@ -35,5 +34,18 @@
     background-repeat: no-repeat;
     background-size: contain;
     transition: ease-in-out 1s;
+    animation: logoAnimation 6s infinite;
+  }
+}
+
+@keyframes logoAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(.85);
+  }
+  100% {
+    transform: scale(1);
   }
 }

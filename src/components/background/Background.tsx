@@ -1,5 +1,3 @@
-import radar from "../../assets/video/radar1080.webm";
-
 import "./Background.scss";
 
 const Background = () => {
