@@ -3,6 +3,7 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 20px;
   background: linear-gradient(
     90deg,
@@ -48,4 +49,33 @@
   100% {
     transform: scale(1);
   }
+}
+
+.navigation_list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.navigation_item {
+  position: relative;
+  margin-left: 40px;
+  padding: 4px 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 40px;
+    height: 2px;
+    left: -40px;
+    top: 12px;
+    background-color: $primaryColor-100;
+    transform: rotate(110deg);
+  }
+}
+
+.navigation_link {
+  color: #fff;
+  text-decoration: none;
 }

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import Header from "../header/Header";
-import Main from "../main/Main";
+import Home from "../../pages/home/Home";
 import Footer from "../footer/Footer";
 import Background from "../background/Background";
 
@@ -12,7 +12,7 @@ const App = () => {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
       <Background />
