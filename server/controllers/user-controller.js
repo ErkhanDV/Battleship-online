@@ -15,9 +15,11 @@ export class UserController {
       const { name } = req.body;
       const userData = await userService.logIn(name);
 
-      res.cookie("user", userData.refreshToken, {
+      res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 3600000,
         httpOnly: true,
+        sameSite: "none",
+        secure: true,
       });
 
       return res.status(200).json(userData);
