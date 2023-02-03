@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -7,13 +9,13 @@
     rgba(0, 0, 0, .9) 0%,
     rgba(0, 255, 0, 0.4) 100%
   );
-  border-bottom: 1px dotted #66cc66;
+  border-bottom: 1px dotted $maincolor;
   z-index: 100;
   &:hover .logo-image::before {
     transform: scale(0.75);
   }
   &_logo {
-    color: #66cc66;
+    color: $maincolor;
     text-transform: uppercase;
     font-weight: 100;
   }
