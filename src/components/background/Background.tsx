@@ -1,12 +1,13 @@
-import radar from "../../assets/video/radar1080.webm";
-
 import "./Background.scss";
 
-function Background() {
+const Background = () => {
   return (
-    <video autoPlay muted loop className="background_video">
-      <source src={radar} type="video/webm" />
-    </video>
+    <div className="background">
+      <div className="background_radar"></div>
+      <div className="background_ship-first"></div>
+      <div className="background_ship-second"></div>
+      <div className="background_ship-third"></div>
+    </div>
   );
 }
 

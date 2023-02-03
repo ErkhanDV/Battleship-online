@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .footer {
   display: flex;
   justify-content: space-around;
@@ -5,13 +7,8 @@
   min-height: 120px;
   margin-top: auto;
   color: #66cc66;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 255, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.75) 100%
-  );
+  background: linear-gradient(90deg, $primaryColor-50 0%, rgba(0, 0, 0, 0.75) 100%);
   border-top: 1px dotted #66cc66;
-  z-index: 100;
   &_authors {
     display: flex;
     flex-direction: column;
@@ -25,7 +22,7 @@
   &_school {
     width: 100px;
     height: 38px;
-    fill: #66cc66;
+    fill: $primaryColor-100;
     transition: ease-in-out 0.4s;
     &:hover {
       fill: #fff;
@@ -58,7 +55,7 @@
     }
   }
   &_link {
-    color: #66cc66;
+    color: $primaryColor-100;
     transition: ease-in-out 0.4s;
     &:hover {
       color: #fff;

@@ -10,4 +10,10 @@ body {
   margin: 0 auto;
   background: url(./assets/svg/background.svg);
   background-color: black;
+  user-select: none;
 }
+
+$primaryColor-100: rgb(102, 204, 102, 1);
+$primaryColor-75: rgb(102, 204, 102, 0.75);
+$primaryColor-50: rgb(102, 204, 102, 0.5);
+$primaryColor-25: rgb(102, 204, 102, 0.25);
