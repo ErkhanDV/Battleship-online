@@ -11,4 +11,8 @@ declare module "*.svg" {
 
 declare module "react-router-dom";
 
+<<<<<<< HEAD
 declare module "node:url";
+=======
+declare module "node:url";
+>>>>>>> develop
