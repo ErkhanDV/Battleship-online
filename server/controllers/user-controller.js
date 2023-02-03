@@ -15,15 +15,12 @@ export class UserController {
       const { name } = req.body;
       const userData = await userService.logIn(name);
 
-      res.cookie(
-        "user", userData.refreshToken,
-        {
-          maxAge: 3600000,
-          httpOnly: true,
-        }
-      );
+      res.cookie("user", userData.refreshToken, {
+        maxAge: 3600000,
+        httpOnly: true,
+      });
 
-      return res.json(userData);
+      return res.status(200).json(userData);
     } catch (error) {
       console.log(error);
     }
@@ -53,14 +50,14 @@ export class UserController {
         }
       );
 
-      return res.json(userData);
+      return res.status(200).json(userData);
     } catch (error) {}
   }
 
   async getUsers(req, res, next) {
     try {
       const users = await userService.getUsers();
-      return res.json(users);
+      return res.status(200).json(users);
     } catch (error) {}
   }
 
@@ -77,11 +74,11 @@ export class UserController {
       router.ws(wsLink, userService.game);
     }
 
-    return res.json(wsLink);
+    return res.status(200).json(wsLink);
   }
 
   game(ws, req) {
-    ws.on()
+    ws.on();
   }
 }
 
