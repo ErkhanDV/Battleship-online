@@ -2,7 +2,7 @@ import { ReactComponent as Logo } from "../../assets/svg/rs_school_js.svg";
 
 import "./Footer.scss";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer_authors">

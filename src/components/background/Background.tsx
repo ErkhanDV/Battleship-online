@@ -2,7 +2,7 @@ import radar from "../../assets/video/radar1080.webm";
 
 import "./Background.scss";
 
-function Background() {
+const Background = () => {
   return (
     <div className="background">
       <div className="background_radar"></div>

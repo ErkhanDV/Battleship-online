@@ -1,7 +1,7 @@
 import Background from "../background/Background";
 import "./Main.scss";
 
-function Main() {
+const Main = () => {
   return (
     <main className="main">
       <Background />
