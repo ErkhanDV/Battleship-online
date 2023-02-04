@@ -1,20 +1,16 @@
-import { Route, Routes } from "react-router-dom";
-import LogIn from "@/pages/login/LogIn";
-import Header from "../header/Header";
-import Home from "../../pages/home/Home";
-import Footer from "../footer/Footer";
-import Background from "../background/Background";
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
+import Background from '../background/Background';
 
-import "./App.scss";
+import './App.scss';
+
+import AppRouter from '../router/AppRouter';
 
 const App = () => {
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LogIn />} />
-      </Routes>
+      <AppRouter />
       <Footer />
       <Background />
     </div>
