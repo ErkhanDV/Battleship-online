@@ -1,6 +1,9 @@
 .ship {
   cursor: grab;
-  // transition: all ease 0.1s;
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  height: 90px;
 }
 
 .ship-1 {
@@ -9,6 +12,11 @@
   border: 1px solid black;
   background-color: aquamarine;
   opacity: 0.5;
+}
+.horizontal {
+  flex-direction: row;
+  width: 90px;
+  height: 30px;
 }
 .red {
   background-color: red;
