@@ -19,11 +19,12 @@ const Ship = ({
   return (
     <div
       className="ship"
+      draggable={true}
       onMouseDown={(event) => {
-        const parent = event.target.parentElement as HTMLDivElement;
-        event.target.parentElement.style.position = 'absolute';
-        event.target.parentElement.style.left = `${event.clientX - 14}px`;
-        event.target.parentElement.style.top = `${event.clientY - 14}px`;
+        // const parent = event.target.parentElement as HTMLDivElement;
+        // event.target.parentElement.style.position = 'absolute';
+        // event.target.parentElement.style.left = `${event.clientX - 14}px`;
+        // event.target.parentElement.style.top = `${event.clientY - 14}px`;
         setClicked(true);
       }}
       onMouseMove={(event) => {
@@ -42,7 +43,7 @@ const Ship = ({
       }}
       onMouseUp={(event) => {
         setClicked(false);
-        event.target.parentNode.style.position = 'fixed';
+        // event.target.parentNode.style.position = 'fixed';
       }}
     >
       <Cell cell={'ship'} coordinate={1} />

@@ -26,7 +26,7 @@ const Cell = ({ battlefield, setBattlefield, coordinate, cell, coordinates }: IC
     ) {
       cellRef.current.classList.add('ship-111');
     }
-  }, [ownCoordinates]);
+  }, [coordinates]);
 
   return (
     <div
@@ -34,10 +34,9 @@ const Cell = ({ battlefield, setBattlefield, coordinate, cell, coordinates }: IC
       id={coordinate.toString()}
       className={classList.join(' ')}
       onDrop={(event) => dropHadler(event)}
-      onDragLeave={(event) => dragEndHandler()}
-      onDragEnd={(event) => dragEndHandler()}
+      onDragLeave={(event) => dragEndHandler(event)}
+      onDragEnd={(event) => dragEndHandler(event)}
       onDragOver={(event) => dragOverHandler(event)}
-      // onClick={(event) => console.log(event.target.getBoundingClientRect())}
     ></div>
   );
 };
