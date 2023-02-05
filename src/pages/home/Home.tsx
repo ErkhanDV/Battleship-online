@@ -5,14 +5,17 @@ import Footer from '@/components/footer/Footer';
 import Background from '@/components/background/Background';
 import './Home.scss';
 import { gameService } from '@/services/axios/Game';
+import { SOCKET } from '@/services/axios/_constants';
 
 const Home: FC = () => {
   const navigate = useNavigate();
 
   const playHandler = async () => {
-    const socket = await gameService.startGame();
+    const socketId = await gameService.startGame();
 
-    if (socket) {
+    if (socketId) {
+      const socket = new WebSocket(SOCKET);
+
       navigate('/game');
 
       socket.onopen = () => {

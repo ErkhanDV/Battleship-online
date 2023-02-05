@@ -10,21 +10,21 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (location.pathname !== '/') {
-  //     if (localStorage.getItem('token')) {
-  //       const check = async () => {
-  //         const isAuth = await AuthService.checkAuth();
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      if (localStorage.getItem('token')) {
+        const check = async () => {
+          const isAuth = await AuthService.checkAuth();
 
-  //         navigate(isAuth ? '/home' : '/');
-  //       };
+          navigate(isAuth ? '/home' : '/');
+        };
 
-  //       check();
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   }
-  // }, [location]);
+        check();
+      } else {
+        navigate('/');
+      }
+    }
+  }, [location]);
 
   return (
     <div className="App">
