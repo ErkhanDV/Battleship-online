@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from 'react-router-dom';
 
-import "./Header.scss";
+import './Header.scss';
 
 const Header = () => {
   return (
@@ -11,27 +11,30 @@ const Header = () => {
       <nav className="header_navigation">
         <ul className="navigation_list">
           <li className="navigation_item">
-            <Link to="/" className="navigation_link">
+            <NavLink to="/" className="navigation_link">
               Home
-            </Link>
+            </NavLink>
           </li>
           <li className="navigation_item">
-            <Link to="/play" className="navigation_link">
+            <NavLink to="/play" className="navigation_link">
               Play
-            </Link>
+            </NavLink>
           </li>
           <li className="navigation_item">
-            <Link to="/rules" className="navigation_link">
+            <NavLink to="/rules" className="navigation_link">
               Rules
-            </Link>
+            </NavLink>
           </li>
           <li className="navigation_item">
-            <Link to="/settings" className="navigation_link">
+            <NavLink to="/settings" className="navigation_link">
               Settings
-            </Link>
+            </NavLink>
           </li>
-          <li className="navigation_item">Log in</li>
-          <li className="navigation_item">Sign up</li>
+          <li className="navigation_item">
+            <NavLink to="/login" className="navigation_link">
+              Log in
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </header>
