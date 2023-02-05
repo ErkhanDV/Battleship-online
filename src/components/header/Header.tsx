@@ -1,8 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthService } from '@/services/axios/Auth';
 
-import "./Header.scss";
+import './Header.scss';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const logOutHandler = async () => {
+    const isOut = await AuthService.logout();
+
+    if (isOut) {
+      navigate('/');
+    }
+  };
+
   return (
     <header className="header">
       <h1 className="header_logo">
@@ -30,8 +41,9 @@ const Header = () => {
               Settings
             </Link>
           </li>
-          <li className="navigation_item">Log in</li>
-          <li className="navigation_item">Sign up</li>
+          <li onClick={logOutHandler} className="navigation_item">
+            Log out
+          </li>
         </ul>
       </nav>
     </header>
