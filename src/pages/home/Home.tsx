@@ -11,7 +11,7 @@ const Home = () => {
     <main className="main">
       Players online: 0<button>Play</button>
       <Battleground battlefield={battlefield} setBattlefield={setBattlefield} coordinates={coordinates} />
-      <Ship coordinates={coordinates} setCoordinates={setCoordinates} />
+      <Ship />
     </main>
   );
 };

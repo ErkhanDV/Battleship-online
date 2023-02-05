@@ -6,7 +6,7 @@ export const dragStartHandler = (event: DragEvent<HTMLDivElement>) => {
 
 export const dragOverHandler = (event: DragEvent<HTMLDivElement>) => {
   event.preventDefault();
-  const target = event.target;
+  const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
   const parent = event.target.parentElement;
   if (!parent.childNodes[targetId + 10] && !parent.childNodes[targetId + 20]) {
@@ -24,28 +24,36 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>) => {
 };
 
 export const dragEndHandler = (event: DragEvent<HTMLDivElement>) => {
-  // const target = event.target;
-  // const targetId = Number(target.id);
-  // const parent = event.target.parentElement;
-  // if (!parent.childNodes[targetId + 10] && !parent.childNodes[targetId + 20]) {
-  //   target.classList.remove('red');
-  //   target.classList.remove('green');
-  // }
-  // if (parent.childNodes[targetId + 10] && !parent.childNodes[targetId + 20]) {
-  //   target.classList.remove('red');
-  //   parent.childNodes[targetId + 10].classList.add('red');
-  // } else {
-  //   target.classList.remove('green');
-  //   parent.childNodes[targetId + 10].classList.remove('green');
-  //   parent.childNodes[targetId + 20].classList.remove('green');
-  // }
+  const target = event.target as HTMLDivElement;
+  const targetId = Number(target.id);
+  const parent = event.target.parentElement;
+  target.classList.remove('green', 'red');
+  if (parent.childNodes[targetId + 10]) {
+    parent.childNodes[targetId + 10].classList.remove('green', 'red');
+  }
+  if (parent.childNodes[targetId + 20]) {
+    parent.childNodes[targetId + 20].classList.remove('green', 'red');
+  }
 };
 
 export const dropHadler = (event: DragEvent<HTMLDivElement>) => {
   event.preventDefault();
+  const target = event.target as HTMLDivElement;
+  const targetId = Number(target.id);
   const children = event.target.parentNode.childNodes;
-  const startId = Number(event.target.id);
-  children[startId].classList.add('ship-1');
-  children[startId + 10].classList.add('ship-1');
-  children[startId + 20].classList.add('ship-1');
+  const parent = event.target.parentElement;
+  if (children[targetId + 10] && children[targetId + 20]) {
+    children[targetId].classList.add('ship-1');
+    children[targetId + 10].classList.add('ship-1');
+    children[targetId + 20].classList.add('ship-1');
+  } else {
+    target.classList.remove('green', 'red');
+    if (parent.childNodes[targetId + 10]) {
+      parent.childNodes[targetId + 10].classList.remove('green', 'red');
+    }
+    if (parent.childNodes[targetId + 20]) {
+      parent.childNodes[targetId + 20].classList.remove('green', 'red');
+    }
+    return;
+  }
 };
