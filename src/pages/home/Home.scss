@@ -1,8 +1,68 @@
-@import "../../index.scss";
+@import '../../index.scss';
 
-.main {
+.section {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: calc(50% - 20px);
   padding: 20px;
-}
+  border-radius: 4px;
+  background: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
+    linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
+    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
+    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
+    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
+    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
+    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
+    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-color: $primaryColor-25;
+  &_title {
+    text-align: center;
+    font-weight: 100;
+    line-height: 1.4;
+    letter-spacing: 2px;
+    border-bottom: 2px dotted $primaryColor-50;
+  }
+  &_paragraph {
+    line-height: 1.6;
+    letter-spacing: 1px;
+    padding-left: 20px;
+    border-left: 2px dotted $primaryColor-50;
+  }
+  &_button {
+    width: 320px;
+    padding: 10px;
+    margin: 20px auto;
 
+    font-size: 20px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $primaryColor-100;
+
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
+      linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
+      linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
+      linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
+      linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
+      linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
+      linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
+      linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 25% 10px;
+    background-color: $primaryColor-25;
+    cursor: pointer;
+    transition: ease-in-out 0.5s;
+    &:hover {
+      color: #fff;
+      background-size: 100% 10px;
+      background-color: $primaryColor-50;
+      transform: scale(1.1);
+    }
+  }
+}
