@@ -8,7 +8,7 @@ const Battleground = () => {
   return (
     <div className="battleground">
       {battleground.map((cell, index) => (
-        <Cell key={Math.random()} coordinate={index} cell={cell} />
+        <Cell key={index} coordinate={index} cell={cell} />
       ))}
     </div>
   );
