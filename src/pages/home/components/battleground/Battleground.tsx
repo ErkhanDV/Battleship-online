@@ -3,30 +3,12 @@ import Cell from '../cell/Cell';
 
 import './row.scss';
 
-const Battleground = ({
-  battlefield,
-  coordinates,
-  setBattlefield,
-}: {
-  battlefield: string[];
-  coordinates: { x: number; y: number };
-  setBattlefield: React.Dispatch<React.SetStateAction<string[]>>;
-}) => {
+const Battleground = () => {
+  const battleground: string[] = new Array(100).fill('empty');
   return (
     <div className="battleground">
-      {battlefield.map((cell, index) => (
-        <>
-          {
-            <Cell
-              key={Math.random()}
-              coordinate={index}
-              cell={cell}
-              coordinates={coordinates}
-              battlefield={battlefield}
-              setBattlefield={setBattlefield}
-            />
-          }
-        </>
+      {battleground.map((cell, index) => (
+        <Cell key={Math.random()} coordinate={index} cell={cell} />
       ))}
     </div>
   );

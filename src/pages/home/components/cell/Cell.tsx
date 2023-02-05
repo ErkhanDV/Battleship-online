@@ -13,10 +13,9 @@ const Cell = ({ coordinate, cell }: ICell) => {
     <div
       id={coordinate.toString()}
       className={classList.join(' ')}
-      onDrop={(event) => dropHadler(event)}
-      onDragLeave={(event) => dragEndHandler(event)}
-      // onDragEnd={(event) => dragEndHandler(event)}
       onDragOver={(event) => dragOverHandler(event)}
+      onDragLeave={(event) => dragEndHandler(event)}
+      onDrop={(event) => dropHadler(event)}
     ></div>
   );
 };

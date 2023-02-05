@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import './ship.scss';
 
 const Ship = () => {

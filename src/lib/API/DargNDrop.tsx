@@ -1,8 +1,8 @@
 import { DragEvent } from 'react';
 
-export const dragStartHandler = (event: DragEvent<HTMLDivElement>) => {
-  console.log(event.target.childNodes.length);
-};
+// export const dragStartHandler = (event: DragEvent<HTMLDivElement>) => {
+//   console.log(event.target.childNodes.length);
+// };
 
 export const dragOverHandler = (event: DragEvent<HTMLDivElement>) => {
   event.preventDefault();
