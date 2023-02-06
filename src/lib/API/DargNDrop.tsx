@@ -12,6 +12,15 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
   const delta3 = 30;
   if (!horizontalRotation) {
     switch (shipLength) {
+      case 2:
+        if (!parent.childNodes[targetId + delta1]) {
+          target.classList.add('red');
+        }
+        if (parent.childNodes[targetId + delta1]) {
+          target.classList.add('green');
+          parent.childNodes[targetId + delta1].classList.add('green');
+        }
+        break;
       case 3:
         if (!parent.childNodes[targetId + delta1] && !parent.childNodes[targetId + delta2]) {
           target.classList.add('red');
@@ -29,6 +38,7 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
           parent.childNodes[targetId + delta1].classList.add('green');
           parent.childNodes[targetId + delta2].classList.add('green');
         }
+        break;
       case 4:
         if (
           !parent.childNodes[targetId + delta1] &&
@@ -64,6 +74,7 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
           parent.childNodes[targetId + delta2].classList.add('green');
           parent.childNodes[targetId + delta3].classList.add('green');
         }
+        break;
     }
   } else {
     const delta1 = 1;
@@ -75,6 +86,14 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
       parent.childNodes[targetId + delta3],
     ];
     switch (shipLength) {
+      case 2:
+        if (!parent.childNodes[targetId + delta2] || Math.floor(targetId / 10) !== Math.floor((targetId - 1) / 10)) {
+          target.classList.add('red');
+        } else {
+          target.classList.add('green');
+          parent.childNodes[targetId + delta2].classList.add('green');
+        }
+        break;
       case 3:
         if (!parent.childNodes[targetId + delta1] && !parent.childNodes[targetId + delta2]) {
           target.classList.add('red');
@@ -113,6 +132,7 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
           parent.childNodes[targetId + delta1].classList.add('green');
           parent.childNodes[targetId + delta2].classList.add('green');
         }
+        break;
       case 4:
         if (notAvailableIndexesRight.includes(targetId)) {
           target.classList.add('red');
@@ -137,6 +157,7 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
           target.classList.add('green');
           elements.forEach((element) => element.classList.add('green'));
         }
+        break;
     }
   }
 };
@@ -149,6 +170,12 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
   const delta2 = !horizontalRotation ? 20 : -1;
   const delta3 = !horizontalRotation ? 30 : -2;
   switch (shipLength) {
+    case 2:
+      target.classList.remove('green', 'red');
+      if (parent.childNodes[targetId + delta2]) {
+        parent.childNodes[targetId + delta2].classList.remove('green', 'red');
+      }
+      break;
     case 3:
       target.classList.remove('green', 'red');
       const neighbor1 = parent.childNodes[targetId + delta1] as HTMLDivElement;
@@ -159,9 +186,9 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
       if (neighbor2) {
         neighbor2.classList.remove('green', 'red');
       }
+      break;
     case 4:
       target.classList.remove('green', 'red');
-      const neighbor3 = parent.childNodes[targetId + delta3] as HTMLDivElement;
       if (parent.childNodes[targetId + delta1]) {
         parent.childNodes[targetId + delta1].classList.remove('green', 'red');
       }
@@ -171,6 +198,7 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
       if (parent.childNodes[targetId + delta3]) {
         parent.childNodes[targetId + delta3].classList.remove('green', 'red');
       }
+      break;
   }
 };
 
@@ -182,6 +210,18 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
   const parent = event.target.parentElement;
   if (!horizontalRotation) {
     switch (shipLength) {
+      case 2:
+        if (children[targetId + 10]) {
+          children[targetId].classList.add('ship-1');
+          children[targetId + 10].classList.add('ship-1');
+        } else {
+          target.classList.remove('green', 'red');
+          if (parent.childNodes[targetId + 10]) {
+            parent.childNodes[targetId + 10].classList.remove('green', 'red');
+          }
+          return;
+        }
+        break;
       case 3:
         if (children[targetId + 10] && children[targetId + 20]) {
           children[targetId].classList.add('ship-1');
@@ -197,6 +237,7 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
           }
           return;
         }
+        break;
       case 4:
         if (children[targetId + 10] && children[targetId + 20] && children[targetId + 30]) {
           children[targetId].classList.add('ship-1');
@@ -216,11 +257,28 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
           }
           return;
         }
+        break;
     }
   } else {
     const notAvailableIndexesRight = [9, 19, 29, 39, 49, 59, 69, 79, 89];
     const notAvailableIndexesLeft = [10, 20, 30, 40, 50, 60, 70, 80, 90];
     switch (shipLength) {
+      case 2:
+        if (notAvailableIndexesRight.includes(targetId) || notAvailableIndexesLeft.includes(targetId)) {
+          children[targetId].classList.remove('red');
+          children[targetId - 1].classList.remove('red');
+          return;
+        } else if (children[targetId - 1]) {
+          children[targetId].classList.add('ship-1');
+          children[targetId - 1].classList.add('ship-1');
+        } else {
+          target.classList.remove('green', 'red');
+          if (parent.childNodes[targetId - 1]) {
+            parent.childNodes[targetId - 1].classList.remove('green', 'red');
+          }
+          return;
+        }
+        break;
       case 3:
         if (notAvailableIndexesRight.includes(targetId) || notAvailableIndexesLeft.includes(targetId)) {
           children[targetId].classList.remove('red');
@@ -241,6 +299,7 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
           }
           return;
         }
+        break;
       case 4:
         if (notAvailableIndexesRight.includes(targetId) || notAvailableIndexesLeft.includes(targetId)) {
           children[targetId].classList.remove('red');
@@ -271,6 +330,7 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
           }
           return;
         }
+        break;
     }
   }
 };

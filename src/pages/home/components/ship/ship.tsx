@@ -22,8 +22,8 @@ const Ship = () => {
     <div className={`ship${horizontal ? ' horizontal' : ''}`} draggable={true} onClick={rotateHandler}>
       <div className="cell"></div>
       <div className="cell"></div>
-      <div className="cell"></div>
-      <div className="cell"></div>
+      {/* <div className="cell"></div> */}
+      {/* <div className="cell"></div> */}
     </div>
   );
 };
