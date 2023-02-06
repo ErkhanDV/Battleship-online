@@ -4,16 +4,63 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  min-height: 112px;
+  padding: 15px 40px;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, $primaryColor-50 100%);
   border-bottom: 1px dotted $primaryColor-100;
-  &:hover .logo-image::before {
-    transform: scale(0.75);
-  }
   &_logo {
-    color: $primaryColor-100;
+    margin: 16px 0;
+    padding: 6px 12px 4px;
+    color: white;
     text-transform: uppercase;
     font-weight: 100;
+    border-radius: 4px;
+    background: $logoCornerGradient;
+    background-repeat: no-repeat;
+    background-size: 64px 12px;
+    background-color: $primaryColor-25;
+    transform: rotate(-2deg);
+    transition: ease-in-out 0.3s;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  &_link {
+    text-decoration: none;
+  }
+  &_burger {
+    position: fixed;
+    right: 40px;
+    top: 42px;
+    display: none;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 200;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      left: 0;
+      top: 0;
+      background-color: $primaryColor-100;
+      transition: ease-in-out 0.3s;
+    }
+    &::after {
+      top: 100%;
+    }
+    &.open {
+      &::before {
+        top: 50%;
+        transform: rotate(405deg);
+      }
+      &::after {
+        top: 50%;
+        transform: rotate(-405deg);
+      }
+    }
   }
 }
 
@@ -23,15 +70,27 @@
   &::before {
     position: absolute;
     content: '';
-    left: -54px;
-    top: -6px;
-    width: 48px;
-    height: 48px;
+    left: -57px;
+    top: -8px;
+    width: 52px;
+    height: 52px;
     background-image: url(../../assets/svg/battleship.svg);
     background-repeat: no-repeat;
     background-size: contain;
     transition: ease-in-out 1s;
     animation: logoAnimation 6s infinite;
+  }
+}
+
+.burger-icon {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  left: 0;
+  top: 50%;
+  background-color: $primaryColor-100;
+  &.open {
+    opacity: 0;
   }
 }
 
@@ -58,14 +117,7 @@
   padding: 2px 10px;
   font-size: 20px;
   border-radius: 4px;
-  background: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
-    linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
-    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
-    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
-    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
-    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
-    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
-    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+  background: $primaryCornerGradient;
   background-repeat: no-repeat;
   background-size: 10px 8px;
   background-color: $primaryColor-25;
@@ -84,5 +136,54 @@
   &:hover,
   &.active {
     color: #fff;
+  }
+}
+
+@media (max-width: 1040px) {
+  .header {
+    &_logo {
+      transform: rotate(0deg);
+    }
+    &_burger {
+      display: block;
+    }
+    &_navigation {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgb(0, 0, 0, 0.9);
+      z-index: 100;
+      &.visible {
+        display: flex;
+      }
+    }
+  }
+  .navigation_list {
+    flex-direction: column;
+    margin: 100px auto;
+  }
+
+  .navigation_item {
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    &_logo {
+      font-size: 20px;
+    }
+  }
+  .logo-image {
+    margin-left: 40px;
+    &::before {
+      left: -39px;
+      top: -7px;
+      width: 36px;
+      height: 36px;
+    }
   }
 }
