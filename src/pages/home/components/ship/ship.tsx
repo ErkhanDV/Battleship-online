@@ -23,6 +23,7 @@ const Ship = () => {
       <div className="cell"></div>
       <div className="cell"></div>
       <div className="cell"></div>
+      <div className="cell"></div>
     </div>
   );
 };
