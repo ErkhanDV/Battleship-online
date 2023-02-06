@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Battleground from './components/battleground/Battleground';
 import Ship from './components/ship/ship';
 import './Home.scss';
