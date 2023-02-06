@@ -4,6 +4,10 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: 'Russo One', sans-serif;
+  font-weight: 100;
+  letter-spacing: 1px;
+  color: #fff;
 }
 
 body {
@@ -11,6 +15,14 @@ body {
   background: url(./assets/svg/background.svg);
   background-color: black;
   user-select: none;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
 }
 
 $primaryColor-100: rgb(102, 204, 102, 1);
