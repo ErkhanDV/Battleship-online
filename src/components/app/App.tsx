@@ -12,11 +12,12 @@ const App = () => {
 
   useEffect(() => {
     if (location.pathname !== '/') {
+      console.log('useeffect');
       if (localStorage.getItem('token')) {
         const check = async () => {
           const isAuth = await AuthService.checkAuth();
 
-          navigate(isAuth ? '/home' : '/');
+          if (!isAuth) navigate('/');
         };
 
         check();

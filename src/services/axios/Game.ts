@@ -3,9 +3,9 @@ import { axiosAPI } from './_index';
 import { STATUS, CLONE_SERVER } from './_constants';
 
 export class gameService {
-  static async startGame(): Promise<unknown | undefined> {
+  static async startGame(): Promise<string | undefined> {
     try {
-      const { status, data } = await axiosAPI.get<unknown>(`${CLONE_SERVER}/startgame`);
+      const { status, data } = await axiosAPI.get<string>(`${CLONE_SERVER}/startgame`);
 
       if (status === STATUS.ok && data) {
         return data;

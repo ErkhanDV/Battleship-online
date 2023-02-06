@@ -1,6 +1,6 @@
 export const CLONE_SERVER = 'https://battle-ship.up.railway.app/api';
 
-export const SOCKET = 'wss://battle-ship.up.railway.app/api/'
+export const SOCKET = 'wss://battle-ship.up.railway.app/game';
 
 export enum STATUS {
   ok = 200,
