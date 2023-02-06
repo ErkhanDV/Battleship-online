@@ -12,6 +12,9 @@ export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRota
   const delta3 = 30;
   if (!horizontalRotation) {
     switch (shipLength) {
+      case 1:
+        target.classList.add('green');
+        break;
       case 2:
         if (!parent.childNodes[targetId + delta1]) {
           target.classList.add('red');
@@ -170,6 +173,9 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
   const delta2 = !horizontalRotation ? 20 : -1;
   const delta3 = !horizontalRotation ? 30 : -2;
   switch (shipLength) {
+    case 1:
+      target.classList.remove('green');
+      break;
     case 2:
       target.classList.remove('green', 'red');
       if (parent.childNodes[targetId + delta2]) {
@@ -210,6 +216,10 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
   const parent = event.target.parentElement;
   if (!horizontalRotation) {
     switch (shipLength) {
+      case 1:
+        target.classList.add('ship-1');
+        target.classList.remove('green', 'red');
+        break;
       case 2:
         if (children[targetId + 10]) {
           children[targetId].classList.add('ship-1');

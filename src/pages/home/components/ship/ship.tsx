@@ -19,9 +19,19 @@ const Ship = () => {
     }
   }, [clickCount]);
   return (
-    <div className={`ship${horizontal ? ' horizontal' : ''}`} draggable={true} onClick={rotateHandler}>
+    <div
+      className={`ship${horizontal ? ' horizontal' : ''}`}
+      draggable={true}
+      onClick={rotateHandler}
+      onDragStart={() => {
+        console.log('Drag start!');
+      }}
+      onDragEnd={() => {
+        console.log('Drag end!');
+      }}
+    >
       <div className="cell"></div>
-      <div className="cell"></div>
+      {/* <div className="cell"></div> */}
       {/* <div className="cell"></div> */}
       {/* <div className="cell"></div> */}
     </div>
