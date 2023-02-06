@@ -42,7 +42,10 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className={`header_burger ${menuVisible && 'open'}`} onClick={() => setMenuVisible(!menuVisible)}>
+      <div
+        className={`header_burger ${menuVisible && 'open'}`}
+        onClick={() => setMenuVisible(!menuVisible)}
+      >
         <span className={`burger-icon ${menuVisible && 'open'}`}></span>
       </div>
     </header>

@@ -4,7 +4,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 112px;
   padding: 15px 40px;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, $primaryColor-50 100%);
   border-bottom: 1px dotted $primaryColor-100;
@@ -29,12 +28,12 @@
     text-decoration: none;
   }
   &_burger {
-    position: fixed;
+    position: absolute;
     right: 40px;
-    top: 42px;
+    top: 44px;
     display: none;
     width: 30px;
-    height: 21px;
+    height: 20px;
     cursor: pointer;
     z-index: 200;
     &::before,
@@ -52,6 +51,7 @@
       top: 100%;
     }
     &.open {
+      position: fixed;
       &::before {
         top: 50%;
         transform: rotate(405deg);
@@ -173,8 +173,15 @@
 
 @media (max-width: 480px) {
   .header {
+    padding: 6px 20px;
     &_logo {
       font-size: 20px;
+    }
+    &_burger {
+      right: 24px;
+      top: 30px;
+      width: 24px;
+      height: 16px;
     }
   }
   .logo-image {

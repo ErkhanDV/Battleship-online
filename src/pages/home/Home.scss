@@ -61,10 +61,17 @@
 }
 
 @media (max-width: 480px) {
-  .section_button {
-    width: 200px;
-    margin: 10px auto;
-    font-size: 14px;
-    letter-spacing: 1px;
+  .section {
+    padding: 10px;
+    margin-bottom: 20px;
+    &_title {
+      font-size: 20px;
+    }
+    &_button {
+      width: 200px;
+      margin: 10px auto;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
   }
 }
