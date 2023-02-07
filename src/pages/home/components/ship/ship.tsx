@@ -9,7 +9,6 @@ const Ship = ({ decks }: { decks: number }) => {
   const [clickCount, setClickCount] = useState(0);
   const dispatch = useDispatch();
 
-  const currentShip = useSelector((state) => state.currentShipSlice);
   const setShipHandler = (decks: number | null, isHorizontal: boolean) => {
     dispatch(setCurrentShip({ decks, isHorizontal }));
   };

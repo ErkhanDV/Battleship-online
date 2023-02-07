@@ -6,7 +6,7 @@ const initialState: ICurrentShip = {
   isHorizontal: false,
 };
 
-const currentShipSlice = createSlice({
+const currentShip = createSlice({
   name: 'currentShip',
   initialState,
   reducers: {
@@ -17,5 +17,5 @@ const currentShipSlice = createSlice({
   },
 });
 
-export const { setCurrentShip } = currentShipSlice.actions;
-export default currentShipSlice.reducer;
+export const { setCurrentShip } = currentShip.actions;
+export default currentShip.reducer;

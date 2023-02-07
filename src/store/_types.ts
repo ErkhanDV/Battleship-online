@@ -13,3 +13,9 @@ export interface ICurrentShip {
   decks: number | null;
   isHorizontal: Boolean;
 }
+
+export type ShipCoordinates = number[];
+
+export interface IShipsLocation {
+  shipsLocation: ShipCoordinates[];
+}

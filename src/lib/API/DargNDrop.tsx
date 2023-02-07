@@ -1,3 +1,5 @@
+import { ShipCoordinates } from '@/store/_types';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { DragEvent } from 'react';
 
 export const dragOverHandler = (event: DragEvent<HTMLDivElement>, horizontalRotation: Boolean, shipLength: number) => {
@@ -211,7 +213,15 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
   }
 };
 
-export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation: Boolean, shipLength: number) => {
+export const dropHadler = (
+  event: DragEvent<HTMLDivElement>,
+  horizontalRotation: Boolean,
+  shipLength: number,
+  callback: (ship: number[]) => {
+    payload: ShipCoordinates;
+    type: 'shipsLocation/setShipsLocation';
+  },
+) => {
   event.preventDefault();
   const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
@@ -257,6 +267,7 @@ export const dropHadler = (event: DragEvent<HTMLDivElement>, horizontalRotation:
           children[targetId + 10].classList.add('ship-1');
           children[targetId + 20].classList.add('ship-1');
           children[targetId + 30].classList.add('ship-1');
+          callback([targetId, targetId + 10, targetId + 20, targetId + 30]);
         } else {
           target.classList.remove('green', 'red');
           if (parent.childNodes[targetId + 10]) {

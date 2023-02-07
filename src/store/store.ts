@@ -1,6 +1,7 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '@/store/reducers/UserSlice';
-import currentShipSlice from './reducers/CurrentShipSlice';
+import currentShip from './reducers/CurrentShipSlice';
+import shipsLocation from './reducers/ShipsLocation';
 
 // const rootReducer = combineReducers({
 //   userReducer,
@@ -8,8 +9,9 @@ import currentShipSlice from './reducers/CurrentShipSlice';
 
 export const store = configureStore({
   reducer: {
-    currentShipSlice,
+    currentShip,
     userReducer,
+    shipsLocation,
   },
 });
 
