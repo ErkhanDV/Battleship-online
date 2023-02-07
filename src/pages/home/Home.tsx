@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Home.scss';
 
 const Home = () => {
@@ -9,12 +10,17 @@ const Home = () => {
           This is a strategy type guessing game for two players. It is played on ruled grids on which each player's
           fleet of warships are marked.
         </p>
-        <button className="section_button">Play BattleShip</button>
+        <Link to="/play" className="section_button">
+          Play BattleShip
+        </Link>
         <p className="section_paragraph">
           The locations of the fleets are concealed from the other player. Players alternate turns calling "shots" at
           the other player's ships, and the objective of the game is to destroy the opposing player's fleet.
         </p>
-        <button className="section_button">Rules of the game</button>
+
+        <Link to="/rules" className="section_button">
+          Rules of the game
+        </Link>
       </section>
       <section className="section">
         <h2 className="section_title">Gaming profile</h2>

@@ -5,16 +5,10 @@
   flex-direction: column;
   justify-content: space-between;
   width: calc(50% - 20px);
+  margin-bottom: 40px;
   padding: 20px;
   border-radius: 4px;
-  background: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
-    linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
-    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
-    linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
-    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
-    linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
-    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
-    linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+  background: $primaryCornerGradient;
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-color: $primaryColor-25;
@@ -35,24 +29,17 @@
     width: 320px;
     padding: 10px;
     margin: 20px auto;
-
+    text-decoration: none;
+    text-align: center;
     font-size: 20px;
     font-family: 'Russo One', sans-serif;
     font-weight: 100;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: $primaryColor-100;
-
     border: none;
     border-radius: 4px;
-    background: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
-      linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
-      linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
-      linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
-      linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
-      linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
-      linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
-      linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+    background: $primaryCornerGradient;
     background-repeat: no-repeat;
     background-size: 25% 10px;
     background-color: $primaryColor-25;
@@ -63,6 +50,28 @@
       background-size: 100% 10px;
       background-color: $primaryColor-50;
       transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 1040px) {
+  .section {
+    width: calc(100%);
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 10px;
+    margin-bottom: 20px;
+    &_title {
+      font-size: 20px;
+    }
+    &_button {
+      width: 200px;
+      margin: 10px auto;
+      font-size: 14px;
+      letter-spacing: 1px;
     }
   }
 }

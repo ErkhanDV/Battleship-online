@@ -1,15 +1,31 @@
+import Settings from '@/components/settings/Settings';
+
+import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import './Header.scss';
 
-const Header = () => {
+import { IHeader } from '@/types/Types';
+import LoGInPage from '@/pages/login/LogIn';
+
+const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handlerOpenModal = (component: JSX.Element) => {
+    setModalOpen(true);
+    setModalChildren(component);
+    setMenuVisible(false);
+  };
+
   return (
     <header className="header">
-      <h1 className="header_logo">
-        Battle<span className="logo-image">Ship</span>
-      </h1>
-      <nav className="header_navigation">
-        <ul className="navigation_list">
+      <Link to="/" className="header_link">
+        <h1 className="header_logo">
+          Battle<span className="logo-image">Ship</span>
+        </h1>
+      </Link>
+      <nav className={`header_navigation ${menuVisible && 'visible'}`}>
+        <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
           <li className="navigation_item">
             <NavLink to="/" className="navigation_link">
               Home
@@ -25,18 +41,26 @@ const Header = () => {
               Rules
             </NavLink>
           </li>
-          <li className="navigation_item">
-            <NavLink to="/settings" className="navigation_link">
-              Settings
-            </NavLink>
+          <li
+            className="navigation_item"
+            onClick={() => handlerOpenModal(<Settings />)}
+          >
+            Settings
           </li>
-          <li className="navigation_item">
-            <NavLink to="/login" className="navigation_link">
-              Login
-            </NavLink>
+          <li
+            className="navigation_item"
+            onClick={() => handlerOpenModal(<LoGInPage />)}
+          >
+            Login
           </li>
         </ul>
       </nav>
+      <div
+        className={`header_burger ${menuVisible && 'open'}`}
+        onClick={() => setMenuVisible(!menuVisible)}
+      >
+        <span className={`burger-icon ${menuVisible && 'open'}`}></span>
+      </div>
     </header>
   );
 };
