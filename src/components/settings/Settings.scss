@@ -1,0 +1,42 @@
+@import "../../index.scss";
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &_title {
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 100;
+    line-height: 1.4;
+    letter-spacing: 5px;
+    border-bottom: 2px dashed $primaryColor-50;
+  }
+  &_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px dotted $primaryColor-25;
+  }
+}
+
+.section-title {
+  width: 40%;
+  padding: 10px;
+  text-align: center;
+  font-weight: 100;
+  background-color: $primaryColor-25;
+}
+
+.section-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 40%;
+  height: 40px;
+}

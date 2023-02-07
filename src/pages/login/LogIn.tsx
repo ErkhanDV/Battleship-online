@@ -1,8 +1,11 @@
-import { FC, useState } from "react";
-import { AuthService } from "@/services/axios/Auth";
+import { FC, useState } from 'react';
+
+import { AuthService } from '@/services/axios/Auth';
+
+import './Login.scss';
 
 const LoGInPage: FC = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   const inputHandler = ({
     target,
@@ -13,19 +16,25 @@ const LoGInPage: FC = () => {
   };
 
   const logOutHandler = async () => {
-    await AuthService.logout()
-  }
+    await AuthService.logout();
+  };
 
   return (
-    <div>
+    <div className="login">
+      <h2 className="login_title">Login</h2>
       <input
+        className="login_input"
         onChange={inputHandler}
         value={name}
         type="text"
         placeholder="Enter name"
       />
-      <button onClick={logInHandler}>Войти</button>
-      <button onClick={logOutHandler}>Выйти</button>
+      <button className="login_button" onClick={logInHandler}>
+        Войти
+      </button>
+      <button className="login_button" onClick={logOutHandler}>
+        Выйти
+      </button>
     </div>
   );
 };

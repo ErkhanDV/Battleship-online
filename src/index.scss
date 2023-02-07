@@ -28,6 +28,8 @@ body {
   }
 }
 
+$primaryFont: 'Russo One', sans-serif;
+
 $primaryColor-100: rgb(102, 204, 102, 1);
 $primaryColor-75: rgb(102, 204, 102, 0.75);
 $primaryColor-50: rgb(102, 204, 102, 0.5);
@@ -50,3 +52,12 @@ $logoCornerGradient: linear-gradient(to right, rgb(255, 255, 255, 0.5) 2px, tran
   linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 0,
   linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 100%,
   linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 100%;
+
+  $modalCornerGradient: linear-gradient(to right, $primaryColor-75 4px, transparent 4px) 0 0,
+  linear-gradient(to right, $primaryColor-75 4px, transparent 4px) 0 100%,
+  linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 0,
+  linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 100%,
+  linear-gradient(to bottom, $primaryColor-75 4px, transparent 4px) 0 0,
+  linear-gradient(to bottom, $primaryColor-75 4px, transparent 4px) 100% 0,
+  linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 0 100%,
+  linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 100% 100%;
