@@ -3,5 +3,4 @@ export interface IProps {
 }
 export interface ICell {
   coordinate: number;
-  cell: string;
 }

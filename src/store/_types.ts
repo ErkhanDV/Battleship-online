@@ -8,3 +8,8 @@ export interface IUser {
 export interface IUserState {
   user: IUser | null;
 }
+
+export interface ICurrentShip {
+  decks: number | null;
+  isHorizontal: Boolean;
+}

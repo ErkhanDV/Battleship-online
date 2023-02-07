@@ -178,6 +178,9 @@ export const dragEndHandler = (event: DragEvent<HTMLDivElement>, horizontalRotat
       break;
     case 2:
       target.classList.remove('green', 'red');
+      if (parent.childNodes[targetId + delta1]) {
+        parent.childNodes[targetId + delta1].classList.remove('green', 'red');
+      }
       if (parent.childNodes[targetId + delta2]) {
         parent.childNodes[targetId + delta2].classList.remove('green', 'red');
       }

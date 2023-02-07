@@ -2,20 +2,19 @@ import { ICell } from '@/types/Types';
 
 import { dragEndHandler, dragOverHandler, dropHadler } from '@/lib/API/DargNDrop';
 import './Cell.scss';
+import { useSelector } from 'react-redux';
 
-const Cell = ({ coordinate, cell }: ICell) => {
-  const classList = ['cell'];
-  if (cell === 'ship') {
-    classList.push('ship');
-  }
+const Cell = ({ coordinate }: ICell) => {
+  const decks = useSelector((state) => state.currentShipSlice.decks);
+  const isHorizontal = useSelector((state) => state.currentShipSlice.isHorizontal);
 
   return (
     <div
       id={coordinate.toString()}
-      className={classList.join(' ')}
-      onDragOver={(event) => dragOverHandler(event, false, 1)}
-      onDragLeave={(event) => dragEndHandler(event, false, 1)}
-      onDrop={(event) => dropHadler(event, false, 1)}
+      className="cell"
+      onDragOver={(event) => dragOverHandler(event, isHorizontal, decks)}
+      onDragLeave={(event) => dragEndHandler(event, isHorizontal, decks)}
+      onDrop={(event) => dropHadler(event, isHorizontal, decks)}
     ></div>
   );
 };

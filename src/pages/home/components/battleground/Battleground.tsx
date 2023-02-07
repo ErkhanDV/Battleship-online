@@ -7,8 +7,8 @@ const Battleground = () => {
   const battleground: string[] = new Array(100).fill('empty');
   return (
     <div className="battleground">
-      {battleground.map((cell, index) => (
-        <Cell key={index} coordinate={index} cell={cell} />
+      {battleground.map((_, index) => (
+        <Cell key={index} coordinate={index} />
       ))}
     </div>
   );

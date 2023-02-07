@@ -3,8 +3,19 @@
   display: flex;
   flex-direction: column;
   width: 30px;
-  height: 30px;
   transition: all ease 0.2s;
+}
+.one-deck {
+  height: 30px;
+}
+.two-deck {
+  height: 60px;
+}
+.three-deck {
+  height: 90px;
+}
+.four-deck {
+  height: 120px;
 }
 
 .ship-1 {
@@ -16,7 +27,7 @@
 }
 .horizontal {
   flex-direction: row;
-  width: 30px;
+  width: 120px;
   height: 30px;
 }
 .red {
