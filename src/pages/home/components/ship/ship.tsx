@@ -1,13 +1,14 @@
-import { setCurrentShip } from '@/store/reducers/CurrentShipSlice';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useAppDispatch } from '@/store/hook/hook';
+import { setCurrentShip } from '@/store/reducers/CurrentShipSlice';
 
 import './ship.scss';
 
 const Ship = ({ decks }: { decks: number }) => {
   const [isHorizontal, setHorizonal] = useState(false);
   const [clickCount, setClickCount] = useState(0);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const setShipHandler = (decks: number | null, isHorizontal: boolean) => {
     dispatch(setCurrentShip({ decks, isHorizontal }));
@@ -44,13 +45,15 @@ const Ship = ({ decks }: { decks: number }) => {
   };
 
   const classList = ['ship', getDeckClass(decks)];
+
   return (
     <div
       className={`${classList.join(' ')}${isHorizontal ? ' horizontal' : ''}`}
       draggable={true}
       onClick={() => rotateHandler(decks)}
       onDragStart={(event) => {
-        const decks: number = event.target.childNodes.length;
+        const target = event.target as HTMLDivElement;
+        const decks = target.childNodes.length;
         setShipHandler(decks, isHorizontal);
       }}
       onDragEnd={() => {

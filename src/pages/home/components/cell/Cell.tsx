@@ -1,19 +1,20 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-
 import './Cell.scss';
 
-import { dragEndHandler, dragOverHandler, dropHadler } from '@/lib/API/DargNDrop';
+import { dropHadler } from '@/lib/API/DargNDrop';
+
+import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
 
 import { setShipsLocation } from '@/store/reducers/ShipsLocation';
 
 import { ICell } from '@/types/Types';
+import { dragOverHandler } from '@/lib/API/DragAndDrop/dragOver';
+import { dragEndHandler } from '@/lib/API/DragAndDrop/dragEnd';
 
 const Cell = ({ coordinate }: ICell) => {
-  const decks = useSelector((state) => state.currentShip.decks);
-  const isHorizontal = useSelector((state) => state.currentShip.isHorizontal);
+  const decks = useAppSelector((state) => state.currentShip.decks);
+  const isHorizontal = useAppSelector((state) => state.currentShip.isHorizontal);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const setLocations = (ship: number[]) => dispatch(setShipsLocation(ship));
 
   return (

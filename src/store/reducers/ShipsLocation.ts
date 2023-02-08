@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IShipsLocation, ShipCoordinates } from '@/store/_types';
+import { IShipsLocation, ShipCoordinates } from '@/store/types/_types';
 
 const initialState: IShipsLocation = {
   shipsLocation: [],
@@ -10,7 +10,7 @@ const shipsLocation = createSlice({
   initialState,
   reducers: {
     setShipsLocation(state, action: PayloadAction<ShipCoordinates>) {
-      state.shipsLocation = [...state.shipsLocation, action.payload];
+      state.shipsLocation.push(action.payload);
     },
   },
 });
