@@ -1,33 +1,39 @@
-@import "../../index.scss";
+@import '../../index.scss';
 
 .footer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   min-height: 120px;
+  padding: 0 40px;
   margin-top: auto;
-  color: #66cc66;
+  color: $primaryColor-100;
   background: linear-gradient(90deg, $primaryColor-50 0%, rgba(0, 0, 0, 0.75) 100%);
-  border-top: 1px dotted #66cc66;
+  border-top: 1px dotted $primaryColor-100;
   &_authors {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 50px;
+    justify-content: space-around;
+    align-items: center;
+    width: 360px;
+    height: 60px;
+    margin: 20px;
   }
   &_title {
     font-weight: 100;
     margin: 0;
   }
   &_school {
-    width: 100px;
-    height: 38px;
-    fill: $primaryColor-100;
-    transition: ease-in-out 0.4s;
-    &:hover {
-      fill: #fff;
-      transform: scale(1.05);
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 60px;
+  }
+  &_copyright {
+    width: 300px;
+    font-weight: 100;
+    text-align: center;
   }
 }
 
@@ -41,7 +47,7 @@
     margin: 0 15px 0 22px;
     &::before {
       position: absolute;
-      content: "";
+      content: '';
       left: -22px;
       top: 0px;
       width: 20px;
@@ -63,6 +69,17 @@
   }
 }
 
+.school-logo {
+  width: 100px;
+  height: 36px;
+  fill: $primaryColor-100;
+  transition: ease-in-out 0.4s;
+  &:hover {
+    fill: #fff;
+    transform: scale(1.05);
+  }
+}
+
 .title-accent {
   color: #fff;
 }
@@ -72,25 +89,51 @@
   margin-left: 25px;
   &::before {
     position: absolute;
-    content: "copyright";
+    content: 'copyright';
     left: -26px;
     top: -4px;
-    font-family: "Material Symbols Outlined";
+    font-family: 'Material Symbols Outlined';
     font-size: 22px;
     font-weight: 400;
     color: #fff;
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1040px) {
   .footer {
-    flex-direction: column;
-    min-height: 186px;
-    padding: 20px 0;
+    flex-wrap: wrap;
+    padding: 20px 40px;
+    &_copyright {
+      width: 50%;
+    }
+    &_school {
+      width: 50%;
+    }
+    &_authors {
+      order: 1;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .footer {
+
+    &_title {
+      font-size: 14px;
+    }
+    &_copyright {
+      width: 100%;
+    }
+    &_school {
+      width: 100%;
+    }
+    &_authors {
+      margin: 0;
+    }
   }
 
-  .footer_authors {
-    align-items: center;
-    order: 1;
+  .authors-list {
+    display: none;
   }
 }
