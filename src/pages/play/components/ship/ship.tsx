@@ -16,7 +16,10 @@ const Ship = ({ decks }: { decks: number }) => {
     dispatch(setCurrentShip(currentShip));
   };
 
-  const dragStartHandler = (event: React.DragEvent<HTMLDivElement>, isHorizontal: boolean) => {
+  const dragStartHandler = (
+    event: React.DragEvent<HTMLDivElement>,
+    isHorizontal: boolean,
+  ) => {
     const target = event.target as HTMLDivElement;
     const decks = target.childNodes.length;
     setShipHandler({ decks, isHorizontal });
