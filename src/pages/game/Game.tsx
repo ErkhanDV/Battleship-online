@@ -5,10 +5,10 @@ import { gameService } from '@/services/axios/Game';
 
 const Game: FC = () => {
   const getId = async () => {
-    const socketId = await gameService.startGame();
+    const response = await gameService.startGame();
 
-    if (socketId) {
-      const socket = new Socket(socketId);
+    if (response) {
+      const socket = new Socket(response);
     }
   };
 

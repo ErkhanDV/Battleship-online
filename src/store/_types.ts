@@ -8,3 +8,9 @@ export interface IUser {
 export interface IUserState {
   user: IUser | null;
 }
+
+export type ShipCoordinates = number[];
+
+export interface IShipsLocation {
+  shipsLocation: ShipCoordinates[];
+}
