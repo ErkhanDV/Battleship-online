@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICurrentShip } from '@/store/types/_types';
+import { ICurrentShip } from '@/store/_types';
 
 const initialState: ICurrentShip = {
   decks: null,

@@ -1,14 +1,14 @@
 import './Cell.scss';
 
-import { dropHadler } from '@/lib/API/DargNDrop';
-
 import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
 
-import { setShipsLocation } from '@/store/reducers/ShipsLocation';
+import { setShipsLocation } from '@/store/reducers/ShipsLocationSlice';
 
-import { ICell } from '@/types/Types';
 import { dragOverHandler } from '@/lib/API/DragAndDrop/dragOver';
 import { dragEndHandler } from '@/lib/API/DragAndDrop/dragEnd';
+import { dropHadler } from '@/lib/API/DragAndDrop/drop';
+
+import { ICell } from '@/types/Types';
 
 const Cell = ({ coordinate }: ICell) => {
   const decks = useAppSelector((state) => state.currentShip.decks);

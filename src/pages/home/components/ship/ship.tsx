@@ -4,14 +4,27 @@ import { useAppDispatch } from '@/store/hook/hook';
 import { setCurrentShip } from '@/store/reducers/CurrentShipSlice';
 
 import './ship.scss';
+import { ICurrentShip } from '@/store/_types';
 
 const Ship = ({ decks }: { decks: number }) => {
   const [isHorizontal, setHorizonal] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+
   const dispatch = useAppDispatch();
 
-  const setShipHandler = (decks: number | null, isHorizontal: boolean) => {
-    dispatch(setCurrentShip({ decks, isHorizontal }));
+  const setShipHandler = (currentShip: ICurrentShip) => {
+    dispatch(setCurrentShip(currentShip));
+  };
+
+  const dragStartHandler = (event: React.DragEvent<HTMLDivElement>, isHorizontal: boolean) => {
+    const target = event.target as HTMLDivElement;
+    const decks = target.childNodes.length;
+    setShipHandler({ decks, isHorizontal });
+  };
+
+  const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    setShipHandler({ decks: null, isHorizontal: false });
+    event.target.remove();
   };
 
   const rotateHandler = (decks: number) => {
@@ -40,7 +53,7 @@ const Ship = ({ decks }: { decks: number }) => {
       case 4:
         return 'four-deck';
       default:
-        return 'ship';
+        return '';
     }
   };
 
@@ -52,12 +65,10 @@ const Ship = ({ decks }: { decks: number }) => {
       draggable={true}
       onClick={() => rotateHandler(decks)}
       onDragStart={(event) => {
-        const target = event.target as HTMLDivElement;
-        const decks = target.childNodes.length;
-        setShipHandler(decks, isHorizontal);
+        dragStartHandler(event, isHorizontal);
       }}
-      onDragEnd={() => {
-        setShipHandler(null, false);
+      onDragEnd={(event) => {
+        dragEndHandler(event);
       }}
     >
       {new Array(decks).fill(null).map((_, index) => (

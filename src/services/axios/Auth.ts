@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosAPI } from "./_index";
-import { IUser } from "@/store/types/_types";
+import { IUser } from "@/store/_types";
 import { STATUS } from "./_constants";
 
 export class AuthService {

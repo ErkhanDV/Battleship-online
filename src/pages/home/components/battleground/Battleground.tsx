@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Cell from '../cell/Cell';
 
 import './row.scss';

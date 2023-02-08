@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IShipsLocation, ShipCoordinates } from '@/store/types/_types';
+import { IShipsLocation, ShipCoordinates } from '@/store/_types';
 
 const initialState: IShipsLocation = {
   shipsLocation: [],

@@ -1,17 +1,6 @@
-import { ShipCoordinates } from '@/store/types/_types';
-import { DragEvent } from 'react';
+import { IDropHandler } from './types';
 
-
-
-export const dropHadler = (
-  event: DragEvent<HTMLDivElement>,
-  horizontalRotation: Boolean,
-  shipLength: number | null,
-  callback: (ship: number[]) => {
-    payload: ShipCoordinates;
-    type: 'shipsLocation/setShipsLocation';
-  },
-) => {
+export const dropHadler: IDropHandler = (event, horizontalRotation, shipLength, callback) => {
   event.preventDefault();
   const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
