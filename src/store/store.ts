@@ -1,16 +1,11 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userReducer from "@/store/reducers/UserSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import * as slices from '@/store/reducers/_index';
 
-const rootReducer = combineReducers({
-  userReducer
+export const store = configureStore({
+  reducer: {
+    ...slices,
+  },
 });
 
-export const setupStore = () => {
-  return configureStore({
-    reducer: rootReducer,
-  });
-};
-
-export type TRootState = ReturnType<typeof rootReducer>;
-export type TAppStore = ReturnType<typeof setupStore>;
-export type TAppDispatch = TAppStore["dispatch"];
+export type TRootState = ReturnType<typeof store.getState>;
+export type TAppDispatch = typeof store.dispatch;
