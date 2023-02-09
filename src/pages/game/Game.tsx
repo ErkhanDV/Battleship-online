@@ -1,32 +1,26 @@
-import route from 'react-router-dom';
-import { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { Socket } from '@/services/Socket';
 import { gameService } from '@/services/axios/Game';
 
 const Game: FC = () => {
-  const getId = async () => {
-    const response = await gameService.startGame();
-
-    if (response) {
-      const socket = new Socket(response);
-    }
-  };
-
-  getId();
-
-  // const sendHandler = () => {
-  //   socket.instance.send(
-  //     JSON.stringify({
-  //       id: id,
-  //     }),
-  //   );
-  // };
+  useEffect(() => {
+    (async () => {
+      const response = await gameService.startGame();
+      if (response) {
+        console.log('socket');
+        const socket = new Socket(response);
+      }
+    })();
+  });
 
   return (
     <div>
-      <button></button>
+      <button>play</button>
     </div>
   );
 };
 
 export default Game;
+
+
+

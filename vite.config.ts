@@ -7,7 +7,6 @@ import mkcert from 'vite-plugin-mkcert';
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    open: 'http://localhost:5173/',
     https: true,
   },
   plugins: [react(), svgr(), mkcert()],

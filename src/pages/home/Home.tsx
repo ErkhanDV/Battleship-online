@@ -4,7 +4,6 @@ import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import Background from '@/components/background/Background';
 import './Home.scss';
-import { gameService } from '@/services/axios/Game';
 
 const Home: FC = () => {
   const navigate = useNavigate();

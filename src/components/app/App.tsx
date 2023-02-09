@@ -1,25 +1,32 @@
+import { useEffect, type FC } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { AuthService } from '@/services/axios/Auth';
 import LogIn from '@/pages/login/LogIn';
 import Home from '../../pages/home/Home';
 import Game from '@/pages/game/Game';
+import { AuthService } from '@/services/axios/Auth';
 import './App.scss';
+import { Socket } from '@/services/Socket';
+import { gameService } from '@/services/axios/Game';
 
-const App = () => {
+const App: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const check = async () => {
+    const isAuth = await AuthService.checkAuth();
+
+    if (!isAuth) navigate('/');
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      check();
+    }
+  }, []);
+
   useEffect(() => {
     if (location.pathname !== '/') {
-      console.log('useeffect');
       if (localStorage.getItem('token')) {
-        const check = async () => {
-          const isAuth = await AuthService.checkAuth();
-
-          if (!isAuth) navigate('/');
-        };
-
         check();
       } else {
         navigate('/');
