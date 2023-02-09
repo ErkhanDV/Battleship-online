@@ -14,10 +14,7 @@ export class gameService {
 
       return undefined;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error instanceof Error) console.log('error message: ', error.message);
-      }
-      console.log('unexpected error: ', error);
+      console.log(error);
     }
 
     return undefined;

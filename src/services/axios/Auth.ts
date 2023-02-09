@@ -13,10 +13,7 @@ export class AuthService {
         return data;
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error instanceof Error) console.log('error message: ', error.message);
-      }
-      console.log('unexpected error: ', error);
+      console.log(error);
     }
   }
 
@@ -28,10 +25,7 @@ export class AuthService {
       }
       return false;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error instanceof Error) console.log('error message: ', error.message);
-      }
-      console.log('unexpected error: ', error);
+      console.log(error);
     }
     return false;
   }
@@ -47,10 +41,7 @@ export class AuthService {
       }
       return false;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error instanceof Error) console.log('error message: ', error.message);
-      }
-      console.log('unexpected error: ', error);
+      console.log(error);
     }
     return false;
   }

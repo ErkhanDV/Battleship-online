@@ -67,12 +67,14 @@ export class Socket {
     }
 
     this.isGameFinded = isGameFinded;
+    console.log('connection');
   }
 
   startHandler(data: ISocketMessage) {
     if (data.isStarted) {
       this.isStarted = true;
     }
+    console.log('start');
   }
 
   shootHandler(data: ISocketMessage) {
@@ -83,12 +85,14 @@ export class Socket {
       this.isAbleShoot = true;
       //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
     }
+    console.log('shoot');
   }
 
   gameOverHandler(data: ISocketMessage) {
     const { user, coordinates } = data;
     //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
     this.winner = user.name;
+    console.log('gameover');
   }
 
   setReady(field: IShipsLocation) {
