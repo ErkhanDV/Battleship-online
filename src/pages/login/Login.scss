@@ -15,7 +15,7 @@
     border-bottom: 2px dashed $primaryColor-50;
   }
   &_input {
-    width: 320px;
+    width: 60%;
     padding: 10px;
     margin: 20px auto;
     font-family: $primaryFont;
@@ -54,5 +54,11 @@
       background-size: 100% 10px;
       background-color: $primaryColor-50;
     }
+  }
+}
+
+@media (max-width: 1040px) {
+  .login_input {
+    width: 100%;
   }
 }

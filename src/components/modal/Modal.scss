@@ -19,7 +19,7 @@
     pointer-events: all;
   }
   &_content {
-    width: 50vw;
+    width: 720px;
     padding: 20px 40px;
     border-radius: 8px;
     background: $modalCornerGradient;
@@ -31,5 +31,12 @@
     &.open {
       transform: scale(1);
     }
+  }
+}
+
+@media (max-width: 1040px) {
+  .modal_content {
+    width: 320px;
+    padding: 20px;
   }
 }
