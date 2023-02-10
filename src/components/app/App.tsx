@@ -7,7 +7,6 @@ import './App.scss';
 
 import AppRouter from '../router/AppRouter';
 import { useState } from 'react';
-import LoGInPage from '@/pages/login/LogIn';
 import Settings from '@/components/settings/Settings';
 
 const App = () => {

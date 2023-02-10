@@ -7,15 +7,17 @@ const Home = () => {
       <section className="section">
         <h2 className="section_title">Welcome to the ButtleShip Online!</h2>
         <p className="section_paragraph">
-          This is a strategy type guessing game for two players. It is played on ruled grids on which each player's
-          fleet of warships are marked.
+          This is a strategy type guessing game for two players. It is played on
+          ruled grids on which each player's fleet of warships are marked.
         </p>
         <Link to="/play" className="section_button">
           Play BattleShip
         </Link>
         <p className="section_paragraph">
-          The locations of the fleets are concealed from the other player. Players alternate turns calling "shots" at
-          the other player's ships, and the objective of the game is to destroy the opposing player's fleet.
+          The locations of the fleets are concealed from the other player.
+          Players alternate turns calling "shots" at the other player's ships,
+          and the objective of the game is to destroy the opposing player's
+          fleet.
         </p>
 
         <Link to="/rules" className="section_button">

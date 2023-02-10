@@ -1,7 +1,10 @@
-import { ReactNode } from "react";
-
 export interface IProps {
   string: string;
+}
+
+export interface ICell {
+  coordinate: number;
+  isRival?: boolean;
 }
 
 export interface IRoute {
@@ -18,4 +21,8 @@ export interface IModal {
 export interface IHeader {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalChildren: React.Dispatch<React.SetStateAction<JSX.Element>>;
+}
+
+export interface IDecks {
+  decks: number;
 }
