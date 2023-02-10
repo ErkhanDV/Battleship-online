@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { axiosAPI } from './_index';
 import { IUser } from '@/store/_types';
 import { STATUS, CLONE_SERVER } from './_constants';
@@ -13,6 +13,9 @@ export class AuthService {
         return data;
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+      }
       console.log(error);
     }
   }
@@ -25,6 +28,9 @@ export class AuthService {
       }
       return false;
     } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+      }
       console.log(error);
     }
     return false;
@@ -41,6 +47,9 @@ export class AuthService {
       }
       return false;
     } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+      }
       console.log(error);
     }
     return false;

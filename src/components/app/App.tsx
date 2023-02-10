@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import LogIn from '@/pages/login/LogIn';
 import Home from '../../pages/home/Home';
@@ -11,28 +11,34 @@ import { gameService } from '@/services/axios/Game';
 const App: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isChecking, setIsChecking] = useState(false);
 
   const check = async () => {
+    setIsChecking(true);
     const isAuth = await AuthService.checkAuth();
+    setIsChecking(false);
 
-    if (!isAuth) navigate('/');
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      check();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (location.pathname !== '/') {
-      if (localStorage.getItem('token')) {
-        check();
-      } else {
+    if (!isAuth) {
+      if (location.pathname !== '/') {
         navigate('/');
       }
+    } else {
+      if (location.pathname === '/') {
+        navigate(`${location.pathname}`);
+      }
     }
-  }, [location]);
+  };
+
+  // useEffect(() => {
+  //   console.log(true);
+  //   if (!isChecking) {
+  //     if (localStorage.getItem('token')) {
+  //       check();
+  //     } else {
+  //       if (location.pathname !== '/') navigate('/');
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div className="App">

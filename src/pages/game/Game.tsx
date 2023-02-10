@@ -1,17 +1,18 @@
 import { useEffect, type FC } from 'react';
-import { Socket } from '@/services/Socket';
+import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
+import { IStartGame, ISocketMessage } from '@/services/axios/_types';
 
 const Game: FC = () => {
+  const { init } = useSocket();
+
   useEffect(() => {
     (async () => {
       const response = await gameService.startGame();
-      if (response) {
-        console.log('socket');
-        const socket = new Socket(response);
-      }
+
+      if (response) init(response);
     })();
-  });
+  }, []);
 
   return (
     <div>
@@ -21,6 +22,3 @@ const Game: FC = () => {
 };
 
 export default Game;
-
-
-

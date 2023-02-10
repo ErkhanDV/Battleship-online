@@ -3,37 +3,50 @@ import { IStartGame, ISocketMessage } from './axios/_types';
 import { IShipsLocation } from '@/store/_types';
 
 export class Socket {
-  instance: WebSocket;
+  socket: WebSocket = new WebSocket(SOCKET);
 
-  userName: string;
+  private static instance: Socket;
 
-  opponentName: string | undefined;
+  userName: string = '';
 
-  isGameFinded: boolean;
+  opponentName: string = '';
 
-  isStarted: boolean;
+  isGameFinded: boolean = false;
 
-  isAbleShoot: boolean;
+  isStarted: boolean = false;
 
-  winner: string | null;
+  isAbleShoot: boolean = false;
 
-  gameInfo: IStartGame;
+  winner: string | null = null;
 
-  constructor(data: IStartGame) {
+  gameInfo = {} as IStartGame;
+
+  private constructor() {}
+
+  public static getInstance(data: IStartGame): Socket {
+    if (!Socket.instance) {
+      Socket.instance = new Socket();
+      Socket.instance.init(data);
+    }
+
+    return Socket.instance;
+  }
+
+  init(data: IStartGame) {
     this.gameInfo = data;
-    this.instance = new WebSocket(SOCKET);
+    this.socket = new WebSocket(SOCKET);
     this.userName = data.user.name;
-    this.opponentName = undefined;
+    this.opponentName = '';
     this.isGameFinded = false;
     this.isStarted = false;
     this.isAbleShoot = false;
     this.winner = null;
 
-    this.instance.onopen = () => {
-      this.instance.send(JSON.stringify({ ...data, method: 'connection' }));
+    this.socket.onopen = () => {
+      this.socket.send(JSON.stringify({ ...data, method: 'connection' }));
     };
 
-    this.instance.onmessage = (response) => {
+    this.socket.onmessage = (response) => {
       const data: ISocketMessage = JSON.parse(response.data);
       const { method } = data;
 
@@ -96,16 +109,20 @@ export class Socket {
   }
 
   setReady(field: IShipsLocation) {
-    this.instance.send(JSON.stringify({ ...this.gameInfo, field, method: 'ready' }));
+    this.socket.send(JSON.stringify({ ...this.gameInfo, field, method: 'ready' }));
   }
 
   setShoot(coordinates: number) {
     if (this.isAbleShoot) {
-      this.instance.send(JSON.stringify({ ...this.gameInfo, coordinates, method: 'shoot' }));
+      this.socket.send(JSON.stringify({ ...this.gameInfo, coordinates, method: 'shoot' }));
     }
   }
 
   exitSocket() {
-    this.instance.send(JSON.stringify({ ...this.gameInfo, method: 'exit' }));
+    this.socket.send(JSON.stringify({ ...this.gameInfo, method: 'exit' }));
+  }
+
+  reset() {
+    this.socket.close();
   }
 }
