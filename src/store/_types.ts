@@ -16,6 +16,8 @@ export interface ICurrentShip {
 
 export type ShipCoordinates = number[];
 
-export interface IShipsLocation {
+export interface IShip {
+  currentDragedShip: ICurrentShip;
   shipsLocation: ShipCoordinates[];
+  wasDropped: boolean;
 }

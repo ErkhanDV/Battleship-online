@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
 
-import { useAppDispatch } from '@/store/hook/hook';
-import { setCurrentShip } from '@/store/reducers/CurrentShipSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
+import { setCurrentShip, setDropped } from '@/store/reducers/ShipsSlice';
 
 import './ship.scss';
-import { ICurrentShip } from '@/store/_types';
 
-const Ship = ({ decks }: { decks: number }) => {
+import { ICurrentShip } from '@/store/_types';
+import { IDecks } from '@/types/Types';
+
+const Ship = ({ decks }: IDecks) => {
   const [isHorizontal, setHorizonal] = useState(false);
   const [clickCount, setClickCount] = useState(0);
 
   const dispatch = useAppDispatch();
-
   const setShipHandler = (currentShip: ICurrentShip) => {
     dispatch(setCurrentShip(currentShip));
   };
+
+  const isSuccessfullyDrop = useAppSelector((state) => state.ships.wasDropped);
+  const setNotDrop = () => dispatch(setDropped(false));
 
   const dragStartHandler = (
     event: React.DragEvent<HTMLDivElement>,
@@ -27,7 +31,11 @@ const Ship = ({ decks }: { decks: number }) => {
 
   const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
     setShipHandler({ decks: null, isHorizontal: false });
-    event.target.remove();
+    if (!!isSuccessfullyDrop) {
+      const target = event.target as HTMLDivElement;
+      target.remove();
+      setNotDrop();
+    }
   };
 
   const rotateHandler = (decks: number) => {

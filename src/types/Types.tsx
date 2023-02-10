@@ -4,6 +4,7 @@ export interface IProps {
 
 export interface ICell {
   coordinate: number;
+  isRival?: boolean;
 }
 
 export interface IRoute {
@@ -20,4 +21,8 @@ export interface IModal {
 export interface IHeader {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalChildren: React.Dispatch<React.SetStateAction<JSX.Element>>;
+}
+
+export interface IDecks {
+  decks: number;
 }

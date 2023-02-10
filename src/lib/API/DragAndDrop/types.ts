@@ -14,6 +14,10 @@ export type IDropHandler = (
   shipLength: number | null,
   callback: (ship: number[]) => {
     payload: ShipCoordinates;
-    type: 'shipsLocation/setShipsLocation';
+    type: 'ships/setShipsLocation';
+  },
+  successfullyDrop: () => {
+    payload: boolean;
+    type: 'ships/setDropped';
   },
 ) => void;
