@@ -10,10 +10,8 @@ export const dropHadler: IDropHandler = (
   event.preventDefault();
   const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
-  // const children = event.target.parentElement.children;
-  const childrens = target.parentElement as HTMLDivElement;
-  const children = childrens.children;
   const parent = target.parentElement as HTMLDivElement;
+  const children = parent.children;
   if (!horizontalRotation) {
     switch (shipLength) {
       case 1:
