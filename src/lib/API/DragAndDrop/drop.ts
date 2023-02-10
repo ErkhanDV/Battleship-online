@@ -10,8 +10,10 @@ export const dropHadler: IDropHandler = (
   event.preventDefault();
   const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
-  const children = event.target.parentNode.childNodes;
-  const parent = event.target.parentElement;
+  // const children = event.target.parentElement.children;
+  const childrens = target.parentElement as HTMLDivElement;
+  const children = childrens.children;
+  const parent = target.parentElement as HTMLDivElement;
   if (!horizontalRotation) {
     switch (shipLength) {
       case 1:
@@ -28,8 +30,8 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId + 10]) {
-            parent.childNodes[targetId + 10].classList.remove('green', 'red');
+          if (parent.children[targetId + 10]) {
+            parent.children[targetId + 10].classList.remove('green', 'red');
           }
           return;
         }
@@ -43,11 +45,11 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId + 10]) {
-            parent.childNodes[targetId + 10].classList.remove('green', 'red');
+          if (parent.children[targetId + 10]) {
+            parent.children[targetId + 10].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId + 20]) {
-            parent.childNodes[targetId + 20].classList.remove('green', 'red');
+          if (parent.children[targetId + 20]) {
+            parent.children[targetId + 20].classList.remove('green', 'red');
           }
           return;
         }
@@ -66,14 +68,14 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId + 10]) {
-            parent.childNodes[targetId + 10].classList.remove('green', 'red');
+          if (parent.children[targetId + 10]) {
+            parent.children[targetId + 10].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId + 20]) {
-            parent.childNodes[targetId + 20].classList.remove('green', 'red');
+          if (parent.children[targetId + 20]) {
+            parent.children[targetId + 20].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId + 30]) {
-            parent.childNodes[targetId + 30].classList.remove('green', 'red');
+          if (parent.children[targetId + 30]) {
+            parent.children[targetId + 30].classList.remove('green', 'red');
           }
           return;
         }
@@ -99,8 +101,8 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId - 1]) {
-            parent.childNodes[targetId - 1].classList.remove('green', 'red');
+          if (parent.children[targetId - 1]) {
+            parent.children[targetId - 1].classList.remove('green', 'red');
           }
           return;
         }
@@ -122,11 +124,11 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId + 1]) {
-            parent.childNodes[targetId + 1].classList.remove('green', 'red');
+          if (parent.children[targetId + 1]) {
+            parent.children[targetId + 1].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId - 1]) {
-            parent.childNodes[targetId - 1].classList.remove('green', 'red');
+          if (parent.children[targetId - 1]) {
+            parent.children[targetId - 1].classList.remove('green', 'red');
           }
           return;
         }
@@ -155,14 +157,14 @@ export const dropHadler: IDropHandler = (
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
-          if (parent.childNodes[targetId + 1]) {
-            parent.childNodes[targetId + 1].classList.remove('green', 'red');
+          if (parent.children[targetId + 1]) {
+            parent.children[targetId + 1].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId - 1]) {
-            parent.childNodes[targetId - 1].classList.remove('green', 'red');
+          if (parent.children[targetId - 1]) {
+            parent.children[targetId - 1].classList.remove('green', 'red');
           }
-          if (parent.childNodes[targetId - 2]) {
-            parent.childNodes[targetId - 2].classList.remove('green', 'red');
+          if (parent.children[targetId - 2]) {
+            parent.children[targetId - 2].classList.remove('green', 'red');
           }
           return;
         }
