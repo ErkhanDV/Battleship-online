@@ -1,14 +1,21 @@
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
+import Modal from '../modal/Modal';
+import Background from '../background/Background';
 import { useEffect, useState, type FC } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import LogIn from '@/pages/login/LogIn';
-import Home from '../../pages/home/Home';
-import Game from '@/pages/game/Game';
-import { AuthService } from '@/services/axios/Auth';
 import './App.scss';
+import { AuthService } from '@/services/axios/Auth';
 import { Socket } from '@/services/Socket';
 import { gameService } from '@/services/axios/Game';
 
-const App: FC = () => {
+import AppRouter from '../router/AppRouter';
+import { useState } from 'react';
+import Settings from '@/components/settings/Settings';
+
+const App = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalChildren, setModalChildren] = useState(<Settings />);
   const location = useLocation();
   const navigate = useNavigate();
   const [isChecking, setIsChecking] = useState(false);
@@ -42,11 +49,15 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<LogIn />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/game" element={<Game />} />
-      </Routes>
+      <Header setModalOpen={setModalOpen} setModalChildren={setModalChildren} />
+      <AppRouter />
+      <Footer />
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        children={modalChildren}
+      />
+      <Background />
     </div>
   );
 };

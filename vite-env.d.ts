@@ -6,13 +6,8 @@ declare module "*.svg" {
     React.SVGProps<SVGSVGElement>
   >;
   const src: string;
-  export default src;
 }
 
 declare module "react-router-dom";
 
-<<<<<<< HEAD
 declare module "node:url";
-=======
-declare module "node:url";
->>>>>>> develop

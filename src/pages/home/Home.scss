@@ -1,8 +1,77 @@
-@import "../../index.scss";
+@import '../../index.scss';
 
-.main {
+.section {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: calc(50% - 20px);
+  margin-bottom: 40px;
   padding: 20px;
+  border-radius: 4px;
+  background: $primaryCornerGradient;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-color: $primaryColor-25;
+  &_title {
+    text-align: center;
+    font-weight: 100;
+    line-height: 1.4;
+    letter-spacing: 2px;
+    border-bottom: 2px dotted $primaryColor-50;
+  }
+  &_paragraph {
+    line-height: 1.6;
+    letter-spacing: 1px;
+    padding-left: 20px;
+    border-left: 2px dotted $primaryColor-50;
+  }
+  &_button {
+    width: 320px;
+    padding: 10px;
+    margin: 20px auto;
+    text-decoration: none;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $primaryColor-100;
+    border: none;
+    border-radius: 4px;
+    background: $primaryCornerGradient;
+    background-repeat: no-repeat;
+    background-size: 25% 10px;
+    background-color: $primaryColor-25;
+    cursor: pointer;
+    transition: ease-in-out 0.5s;
+    &:hover {
+      color: #fff;
+      background-size: 100% 10px;
+      background-color: $primaryColor-50;
+      transform: scale(1.1);
+    }
+  }
 }
 
+@media (max-width: 1040px) {
+  .section {
+    width: calc(100%);
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 10px;
+    margin-bottom: 20px;
+    &_title {
+      font-size: 20px;
+    }
+    &_button {
+      width: 200px;
+      margin: 10px auto;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+  }
+}

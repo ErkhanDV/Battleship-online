@@ -1,54 +1,56 @@
-import { ReactComponent as Logo } from "../../assets/svg/rs_school_js.svg";
+import { Link } from 'react-router-dom';
 
-import "./Footer.scss";
+import { ReactComponent as RssLogo } from '../../assets/svg/rs_school_js.svg';
+
+import './Footer.scss';
 
 const Footer = () => {
   return (
     <footer className="footer">
+      <h4 className="footer_copyright">
+        BattleShip Online <span className="title-copyright">2023</span>
+      </h4>
+
       <div className="footer_authors">
         <h4 className="footer_title">
           Created by <span className="title-accent">Power Rangers</span>
         </h4>
         <ul className="authors-list">
           <li className="authors-list_item">
-            <a
+            <Link
               className="authors-list_link"
-              href="https://github.com/pa4ka1992/"
+              to="https://github.com/pa4ka1992/"
               title="github.com/pa4ka1992"
             >
               pa4ka1992
-            </a>
+            </Link>
           </li>
           <li className="authors-list_item">
-            <a
+            <Link
               className="authors-list_link"
-              href="https://github.com/ErkhanDV/"
+              to="https://github.com/ErkhanDV/"
               title="github.com/ErkhanDV"
             >
               ErkhanDV
-            </a>
+            </Link>
           </li>
           <li className="authors-list_item">
-            <a
+            <Link
               className="authors-list_link"
-              href="https://github.com/mshns/"
+              to="https://github.com/mshns/"
               title="github.com/mshns"
             >
               mshns
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
 
-      <a href="https://rs.school/js/" title="RSS">
-        <Logo className="footer_school" />
-      </a>
-
-      <h4 className="footer_title">
-        BattleShip Online <span className="title-copyright">2023</span>
-      </h4>
+      <Link to="https://rs.school/js/" className="footer_school" title="RS School">
+        <RssLogo className="school-logo"/>
+      </Link>
     </footer>
   );
-}
+};
 
 export default Footer;

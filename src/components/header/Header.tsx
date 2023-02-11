@@ -1,7 +1,9 @@
+import Settings from '@/components/settings/Settings';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '@/services/axios/Auth';
 
-import './Header.scss';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,36 +18,45 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="header_logo">
-        Battle<span className="logo-image">Ship</span>
-      </h1>
-      <nav className="header_navigation">
-        <ul className="navigation_list">
+      <Link to="/" className="header_link">
+        <h1 className="header_logo">
+          Battle<span className="logo-image">Ship</span>
+        </h1>
+      </Link>
+      <nav className={`header_navigation ${menuVisible && 'visible'}`}>
+        <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
           <li className="navigation_item">
-            <Link to="/" className="navigation_link">
+            <NavLink to="/" className="navigation_link">
               Home
-            </Link>
+            </NavLink>
           </li>
           <li className="navigation_item">
-            <Link to="/play" className="navigation_link">
+            <NavLink to="/play" className="navigation_link">
               Play
-            </Link>
+            </NavLink>
           </li>
           <li className="navigation_item">
-            <Link to="/rules" className="navigation_link">
+            <NavLink to="/rules" className="navigation_link">
               Rules
-            </Link>
+            </NavLink>
           </li>
-          <li className="navigation_item">
-            <Link to="/settings" className="navigation_link">
-              Settings
-            </Link>
+          <li
+            className="navigation_item"
+            onClick={() => handlerOpenModal(<Settings />)}
+          >
+            Settings
           </li>
           <li onClick={logOutHandler} className="navigation_item">
             Log out
           </li>
         </ul>
       </nav>
+      <div
+        className={`header_burger ${menuVisible && 'open'}`}
+        onClick={() => setMenuVisible(!menuVisible)}
+      >
+        <span className={`burger-icon ${menuVisible && 'open'}`}></span>
+      </div>
     </header>
   );
 };
