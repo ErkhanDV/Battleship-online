@@ -1,33 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-family: 'Russo One', sans-serif;
-  font-weight: 100;
-  letter-spacing: 1px;
-  color: #fff;
-}
-
-body {
-  margin: 0 auto;
-  background: url(./assets/svg/background.svg);
-  background-color: black;
-  user-select: none;
-}
-
-.main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px;
-  @media (max-width: 480px) {
-    padding: 20px;
-  }
-}
-
 $primaryFont: 'Russo One', sans-serif;
 
 $primaryColor-100: rgb(102, 204, 102, 1);
@@ -35,7 +5,12 @@ $primaryColor-75: rgb(102, 204, 102, 0.75);
 $primaryColor-50: rgb(102, 204, 102, 0.5);
 $primaryColor-25: rgb(102, 204, 102, 0.25);
 
-$primaryCornerGradient: linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 0,
+$primaryCornerGradient: linear-gradient(
+      to right,
+      $primaryColor-75 2px,
+      transparent 2px
+    )
+    0 0,
   linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
   linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
   linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
@@ -44,16 +19,29 @@ $primaryCornerGradient: linear-gradient(to right, $primaryColor-75 2px, transpar
   linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
   linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
 
-$logoCornerGradient: linear-gradient(to right, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 0,
+$logoCornerGradient: linear-gradient(
+      to right,
+      rgb(255, 255, 255, 0.5) 2px,
+      transparent 2px
+    )
+    0 0,
   linear-gradient(to right, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 100%,
   linear-gradient(to left, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 0,
-  linear-gradient(to left, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 100%,
+  linear-gradient(to left, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
+    100%,
   linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 0,
-  linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 0,
+  linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
+    0,
   linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 100%,
-  linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 100%;
+  linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
+    100%;
 
-  $modalCornerGradient: linear-gradient(to right, $primaryColor-75 4px, transparent 4px) 0 0,
+$modalCornerGradient: linear-gradient(
+      to right,
+      $primaryColor-75 4px,
+      transparent 4px
+    )
+    0 0,
   linear-gradient(to right, $primaryColor-75 4px, transparent 4px) 0 100%,
   linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 0,
   linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 100%,

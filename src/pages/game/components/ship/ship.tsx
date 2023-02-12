@@ -17,7 +17,7 @@ const Ship = ({ decks }: IDecks) => {
     dispatch(setCurrentShip(currentShip));
   };
 
-  const isSuccessfullyDrop = useAppSelector((state) => state.ships.wasDropped);
+  const isSuccessfullyDrop = useAppSelector((state) => state.shipsSlice.wasDropped);
   const setNotDrop = () => dispatch(setDropped(false));
 
   const dragStartHandler = (

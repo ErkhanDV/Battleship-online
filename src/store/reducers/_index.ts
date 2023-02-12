@@ -1,5 +1,4 @@
 import userSlice from './userSlice';
-import currentShipSlice from './currentShipSlice';
-import shipsLocationSlice from './shipLocationSlice';
+import shipsSlice from './ShipsSlice';
 
-export { userSlice, currentShipSlice, shipsLocationSlice };
+export { userSlice, shipsSlice };

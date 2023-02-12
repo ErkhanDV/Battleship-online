@@ -11,9 +11,9 @@ import { dropHadler } from '@/lib/API/DragAndDrop/drop';
 import { ICell } from '@/types/Types';
 
 const Cell = ({ coordinate, isRival }: ICell) => {
-  const decks = useAppSelector((state) => state.ships.currentDragedShip.decks);
+  const decks = useAppSelector((state) => state.shipsSlice.currentDragedShip.decks);
   const isHorizontal = useAppSelector(
-    (state) => state.ships.currentDragedShip.isHorizontal,
+    (state) => state.shipsSlice.currentDragedShip.isHorizontal,
   );
 
   const dispatch = useAppDispatch();
