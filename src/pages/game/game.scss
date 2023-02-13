@@ -1,4 +1,27 @@
-// @import "../../index.scss";
+.ready {
+  margin-bottom: 1rem;
+  max-width: 4rem;
+}
 
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
 
+  .fields {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
 
+    .shoot {
+      margin: 1rem;
+    }
+  }
+
+  .ship-station {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}

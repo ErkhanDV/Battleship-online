@@ -12,7 +12,7 @@ html {
 
 body {
   margin: 0 auto;
-  background: url(./assets/svg/background.svg);
+  background: url(../assets/svg/background.svg);
   background-color: black;
   -webkit-user-select: none;
   user-select: none;
@@ -28,3 +28,10 @@ body {
     padding: 20px;
   }
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
