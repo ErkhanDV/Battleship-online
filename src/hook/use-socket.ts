@@ -1,27 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { SOCKET } from '@/services/axios/_constants';
 import { IStartGame, ISocketMessage } from '@/services/axios/_types';
-import { IShipsLocation } from '@/store/_types';
+import { ShipCoordinates } from '@/store/_types';
 
 export const useSocket = () => {
-  let socket: WebSocket;
-  let gameInfo: IStartGame;
+  const socket = useRef<null | WebSocket>(null);
+  const gameInfo = useRef<null | IStartGame>(null);
   const [userName, setUserName] = useState('');
   const [opponentName, setOpponentName] = useState('');
   const [isGameFinded, setIsGameFinded] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
-  const [isAbleShoot, setIsAbleShoot] = useState(false);
+  const [isAbleShoot, setIsAbleShoot] = useState(true);
   const [winner, setWinner] = useState('');
 
   const init = (response: IStartGame) => {
-    gameInfo = response;
-    socket = new WebSocket(SOCKET);
+    gameInfo.current = response;
+    socket.current = new WebSocket(SOCKET);
+    setUserName(response.user.name);
+    console.log(userName);
+    // console.log(userName);
 
-    socket.onopen = () => {
-      socket.send(JSON.stringify({ ...gameInfo, method: 'connection' }));
+    socket.current.onopen = () => {
+      socket.current?.send(
+        JSON.stringify({ ...gameInfo.current, method: 'connection' }),
+      );
     };
 
-    socket.onmessage = (response) => {
+    socket.current.onmessage = (response) => {
       const data: ISocketMessage = JSON.parse(response.data);
       const { method } = data;
 
@@ -43,61 +48,78 @@ export const useSocket = () => {
           break;
 
         case 'exit':
-          socket.close();
+          socket.current?.close();
       }
+    };
+
+    const connectHandler = (data: ISocketMessage) => {
+      if (data.user.name !== userName) {
+        setOpponentName(data.user.name);
+      } else {
+        setIsAbleShoot(data.isAbleShoot);
+        console.log(userName);
+      }
+
+      setIsGameFinded(data.isGameFinded);
+      console.log('connection');
+    };
+
+    const startHandler = (data: ISocketMessage) => {
+      if (data.isStarted) {
+        setIsStarted(true);
+      }
+      console.log('start');
+    };
+
+    const shootHandler = (data: ISocketMessage) => {
+      const { user, coordinates } = data;
+      if (user.name === userName) {
+        setIsAbleShoot(false);
+      } else {
+        setIsAbleShoot(true);
+        //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
+      }
+      console.log('shoot');
+    };
+
+    const gameOverHandler = (data: ISocketMessage) => {
+      const { user, coordinates } = data;
+      //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
+      setWinner(user.name);
+      console.log('gameover');
     };
   };
 
-  const connectHandler = (data: ISocketMessage) => {
-    const { user, isAbleShoot, isGameFinded } = data;
-
-    if (user.name !== userName) {
-      setOpponentName(user.name);
-    } else {
-      setIsAbleShoot(isAbleShoot);
-    }
-
-    setIsGameFinded(isGameFinded);
-    console.log('connection');
-  };
-
-  const startHandler = (data: ISocketMessage) => {
-    if (data.isStarted) {
-      setIsStarted(true);
-    }
-  };
-
-  const shootHandler = (data: ISocketMessage) => {
-    const { user, coordinates } = data;
-    if (user.name === userName) {
-      setIsAbleShoot(false);
-    } else {
-      setIsAbleShoot(true);
-      //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
-    }
-    console.log('shoot');
-  };
-
-  const gameOverHandler = (data: ISocketMessage) => {
-    const { user, coordinates } = data;
-    //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
-    setWinner(user.name);
-    console.log('gameover');
-  };
-
-  const setReady = (field: IShipsLocation) => {
-    socket.send(JSON.stringify({ ...gameInfo, field, method: 'ready' }));
+  const setReady = (field: ShipCoordinates[]) => {
+    socket.current?.send(
+      JSON.stringify({ ...gameInfo.current, field, method: 'ready' }),
+    );
   };
 
   const setShoot = (coordinates: number) => {
+    console.log(isAbleShoot, gameInfo.current, coordinates);
     if (isAbleShoot) {
-      socket.send(JSON.stringify({ ...gameInfo, coordinates, method: 'shoot' }));
+      socket.current?.send(
+        JSON.stringify({ ...gameInfo.current, coordinates, method: 'shoot' }),
+      );
     }
   };
 
   const exitSocket = () => {
-    socket.send(JSON.stringify({ ...gameInfo, method: 'exit' }));
+    socket.current?.send(
+      JSON.stringify({ ...gameInfo.current, method: 'exit' }),
+    );
   };
 
-  return { init, opponentName, isGameFinded, isStarted, isAbleShoot, winner, setReady, setShoot, exitSocket };
+  return {
+    init,
+    opponentName,
+    isGameFinded,
+    isStarted,
+    isAbleShoot,
+    winner,
+    setReady,
+    setShoot,
+    exitSocket,
+  };
 };

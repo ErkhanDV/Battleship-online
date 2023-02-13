@@ -6,7 +6,9 @@ import { IStartGame } from '@/services/axios/_types';
 export class gameService {
   static async startGame(): Promise<IStartGame | undefined> {
     try {
-      const { status, data } = await axiosAPI.get<IStartGame>(`${CLONE_SERVER}/startgame`);
+      const { status, data } = await axiosAPI.get<IStartGame>(
+        `${CLONE_SERVER}/startgame`,
+      );
 
       if (status === STATUS.ok && data) {
         return data;
