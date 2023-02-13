@@ -1,3 +1,6 @@
+const notAvailableIndexesRight = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+const notAvailableIndexesLeft = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+
 export const getShip = (
   startPosition: number,
   length: number,
@@ -8,21 +11,54 @@ export const getShip = (
     return startPosition + i;
   });
 };
-export const checkPosition = (
-  startPosition: number,
-  length: number,
-  isHorizontal: boolean,
-) => {
-  const ship = getShip(startPosition, length, isHorizontal);
-  
+
+export const checkPosition = (ship: number[], cellsList: number[]) => {
+  const shipCells = [...ship];
+  shipCells.push(...getOccupiedCells(ship));
+  return shipCells.every((cell) => !cellsList.includes(cell));
 };
 
-export const shipsPlacer = (
-  startPosition: number,
-  length: number,
-  isHorizontal: boolean,
-) => {
-  if (checkPosition(startPosition, length, isHorizontal)) {
-    return getShip(startPosition, length, isHorizontal);
+export const getOccupiedCells = (ship: number[]) => {
+  const startPosition = ship[0];
+  const length = ship.length;
+  const isHorizontal = ship[0] + 1 === ship[1] ? true : false;
+  const occupiedCells: number[] = [];
+
+  if (isHorizontal) {
+    if (startPosition > 9) {
+      ship.forEach((id) => occupiedCells.push(id - 10));
+      if (!notAvailableIndexesLeft.includes(startPosition)) {
+        occupiedCells.push(startPosition - 11);
+      }
+      if (!notAvailableIndexesRight.includes(startPosition + length - 1)) {
+        occupiedCells.push(startPosition + length - 10);
+      }
+    }
+    if (startPosition <= 89) {
+      ship.forEach((id) => occupiedCells.push(id + 10));
+      if (!notAvailableIndexesLeft.includes(startPosition)) {
+        occupiedCells.push(startPosition + 9);
+      }
+      if (!notAvailableIndexesRight.includes(startPosition + length - 1)) {
+        occupiedCells.push(startPosition + length + 10);
+      }
+    }
+    if (!notAvailableIndexesLeft.includes(startPosition)) {
+      occupiedCells.push(startPosition - 1);
+    }
+    if (!notAvailableIndexesRight.includes(startPosition + length - 1)) {
+      occupiedCells.push(startPosition + length);
+    }
   }
+  return occupiedCells;
 };
+
+// export const shipsPlacer = (
+//   startPosition: number,
+//   length: number,
+//   isHorizontal: boolean,
+// ) => {
+//   if (checkPosition(startPosition, length, isHorizontal)) {
+//     return getShip(startPosition, length, isHorizontal);
+//   }
+// };
