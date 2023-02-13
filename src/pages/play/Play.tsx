@@ -21,7 +21,6 @@ const Play = () => {
           <button
             onClick={() => {
               const random = Math.floor(Math.random() * 100);
-
               const shootTarget = settedShips.findIndex((ship) =>
                 ship.shipLocation.some((coordinate) => random === coordinate),
               );
@@ -49,8 +48,8 @@ const Play = () => {
     <main className="main">
       <Battleground />
       <div className="ship-station">
-        {ships.map((decks) => (
-          <Ship decks={decks} />
+        {ships.map((decks, index) => (
+          <Ship decks={decks} key={index} />
         ))}
       </div>
       {renderRivalField()}
