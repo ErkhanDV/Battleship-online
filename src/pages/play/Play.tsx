@@ -2,11 +2,13 @@ import './Play.scss';
 
 import Battleground from './components/battleground/Battleground';
 import Ship from './components/ship/ship';
-import { useAppSelector } from '@/store/hook/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
+import { setGameShip } from '@/store/reducers/GameSlice';
 
 const Play = () => {
   const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
   const settedShips = useAppSelector((state) => state.ships.shipsLocation);
+  const dispatch = useAppDispatch();
 
   const renderRivalField = () => {
     if (settedShips.length === 10) {
@@ -21,6 +23,7 @@ const Play = () => {
               });
               if (!!isShoot) {
                 console.log(`U r shoot me at coordinate: ${random}`);
+                dispatch(setGameShip(random));
               } else {
                 console.log(`U r miss :( at coordinate: ${random}`);
               }

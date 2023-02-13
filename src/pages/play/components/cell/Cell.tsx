@@ -15,6 +15,9 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const isHorizontal = useAppSelector(
     (state) => state.ships.currentDragedShip.isHorizontal,
   );
+  const isShooted = useAppSelector((state) =>
+    state.gameShips.gameShips.includes(coordinate),
+  );
 
   const dispatch = useAppDispatch();
   const setLocations = (ship: number[]) => dispatch(setShipsLocation(ship));
@@ -24,12 +27,16 @@ const Cell = ({ coordinate, isRival }: ICell) => {
       console.log(coordinate);
     }
   };
+  let classList = 'cell';
+  if (isShooted && !isRival) {
+    classList += ' POPAL';
+  }
 
   return (
     <div
       onClick={() => handleClick(isRival)}
       id={coordinate.toString()}
-      className="cell"
+      className={classList}
       onDragOver={(event) => dragOverHandler(event, isHorizontal, decks)}
       onDragLeave={(event) => dragEndHandler(event, isHorizontal, decks)}
       onDrop={(event) =>

@@ -21,3 +21,13 @@ export interface IShip {
   shipsLocation: ShipCoordinates[];
   wasDropped: boolean;
 }
+
+export interface IGameShip {
+  shipLocation: number[];
+  decks: number;
+  woundedCells: number[];
+}
+
+export interface IGameShips {
+  gameShips: number[];
+}
