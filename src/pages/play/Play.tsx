@@ -12,6 +12,7 @@ const Play = () => {
     (state) => state.shipsLocation.shipsLocation,
   );
   const dispatch = useAppDispatch();
+  console.log(settedShips);
 
   const renderRivalField = () => {
     if (settedShips.length === 10) {

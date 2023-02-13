@@ -20,14 +20,15 @@ export const checkPosition = (ship: number[], cellsList: number[]) => {
 
 export const getOccupiedCells = (ship: number[]) => {
   const sortedShip = [...ship].sort((a, b) => a - b);
-  const startPosition = sortedShip[0];
   const length = sortedShip.length;
+  const startPosition = sortedShip[0];
+  const lastPosition = sortedShip[length - 1];
   const isHorizontal = sortedShip[0] + 1 == sortedShip[1] ? true : false;
   const occupiedCells: number[] = [];
 
   if (isHorizontal) {
     if (startPosition > 9) {
-      ship.forEach((id) => occupiedCells.push(id - 10));
+      sortedShip.forEach((id) => occupiedCells.push(id - 10));
       if (!notAvailableIndexesLeft.includes(startPosition)) {
         occupiedCells.push(startPosition - 11);
       }
@@ -36,7 +37,7 @@ export const getOccupiedCells = (ship: number[]) => {
       }
     }
     if (startPosition <= 89) {
-      ship.forEach((id) => occupiedCells.push(id + 10));
+      sortedShip.forEach((id) => occupiedCells.push(id + 10));
       if (!notAvailableIndexesLeft.includes(startPosition)) {
         occupiedCells.push(startPosition + 9);
       }
@@ -50,16 +51,31 @@ export const getOccupiedCells = (ship: number[]) => {
     if (!notAvailableIndexesRight.includes(startPosition + length - 1)) {
       occupiedCells.push(startPosition + length);
     }
+  } else {
+    if (startPosition > 9) {
+      occupiedCells.push(startPosition - 10);
+    }
+    if (lastPosition <= 89) {
+      occupiedCells.push(lastPosition + 10);
+    }
+    if (!notAvailableIndexesLeft.includes(startPosition)) {
+      sortedShip.forEach((id) => occupiedCells.push(id - 1));
+      if (startPosition > 9) {
+        occupiedCells.push(startPosition - 11);
+      }
+      if (lastPosition <= 89) {
+        occupiedCells.push(lastPosition + 9);
+      }
+    }
+    if (!notAvailableIndexesRight.includes(startPosition)) {
+      sortedShip.forEach((id) => occupiedCells.push(id + 1));
+      if (startPosition > 9) {
+        occupiedCells.push(startPosition - 9);
+      }
+      if (lastPosition <= 89) {
+        occupiedCells.push(lastPosition + 11);
+      }
+    }
   }
   return occupiedCells;
 };
-
-// export const shipsPlacer = (
-//   startPosition: number,
-//   length: number,
-//   isHorizontal: boolean,
-// ) => {
-//   if (checkPosition(startPosition, length, isHorizontal)) {
-//     return getShip(startPosition, length, isHorizontal);
-//   }
-// };

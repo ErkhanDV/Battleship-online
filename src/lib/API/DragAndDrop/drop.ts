@@ -134,7 +134,6 @@ export const dropHadler: IDropHandler = (
         ) {
           children[targetId].classList.remove('red');
           children[targetId - 1].classList.remove('red');
-          return;
         }
         if (children[targetId - 1]) {
           children[targetId].classList.add('ship-1');
