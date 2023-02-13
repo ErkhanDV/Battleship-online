@@ -19,9 +19,10 @@ export const checkPosition = (ship: number[], cellsList: number[]) => {
 };
 
 export const getOccupiedCells = (ship: number[]) => {
-  const startPosition = ship[0];
-  const length = ship.length;
-  const isHorizontal = ship[0] + 1 === ship[1] ? true : false;
+  const sortedShip = [...ship].sort((a, b) => a - b);
+  const startPosition = sortedShip[0];
+  const length = sortedShip.length;
+  const isHorizontal = sortedShip[0] + 1 == sortedShip[1] ? true : false;
   const occupiedCells: number[] = [];
 
   if (isHorizontal) {

@@ -1,3 +1,4 @@
+import { getOccupiedCells } from '../ShipsPlacer/ShipsPlacer';
 import { IDropHandler } from './types';
 
 export const dropHadler: IDropHandler = (
@@ -17,14 +18,26 @@ export const dropHadler: IDropHandler = (
       case 1:
         target.classList.add('ship-1');
         target.classList.remove('green', 'red');
-        callback([targetId]);
+        callback({
+          shipLocation: [targetId],
+          decks: 1,
+          occupiedCells: getOccupiedCells([targetId]),
+          woundedCells: [],
+        });
         succesfullyDrop();
         break;
       case 2:
         if (children[targetId + 10]) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId + 10].classList.add('ship-1');
-          callback([targetId, targetId + 10]);
+          children[targetId + 10].classList.remove('green');
+          callback({
+            shipLocation: [targetId, targetId + 10],
+            decks: 2,
+            occupiedCells: getOccupiedCells([targetId, targetId + 10]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
@@ -37,9 +50,21 @@ export const dropHadler: IDropHandler = (
       case 3:
         if (children[targetId + 10] && children[targetId + 20]) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId + 10].classList.add('ship-1');
+          children[targetId + 10].classList.remove('green');
           children[targetId + 20].classList.add('ship-1');
-          callback([targetId, targetId + 10, targetId + 20]);
+          children[targetId + 20].classList.remove('green');
+          callback({
+            shipLocation: [targetId, targetId + 10, targetId + 20],
+            decks: 3,
+            occupiedCells: getOccupiedCells([
+              targetId,
+              targetId + 10,
+              targetId + 20,
+            ]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
@@ -59,10 +84,29 @@ export const dropHadler: IDropHandler = (
           children[targetId + 30]
         ) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId + 10].classList.add('ship-1');
+          children[targetId + 10].classList.remove('green');
           children[targetId + 20].classList.add('ship-1');
+          children[targetId + 20].classList.remove('green');
           children[targetId + 30].classList.add('ship-1');
-          callback([targetId, targetId + 10, targetId + 20, targetId + 30]);
+          children[targetId + 30].classList.remove('green');
+          callback({
+            shipLocation: [
+              targetId,
+              targetId + 10,
+              targetId + 20,
+              targetId + 30,
+            ],
+            decks: 4,
+            occupiedCells: getOccupiedCells([
+              targetId,
+              targetId + 10,
+              targetId + 20,
+              targetId + 30,
+            ]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
@@ -94,8 +138,15 @@ export const dropHadler: IDropHandler = (
         }
         if (children[targetId - 1]) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId - 1].classList.add('ship-1');
-          callback([targetId, targetId - 1]);
+          children[targetId - 1].classList.remove('green');
+          callback({
+            shipLocation: [targetId, targetId - 1],
+            decks: 2,
+            occupiedCells: getOccupiedCells([targetId, targetId - 1]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
@@ -116,9 +167,21 @@ export const dropHadler: IDropHandler = (
           return;
         } else if (children[targetId + 1] && children[targetId - 1]) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId + 1].classList.add('ship-1');
+          children[targetId + 1].classList.remove('green');
           children[targetId - 1].classList.add('ship-1');
-          callback([targetId, targetId + 1, targetId - 1]);
+          children[targetId - 1].classList.remove('green');
+          callback({
+            shipLocation: [targetId, targetId + 1, targetId - 1],
+            decks: 3,
+            occupiedCells: getOccupiedCells([
+              targetId,
+              targetId + 1,
+              targetId - 1,
+            ]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');
@@ -148,10 +211,24 @@ export const dropHadler: IDropHandler = (
           Math.floor((targetId - 2) / 10) === Math.floor(targetId / 10)
         ) {
           children[targetId].classList.add('ship-1');
+          children[targetId].classList.remove('green');
           children[targetId + 1].classList.add('ship-1');
+          children[targetId + 1].classList.remove('green');
           children[targetId - 1].classList.add('ship-1');
+          children[targetId - 1].classList.remove('green');
           children[targetId - 2].classList.add('ship-1');
-          callback([targetId, targetId + 1, targetId - 1, targetId - 2]);
+          children[targetId - 2].classList.remove('green');
+          callback({
+            shipLocation: [targetId, targetId + 1, targetId - 1, targetId - 2],
+            decks: 4,
+            occupiedCells: getOccupiedCells([
+              targetId,
+              targetId + 1,
+              targetId - 1,
+              targetId - 2,
+            ]),
+            woundedCells: [],
+          });
           succesfullyDrop();
         } else {
           target.classList.remove('green', 'red');

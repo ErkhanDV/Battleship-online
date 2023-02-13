@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '@/store/reducers/UserSlice';
-import ships from './reducers/ShipsSlice';
-import gameShips from './reducers/GameSlice';
+import currentShip from './reducers/CurrentShipSlice';
+import shipsLocation from './reducers/ShipsLocationSlice';
+import shoots from './reducers/ShootsSlice';
 
 export const store = configureStore({
   reducer: {
-    ships,
-    gameShips,
+    currentShip,
+    shipsLocation,
+    shoots,
     userReducer,
   },
 });

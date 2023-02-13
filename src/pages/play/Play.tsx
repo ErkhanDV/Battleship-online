@@ -3,11 +3,14 @@ import './Play.scss';
 import Battleground from './components/battleground/Battleground';
 import Ship from './components/ship/ship';
 import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
-import { setGameShip } from '@/store/reducers/GameSlice';
+import { setWoundedCell } from '@/store/reducers/ShipsLocationSlice';
+import { addRivalHit, addRivalMiss } from '@/store/reducers/ShootsSlice';
 
 const Play = () => {
   const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-  const settedShips = useAppSelector((state) => state.ships.shipsLocation);
+  const settedShips = useAppSelector(
+    (state) => state.shipsLocation.shipsLocation,
+  );
   const dispatch = useAppDispatch();
 
   const renderRivalField = () => {
@@ -18,15 +21,21 @@ const Play = () => {
           <button
             onClick={() => {
               const random = Math.floor(Math.random() * 100);
-              const isShoot = settedShips.some((ship) => {
-                return ship.find((coordinate) => coordinate === random);
-              });
-              if (!!isShoot) {
+
+              const shootTarget = settedShips.findIndex((ship) =>
+                ship.shipLocation.some((coordinate) => random === coordinate),
+              );
+              if (shootTarget !== -1) {
+                dispatch(addRivalHit(random));
                 console.log(`U r shoot me at coordinate: ${random}`);
-                dispatch(setGameShip(random));
+                dispatch(
+                  setWoundedCell({ index: shootTarget, cellId: random }),
+                );
               } else {
+                dispatch(addRivalMiss(random));
                 console.log(`U r miss :( at coordinate: ${random}`);
               }
+              console.log(shootTarget, random);
             }}
           >
             Click me to shoot
