@@ -1,9 +1,8 @@
 import { useState, type FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AppRouter from '../router/AppRouter';
-import Background from '../background/Background';
+import AppRouter from './router/AppRouter';
+import Background from './components/background/Background';
 import { AuthService } from '@/services/axios/Auth';
-import './App.scss';
 
 const App = () => {
 

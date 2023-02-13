@@ -1,4 +1,4 @@
 import userSlice from './userSlice';
-import shipsSlice from './ShipsSlice';
+import shipsSlice from './shipsSlice';
 
 export { userSlice, shipsSlice };
