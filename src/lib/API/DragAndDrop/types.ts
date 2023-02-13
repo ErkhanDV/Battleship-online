@@ -1,23 +1,24 @@
 import { DragEvent } from 'react';
 
-import { ShipCoordinates } from '@/store/_types';
+import { IShip, IShipsLocation } from '@/store/_types';
 
 export type IDragHandler = (
   event: DragEvent<HTMLDivElement>,
   horizontalRotation: Boolean,
   shipLength: number | null,
+  settedShips?: IShip[],
 ) => void;
 
 export type IDropHandler = (
   event: DragEvent<HTMLDivElement>,
   horizontalRotation: Boolean,
   shipLength: number | null,
-  callback: (ship: number[]) => {
-    payload: ShipCoordinates;
-    type: 'ships/setShipsLocation';
+  callback: (ship: IShip) => {
+    payload: IShip;
+    type: 'shipsLocation/addShip';
   },
   successfullyDrop: () => {
     payload: boolean;
-    type: 'ships/setDropped';
+    type: 'currentShip/setDropped';
   },
 ) => void;

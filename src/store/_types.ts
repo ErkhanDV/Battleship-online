@@ -14,10 +14,36 @@ export interface ICurrentShip {
   isHorizontal: Boolean;
 }
 
-export type ShipCoordinates = number[];
-
-export interface IShip {
+export interface IDragedShip {
   currentDragedShip: ICurrentShip;
-  shipsLocation: ShipCoordinates[];
   wasDropped: boolean;
 }
+
+export interface IShip {
+  shipLocation: number[];
+  decks: number;
+  occupiedCells: number[];
+  woundedCells: number[];
+}
+
+export interface IShipsLocation {
+  shipsLocation: IShip[];
+}
+
+export interface IWoundedCell {
+  index: number;
+  cellId: number;
+}
+
+export interface IShoots {
+  own: {
+    hits: number[];
+    misses: number[];
+  };
+  rival: {
+    hits: number[];
+    misses: number[];
+  };
+}
+
+export type ShipCoordinates = number[];

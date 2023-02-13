@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
-import { setCurrentShip, setDropped } from '@/store/reducers/ShipsSlice';
+import { setCurrentShip, setDropped } from '@/store/reducers/CurrentShipSlice';
 
 import './ship.scss';
 
@@ -17,7 +17,7 @@ const Ship = ({ decks }: IDecks) => {
     dispatch(setCurrentShip(currentShip));
   };
 
-  const isSuccessfullyDrop = useAppSelector((state) => state.ships.wasDropped);
+  const isSuccessfullyDrop = useAppSelector((state) => state.currentShip.wasDropped);
   const setNotDrop = () => dispatch(setDropped(false));
 
   const dragStartHandler = (
