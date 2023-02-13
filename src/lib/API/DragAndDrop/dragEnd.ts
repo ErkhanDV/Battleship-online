@@ -1,6 +1,10 @@
 import { IDragHandler } from './types';
 
-export const dragEndHandler: IDragHandler = (event, horizontalRotation, shipLength) => {
+export const dragEndHandler: IDragHandler = (
+  event,
+  horizontalRotation,
+  shipLength,
+) => {
   const target = event.target as HTMLDivElement;
   const targetId = Number(target.id);
   const parent = target.parentElement as HTMLDivElement;
@@ -11,6 +15,7 @@ export const dragEndHandler: IDragHandler = (event, horizontalRotation, shipLeng
   switch (shipLength) {
     case 1:
       target.classList.remove('green');
+      target.classList.remove('red');
       break;
     case 2:
       target.classList.remove('green', 'red');

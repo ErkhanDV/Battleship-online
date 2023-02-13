@@ -1,9 +1,12 @@
+import { isCanDrop } from '../ShipsPlacer/isCanDrop';
+
 import { IDragHandler } from './types';
 
 export const dragOverHandler: IDragHandler = (
   event,
   horizontalRotation,
   shipLength,
+  settedShips,
 ) => {
   event.preventDefault();
   const notAvailableIndexesRight = [9, 19, 29, 39, 49, 59, 69, 79, 89];
@@ -17,11 +20,27 @@ export const dragOverHandler: IDragHandler = (
   if (!horizontalRotation) {
     switch (shipLength) {
       case 1:
+        if (settedShips?.length) {
+          if (!isCanDrop(settedShips, [targetId])) {
+            target.classList.add('red');
+            return;
+          }
+        }
         target.classList.add('green');
         break;
       case 2:
         if (parent && !parent.children[targetId + delta1]) {
           target.classList.add('red');
+        }
+        if (settedShips?.length) {
+          if (
+            parent &&
+            !isCanDrop(settedShips, [targetId, targetId + delta1])
+          ) {
+            target.classList.add('red');
+            parent.children[targetId + delta1].classList.add('red');
+            return;
+          }
         }
         if (parent && parent.children[targetId + delta1]) {
           target.classList.add('green');
@@ -51,6 +70,23 @@ export const dragOverHandler: IDragHandler = (
         ) {
           target.classList.add('red');
           parent.children[targetId + delta2].classList.add('red');
+        }
+        if (settedShips?.length) {
+          if (
+            parent &&
+            parent.children[targetId + delta1] &&
+            parent.children[targetId + delta2] &&
+            !isCanDrop(settedShips, [
+              targetId,
+              targetId + delta1,
+              targetId + delta2,
+            ])
+          ) {
+            target.classList.add('red');
+            parent.children[targetId + delta1].classList.add('red');
+            parent.children[targetId + delta2].classList.add('red');
+            return;
+          }
         }
         if (
           parent &&
@@ -90,6 +126,26 @@ export const dragOverHandler: IDragHandler = (
           parent.children[targetId + delta1].classList.add('red');
           parent.children[targetId + delta2].classList.add('red');
         }
+        if (settedShips?.length) {
+          if (
+            parent &&
+            parent.children[targetId + delta1] &&
+            parent.children[targetId + delta2] &&
+            parent.children[targetId + delta3] &&
+            !isCanDrop(settedShips, [
+              targetId,
+              targetId + delta1,
+              targetId + delta2,
+              targetId + delta3,
+            ])
+          ) {
+            target.classList.add('red');
+            parent.children[targetId + delta1].classList.add('red');
+            parent.children[targetId + delta2].classList.add('red');
+            parent.children[targetId + delta3].classList.add('red');
+            return;
+          }
+        }
         if (
           parent &&
           parent.children[targetId + delta1] &&
@@ -120,7 +176,19 @@ export const dragOverHandler: IDragHandler = (
             Math.floor(targetId / 10) !== Math.floor((targetId - 1) / 10)
           ) {
             target.classList.add('red');
-          } else {
+          }
+          if (settedShips?.length) {
+            if (
+              parent &&
+              parent.children[targetId + delta2] &&
+              !isCanDrop(settedShips, [targetId, targetId + delta2])
+            ) {
+              target.classList.add('red');
+              parent.children[targetId + delta2].classList.add('red');
+              return;
+            }
+          }
+          if (parent && parent.children[targetId + delta2]) {
             target.classList.add('green');
             parent.children[targetId + delta2].classList.add('green');
           }
@@ -167,6 +235,23 @@ export const dragOverHandler: IDragHandler = (
             target.classList.add('red');
             parent.children[targetId + delta1].classList.add('red');
           }
+          if (settedShips?.length) {
+            if (
+              parent &&
+              parent.children[targetId + delta1] &&
+              parent.children[targetId + delta2] &&
+              !isCanDrop(settedShips, [
+                targetId,
+                targetId + delta2,
+                targetId + delta1,
+              ])
+            ) {
+              target.classList.add('red');
+              parent.children[targetId + delta1].classList.add('red');
+              parent.children[targetId + delta2].classList.add('red');
+              return;
+            }
+          }
           if (
             parent &&
             parent.children[targetId + delta1] &&
@@ -203,6 +288,26 @@ export const dragOverHandler: IDragHandler = (
             elements
               .filter((element) => element)
               .forEach((element) => element.classList.add('red'));
+          }
+          if (settedShips?.length) {
+            if (
+              parent &&
+              parent.children[targetId + delta1] &&
+              parent.children[targetId + delta2] &&
+              parent.children[targetId + delta3] &&
+              !isCanDrop(settedShips, [
+                targetId,
+                targetId + delta2,
+                targetId + delta1,
+                targetId + delta3,
+              ])
+            ) {
+              target.classList.add('red');
+              parent.children[targetId + delta1].classList.add('red');
+              parent.children[targetId + delta2].classList.add('red');
+              parent.children[targetId + delta3].classList.add('red');
+              return;
+            }
           }
           if (
             elements.every((element) => element) &&

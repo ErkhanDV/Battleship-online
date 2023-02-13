@@ -16,18 +16,26 @@ export const dropHadler: IDropHandler = (
   if (!horizontalRotation) {
     switch (shipLength) {
       case 1:
-        target.classList.add('ship-1');
-        target.classList.remove('green', 'red');
-        callback({
-          shipLocation: [targetId],
-          decks: 1,
-          occupiedCells: getOccupiedCells([targetId]),
-          woundedCells: [],
-        });
-        succesfullyDrop();
+        if (target.classList.contains('green')) {
+          target.classList.add('ship-1');
+          target.classList.remove('green', 'red');
+          callback({
+            shipLocation: [targetId],
+            decks: 1,
+            occupiedCells: getOccupiedCells([targetId]),
+            woundedCells: [],
+          });
+          succesfullyDrop();
+        } else {
+          target.classList.remove('green', 'red');
+        }
         break;
       case 2:
-        if (children[targetId + 10]) {
+        if (
+          children[targetId + 10] &&
+          children[targetId].classList.contains('green') &&
+          children[targetId + 10].classList.contains('green')
+        ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
           children[targetId + 10].classList.add('ship-1');
@@ -48,7 +56,13 @@ export const dropHadler: IDropHandler = (
         }
         break;
       case 3:
-        if (children[targetId + 10] && children[targetId + 20]) {
+        if (
+          children[targetId + 10] &&
+          children[targetId + 20] &&
+          children[targetId].classList.contains('green') &&
+          children[targetId + 10].classList.contains('green') &&
+          children[targetId + 20].classList.contains('green')
+        ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
           children[targetId + 10].classList.add('ship-1');
@@ -81,7 +95,11 @@ export const dropHadler: IDropHandler = (
         if (
           children[targetId + 10] &&
           children[targetId + 20] &&
-          children[targetId + 30]
+          children[targetId + 30] &&
+          children[targetId].classList.contains('green') &&
+          children[targetId + 10].classList.contains('green') &&
+          children[targetId + 20].classList.contains('green') &&
+          children[targetId + 30].classList.contains('green')
         ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
@@ -135,7 +153,10 @@ export const dropHadler: IDropHandler = (
           children[targetId].classList.remove('red');
           children[targetId - 1].classList.remove('red');
         }
-        if (children[targetId - 1]) {
+        if (
+          children[targetId].classList.contains('green') &&
+          children[targetId - 1].classList.contains('green')
+        ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
           children[targetId - 1].classList.add('ship-1');
@@ -164,7 +185,13 @@ export const dropHadler: IDropHandler = (
           children[targetId + 1].classList.remove('red');
           children[targetId - 1].classList.remove('red');
           return;
-        } else if (children[targetId + 1] && children[targetId - 1]) {
+        } else if (
+          children[targetId + 1] &&
+          children[targetId - 1] &&
+          children[targetId].classList.contains('green') &&
+          children[targetId + 1].classList.contains('green') &&
+          children[targetId - 1].classList.contains('green')
+        ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
           children[targetId + 1].classList.add('ship-1');
@@ -207,7 +234,11 @@ export const dropHadler: IDropHandler = (
           children[targetId + 1] &&
           children[targetId - 1] &&
           children[targetId - 2] &&
-          Math.floor((targetId - 2) / 10) === Math.floor(targetId / 10)
+          Math.floor((targetId - 2) / 10) === Math.floor(targetId / 10) &&
+          children[targetId].classList.contains('green') &&
+          children[targetId + 1].classList.contains('green') &&
+          children[targetId - 1].classList.contains('green') &&
+          children[targetId - 2].classList.contains('green')
         ) {
           children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');

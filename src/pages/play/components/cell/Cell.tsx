@@ -26,6 +26,10 @@ const Cell = ({ coordinate, isRival }: ICell) => {
     state.shoots.rival.misses.some((id) => id === coordinate),
   );
 
+  const settedShips = useAppSelector(
+    (state) => state.shipsLocation.shipsLocation,
+  );
+
   const dispatch = useAppDispatch();
   const setLocations = (ship: IShip) => dispatch(addShip(ship));
   const successfullyDrop = () => dispatch(setDropped(true));
@@ -47,7 +51,9 @@ const Cell = ({ coordinate, isRival }: ICell) => {
       onClick={() => handleClick(isRival)}
       id={coordinate.toString()}
       className={classList}
-      onDragOver={(event) => dragOverHandler(event, isHorizontal, decks)}
+      onDragOver={(event) =>
+        dragOverHandler(event, isHorizontal, decks, settedShips)
+      }
       onDragLeave={(event) => dragEndHandler(event, isHorizontal, decks)}
       onDrop={(event) =>
         dropHadler(event, isHorizontal, decks, setLocations, successfullyDrop)
