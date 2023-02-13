@@ -176,6 +176,7 @@ export const dragOverHandler: IDragHandler = (
             Math.floor(targetId / 10) !== Math.floor((targetId - 1) / 10)
           ) {
             target.classList.add('red');
+            return;
           }
           if (settedShips?.length) {
             if (
