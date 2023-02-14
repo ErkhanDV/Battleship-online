@@ -28,6 +28,8 @@ export interface IShip {
 
 export interface IShipsLocation {
   shipsLocation: IShip[];
+  rivalShipsLocations: IShip[];
+  rivalMisses: number[];
   misses: number[];
 }
 
