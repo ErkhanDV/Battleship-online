@@ -1,4 +1,5 @@
-import Cell from '../cell/Cell';
+import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
+import Cell from '@/components/game/cell/Cell';
 
 import './field.scss';
 
@@ -11,7 +12,9 @@ const Field = ({
   isRival?: boolean;
   isAbleShoot?: boolean;
 }) => {
-  const field: string[] = new Array(100).fill('empty');
+  const field = useAppSelector(
+    (state) => state.shipsLocationSlice.shipsLocation,
+  );
   return (
     <div
       style={{ opacity: isAbleShoot && isStarted ? 1 : 0.5 }}

@@ -7,4 +7,6 @@ export enum STATUS {
   created = 201,
   notFound = 404,
   serverError = 500,
+  unAuthorized = 401,
+  forbidden = 403,
 }
