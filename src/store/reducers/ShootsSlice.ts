@@ -13,28 +13,29 @@ const initialState: IShoots = {
   },
 };
 
-const shoots = createSlice({
+const shootsSlice = createSlice({
   name: 'shoots',
   initialState,
   reducers: {
     addOwnHit(state, action: PayloadAction<number>) {
       state.own.hits.push(action.payload);
     },
+
     addOwnMiss(state, action: PayloadAction<number>) {
       state.own.misses.push(action.payload);
     },
+
     addRivalHit(state, action: PayloadAction<number>) {
       state.rival.hits.push(action.payload);
     },
+
     addRivalMiss(state, action: PayloadAction<number>) {
       state.rival.misses.push(action.payload);
     },
   },
 });
 
-export const { addOwnHit } = shoots.actions;
-export const { addOwnMiss } = shoots.actions;
-export const { addRivalHit } = shoots.actions;
-export const { addRivalMiss } = shoots.actions;
+export const { addOwnHit, addOwnMiss, addRivalHit, addRivalMiss } =
+  shootsSlice.actions;
 
-export default shoots.reducer;
+export default shootsSlice.reducer;

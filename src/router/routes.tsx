@@ -1,19 +1,23 @@
 import Home from '@/pages/home/Home';
-import Play from '@/pages/play/Play';
 import Rules from '@/pages/rules/Rules';
 import Settings from '@/components/settings/Settings';
 import LogIn from '@/pages/login/LogIn';
-
+import Game from '@/pages/game/Game';
 import { IRoute } from '@/types/Types';
+
 
 const routes: IRoute[] = [
   {
     path: '/',
+    element: <LogIn />,
+  },
+  {
+    path: '/home',
     element: <Home />,
   },
   {
-    path: '/play',
-    element: <Play />,
+    path: '/game',
+    element: <Game />,
   },
   {
     path: '/rules',
@@ -22,10 +26,6 @@ const routes: IRoute[] = [
   {
     path: '/settings',
     element: <Settings />,
-  },
-  {
-    path: '/login',
-    element: <LogIn />,
   },
 ];
 

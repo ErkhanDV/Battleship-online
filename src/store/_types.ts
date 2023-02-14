@@ -47,3 +47,12 @@ export interface IShoots {
 }
 
 export type ShipCoordinates = number[];
+
+export interface IDecks {
+  decks: number;
+}
+
+export interface ICell {
+  coordinate: number;
+  isRival?: boolean;
+}

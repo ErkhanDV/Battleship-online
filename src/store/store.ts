@@ -1,15 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '@/store/reducers/UserSlice';
-import currentShip from './reducers/CurrentShipSlice';
-import shipsLocation from './reducers/ShipsLocationSlice';
-import shoots from './reducers/ShootsSlice';
+import * as slices from '@/store/reducers/_index';
 
 export const store = configureStore({
   reducer: {
-    currentShip,
-    shipsLocation,
-    shoots,
-    userReducer,
+    ...slices,
   },
 });
 

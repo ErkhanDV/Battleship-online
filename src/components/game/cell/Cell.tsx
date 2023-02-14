@@ -1,33 +1,27 @@
-import './Cell.scss';
-
-import { useAppDispatch, useAppSelector } from '@/store/hook/hook';
-
-import { setDropped } from '@/store/reducers/CurrentShipSlice';
-import { addShip } from '@/store/reducers/ShipsLocationSlice';
-
+import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
+import { setDropped } from '@/store/reducers/currentShipSlice';
+import { addShip } from '@/store/reducers/shipsLocationSlice';
 import { dragOverHandler } from '@/lib/API/DragAndDrop/dragOver';
 import { dragEndHandler } from '@/lib/API/DragAndDrop/dragEnd';
 import { dropHadler } from '@/lib/API/DragAndDrop/drop';
-
-import { ICell } from '@/types/Types';
-import { IShip } from '@/store/_types';
+import { ICell, IShip } from '@/store/_types';
+import './Cell.scss';
 
 const Cell = ({ coordinate, isRival }: ICell) => {
   const decks = useAppSelector(
-    (state) => state.currentShip.currentDragedShip.decks,
+    (state) => state.currentShipSlice.currentDragedShip.decks,
   );
   const isHorizontal = useAppSelector(
-    (state) => state.currentShip.currentDragedShip.isHorizontal,
+    (state) => state.currentShipSlice.currentDragedShip.isHorizontal,
   );
   const isShooted = useAppSelector((state) =>
-    state.shoots.rival.hits.some((id) => id === coordinate),
+    state.shootsSlice.rival.hits.some((id) => id === coordinate),
   );
   const isMissed = useAppSelector((state) =>
-    state.shoots.rival.misses.some((id) => id === coordinate),
+    state.shootsSlice.rival.misses.some((id) => id === coordinate),
   );
-
   const settedShips = useAppSelector(
-    (state) => state.shipsLocation.shipsLocation,
+    (state) => state.shipsLocationSlice.shipsLocation,
   );
 
   const dispatch = useAppDispatch();

@@ -1,20 +1,27 @@
-import Settings from '@/components/settings/Settings';
-
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-
+import Settings from '@/components/settings/Settings';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
+import { AuthService } from '@/services/axios/Auth';
+import { IHeader } from '@/types/Types';
 import './Header.scss';
 
-import { IHeader } from '@/types/Types';
-import LoGInPage from '@/pages/login/LogIn';
-
 const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
+  const navigate = useNavigate();
+
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handlerOpenModal = (component: JSX.Element) => {
     setModalOpen(true);
     setModalChildren(component);
     setMenuVisible(false);
+  };
+
+  const logOutHandler = async () => {
+    const isOut = await AuthService.logout();
+
+    if (isOut) {
+      navigate('/');
+    }
   };
 
   return (
@@ -32,7 +39,7 @@ const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
             </NavLink>
           </li>
           <li className="navigation_item">
-            <NavLink to="/play" className="navigation_link">
+            <NavLink to="/game" className="navigation_link">
               Play
             </NavLink>
           </li>
@@ -47,11 +54,8 @@ const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
           >
             Settings
           </li>
-          <li
-            className="navigation_item"
-            onClick={() => handlerOpenModal(<LoGInPage />)}
-          >
-            Login
+          <li onClick={logOutHandler} className="navigation_item">
+            Log out
           </li>
         </ul>
       </nav>

@@ -1,42 +1,38 @@
+import { useNavigate } from 'react-router-dom';
 import { FC, useState } from 'react';
-
 import { AuthService } from '@/services/axios/Auth';
+import { STATUS } from '@/services/axios/_constants';
 
-import './Login.scss';
-
-const LoGInPage: FC = () => {
+const LogIn: FC = () => {
   const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const inputHandler = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setName(target.value);
 
   const logInHandler = async () => {
-    const user = await AuthService.login(name);
-  };
-
-  const logOutHandler = async () => {
-    await AuthService.logout();
+    const response = await AuthService.login(name);
+    if (typeof response === 'string') {
+      setError(response);
+    } else {
+      navigate('/home');
+    }
   };
 
   return (
-    <div className="login">
-      <h2 className="login_title">Login</h2>
+    <div>
       <input
-        className="login_input"
         onChange={inputHandler}
         value={name}
         type="text"
         placeholder="Enter name"
       />
-      <button className="login_button" onClick={logInHandler}>
-        Войти
-      </button>
-      <button className="login_button" onClick={logOutHandler}>
-        Выйти
-      </button>
+      <button onClick={logInHandler}>Войти</button>
+      <span>{error}</span>
     </div>
   );
 };
 
-export default LoGInPage;
+export default LogIn;
