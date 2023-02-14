@@ -4,11 +4,10 @@ import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
-import Background from '@/components/background/Background';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
-import { SHIPS } from '@/store/_constants';
 import './game.scss';
+import { getSettedShips } from '@/lib/helpers/getSettedShips';
 
 const Game = () => {
   const {
@@ -73,6 +72,12 @@ const Game = () => {
     }
   };
 
+  const initialShipsSet = useAppSelector(
+    (state) => state.shipsLocationSlice.shipsLocation,
+    () => true,
+  );
+  const ships: number[] = getSettedShips(initialShipsSet);
+
   return (
     <div className="game">
       <Header />
@@ -94,13 +99,13 @@ const Game = () => {
         </div>
 
         <div className="ship-station">
-          {SHIPS.map((decks, i) => (
+          {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
+          <button>Random</button>
         </div>
       </main>
       <Footer />
-      <Background />
     </div>
   );
 };
