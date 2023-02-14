@@ -3,8 +3,7 @@ import Rules from '@/pages/rules/Rules';
 import Settings from '@/components/settings/Settings';
 import LogIn from '@/pages/login/LogIn';
 import Game from '@/pages/game/Game';
-import { IRoute } from '@/types/Types';
-
+import { IRoute } from './_types';
 
 const routes: IRoute[] = [
   {
