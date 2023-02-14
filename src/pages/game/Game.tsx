@@ -80,7 +80,7 @@ const Game = () => {
       <main className="game-wrapper">
         <button
           style={{ visibility: isReady ? 'hidden' : 'visible' }}
-          disabled={settedShips.flat().length < 20}
+          disabled={settedShips.length < 10}
           onClick={readyHandler}
           className="ready"
         >
@@ -100,7 +100,6 @@ const Game = () => {
         </div>
       </main>
       <Footer />
-      <Background />
     </div>
   );
 };
