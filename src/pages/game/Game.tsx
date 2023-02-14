@@ -1,5 +1,5 @@
 import { useState, useEffect, type FC } from 'react';
-import { useAppSelector } from '@/hook/use-redux';
+import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
 import Header from '@/components/header/Header';
@@ -8,6 +8,10 @@ import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import './game.scss';
 import { getSettedShips } from '@/lib/helpers/getSettedShips';
+import {
+  addShip,
+  updateShipsLocationState,
+} from '@/store/reducers/shipsLocationSlice';
 
 const Game: FC = () => {
   const {

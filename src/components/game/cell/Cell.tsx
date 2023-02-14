@@ -14,25 +14,29 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const isHorizontal = useAppSelector(
     (state) => state.currentShipSlice.currentDragedShip.isHorizontal,
   );
-  const isShooted = useAppSelector((state) =>
-    state.shipsLocationSlice.shipsLocation.find((ship) =>
+  const isShooted = useAppSelector((state) => {
+    const key = isRival ? 'rivalShipsLocations' : 'shipsLocation';
+    return state.shipsLocationSlice[key].find((ship) =>
       ship.woundedCells.includes(coordinate),
-    ),
-  );
-  const isMissed = useAppSelector((state) =>
-    state.shipsLocationSlice.misses.some((id) => id === coordinate),
-  );
+    );
+  });
+  const isMissed = useAppSelector((state) => {
+    const key = isRival ? 'rivalMisses' : 'misses';
+    return state.shipsLocationSlice[key].some((id) => id === coordinate);
+  });
   const settedShips = useAppSelector(
     (state) => state.shipsLocationSlice.shipsLocation,
   );
   const isShip = () => {
-    const index = settedShips.findIndex((ship) =>
-      ship.shipLocation.some((id) => id === coordinate),
-    );
-    if (index === -1) {
-      return false;
+    if (!isRival) {
+      const index = settedShips.findIndex((ship) =>
+        ship.shipLocation.some((id) => id === coordinate),
+      );
+      if (index === -1) {
+        return false;
+      }
+      return true;
     }
-    return true;
   };
 
   const dispatch = useAppDispatch();
