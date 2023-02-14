@@ -12,8 +12,17 @@ import { useSocket } from '@/hook/use-socket';
 import './game.scss';
 
 const Game = () => {
-  const { init, gameInfo, opponentName, socket, isAbleShoot, isGameFinded } =
-    useSocket();
+  const {
+    init,
+    gameInfo,
+    opponentName,
+    socket,
+    isAbleShoot,
+    isStarted,
+    isGameFinded,
+    isReady,
+    setIsReady,
+  } = useSocket();
 
   useEffect(() => {
     (async () => {
@@ -28,6 +37,7 @@ const Game = () => {
   const settedShips = useAppSelector((state) => state.shipsSlice.shipsLocation);
 
   const readyHandler = () => {
+    setIsReady(true);
     socket?.send(JSON.stringify({ ...gameInfo, settedShips, method: 'ready' }));
     // socket.current?.setReady(settedShips);
   };
@@ -35,7 +45,7 @@ const Game = () => {
   const shootHandler = (e: React.MouseEvent): void => {
     if (e.target instanceof HTMLDivElement) {
       const shoot: number = Number(e.target.id);
-      if (isAbleShoot) {
+      if (isAbleShoot && isStarted) {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
       }
     }
@@ -50,7 +60,11 @@ const Game = () => {
       return (
         <div onClick={shootHandler} className="opponent">
           <div className="opponent-name">{opponentName}</div>
-          <Field isAbleShoot={isAbleShoot} isRival={true} />
+          <Field
+            isAbleShoot={isAbleShoot}
+            isStarted={isStarted}
+            isRival={true}
+          />
         </div>
       );
     } else {
@@ -64,6 +78,7 @@ const Game = () => {
 
       <main className="game-wrapper">
         <button
+          style={{ visibility: isReady ? 'hidden' : 'visible' }}
           disabled={settedShips.flat().length < 20}
           onClick={readyHandler}
           className="ready"
@@ -72,7 +87,7 @@ const Game = () => {
         </button>
         <div className="fields">
           <div className="user">
-            <Field isAbleShoot={true} />
+            <Field />
           </div>
           {renderRivalField()}
         </div>

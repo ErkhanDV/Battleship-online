@@ -11,6 +11,7 @@ export const useSocket = () => {
   const [isGameFinded, setIsGameFinded] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [isAbleShoot, setIsAbleShoot] = useState(true);
+  const [isReady, setIsReady] = useState(false);
   const [winner, setWinner] = useState('');
 
   useEffect(() => {
@@ -57,20 +58,14 @@ export const useSocket = () => {
       };
 
       const startHandler = (data: ISocketMessage) => {
-        if (data.isStarted) {
-          setIsStarted(true);
-        }
+        setIsStarted(!!data.isStarted);
         console.log('start');
       };
 
       const shootHandler = (data: ISocketMessage) => {
         const { user, coordinates } = data;
-        if (user.name === userName) {
-          setIsAbleShoot(false);
-        } else {
-          setIsAbleShoot(true);
-          //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
-        }
+        setIsAbleShoot(!(user.name === userName));
+        //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
         console.log('shoot');
       };
 
@@ -89,33 +84,16 @@ export const useSocket = () => {
     setUserName(response.user.name);
   };
 
-  // const setReady = (field: ShipCoordinates[]) => {
-  //   socket?.send(JSON.stringify({ ...gameInfo, field, method: 'ready' }));
-  // };
-
-  // const setShoot = (coordinates: number) => {
-  //   if (isAbleShoot) {
-  //     socket?.send(
-  //       JSON.stringify({ ...gameInfo, coordinates, method: 'shoot' }),
-  //     );
-  //   }
-  // };
-
-  // const exitSocket = () => {
-  //   socket?.send(JSON.stringify({ ...gameInfo, method: 'exit' }));
-  // };
-
   return {
     init,
     gameInfo,
     socket,
     opponentName,
     isGameFinded,
+    isReady,
+    setIsReady,
     isStarted,
     isAbleShoot,
     winner,
-    // setReady,
-    // setShoot,
-    // exitSocket,
   };
 };
