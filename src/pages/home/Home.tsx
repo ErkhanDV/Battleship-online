@@ -55,7 +55,6 @@ const Home: FC = () => {
         </section>
       </main>
       <Footer />
-      <Background />
     </div>
   );
 };
