@@ -15,10 +15,12 @@ const Cell = ({ coordinate, isRival }: ICell) => {
     (state) => state.currentShipSlice.currentDragedShip.isHorizontal,
   );
   const isShooted = useAppSelector((state) =>
-    state.shootsSlice.rival.hits.some((id) => id === coordinate),
+    state.shipsLocationSlice.shipsLocation.find((ship) =>
+      ship.woundedCells.includes(coordinate),
+    ),
   );
   const isMissed = useAppSelector((state) =>
-    state.shootsSlice.rival.misses.some((id) => id === coordinate),
+    state.shipsLocationSlice.misses.some((id) => id === coordinate),
   );
   const settedShips = useAppSelector(
     (state) => state.shipsLocationSlice.shipsLocation,

@@ -5,7 +5,29 @@
   border: solid 1px black;
 }
 .hit {
-  background-color: red;
+  position: relative;
+  background: red;
+  overflow: hidden;
+  &::after,
+  &::before {
+    position: absolute;
+    content: '';
+    background: red;
+    display: block;
+    width: 100%;
+    height: 2px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  &::after {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
 }
 
 .miss {
