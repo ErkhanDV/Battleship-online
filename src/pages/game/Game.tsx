@@ -6,8 +6,8 @@ import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
-import { SHIPS } from '@/store/_constants';
 import './game.scss';
+import { getSettedShips } from '@/lib/helpers/getSettedShips';
 
 const Game: FC = () => {
   const {
@@ -79,6 +79,12 @@ const Game: FC = () => {
     }
   };
 
+  const initialShipsSet = useAppSelector(
+    (state) => state.shipsLocationSlice.shipsLocation,
+    () => true,
+  );
+  const ships: number[] = getSettedShips(initialShipsSet);
+
   return (
     <div className="game">
       <Header />
@@ -100,9 +106,10 @@ const Game: FC = () => {
         </div>
 
         <div className="ship-station">
-          {SHIPS.map((decks, i) => (
+          {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
+          <button>Random</button>
         </div>
       </main>
       <Footer />

@@ -2,7 +2,27 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IShipsLocation, IShip, IWoundedCell } from '../_types';
 
 const initialState: IShipsLocation = {
-  shipsLocation: [],
+  shipsLocation: [
+    // {
+    //   decks: 4,
+    //   occupiedCells: [12, 62, 21, 31, 41, 51, 11, 61, 23, 33, 43, 53, 13, 63],
+    //   shipLocation: [22, 32, 42, 52],
+    //   woundedCells: [],
+    // },
+    // {
+    //   decks: 3,
+    //   occupiedCells: [17, 18, 19, 27, 29, 37, 39, 47, 49, 57, 58, 59],
+    //   shipLocation: [28, 38, 48],
+    //   woundedCells: [],
+    // },
+    // {
+    //   decks: 3,
+    //   occupiedCells: [44, 45, 46, 84, 85, 86, 54, 64, 74, 56, 66, 76],
+    //   shipLocation: [55, 65, 75],
+    //   woundedCells: [],
+    // },
+  ],
+  misses: [],
 };
 
 const shipsLocationSlice = createSlice({
@@ -13,19 +33,18 @@ const shipsLocationSlice = createSlice({
       state.shipsLocation.push(action.payload);
     },
 
-    setWoundedCell(state, action: PayloadAction<number>) {
-      state.shipsLocation.forEach((ship) => {
-        const cell = ship.shipLocation.find(
-          (cell) => cell === action.payload,
-        );
-        if (cell) {
-          ship.woundedCells.push(cell);
-        }
-      });
+    addMiss(state, action: PayloadAction<number>) {
+      state.misses.push(action.payload);
+    },
+
+    setWoundedCell(state, action: PayloadAction<IWoundedCell>) {
+      state.shipsLocation[action.payload.index].woundedCells.push(
+        action.payload.cellId,
+      );
     },
   },
 });
 
-export const { setWoundedCell, addShip } = shipsLocationSlice.actions;
+export const { setWoundedCell, addMiss, addShip } = shipsLocationSlice.actions;
 
 export default shipsLocationSlice.reducer;

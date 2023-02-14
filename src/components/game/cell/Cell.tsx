@@ -23,6 +23,15 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const settedShips = useAppSelector(
     (state) => state.shipsLocationSlice.shipsLocation,
   );
+  const isShip = () => {
+    const index = settedShips.findIndex((ship) =>
+      ship.shipLocation.some((id) => id === coordinate),
+    );
+    if (index === -1) {
+      return false;
+    }
+    return true;
+  };
 
   const dispatch = useAppDispatch();
   const setLocations = (ship: IShip) => dispatch(addShip(ship));
@@ -38,6 +47,9 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   }
   if (isMissed && !isRival) {
     classList += ' miss';
+  }
+  if (isShip()) {
+    classList += ' ship-1';
   }
 
   return (

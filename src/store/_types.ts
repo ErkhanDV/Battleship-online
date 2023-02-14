@@ -28,6 +28,7 @@ export interface IShip {
 
 export interface IShipsLocation {
   shipsLocation: IShip[];
+  misses: number[];
 }
 
 export interface IWoundedCell {
