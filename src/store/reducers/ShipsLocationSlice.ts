@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IShipsLocation, IShip, IWoundedCell } from '../_types';
 
 const initialState: IShipsLocation = {
-  shipsLocation: new Array(100).fill('empty'),
+  shipsLocation: [],
 };
 
 const shipsLocationSlice = createSlice({
