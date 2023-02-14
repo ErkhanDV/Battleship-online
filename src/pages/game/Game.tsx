@@ -1,14 +1,13 @@
 import { useState, useEffect, type FC } from 'react';
+import { useAppSelector } from '@/hook/use-redux';
+import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
-import { useAppSelector } from '@/store/hook/hook';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import Background from '@/components/background/Background';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import { SHIPS } from '@/store/_constants';
-import { useSocket } from '@/hook/use-socket';
-
 import './game.scss';
 
 const Game = () => {
@@ -34,7 +33,9 @@ const Game = () => {
     })();
   }, []);
 
-  const settedShips = useAppSelector((state) => state.shipsSlice.shipsLocation);
+  const settedShips = useAppSelector(
+    (state) => state.shipsLocationSlice.shipsLocation,
+  );
 
   const readyHandler = () => {
     setIsReady(true);
@@ -79,7 +80,7 @@ const Game = () => {
       <main className="game-wrapper">
         <button
           style={{ visibility: isReady ? 'hidden' : 'visible' }}
-          disabled={settedShips.flat().length < 20}
+          disabled={settedShips.flat().length < 10}
           onClick={readyHandler}
           className="ready"
         >

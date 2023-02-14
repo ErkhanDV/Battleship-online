@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { axiosAPI } from './_index';
+import { axiosAPI } from './_interceptors';
 import { IUser } from '@/store/_types';
 import { STATUS, CLONE_SERVER } from './_constants';
 
@@ -14,13 +14,15 @@ export class AuthService {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+        const { status, message } = error.response?.data;
+        console.log(`status: ${status}; error: ${message}`);
+        return message;
       }
       console.log(error);
     }
   }
 
-  static async logout(): Promise<Boolean> {
+  static async logout(): Promise<Boolean | undefined> {
     try {
       const { status } = await axiosAPI.delete('/logout');
       if (status === STATUS.ok) {
@@ -29,16 +31,19 @@ export class AuthService {
       return false;
     } catch (error) {
       if (error instanceof AxiosError) {
-        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+        const { status, message } = error.response?.data;
+        console.log(`status: ${status}; error: ${message}`);
+        return message;
       }
       console.log(error);
     }
-    return false;
   }
 
-  static async checkAuth(): Promise<Boolean> {
+  static async checkAuth(): Promise<Boolean | undefined> {
     try {
-      const { data } = await axios.get<IUser>(`${CLONE_SERVER}/refresh`, { withCredentials: true });
+      const { data } = await axios.get<IUser>(`${CLONE_SERVER}/refresh`, {
+        withCredentials: true,
+      });
       if (data) {
         localStorage.setItem('token', data.accessToken);
         // set user in store
@@ -48,10 +53,11 @@ export class AuthService {
       return false;
     } catch (error) {
       if (error instanceof AxiosError) {
-        throw new Error(`status: ${error.response?.data.status}; error: ${error.response?.data.message}`);
+        const { status, message } = error.response?.data;
+        console.log(`status: ${status}; error: ${message}`);
+        return message;
       }
       console.log(error);
     }
-    return false;
   }
 }

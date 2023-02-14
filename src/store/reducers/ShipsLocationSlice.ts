@@ -5,13 +5,14 @@ const initialState: IShipsLocation = {
   shipsLocation: [],
 };
 
-const shipsLocation = createSlice({
+const shipsLocationSlice = createSlice({
   name: 'shipsLocation',
   initialState,
   reducers: {
     addShip(state, action: PayloadAction<IShip>) {
       state.shipsLocation.push(action.payload);
     },
+
     setWoundedCell(state, action: PayloadAction<IWoundedCell>) {
       state.shipsLocation[action.payload.index].woundedCells.push(
         action.payload.cellId,
@@ -20,7 +21,6 @@ const shipsLocation = createSlice({
   },
 });
 
-export const { addShip } = shipsLocation.actions;
-export const { setWoundedCell } = shipsLocation.actions;
+export const { setWoundedCell, addShip } = shipsLocationSlice.actions;
 
-export default shipsLocation.reducer;
+export default shipsLocationSlice.reducer;
