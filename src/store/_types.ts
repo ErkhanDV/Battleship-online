@@ -31,7 +31,7 @@ export interface IShipsLocation {
 }
 
 export interface IWoundedCell {
-  index: number;
+  // index: number;
   cellId: number;
 }
 

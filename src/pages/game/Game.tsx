@@ -4,13 +4,12 @@ import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
-import Background from '@/components/background/Background';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import { SHIPS } from '@/store/_constants';
 import './game.scss';
 
-const Game = () => {
+const Game: FC = () => {
   const {
     init,
     gameInfo,
@@ -37,10 +36,17 @@ const Game = () => {
     (state) => state.shipsLocationSlice.shipsLocation,
   );
 
+  const shoots = useAppSelector((state) => state.shootsSlice);
+
   const readyHandler = () => {
     setIsReady(true);
-    socket?.send(JSON.stringify({ ...gameInfo, settedShips, method: 'ready' }));
-    // socket.current?.setReady(settedShips);
+    socket?.send(
+      JSON.stringify({
+        ...gameInfo,
+        field: { settedShips, shoots },
+        method: 'ready',
+      }),
+    );
   };
 
   const shootHandler = (e: React.MouseEvent): void => {
@@ -80,7 +86,7 @@ const Game = () => {
       <main className="game-wrapper">
         <button
           style={{ visibility: isReady ? 'hidden' : 'visible' }}
-          disabled={settedShips.length < 10}
+          // disabled={settedShips.length < 10}
           onClick={readyHandler}
           className="ready"
         >

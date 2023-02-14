@@ -1,4 +1,5 @@
 import { type InternalAxiosRequestConfig } from 'axios';
+import { IShip } from '@/store/_types';
 
 export interface ICycleConfig extends InternalAxiosRequestConfig {
   isRetry?: boolean;
@@ -14,10 +15,23 @@ export interface IPlayer {
   name: string;
 }
 
-export interface ISocketMessage extends IStartGame {
+export interface IConnectMessage {
   method: string;
   isGameFinded: boolean;
   isAbleShoot: boolean;
-  isStarted?: boolean;
-  coordinates?: number;
+  field?: IShip[];
 }
+
+export interface IStartMessage {
+  isStarted: boolean;
+  field: IShip[];
+}
+
+export interface IShootMessage {
+  coordinates: { target: number; isDamaged: boolean };
+}
+
+export type TSocketMessage = IStartGame &
+  IStartMessage &
+  IConnectMessage &
+  IShootMessage;

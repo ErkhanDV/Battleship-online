@@ -13,10 +13,15 @@ const shipsLocationSlice = createSlice({
       state.shipsLocation.push(action.payload);
     },
 
-    setWoundedCell(state, action: PayloadAction<IWoundedCell>) {
-      state.shipsLocation[action.payload.index].woundedCells.push(
-        action.payload.cellId,
-      );
+    setWoundedCell(state, action: PayloadAction<number>) {
+      state.shipsLocation.forEach((ship) => {
+        const cell = ship.shipLocation.find(
+          (cell) => cell === action.payload,
+        );
+        if (cell) {
+          ship.woundedCells.push(cell);
+        }
+      });
     },
   },
 });
