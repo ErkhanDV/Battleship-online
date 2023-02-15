@@ -37,7 +37,7 @@ const Game = () => {
   }, []);
 
   const settedShips = useAppSelector(
-    (state) => state.shipsLocationSlice.shipsLocation,
+    (state) => state.shipsLocationSlice.user.shipsLocation,
   );
 
   const readyHandler = () => {
@@ -77,7 +77,7 @@ const Game = () => {
   };
 
   const initialShipsSet = useAppSelector(
-    (state) => state.shipsLocationSlice.shipsLocation,
+    (state) => state.shipsLocationSlice.user.shipsLocation,
     () => true,
   );
   const ships: number[] = getSettedShips(initialShipsSet);
