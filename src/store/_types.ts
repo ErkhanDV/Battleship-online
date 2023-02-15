@@ -61,17 +61,6 @@ export interface IShoot {
   cell: number;
 }
 
-export interface IShoots {
-  own: {
-    hits: number[];
-    misses: number[];
-  };
-  rival: {
-    hits: number[];
-    misses: number[];
-  };
-}
-
 export type ShipCoordinates = number[];
 
 export interface IDecks {
