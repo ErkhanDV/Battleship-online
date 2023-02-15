@@ -37,7 +37,7 @@ const Game: FC = () => {
   }, []);
 
   const settedShips = useAppSelector(
-    (state) => state.shipsLocationSlice.shipsLocation,
+    (state) => state.shipsLocationSlice.user.shipsLocation,
   );
 
   const shoots = useAppSelector((state) => state.shootsSlice);
@@ -84,7 +84,7 @@ const Game: FC = () => {
   };
 
   const initialShipsSet = useAppSelector(
-    (state) => state.shipsLocationSlice.shipsLocation,
+    (state) => state.shipsLocationSlice.user.shipsLocation,
     () => true,
   );
   const ships: number[] = getSettedShips(initialShipsSet);
