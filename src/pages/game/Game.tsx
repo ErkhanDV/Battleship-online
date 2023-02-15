@@ -112,8 +112,6 @@ const Game: FC = () => {
 
   const renderStation = (ships: number[]) => {
     if (!isReady) {
-      console.log(ships);
-      console.log(shipsSet);
       return (
         <div className="ship-station">
           {ships.map((decks, i) => (
