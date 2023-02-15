@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
@@ -8,16 +8,9 @@ import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import './game.scss';
 import { getSettedShips } from '@/lib/helpers/getSettedShips';
-import { getRandomNum } from '@/lib/helpers/getRandomNum';
-import { isCanDrop } from '@/lib/API/ShipsPlacer/isCanDrop';
 import { addShip } from '@/store/reducers/shipsLocationSlice';
-import {
-  getCorrectShip,
-  getOccupiedCells,
-  getShip,
-} from '@/lib/API/ShipsPlacer/ShipsPlacer';
+import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import { IShip } from '@/store/_types';
-import { getShipOrientation } from '@/lib/helpers/getShipOrientation';
 
 const Game: FC = () => {
   const {
@@ -42,13 +35,7 @@ const Game: FC = () => {
     })();
   }, []);
 
-  const initialShipsSet = useAppSelector(
-    (state) => state.shipsLocationSlice.user.shipsLocation,
-    () => true,
-  );
-
   const dispatch = useAppDispatch();
-  const ships = getSettedShips(initialShipsSet);
 
   const field = useAppSelector((state) => state.shipsLocationSlice.user);
   const field1 = useAppSelector((state) => state.shipsLocationSlice.rival);
@@ -112,9 +99,9 @@ const Game: FC = () => {
   const shipsSet = useAppSelector(
     (state) => state.shipsLocationSlice.user.shipsLocation,
   );
+  const ships = getSettedShips(shipsSet);
 
-  const getRandomShipSet = (shipsSet: IShip[]) => {
-    const ships = getSettedShips(shipsSet);
+  const getRandomShipSet = () => {
     const settedShips = [...shipsSet];
     const newShips: IShip[] = [];
     ships.forEach((ship) => {
@@ -123,14 +110,16 @@ const Game: FC = () => {
     newShips.forEach((ship) => dispatch(addShip({ player: 'user', ship })));
   };
 
-  const renderStation = (shipsSet: IShip[]) => {
+  const renderStation = (ships: number[]) => {
     if (!isReady) {
+      console.log(ships);
+      console.log(shipsSet);
       return (
         <div className="ship-station">
           {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
-          <button onClick={() => getRandomShipSet(shipsSet)}>Random</button>
+          <button onClick={getRandomShipSet}>Random</button>
         </div>
       );
     }
@@ -148,7 +137,7 @@ const Game: FC = () => {
           </div>
           {renderRivalField()}
         </div>
-        {renderStation(shipsSet)}
+        {renderStation(ships)}
       </main>
       <Footer />
     </div>
