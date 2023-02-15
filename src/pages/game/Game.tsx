@@ -11,7 +11,11 @@ import { getSettedShips } from '@/lib/helpers/getSettedShips';
 import { getRandomNum } from '@/lib/helpers/getRandomNum';
 import { isCanDrop } from '@/lib/API/ShipsPlacer/isCanDrop';
 import { addShip } from '@/store/reducers/shipsLocationSlice';
-import { getOccupiedCells, getShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
+import {
+  getCorrectShip,
+  getOccupiedCells,
+  getShip,
+} from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import { IShip } from '@/store/_types';
 import { getShipOrientation } from '@/lib/helpers/getShipOrientation';
 
@@ -108,31 +112,12 @@ const Game: FC = () => {
     const settedShips = [...initialShipsSet];
     const newShips: IShip[] = [];
     ships.forEach((ship) => {
-      const getCorrectShip = (
-        settedShips: IShip[],
-        newShips: IShip[],
-        ship: number,
-      ) => {
-        const isHorizontal = getShipOrientation();
-        const randomShip = getShip(ship, isHorizontal);
-        if (
-          isCanDrop(settedShips, randomShip) &&
-          isCanDrop(newShips, randomShip)
-        ) {
-          const occupiedCells = getOccupiedCells(randomShip);
-          newShips.push({
-            shipLocation: randomShip,
-            decks: ship,
-            occupiedCells: occupiedCells,
-            woundedCells: [],
-          });
-        } else {
-          getCorrectShip(settedShips, newShips, ship);
-        }
-      };
       getCorrectShip(settedShips, newShips, ship);
     });
     newShips.forEach((ship) => dispatch(addShip({ player: 'user', ship })));
+
+    ships = [];
+    console.log(ships);
   };
 
   const renderStation = () => {

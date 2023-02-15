@@ -10,27 +10,28 @@ export const getRandomShipSet = (initialShipsSet: IShip[], ships: number[]) => {
   const settedShips = [...initialShipsSet];
   const newShips: IShip[] = [];
   ships.forEach((ship) => {
-    const getCorrectShip = (
-      settedShips: IShip[],
-      newShips: IShip[],
-      ship: number,
-    ) => {
-      const isHorizontal = getShipOrientation();
-      const randomShip = getShip(ship, isHorizontal);
-      if (isCanDrop(settedShips, randomShip)) {
-        const occupiedCells = getOccupiedCells(randomShip);
-        newShips.push({
-          shipLocation: randomShip,
-          decks: ship,
-          occupiedCells: occupiedCells,
-          woundedCells: [],
-        });
-      } else {
-        getCorrectShip(settedShips, newShips, ship);
-      }
-    };
     getCorrectShip(settedShips, newShips, ship);
   });
+};
+
+export const getCorrectShip = (
+  settedShips: IShip[],
+  newShips: IShip[],
+  ship: number,
+) => {
+  const isHorizontal = getShipOrientation();
+  const randomShip = getShip(ship, isHorizontal);
+  if (isCanDrop(settedShips, randomShip) && isCanDrop(newShips, randomShip)) {
+    const occupiedCells = getOccupiedCells(randomShip);
+    newShips.push({
+      shipLocation: randomShip,
+      decks: ship,
+      occupiedCells: occupiedCells,
+      woundedCells: [],
+    });
+  } else {
+    getCorrectShip(settedShips, newShips, ship);
+  }
 };
 
 export const getShip = (length: number, isHorizontal: boolean) => {
