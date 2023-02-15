@@ -5,6 +5,7 @@ import LogIn from '@/pages/login/LogIn';
 import Game from '@/pages/game/Game';
 import { IRoute } from '@/types/Types';
 
+
 const routes: IRoute[] = [
   {
     path: '/',
