@@ -6,30 +6,12 @@ import {
   IAddShip,
   IAddMiss,
   IAddWoundedCell,
+  IPlayerState,
 } from '../_types';
 
 const initialState: IShipsLocation = {
   user: {
-    shipsLocation: [
-      // {
-      //   decks: 4,
-      //   occupiedCells: [12, 62, 21, 31, 41, 51, 11, 61, 23, 33, 43, 53, 13, 63],
-      //   shipLocation: [22, 32, 42, 52],
-      //   woundedCells: [22, 52],
-      // },
-      // {
-      //   decks: 3,
-      //   occupiedCells: [17, 18, 19, 27, 29, 37, 39, 47, 49, 57, 58, 59],
-      //   shipLocation: [28, 38, 48],
-      //   woundedCells: [28],
-      // },
-      // {
-      //   decks: 3,
-      //   occupiedCells: [44, 45, 46, 84, 85, 86, 54, 64, 74, 56, 66, 76],
-      //   shipLocation: [55, 65, 75],
-      //   woundedCells: [65],
-      // },
-    ],
+    shipsLocation: [],
     misses: [],
   },
   rival: {
@@ -60,9 +42,15 @@ const shipsLocationSlice = createSlice({
       ].woundedCells.push(action.payload.cell.cellId);
     },
 
-    updateShipsLocationState(state, action: PayloadAction<IShipsLocation>) {
-      state.user = action.payload.user;
-      state.rival = action.payload.rival;
+    updateShipsLocationState(
+      state,
+      action: PayloadAction<{ state: IPlayerState; person: string }>,
+    ) {
+      if (action.payload.person === 'user') {
+        state.user = action.payload.state;
+      } else {
+        state.rival = action.payload.state;
+      }
     },
   },
 });
