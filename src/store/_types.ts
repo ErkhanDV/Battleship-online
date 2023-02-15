@@ -37,14 +37,13 @@ export interface IAddMiss {
 }
 
 export interface IShipsLocation {
-  user: {
-    shipsLocation: IShip[];
-    misses: number[];
-  };
-  rival: {
-    shipsLocation: IShip[];
-    misses: number[];
-  };
+  user: IPlayerState;
+  rival: IPlayerState;
+}
+
+export interface IPlayerState {
+  shipsLocation: IShip[];
+  misses: number[];
 }
 
 export interface IWoundedCell {

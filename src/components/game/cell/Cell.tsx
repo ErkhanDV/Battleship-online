@@ -27,9 +27,21 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const settedShips = useAppSelector(
     (state) => state.shipsLocationSlice.user.shipsLocation,
   );
+
   const isShip = () => {
     if (!isRival) {
       const index = settedShips.findIndex((ship) =>
+        ship.shipLocation.some((id) => id === coordinate),
+      );
+      if (index === -1) {
+        return false;
+      }
+      return true;
+    } else {
+      const rivalSettedShips = useAppSelector(
+        (state) => state.shipsLocationSlice.rival.shipsLocation,
+      );
+      const index = rivalSettedShips.findIndex((ship) =>
         ship.shipLocation.some((id) => id === coordinate),
       );
       if (index === -1) {
