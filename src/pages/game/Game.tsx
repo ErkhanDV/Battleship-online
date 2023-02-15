@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from 'react';
+import { useState, useEffect, type FC, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
@@ -9,6 +9,7 @@ import Ship from '@/components/game/ship/ship';
 import './game.scss';
 import { getSettedShips } from '@/lib/helpers/getSettedShips';
 import {
+  addMiss,
   addShip,
   updateShipsLocationState,
 } from '@/store/reducers/shipsLocationSlice';
@@ -34,6 +35,41 @@ const Game = () => {
         init(response);
       }
     })();
+  }, []);
+
+  const dispatch = useAppDispatch();
+
+  useMemo(() => {
+    dispatch(
+      updateShipsLocationState({
+        user: {
+          shipsLocation: [
+            // {
+            //   decks: 4,
+            //   occupiedCells: [
+            //     12, 62, 21, 31, 41, 51, 11, 61, 23, 33, 43, 53, 13, 63,
+            //   ],
+            //   shipLocation: [22, 32, 42, 52],
+            //   woundedCells: [22, 52],
+            // },
+            // {
+            //   decks: 3,
+            //   occupiedCells: [17, 18, 19, 27, 29, 37, 39, 47, 49, 57, 58, 59],
+            //   shipLocation: [28, 38, 48],
+            //   woundedCells: [28],
+            // },
+            // {
+            //   decks: 3,
+            //   occupiedCells: [44, 45, 46, 84, 85, 86, 54, 64, 74, 56, 66, 76],
+            //   shipLocation: [55, 65, 75],
+            //   woundedCells: [65],
+            // },
+          ],
+          misses: [],
+        },
+        rival: { shipsLocation: [], misses: [] },
+      }),
+    );
   }, []);
 
   const settedShips = useAppSelector(

@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  IShipsLocation,
-  IShip,
-  IWoundedCell,
-  IAddShip,
-  IAddMiss,
-  IAddWoundedCell,
-} from '../_types';
+import { IShipsLocation, IAddShip, IAddMiss, IAddWoundedCell } from '../_types';
 
 const initialState: IShipsLocation = {
   user: {
