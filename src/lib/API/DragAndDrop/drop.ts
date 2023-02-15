@@ -17,7 +17,6 @@ export const dropHadler: IDropHandler = (
     switch (shipLength) {
       case 1:
         if (target.classList.contains('green')) {
-          target.classList.add('ship-1');
           target.classList.remove('green', 'red');
           callback({
             shipLocation: [targetId],
@@ -36,9 +35,7 @@ export const dropHadler: IDropHandler = (
           children[targetId].classList.contains('green') &&
           children[targetId + 10].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId + 10].classList.add('ship-1');
           children[targetId + 10].classList.remove('green');
           callback({
             shipLocation: [targetId, targetId + 10],
@@ -63,11 +60,8 @@ export const dropHadler: IDropHandler = (
           children[targetId + 10].classList.contains('green') &&
           children[targetId + 20].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId + 10].classList.add('ship-1');
           children[targetId + 10].classList.remove('green');
-          children[targetId + 20].classList.add('ship-1');
           children[targetId + 20].classList.remove('green');
           callback({
             shipLocation: [targetId, targetId + 10, targetId + 20],
@@ -101,13 +95,9 @@ export const dropHadler: IDropHandler = (
           children[targetId + 20].classList.contains('green') &&
           children[targetId + 30].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId + 10].classList.add('ship-1');
           children[targetId + 10].classList.remove('green');
-          children[targetId + 20].classList.add('ship-1');
           children[targetId + 20].classList.remove('green');
-          children[targetId + 30].classList.add('ship-1');
           children[targetId + 30].classList.remove('green');
           callback({
             shipLocation: [
@@ -157,9 +147,7 @@ export const dropHadler: IDropHandler = (
           children[targetId].classList.contains('green') &&
           children[targetId - 1].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId - 1].classList.add('ship-1');
           children[targetId - 1].classList.remove('green');
           callback({
             shipLocation: [targetId, targetId - 1],
@@ -192,11 +180,8 @@ export const dropHadler: IDropHandler = (
           children[targetId + 1].classList.contains('green') &&
           children[targetId - 1].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId + 1].classList.add('ship-1');
           children[targetId + 1].classList.remove('green');
-          children[targetId - 1].classList.add('ship-1');
           children[targetId - 1].classList.remove('green');
           callback({
             shipLocation: [targetId, targetId + 1, targetId - 1],
@@ -240,13 +225,9 @@ export const dropHadler: IDropHandler = (
           children[targetId - 1].classList.contains('green') &&
           children[targetId - 2].classList.contains('green')
         ) {
-          children[targetId].classList.add('ship-1');
           children[targetId].classList.remove('green');
-          children[targetId + 1].classList.add('ship-1');
           children[targetId + 1].classList.remove('green');
-          children[targetId - 1].classList.add('ship-1');
           children[targetId - 1].classList.remove('green');
-          children[targetId - 2].classList.add('ship-1');
           children[targetId - 2].classList.remove('green');
           callback({
             shipLocation: [targetId, targetId + 1, targetId - 1, targetId - 2],

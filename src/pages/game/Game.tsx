@@ -1,14 +1,18 @@
-import { useState, useEffect, type FC } from 'react';
-import { useAppSelector } from '@/hook/use-redux';
+import { useState, useEffect, type FC, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { useSocket } from '@/hook/use-socket';
 import { gameService } from '@/services/axios/Game';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
-import Background from '@/components/background/Background';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
-import { SHIPS } from '@/store/_constants';
 import './game.scss';
+import { getSettedShips } from '@/lib/helpers/getSettedShips';
+import {
+  addMiss,
+  addShip,
+  updateShipsLocationState,
+} from '@/store/reducers/shipsLocationSlice';
 
 const Game = () => {
   const {
@@ -33,8 +37,43 @@ const Game = () => {
     })();
   }, []);
 
+  const dispatch = useAppDispatch();
+
+  useMemo(() => {
+    dispatch(
+      updateShipsLocationState({
+        user: {
+          shipsLocation: [
+            // {
+            //   decks: 4,
+            //   occupiedCells: [
+            //     12, 62, 21, 31, 41, 51, 11, 61, 23, 33, 43, 53, 13, 63,
+            //   ],
+            //   shipLocation: [22, 32, 42, 52],
+            //   woundedCells: [22, 52],
+            // },
+            // {
+            //   decks: 3,
+            //   occupiedCells: [17, 18, 19, 27, 29, 37, 39, 47, 49, 57, 58, 59],
+            //   shipLocation: [28, 38, 48],
+            //   woundedCells: [28],
+            // },
+            // {
+            //   decks: 3,
+            //   occupiedCells: [44, 45, 46, 84, 85, 86, 54, 64, 74, 56, 66, 76],
+            //   shipLocation: [55, 65, 75],
+            //   woundedCells: [65],
+            // },
+          ],
+          misses: [],
+        },
+        rival: { shipsLocation: [], misses: [] },
+      }),
+    );
+  }, []);
+
   const settedShips = useAppSelector(
-    (state) => state.shipsLocationSlice.shipsLocation,
+    (state) => state.shipsLocationSlice.user.shipsLocation,
   );
 
   const readyHandler = () => {
@@ -73,6 +112,12 @@ const Game = () => {
     }
   };
 
+  const initialShipsSet = useAppSelector(
+    (state) => state.shipsLocationSlice.user.shipsLocation,
+    () => true,
+  );
+  const ships: number[] = getSettedShips(initialShipsSet);
+
   return (
     <div className="game">
       <Header />
@@ -94,9 +139,10 @@ const Game = () => {
         </div>
 
         <div className="ship-station">
-          {SHIPS.map((decks, i) => (
+          {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
+          <button>Random</button>
         </div>
       </main>
       <Footer />
