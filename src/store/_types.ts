@@ -46,14 +46,19 @@ export interface IPlayerState {
   misses: number[];
 }
 
-export interface IWoundedCell {
-  index: number;
-  cellId: number;
+export interface IGameState {
+  state: IPlayerState;
+  person: string;
 }
 
-export interface IAddWoundedCell {
+// export interface IWoundedCell {
+//   index: number;
+//   cellId: number;
+// }
+
+export interface IShoot {
   player: string;
-  cell: IWoundedCell;
+  cell: number;
 }
 
 export interface IShoots {
