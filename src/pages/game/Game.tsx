@@ -48,7 +48,8 @@ const Game: FC = () => {
   );
 
   const dispatch = useAppDispatch();
-  const ships: number[] = getSettedShips(initialShipsSet);
+  const ships = getSettedShips(initialShipsSet);
+
   const field = useAppSelector((state) => state.shipsLocationSlice.user);
   const field1 = useAppSelector((state) => state.shipsLocationSlice.rival);
   console.log(field1);
@@ -108,28 +109,28 @@ const Game: FC = () => {
     }
   };
 
-  const getRandomShipSet = (initialShipsSet: IShip[], ships: number[]) => {
-    const settedShips = [...initialShipsSet];
+  const shipsSet = useAppSelector(
+    (state) => state.shipsLocationSlice.user.shipsLocation,
+  );
+
+  const getRandomShipSet = (shipsSet: IShip[]) => {
+    const ships = getSettedShips(shipsSet);
+    const settedShips = [...shipsSet];
     const newShips: IShip[] = [];
     ships.forEach((ship) => {
       getCorrectShip(settedShips, newShips, ship);
     });
     newShips.forEach((ship) => dispatch(addShip({ player: 'user', ship })));
-
-    ships = [];
-    console.log(ships);
   };
 
-  const renderStation = () => {
-    if (!isReady && ships.length) {
+  const renderStation = (shipsSet: IShip[]) => {
+    if (!isReady) {
       return (
         <div className="ship-station">
           {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
-          <button onClick={() => getRandomShipSet(initialShipsSet, ships)}>
-            Random
-          </button>
+          <button onClick={() => getRandomShipSet(shipsSet)}>Random</button>
         </div>
       );
     }
@@ -147,7 +148,7 @@ const Game: FC = () => {
           </div>
           {renderRivalField()}
         </div>
-        {renderStation()}
+        {renderStation(shipsSet)}
       </main>
       <Footer />
     </div>
