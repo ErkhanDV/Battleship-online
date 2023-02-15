@@ -67,6 +67,8 @@ export const useSocket = () => {
           opponentField,
         } = data;
 
+        console.log(data);
+
         if (user.name !== userName) {
           setOpponentName(user.name);
         } else {
