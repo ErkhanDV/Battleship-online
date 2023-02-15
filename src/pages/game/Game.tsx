@@ -38,6 +38,8 @@ const Game: FC = () => {
   );
   const ships: number[] = getSettedShips(initialShipsSet);
   const field = useAppSelector((state) => state.shipsLocationSlice.user);
+  const field1 = useAppSelector((state) => state.shipsLocationSlice.rival);
+  console.log(field1);
 
   const readyHandler = () => {
     setIsReady(true);

@@ -28,7 +28,7 @@ const Cell = ({ coordinate, isRival }: ICell) => {
     (state) => state.shipsLocationSlice.user.shipsLocation,
   );
   const isShip = () => {
-    if (!isRival) {
+    // if (!isRival) {
       const index = settedShips.findIndex((ship) =>
         ship.shipLocation.some((id) => id === coordinate),
       );
@@ -36,7 +36,7 @@ const Cell = ({ coordinate, isRival }: ICell) => {
         return false;
       }
       return true;
-    }
+    // }
   };
 
   const dispatch = useAppDispatch();
