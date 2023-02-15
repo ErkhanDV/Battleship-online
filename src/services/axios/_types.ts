@@ -1,5 +1,5 @@
 import { type InternalAxiosRequestConfig } from 'axios';
-import { IShip } from '@/store/_types';
+import { IPlayerState } from '@/store/_types';
 
 export interface ICycleConfig extends InternalAxiosRequestConfig {
   isRetry?: boolean;
@@ -19,12 +19,14 @@ export interface IConnectMessage {
   method: string;
   isGameFinded: boolean;
   isAbleShoot: boolean;
-  field?: IShip[];
+  field?: IPlayerState;
+  opponentName?: string;
+  opponentField?: IPlayerState;
 }
 
 export interface IStartMessage {
   isStarted: boolean;
-  field: IShip[];
+  field: IPlayerState;
 }
 
 export interface IShootMessage {

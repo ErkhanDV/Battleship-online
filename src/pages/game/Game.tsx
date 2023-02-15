@@ -8,10 +8,6 @@ import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import './game.scss';
 import { getSettedShips } from '@/lib/helpers/getSettedShips';
-import {
-  addShip,
-  updateShipsLocationState,
-} from '@/store/reducers/shipsLocationSlice';
 
 const Game: FC = () => {
   const {
@@ -36,18 +32,19 @@ const Game: FC = () => {
     })();
   }, []);
 
-  const settedShips = useAppSelector(
+  const initialShipsSet = useAppSelector(
     (state) => state.shipsLocationSlice.user.shipsLocation,
+    () => true,
   );
-
-  const shoots = useAppSelector((state) => state.shootsSlice);
+  const ships: number[] = getSettedShips(initialShipsSet);
+  const field = useAppSelector((state) => state.shipsLocationSlice.user);
 
   const readyHandler = () => {
     setIsReady(true);
     socket?.send(
       JSON.stringify({
         ...gameInfo,
-        field: { settedShips, shoots },
+        field,
         method: 'ready',
       }),
     );
@@ -83,38 +80,46 @@ const Game: FC = () => {
     }
   };
 
-  const initialShipsSet = useAppSelector(
-    (state) => state.shipsLocationSlice.user.shipsLocation,
-    () => true,
-  );
-  const ships: number[] = getSettedShips(initialShipsSet);
-
-  return (
-    <div className="game">
-      <Header />
-
-      <main className="game-wrapper">
+  const renderButton = () => {
+    if (!isReady) {
+      return (
         <button
-          style={{ visibility: isReady ? 'hidden' : 'visible' }}
-          // disabled={settedShips.length < 10}
+          disabled={field.shipsLocation.length < 10}
           onClick={readyHandler}
           className="ready"
         >
           Ready
         </button>
-        <div className="fields">
-          <div className="user">
-            <Field />
-          </div>
-          {renderRivalField()}
-        </div>
+      );
+    }
+  };
 
+  const renderStation = () => {
+    if (!isReady) {
+      return (
         <div className="ship-station">
           {ships.map((decks, i) => (
             <Ship decks={decks} key={i} />
           ))}
           <button>Random</button>
         </div>
+      );
+    }
+  };
+
+  return (
+    <div className="game">
+      <Header />
+
+      <main className="game-wrapper">
+        {renderButton()}
+        <div className="fields">
+          <div className="user">
+            <Field />
+          </div>
+          {renderRivalField()}
+        </div>
+        {renderStation()}
       </main>
       <Footer />
     </div>

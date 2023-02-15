@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '@/hook/use-redux';
+import { updateShipsLocationState } from '@/store/reducers/shipsLocationSlice';
 import { SOCKET } from '@/services/axios/_constants';
 import {
   IStartGame,
@@ -8,6 +9,7 @@ import {
   IShootMessage,
   IStartMessage,
 } from '@/services/axios/_types';
+import { IPlayerState } from '@/store/_types';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<null | WebSocket>(null);
@@ -20,6 +22,8 @@ export const useSocket = () => {
   const [isReady, setIsReady] = useState(false);
   const [winner, setWinner] = useState('');
   const dispatch = useAppDispatch();
+  const updatePerson = (state: IPlayerState, person: string) =>
+    dispatch(updateShipsLocationState({ state, person }));
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -54,12 +58,29 @@ export const useSocket = () => {
       };
 
       const connectHandler = (data: IStartGame & IConnectMessage) => {
-        const { isAbleShoot, isGameFinded, field, user } = data;
+        const {
+          isAbleShoot,
+          isGameFinded,
+          field,
+          user,
+          opponentName,
+          opponentField,
+        } = data;
+
         if (user.name !== userName) {
           setOpponentName(user.name);
         } else {
           if (field) {
-            // присвоить свое поле
+            setIsReady(true);
+            updatePerson(field, 'user');
+          }
+
+          if (opponentName) {
+            setOpponentName(opponentName);
+          }
+
+          if (opponentField) {
+            updatePerson(opponentField, 'opponent');
           }
           setIsAbleShoot(isAbleShoot);
         }
@@ -69,12 +90,12 @@ export const useSocket = () => {
       };
 
       const startHandler = (data: IStartGame & IStartMessage) => {
+        console.log('start');
         const { isStarted, field, user } = data;
         setIsStarted(!!isStarted);
         if (user.name !== userName) {
-          // присвоить поле оппонента
+          updatePerson(field, 'opponent');
         }
-        console.log('start');
       };
 
       const shootHandler = (data: IStartGame & IShootMessage) => {
