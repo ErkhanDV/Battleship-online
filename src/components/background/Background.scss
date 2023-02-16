@@ -1,4 +1,4 @@
-@import "../../index.scss";
+@import '../../scss/variables.scss';
 
 .background {
   position: fixed;
@@ -15,7 +15,7 @@
   z-index: -100;
   &::before {
     position: absolute;
-    content: "";
+    content: '';
     width: 66%;
     height: 66%;
     left: 17%;
@@ -25,7 +25,7 @@
   }
   &::after {
     position: absolute;
-    content: "";
+    content: '';
     width: 33%;
     height: 33%;
     left: 33%;
@@ -43,11 +43,7 @@
   height: 50%;
   border-right: 1px dashed $primaryColor-50;
   transform-origin: 100% 100%;
-  background: linear-gradient(
-    52deg,
-    transparent 55%,
-    $primaryColor-75 100%
-  );
+  background: linear-gradient(52deg, transparent 55%, $primaryColor-75 100%);
   animation: radarAnimation 10s infinite linear;
 }
 
@@ -71,7 +67,7 @@
   animation: shipFirstAnimation 10s infinite;
   &::before {
     position: absolute;
-    content: "";
+    content: '';
     width: 66%;
     height: 66%;
     left: calc(17% - 0.5px);
@@ -81,7 +77,7 @@
   }
   &::after {
     position: absolute;
-    content: "";
+    content: '';
     width: 33%;
     height: 33%;
     left: calc(33% - 0.5px);

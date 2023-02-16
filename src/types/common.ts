@@ -1,12 +1,5 @@
-import { ReactNode } from "react";
-
 export interface IProps {
   string: string;
-}
-
-export interface IRoute {
-  path: string;
-  element: JSX.Element;
 }
 
 export interface IModal {

@@ -1,0 +1,7 @@
+.battle-row {
+  display: flex;
+}
+.battleground {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+}

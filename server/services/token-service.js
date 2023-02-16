@@ -3,18 +3,27 @@ import { ModelToken } from "../models/token-model.js";
 
 class TokenService {
   generateTokens(payload) {
-    const accessToken = jwt.sign(payload, process.env.SERCRET_KEY, {
-      expiresIn: "1h",
+    const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS, {
+      expiresIn: '1h',
     });
-    const refreshToken = jwt.sign(payload, process.env.SERCRET_KEY, {
-      expiresIn: "1h",
+    const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH, {
+      expiresIn: '1h',
     });
     return { accessToken, refreshToken };
   }
 
-  validateToken(token) {
+  validateAcessToken(token) {
     try {
-      const userData = jwt.verify(token, process.env.SERCRET_KEY);
+      const userData = jwt.verify(token, process.env.SECRET_ACCESS);
+      return userData;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  validateRefreshToken(token) {
+    try {
+      const userData = jwt.verify(token, process.env.SECRET_REFRESH);
       return userData;
     } catch (error) {
       return null;
@@ -44,7 +53,6 @@ class TokenService {
     });
     return tokenData;
   }
-
 }
 
 export const tokenService = new TokenService();

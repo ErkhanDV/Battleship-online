@@ -43,14 +43,12 @@ export class UserController {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
 
-      res.cookie(
-        "user",
-        { id: userData.id, refreshToken: userData.refreshToken },
-        {
-          maxAge: 3600000,
-          httpOnly: true,
-        }
-      );
+      res.cookie('refreshToken', userData.refreshToken, {
+        maxAge: 3600000,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+      });
 
       return res.status(200).json(userData);
     } catch (error) {}

@@ -21,7 +21,7 @@ class UserService {
   }
 
   async logOut(refreshToken) {
-    const userData = tokenService.validateToken(refreshToken);
+    const userData = tokenService.validateRefreshToken(refreshToken);
 
     const user = await ModelUser.deleteOne({ _id: userData.id });
     const token = await tokenService.removeToken(refreshToken);
@@ -33,7 +33,7 @@ class UserService {
       return res.status(401).json({ message: "Пользователь не авторизован" });
     }
 
-    const userData = tokenService.validateToken(refreshToken);
+    const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenInDB = await tokenService.findToken(refreshToken);
 
     if (!userData || !tokenInDB) {
@@ -58,7 +58,7 @@ class UserService {
   }
 
   async startGame(refreshToken) {
-    const userData = tokenService.validateToken(refreshToken);
+    const userData = tokenService.validateRefreshToken(refreshToken);
     const users = await this.getUsers();
     const opponent = users.find((user) => !!user.isWaitingGame);
 
@@ -83,7 +83,7 @@ class UserService {
 
 
 
-    
+
 }
 
 export const userService = new UserService();
