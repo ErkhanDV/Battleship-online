@@ -30,8 +30,6 @@ const Ship = ({ decks }: IDecks) => {
   const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
     setShipHandler({ decks: null, isHorizontal: false });
     if (!!isSuccessfullyDrop) {
-      const target = event.target as HTMLDivElement;
-      target.remove();
       setNotDrop();
     }
   };

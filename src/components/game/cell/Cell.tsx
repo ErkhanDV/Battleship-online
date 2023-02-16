@@ -11,23 +11,19 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const decks = useAppSelector(
     (state) => state.currentShipSlice.currentDragedShip.decks,
   );
-
   const isHorizontal = useAppSelector(
     (state) => state.currentShipSlice.currentDragedShip.isHorizontal,
   );
-
   const isShooted = useAppSelector((state) => {
     const key = isRival ? 'rival' : 'user';
     return state.shipsLocationSlice[key].shipsLocation.find((ship) =>
       ship.woundedCells.includes(coordinate),
     );
   });
-
   const isMissed = useAppSelector((state) => {
     const key = isRival ? 'rival' : 'user';
     return state.shipsLocationSlice[key].misses.some((id) => id === coordinate);
   });
-
   const settedShips = useAppSelector(
     (state) => state.shipsLocationSlice.user.shipsLocation,
   );
