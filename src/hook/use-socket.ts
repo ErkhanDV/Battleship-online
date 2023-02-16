@@ -103,9 +103,9 @@ export const useSocket = () => {
         setIsAbleShoot(user.name !== userName);
 
         if (user.name === userName) {
-          checkShoot('user', shoot);
-        } else {
           checkShoot('rival', shoot);
+        } else {
+          checkShoot('user', shoot);
         }
         console.log('shoot');
       };

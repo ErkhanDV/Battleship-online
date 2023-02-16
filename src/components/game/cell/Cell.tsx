@@ -56,10 +56,10 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   const successfullyDrop = () => dispatch(setDropped(true));
 
   let classList = 'cell';
-  if (isShooted && !isRival) {
+  if (isShooted) {
     classList += ' hit';
   }
-  if (isMissed && !isRival) {
+  if (isMissed) {
     classList += ' miss';
   }
   if (isShip()) {
