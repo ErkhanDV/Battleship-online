@@ -6,15 +6,21 @@ import { FIELD } from '@/store/_constants';
 import './field.scss';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
-  const { isAbleShoot, isStarted } = useAppSelector(
+  const { isAbleShoot, isGameFinded } = useAppSelector(
     (state) => state.socketSlice,
   );
 
   return (
-    <div style={{ opacity: isAbleShoot ? 1 : 0.5 }} className="battleground">
+    <div
+      style={{ opacity: isAbleShoot && isRival ? 0.5 : 1 }}
+      className="battleground"
+    >
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
+      {isGameFinded || !isRival ? null : (
+        <div className="connection">Waiting for opponent...</div>
+      )}
     </div>
   );
 };

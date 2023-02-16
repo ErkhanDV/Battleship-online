@@ -26,9 +26,18 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       await AuthService.logout();
+      navigate('/');
       setUser('');
     } else {
       handlerOpenModal('log');
+    }
+  };
+
+  const gameHandler = () => {
+    if (isAuthorized) {
+      if (location.pathname !== '/game') navigate('/game');
+    } else {
+      setModalOpen(true);
     }
   };
 
@@ -47,9 +56,9 @@ const Header: FC = () => {
             </NavLink>
           </li>
           <li className="navigation_item">
-            <NavLink to="/game" className="navigation_link">
+            <div onClick={gameHandler} className="navigation_link">
               Play
-            </NavLink>
+            </div>
           </li>
           <li className="navigation_item">
             <NavLink to="/rules" className="navigation_link">

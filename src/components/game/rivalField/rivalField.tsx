@@ -15,16 +15,12 @@ const RivalField: FC<{ socket: WebSocket | null }> = ({ socket }) => {
     }
   };
 
-  if (isGameFinded) {
-    return (
-      <div onClick={shootHandler} className="opponent">
-        <div className="opponent-name">{opponentName}</div>
-        <Field isRival={true} />
-      </div>
-    );
-  } else {
-    return <div>Waiting for opponent...</div>;
-  }
+  return (
+    <div onClick={shootHandler} className="opponent">
+      <div className="opponent-name">{opponentName ? opponentName : 'Unknown'}</div>
+      <Field isRival={true} />
+    </div>
+  );
 };
 
 export default RivalField;
