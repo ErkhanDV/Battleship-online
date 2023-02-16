@@ -99,19 +99,19 @@ export const useSocket = () => {
       };
 
       const shootHandler = (data: IStartGame & IShoot) => {
-        const { user, coordinates } = data;
+        const { user, shoot } = data;
         setIsAbleShoot(user.name !== userName);
 
         if (user.name === userName) {
-          checkShoot('user', coordinates.target);
+          checkShoot('user', shoot);
         } else {
-          checkShoot('rival', coordinates.target);
+          checkShoot('rival', shoot);
         }
         console.log('shoot');
       };
 
       const gameOverHandler = (data: IStartGame & IShoot) => {
-        const { user, coordinates } = data;
+        const { user, shoot } = data;
         //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
         setWinner(user.name);
         console.log('gameover');

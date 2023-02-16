@@ -27,7 +27,7 @@ export interface IStart {
 }
 
 export interface IShoot {
-  coordinates: { target: number; isDamaged: boolean };
+  shoot: number;
 }
 
 export type TSocketMessage = IStartGame & IStart & IConnect & IShoot;
