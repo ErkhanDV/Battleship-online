@@ -33,26 +33,6 @@ const Game: FC = () => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   if (location.pathname !== '/game') {
-  //      console.log(true);
-  //     updateShipsLocationState(
-  //       {
-  //         shipsLocation: [],
-  //         misses: [],
-  //       },
-  //       'user',
-  //     );
-  //     updateShipsLocationState(
-  //       {
-  //         shipsLocation: [],
-  //         misses: [],
-  //       },
-  //       'rival',
-  //     );
-  //   }
-  // }, [location]);
-
   const ships = getSettedShips(shipsLocation);
 
   const readyHandler = () => {
@@ -90,6 +70,7 @@ const Game: FC = () => {
         {renderButton()}
         <div className="fields">
           <div className="user">
+            <div className="name">You</div>
             <Field isRival={false} />
           </div>
           <RivalField socket={socket} />

@@ -1,7 +1,18 @@
+@import '../../../scss/variables.scss';
+
 .battle-row {
   display: flex;
 }
 .battleground {
   display: grid;
+  position: relative;
   grid-template-columns: repeat(10, 30px);
+
+  .connection {
+    color: $dark;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
