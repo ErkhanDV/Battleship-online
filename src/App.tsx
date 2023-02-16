@@ -14,9 +14,6 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalChildren, setModalChildren] = useState(<Settings />);
-
   const check = async () => {
     const isAuth = await AuthService.checkAuth();
 
@@ -37,14 +34,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header setModalOpen={setModalOpen} setModalChildren={setModalChildren} />
+      <Header />
       <AppRouter />
       <Footer />
-      <Modal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        children={modalChildren}
-      />
+      <Modal />
       <Background />
     </div>
   );

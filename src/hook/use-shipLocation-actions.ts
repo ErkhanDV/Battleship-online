@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hook/use-redux';
-import * as shipActions from '@/store/reducers/shipsLocationSlice';
+import * as shipActions from '@/store/reducers/ShipsLocationSlice';
 import {
   IGameState,
   IPlayerState,

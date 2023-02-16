@@ -6,7 +6,7 @@ export interface ICycleConfig extends InternalAxiosRequestConfig {
 
 export interface IUser {
   id: string;
-  name: string | undefined;
+  name: string;
   accessToken: string;
   refreshToken: string;
 }

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/_index';
-import { setDropped } from '@/store/reducers/currentShipSlice';
-import { addShip } from '@/store/reducers/shipsLocationSlice';
+import { setDropped } from '@/store/reducers/CurrentShipSlice';
+import { addShip } from '@/store/reducers/ShipsLocationSlice';
 import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
 import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';

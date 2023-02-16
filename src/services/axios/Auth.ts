@@ -4,7 +4,7 @@ import { IUser } from './_types';
 import { STATUS, CLONE_SERVER } from './_constants';
 
 export class AuthService {
-  static async login(name: string): Promise<IUser | undefined> {
+  static async login(name: string): Promise<IUser> {
     try {
       const { status, data } = await axiosAPI.post<IUser>('/login', { name });
 
@@ -20,12 +20,14 @@ export class AuthService {
       }
       console.log(error);
     }
+    return { id: '', name: '', refreshToken: '', accessToken: '' };
   }
 
   static async logout(): Promise<Boolean | undefined> {
     try {
       const { status } = await axiosAPI.delete('/logout');
       if (status === STATUS.ok) {
+        localStorage.removeItem('token');
         return true;
       }
       return false;
@@ -46,12 +48,12 @@ export class AuthService {
       });
       if (data) {
         localStorage.setItem('token', data.accessToken);
-        // set user in store
-        // set auth is true in store
         return true;
       }
+      localStorage.removeItem('token');
       return false;
     } catch (error) {
+      localStorage.removeItem('token');
       if (error instanceof AxiosError) {
         const { status, message } = error.response?.data;
         console.log(`status: ${status}; error: ${message}`);

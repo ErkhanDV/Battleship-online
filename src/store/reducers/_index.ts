@@ -1,9 +1,13 @@
-import { useAppDispatch } from '@/hook/use-redux';
-import * as socketActions from '@/store/reducers/socketSlice';
-import userSlice from './userSlice';
-import currentShipSlice from './currentShipSlice';
-import shipsLocationSlice from './shipsLocationSlice';
-import socketSlice from './socketSlice';
+import userSlice from './UserSlice';
+import currentShipSlice from './CurrentShipSlice';
+import shipsLocationSlice from './ShipsLocationSlice';
+import socketSlice from './SocketSlice';
+import logInSlice from './LogInSlice';
 
-export { userSlice, shipsLocationSlice, currentShipSlice, socketSlice };
-
+export {
+  userSlice,
+  shipsLocationSlice,
+  currentShipSlice,
+  socketSlice,
+  logInSlice,
+};

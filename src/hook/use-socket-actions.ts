@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hook/use-redux';
-import * as socketActions from '@/store/reducers/socketSlice';
+import * as socketActions from '@/store/reducers/SocketSlice';
 import { IStartGame } from '@/store/reducers/types/socket';
 
 export const useSocketActions = () => {
