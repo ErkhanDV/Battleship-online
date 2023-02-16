@@ -1,8 +1,5 @@
-import Home from '@/pages/home/Home';
-import Rules from '@/pages/rules/Rules';
-import Settings from '@/components/settings/Settings';
-import LogIn from '@/pages/login/LogIn';
-import Game from '@/pages/game/Game';
+import { Home, Rules, LogIn, Game } from '@/pages/_index';
+import { Settings } from '@/components/_index';
 import { IRoute } from './_types';
 
 const routes: IRoute[] = [
