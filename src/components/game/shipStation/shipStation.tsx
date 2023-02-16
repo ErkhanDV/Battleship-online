@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { useAppSelector, useShipLocationActions } from '@/hook/_index';
-import { Ship } from '../game/_index';
+import { Ship } from '../_index';
 import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import { IShip } from '@/store/reducers/types/shipLocation';
 

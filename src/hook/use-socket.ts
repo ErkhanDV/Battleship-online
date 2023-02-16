@@ -22,7 +22,7 @@ export const useSocket = () => {
     setUserName,
     setWinner,
   } = useSocketActions();
-  const { updatePerson, checkShoot } = useShipLocationActions();
+  const { updateShipsLocationState, checkShoot } = useShipLocationActions();
   const { gameInfo, userName } = useAppSelector((state) => state.socketSlice);
 
   useEffect(() => {
@@ -67,14 +67,12 @@ export const useSocket = () => {
           opponentField,
         } = data;
 
-        console.log(data);
-
         if (user.name !== userName) {
           setOpponentName(user.name);
         } else {
           if (field) {
             setIsReady(true);
-            updatePerson(field, 'user');
+            updateShipsLocationState(field, 'user');
           }
 
           if (opponentName) {
@@ -82,7 +80,7 @@ export const useSocket = () => {
           }
 
           if (opponentField) {
-            updatePerson(opponentField, 'opponent');
+            updateShipsLocationState(opponentField, 'opponent');
           }
           setIsAbleShoot(isAbleShoot);
         }
@@ -96,7 +94,7 @@ export const useSocket = () => {
         const { isStarted, field, user } = data;
         setIsStarted(!!isStarted);
         if (user.name !== userName) {
-          updatePerson(field, 'opponent');
+          updateShipsLocationState(field, 'opponent');
         }
       };
 
@@ -109,7 +107,6 @@ export const useSocket = () => {
         } else {
           checkShoot('rival', coordinates.target);
         }
-
         console.log('shoot');
       };
 

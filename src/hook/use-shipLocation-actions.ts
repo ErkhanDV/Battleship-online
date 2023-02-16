@@ -1,11 +1,15 @@
 import { useAppDispatch } from '@/hook/use-redux';
 import * as shipActions from '@/store/reducers/shipsLocationSlice';
-import { IPlayerState, IShip } from '@/store/reducers/types/shipLocation';
+import {
+  IGameState,
+  IPlayerState,
+  IShip,
+} from '@/store/reducers/types/shipLocation';
 
 export const useShipLocationActions = () => {
   const dispatch = useAppDispatch();
 
-  const updatePerson = (state: IPlayerState, person: string) =>
+  const updateShipsLocationState = (state: IPlayerState, person: string) =>
     dispatch(shipActions.updateShipsLocationState({ state, person }));
 
   const checkShoot = (player: string, cell: number) =>
@@ -15,8 +19,8 @@ export const useShipLocationActions = () => {
     dispatch(shipActions.addShip({ player: 'user', ship }));
 
   return {
-    updatePerson,
+    updateShipsLocationState,
     checkShoot,
-    addShip
+    addShip,
   };
 };

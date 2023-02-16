@@ -11,10 +11,7 @@ const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   );
 
   return (
-    <div
-      style={{ opacity: isAbleShoot ? 1 : 0.5 }}
-      className="battleground"
-    >
+    <div style={{ opacity: isAbleShoot ? 1 : 0.5 }} className="battleground">
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
