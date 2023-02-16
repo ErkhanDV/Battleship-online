@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { FC, useState } from 'react';
 import { AuthService } from '@/services/axios/Auth';
-import { STATUS } from '@/services/axios/_constants';
 
 const LogIn: FC = () => {
   const [name, setName] = useState('');

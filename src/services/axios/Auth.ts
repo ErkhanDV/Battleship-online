@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { axiosAPI } from './_interceptors';
-import { IUser } from '@/store/_types';
+import { IUser } from './_types';
 import { STATUS, CLONE_SERVER } from './_constants';
 
 export class AuthService {

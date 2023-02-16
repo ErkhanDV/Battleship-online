@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '@/hook/use-redux';
-import { updateShipsLocationState } from '@/store/reducers/shipsLocationSlice';
+import {
+  updateShipsLocationState,
+  addShoot,
+} from '@/store/reducers/shipsLocationSlice';
 import { SOCKET } from '@/services/axios/_constants';
 import {
   IStartGame,
@@ -8,8 +11,8 @@ import {
   IConnectMessage,
   IShootMessage,
   IStartMessage,
-} from '@/services/axios/_types';
-import { IPlayerState } from '@/store/_types';
+} from '@/store/reducers/types/socket';
+import { IPlayerState } from '@/store/reducers/types/shipLocation';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<null | WebSocket>(null);
@@ -22,8 +25,12 @@ export const useSocket = () => {
   const [isReady, setIsReady] = useState(false);
   const [winner, setWinner] = useState('');
   const dispatch = useAppDispatch();
+
   const updatePerson = (state: IPlayerState, person: string) =>
     dispatch(updateShipsLocationState({ state, person }));
+
+  const checkShoot = (player: string, cell: number) =>
+    dispatch(addShoot({ player, cell }));
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -102,10 +109,12 @@ export const useSocket = () => {
 
       const shootHandler = (data: IStartGame & IShootMessage) => {
         const { user, coordinates } = data;
-        setIsAbleShoot(!(user.name === userName));
+        setIsAbleShoot(user.name !== userName);
 
         if (user.name === userName) {
+          checkShoot('user', coordinates.target);
         } else {
+          checkShoot('rival', coordinates.target);
         }
 
         console.log('shoot');

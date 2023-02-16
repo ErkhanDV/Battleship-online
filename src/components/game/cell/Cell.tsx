@@ -4,7 +4,8 @@ import { addShip } from '@/store/reducers/shipsLocationSlice';
 import { dragOverHandler } from '@/lib/API/DragAndDrop/dragOver';
 import { dragEndHandler } from '@/lib/API/DragAndDrop/dragEnd';
 import { dropHadler } from '@/lib/API/DragAndDrop/drop';
-import { ICell, IShip } from '@/store/_types';
+import { ICell } from './_types';
+import { IShip } from '@/store/reducers/types/shipLocation';
 import './Cell.scss';
 
 const Cell = ({ coordinate, isRival }: ICell) => {
@@ -55,11 +56,7 @@ const Cell = ({ coordinate, isRival }: ICell) => {
   const setLocations = (ship: IShip) =>
     dispatch(addShip({ player: 'user', ship }));
   const successfullyDrop = () => dispatch(setDropped(true));
-  const handleClick = (isRival: boolean | undefined) => {
-    if (!!isRival) {
-      console.log(coordinate);
-    }
-  };
+
   let classList = 'cell';
   if (isShooted && !isRival) {
     classList += ' hit';
@@ -73,7 +70,6 @@ const Cell = ({ coordinate, isRival }: ICell) => {
 
   return (
     <div
-      onClick={() => handleClick(isRival)}
       id={coordinate.toString()}
       className={classList}
       onDragOver={(event) =>

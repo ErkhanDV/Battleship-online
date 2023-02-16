@@ -1,6 +1,9 @@
 import { DragEvent } from 'react';
 
-import { IAddShip, IShip, IShipsLocation } from '@/store/_types';
+import {
+  IAddShip,
+  IShip,
+} from '@/store/reducers/types/shipLocation';
 
 export type IDragHandler = (
   event: DragEvent<HTMLDivElement>,

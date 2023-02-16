@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IShipsLocation, IAddShip, IGameState, IShoot } from '../_types';
+import {
+  IShipsLocation,
+  IAddShip,
+  IGameState,
+  IShoot,
+} from './types/shipLocation';
 
 const initialState: IShipsLocation = {
   user: {
@@ -21,18 +26,6 @@ const shipsLocationSlice = createSlice({
         action.payload.ship,
       );
     },
-
-    // addMiss(state, action: PayloadAction<IAddMiss>) {
-    //   state[action.payload.player as keyof typeof state].misses.push(
-    //     action.payload.miss,
-    //   );
-    // },
-
-    // setWoundedCell(state, action: PayloadAction<IAddWoundedCell>) {
-    //   state[action.payload.player as keyof typeof state].shipsLocation[
-    //     action.payload.cell.index
-    //   ].woundedCells.push(action.payload.cell.cellId);
-    // },
 
     addShoot(state, action: PayloadAction<IShoot>) {
       const player = action.payload.player;

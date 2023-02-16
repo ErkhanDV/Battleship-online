@@ -2,8 +2,6 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
-import Modal from '@/components/modal/Modal';
-import Background from '@/components/background/Background';
 import './Home.scss';
 import { Link } from 'react-router-dom';
 import Settings from '@/components/settings/Settings';

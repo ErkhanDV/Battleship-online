@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Settings from '@/components/settings/Settings';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { AuthService } from '@/services/axios/Auth';
-import { IHeader } from '@/types/Types';
+import { IHeader } from './_types';
 import './Header.scss';
 
 const Header = ({ setModalOpen, setModalChildren }: IHeader) => {

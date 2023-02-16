@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { setCurrentShip, setDropped } from '@/store/reducers/currentShipSlice';
-import { ICurrentShip, IDecks } from '@/store/_types';
+import { ICurrentShip } from '@/store/reducers/types/currentShip';
+import { IDecks } from './_types';
 import './ship.scss';
 
 const Ship = ({ decks }: IDecks) => {

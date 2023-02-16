@@ -1,4 +1,4 @@
-import { IShip } from '@/store/_types';
+import { IShip } from '@/store/reducers/types/shipLocation';
 
 export const isCanDrop = (settedShips: IShip[], currentShip: number[]) => {
   return !settedShips.some((ship) => {

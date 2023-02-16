@@ -1,6 +1,6 @@
-import { getRandomNum } from '@/lib/helpers/getRandomNum';
-import { getShipOrientation } from '@/lib/helpers/getShipOrientation';
-import { IShip } from '@/store/_types';
+import { getRandomNum } from '@/lib/utils/getRandomNum';
+import { getShipOrientation } from '@/lib/utils/getShipOrientation';
+import { IShip } from '@/store/reducers/types/shipLocation';
 import { isCanDrop } from './isCanDrop';
 
 const notAvailableIndexesRight = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];

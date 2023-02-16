@@ -7,10 +7,10 @@ import Footer from '@/components/footer/Footer';
 import Field from '@/components/game/battleground/Field';
 import Ship from '@/components/game/ship/ship';
 import './game.scss';
-import { getSettedShips } from '@/lib/helpers/getSettedShips';
+import { getSettedShips } from '@/lib/utils/getSettedShips';
 import { addShip } from '@/store/reducers/shipsLocationSlice';
 import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
-import { IShip } from '@/store/_types';
+import { IShip } from '@/store/reducers/types/shipLocation';
 
 const Game: FC = () => {
   const {
@@ -59,6 +59,7 @@ const Game: FC = () => {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
       }
     }
+
   };
 
   const exitSocket = () => {

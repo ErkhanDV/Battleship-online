@@ -1,4 +1,4 @@
-import { IModal } from '@/types/Types';
+import { IModal } from './_types';
 import './Modal.scss';
 
 const Modal = ({ modalOpen, setModalOpen, children }: IModal) => {
