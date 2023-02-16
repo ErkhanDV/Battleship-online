@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import {
-  Header,
-  Footer,
-  Background,
-  Settings,
-  Modal,
-} from '@/components/_index';
+import { useLogInActions, useShipLocationActions } from './hook/_index';
+import { Header, Footer, Background, Modal } from '@/components/_index';
 import { AuthService } from '@/services/axios/Auth';
+import { IUser } from '@/services/axios/_types';
 
 const App = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const { setUser } = useLogInActions();
+  const { updateShipsLocationState } = useShipLocationActions();
 
   const check = async () => {
-    const isAuth = await AuthService.checkAuth();
-
-    if (!isAuth) {
-      if (location.pathname !== '/') {
-        navigate('/');
-      }
+    const auth = await AuthService.checkAuth();
+    if (auth) {
+      setUser(auth.name);
+    } else {
+      setUser('');
     }
   };
 
   useEffect(() => {
+    const initial = { shipsLocation: [], misses: [] };
     if (localStorage.getItem('token')) {
       check();
-    } else {
-      if (location.pathname !== '/') navigate('/');
     }
-  }, []);
+
+    if (location.pathname !== '/game') {
+      updateShipsLocationState(initial, 'user');
+      updateShipsLocationState(initial, 'rival');
+    }
+  }, [location]);
 
   return (
     <div className="App">

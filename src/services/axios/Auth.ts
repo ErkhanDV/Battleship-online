@@ -41,23 +41,23 @@ export class AuthService {
     }
   }
 
-  static async checkAuth(): Promise<Boolean | undefined> {
+  static async checkAuth(): Promise<IUser | undefined> {
     try {
       const { data } = await axios.get<IUser>(`${CLONE_SERVER}/refresh`, {
         withCredentials: true,
       });
       if (data) {
         localStorage.setItem('token', data.accessToken);
-        return true;
+        return data;
       }
       localStorage.removeItem('token');
-      return false;
+      return undefined;
     } catch (error) {
       localStorage.removeItem('token');
       if (error instanceof AxiosError) {
         const { status, message } = error.response?.data;
         console.log(`status: ${status}; error: ${message}`);
-        return message;
+        return undefined;
       }
       console.log(error);
     }
