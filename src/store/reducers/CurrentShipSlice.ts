@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICurrentShip, IDragedShip } from '@/store/_types';
+import { ICurrentShip, IDragedShip } from './types/currentShip';
 
 const initialState: IDragedShip = {
   currentDragedShip: {

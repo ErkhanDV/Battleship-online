@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import { axiosAPI } from './_interceptors';
-import { IUser } from '@/store/_types';
+import { IUser } from './_types';
 import { STATUS, CLONE_SERVER } from './_constants';
 
 export class AuthService {
-  static async login(name: string): Promise<IUser | undefined> {
+  static async login(name: string): Promise<IUser> {
     try {
       const { status, data } = await axiosAPI.post<IUser>('/login', { name });
 
@@ -20,12 +20,14 @@ export class AuthService {
       }
       console.log(error);
     }
+    return { id: '', name: '', refreshToken: '', accessToken: '' };
   }
 
   static async logout(): Promise<Boolean | undefined> {
     try {
       const { status } = await axiosAPI.delete('/logout');
       if (status === STATUS.ok) {
+        localStorage.removeItem('token');
         return true;
       }
       return false;
@@ -39,23 +41,23 @@ export class AuthService {
     }
   }
 
-  static async checkAuth(): Promise<Boolean | undefined> {
+  static async checkAuth(): Promise<IUser | undefined> {
     try {
       const { data } = await axios.get<IUser>(`${CLONE_SERVER}/refresh`, {
         withCredentials: true,
       });
       if (data) {
         localStorage.setItem('token', data.accessToken);
-        // set user in store
-        // set auth is true in store
-        return true;
+        return data;
       }
-      return false;
+      localStorage.removeItem('token');
+      return undefined;
     } catch (error) {
+      localStorage.removeItem('token');
       if (error instanceof AxiosError) {
         const { status, message } = error.response?.data;
         console.log(`status: ${status}; error: ${message}`);
-        return message;
+        return undefined;
       }
       console.log(error);
     }

@@ -1,18 +1,29 @@
 import { useState, useEffect } from 'react';
+import { useAppSelector } from '@/hook/use-redux';
 import { SOCKET } from '@/services/axios/_constants';
-import { IStartGame, ISocketMessage } from '@/services/axios/_types';
-import { ShipCoordinates } from '@/store/_types';
+import {
+  IStartGame,
+  TSocketMessage,
+  IConnect,
+  IShoot,
+  IStart,
+} from '@/store/reducers/types/socket';
+import { useSocketActions, useShipLocationActions } from './_index';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<null | WebSocket>(null);
-  const [gameInfo, setGameInfo] = useState<null | IStartGame>(null);
-  const [userName, setUserName] = useState('');
-  const [opponentName, setOpponentName] = useState('');
-  const [isGameFinded, setIsGameFinded] = useState(false);
-  const [isStarted, setIsStarted] = useState(false);
-  const [isAbleShoot, setIsAbleShoot] = useState(true);
-  const [isReady, setIsReady] = useState(false);
-  const [winner, setWinner] = useState('');
+  const {
+    setGameInfo,
+    setIsAbleShoot,
+    setIsGameFinded,
+    setIsReady,
+    setIsStarted,
+    setOpponentName,
+    setUserName,
+    setWinner,
+  } = useSocketActions();
+  const { updateShipsLocationState, checkShoot } = useShipLocationActions();
+  const { gameInfo, userName } = useAppSelector((state) => state.socketSlice);
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -21,7 +32,7 @@ export const useSocket = () => {
       };
 
       socket.onmessage = (response) => {
-        const data: ISocketMessage = JSON.parse(response.data);
+        const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
 
         switch (method) {
@@ -46,31 +57,61 @@ export const useSocket = () => {
         }
       };
 
-      const connectHandler = (data: ISocketMessage) => {
-        if (data.user.name !== userName) {
-          setOpponentName(data.user.name);
+      const connectHandler = (data: IStartGame & IConnect) => {
+        const {
+          isAbleShoot,
+          isGameFinded,
+          field,
+          user,
+          opponentName,
+          opponentField,
+        } = data;
+
+        if (user.name !== userName) {
+          setOpponentName(user.name);
         } else {
-          setIsAbleShoot(data.isAbleShoot);
+          if (field) {
+            setIsReady(true);
+            updateShipsLocationState(field, 'user');
+          }
+
+          if (opponentName) {
+            setOpponentName(opponentName);
+          }
+
+          if (opponentField) {
+            updateShipsLocationState(opponentField, 'opponent');
+          }
+          setIsAbleShoot(isAbleShoot);
         }
 
-        setIsGameFinded(data.isGameFinded);
+        setIsGameFinded(isGameFinded);
         console.log('connection');
       };
 
-      const startHandler = (data: ISocketMessage) => {
-        setIsStarted(!!data.isStarted);
+      const startHandler = (data: IStartGame & IStart) => {
         console.log('start');
+        const { isStarted, field, user } = data;
+        setIsStarted(!!isStarted);
+        if (user.name !== userName) {
+          updateShipsLocationState(field, 'opponent');
+        }
       };
 
-      const shootHandler = (data: ISocketMessage) => {
-        const { user, coordinates } = data;
-        setIsAbleShoot(!(user.name === userName));
-        //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
+      const shootHandler = (data: IStartGame & IShoot) => {
+        const { user, shoot } = data;
+        setIsAbleShoot(user.name !== userName);
+
+        if (user.name === userName) {
+          checkShoot('rival', shoot);
+        } else {
+          checkShoot('user', shoot);
+        }
         console.log('shoot');
       };
 
-      const gameOverHandler = (data: ISocketMessage) => {
-        const { user, coordinates } = data;
+      const gameOverHandler = (data: IStartGame & IShoot) => {
+        const { user, shoot } = data;
         //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
         setWinner(user.name);
         console.log('gameover');
@@ -84,16 +125,5 @@ export const useSocket = () => {
     setUserName(response.user.name);
   };
 
-  return {
-    init,
-    gameInfo,
-    socket,
-    opponentName,
-    isGameFinded,
-    isReady,
-    setIsReady,
-    isStarted,
-    isAbleShoot,
-    winner,
-  };
+  return { init, socket };
 };
