@@ -1,17 +1,18 @@
+import { FC } from 'react';
+import { useAppSelector } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
-import { IField } from './_types';
-
-import './field.scss';
 import { FIELD } from '@/store/_constants';
 
-const Field = ({
-  isRival,
-  isAbleShoot = true,
-  isStarted = true,
-}: IField) => {
+import './field.scss';
+
+const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
+  const { isAbleShoot, isStarted } = useAppSelector(
+    (state) => state.socketSlice,
+  );
+
   return (
     <div
-      style={{ opacity: isAbleShoot && isStarted ? 1 : 0.5 }}
+      style={{ opacity: isAbleShoot ? 1 : 0.5 }}
       className="battleground"
     >
       {FIELD.map((_, index) => (
