@@ -1,26 +1,11 @@
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/header/Header';
-import Footer from '@/components/footer/Footer';
+import { FC } from 'react';
 import './Home.scss';
 import { Link } from 'react-router-dom';
-import Settings from '@/components/settings/Settings';
 
 const Home: FC = () => {
-  const navigate = useNavigate();
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalChildren, setModalChildren] = useState(<Settings />);
-
   return (
     <div className="home">
-      <Header setModalOpen={setModalOpen} setModalChildren={setModalChildren} />
       <main className="main">
-        {/* <Modal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        children={modalChildren}
-      /> */}
         <section className="section">
           <h2 className="section_title">Welcome to the ButtleShip Online!</h2>
           <p className="section_paragraph">
@@ -52,7 +37,6 @@ const Home: FC = () => {
           <p className="section_paragraph">Please login to your account.</p>
         </section>
       </main>
-      <Footer />
     </div>
   );
 };

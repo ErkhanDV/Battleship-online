@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Settings from '@/components/settings/Settings';
+import { Settings, LogIn } from '@/components/_index';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { AuthService } from '@/services/axios/Auth';
 import { IHeader } from './_types';
@@ -16,13 +16,13 @@ const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
     setMenuVisible(false);
   };
 
-  const logOutHandler = async () => {
-    const isOut = await AuthService.logout();
+  // const logOutHandler = async () => {
+  //   const isOut = await AuthService.logout();
 
-    if (isOut) {
-      navigate('/');
-    }
-  };
+  //   if (isOut) {
+  //     navigate('/');
+  //   }
+  // };
 
   return (
     <header className="header">
@@ -54,8 +54,11 @@ const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
           >
             Settings
           </li>
-          <li onClick={logOutHandler} className="navigation_item">
-            Log out
+          <li
+            className="navigation_item"
+            onClick={() => handlerOpenModal(<LogIn />)}
+          >
+            Login
           </li>
         </ul>
       </nav>

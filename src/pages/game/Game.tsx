@@ -7,7 +7,6 @@ import {
   useShipLocationActions,
 } from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
-import { Header, Footer } from '@/components/_index';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
 import './game.scss';
@@ -87,7 +86,6 @@ const Game: FC = () => {
 
   return (
     <div className="game">
-      <Header />
       <main className="game-wrapper">
         {renderButton()}
         <div className="fields">
@@ -98,7 +96,6 @@ const Game: FC = () => {
         </div>
         <ShipStation ships={ships} />
       </main>
-      <Footer />
     </div>
   );
 };

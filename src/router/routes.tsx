@@ -5,10 +5,6 @@ import { IRoute } from './_types';
 const routes: IRoute[] = [
   {
     path: '/',
-    element: <LogIn />,
-  },
-  {
-    path: '/home',
     element: <Home />,
   },
   {

@@ -1,12 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import Background from './components/background/Background';
+import {
+  Header,
+  Footer,
+  Background,
+  Settings,
+  Modal,
+} from '@/components/_index';
 import { AuthService } from '@/services/axios/Auth';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalChildren, setModalChildren] = useState(<Settings />);
 
   const check = async () => {
     const isAuth = await AuthService.checkAuth();
@@ -28,7 +37,14 @@ const App = () => {
 
   return (
     <div className="App">
+      <Header setModalOpen={setModalOpen} setModalChildren={setModalChildren} />
       <AppRouter />
+      <Footer />
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        children={modalChildren}
+      />
       <Background />
     </div>
   );
