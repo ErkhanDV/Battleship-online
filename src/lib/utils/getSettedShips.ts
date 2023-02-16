@@ -1,4 +1,4 @@
-import { IShip } from '@/store/_types';
+import { IShip } from '@/store/reducers/types/shipLocation';
 
 export const getSettedShips = (settedShips: IShip[]) => {
   const shipsList = settedShips.map((ship) => ship.decks);

@@ -1,26 +1,34 @@
-import { useState } from 'react';
-import Settings from '@/components/settings/Settings';
+import { useState, useEffect, FC } from 'react';
+import { Settings, LogIn } from '@/components/_index';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { AuthService } from '@/services/axios/Auth';
-import { IHeader } from '@/types/Types';
 import './Header.scss';
+import { useLogInActions, useAppSelector } from '@/hook/_index';
 
-const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
+const Header: FC = () => {
   const navigate = useNavigate();
-
+  const { setModalOpen, setUser, setModalChildren } = useLogInActions();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [logStatus, setlogStatus] = useState('LogIn');
 
-  const handlerOpenModal = (component: JSX.Element) => {
+  const { user, isAuthorized } = useAppSelector((state) => state.logInSlice);
+
+  useEffect(() => {
+    setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
+  }, [isAuthorized]);
+
+  const handlerOpenModal = (component: string) => {
     setModalOpen(true);
     setModalChildren(component);
     setMenuVisible(false);
   };
 
-  const logOutHandler = async () => {
-    const isOut = await AuthService.logout();
-
-    if (isOut) {
-      navigate('/');
+  const logHandler = async () => {
+    if (isAuthorized) {
+      await AuthService.logout();
+      setUser('');
+    } else {
+      handlerOpenModal('log');
     }
   };
 
@@ -50,12 +58,12 @@ const Header = ({ setModalOpen, setModalChildren }: IHeader) => {
           </li>
           <li
             className="navigation_item"
-            onClick={() => handlerOpenModal(<Settings />)}
+            onClick={() => handlerOpenModal('settings')}
           >
             Settings
           </li>
-          <li onClick={logOutHandler} className="navigation_item">
-            Log out
+          <li className="navigation_item" onClick={() => logHandler()}>
+            {logStatus}
           </li>
         </ul>
       </nav>

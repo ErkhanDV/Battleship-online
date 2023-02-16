@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import Background from './components/background/Background';
+import {
+  Header,
+  Footer,
+  Background,
+  Settings,
+  Modal,
+} from '@/components/_index';
 import { AuthService } from '@/services/axios/Auth';
 
 const App = () => {
@@ -28,7 +34,10 @@ const App = () => {
 
   return (
     <div className="App">
+      <Header />
       <AppRouter />
+      <Footer />
+      <Modal />
       <Background />
     </div>
   );

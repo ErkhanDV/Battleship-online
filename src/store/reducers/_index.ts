@@ -1,5 +1,13 @@
-import userSlice from './userSlice';
-import currentShipSlice from './currentShipSlice';
-import shipsLocationSlice from './shipsLocationSlice';
+import userSlice from './UserSlice';
+import currentShipSlice from './CurrentShipSlice';
+import shipsLocationSlice from './ShipsLocationSlice';
+import socketSlice from './SocketSlice';
+import logInSlice from './LogInSlice';
 
-export { userSlice, shipsLocationSlice, currentShipSlice };
+export {
+  userSlice,
+  shipsLocationSlice,
+  currentShipSlice,
+  socketSlice,
+  logInSlice,
+};

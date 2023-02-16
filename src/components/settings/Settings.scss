@@ -7,7 +7,9 @@
   align-items: center;
   &_title {
     position: relative;
+    position: relative;
     width: 100%;
+    padding-bottom: 20px;
     padding-bottom: 20px;
     text-align: center;
     text-transform: uppercase;
@@ -15,6 +17,23 @@
     line-height: 1.4;
     letter-spacing: 5px;
     border-bottom: 2px dashed $primaryColor-50;
+    &::before,
+    &::after {
+      position: absolute;
+      content: 'settings';
+      left: 26%;
+      top: -15px;
+      font-family: 'Material Symbols Outlined';
+      font-size: 52px;
+      font-weight: 100;
+      color: $primaryColor-100;
+      animation: settingsAnimation 10s infinite;
+    }
+    &::after {
+      left: 64%;
+      top: -32px;
+      font-weight: 200;
+    }
     &::before,
     &::after {
       position: absolute;

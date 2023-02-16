@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios';
 import { CLONE_SERVER } from './_constants';
 import { ICycleConfig } from './_types';
-import { IUser } from '@/store/_types';
+import { IUser } from './_types';
 
 export const axiosAPI = axios.create({
   withCredentials: true,

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
-import { setCurrentShip, setDropped } from '@/store/reducers/currentShipSlice';
-import { ICurrentShip, IDecks } from '@/store/_types';
+import { setCurrentShip, setDropped } from '@/store/reducers/CurrentShipSlice';
+import { ICurrentShip } from '@/store/reducers/types/currentShip';
+import { IDecks } from './_types';
 import './ship.scss';
 
 const Ship = ({ decks }: IDecks) => {
@@ -30,8 +31,6 @@ const Ship = ({ decks }: IDecks) => {
   const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
     setShipHandler({ decks: null, isHorizontal: false });
     if (!!isSuccessfullyDrop) {
-      const target = event.target as HTMLDivElement;
-      target.remove();
       setNotDrop();
     }
   };

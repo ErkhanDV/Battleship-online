@@ -1,4 +1,4 @@
-import { IDragHandler } from './types';
+import { IDragHandler } from './_types';
 
 export const dragEndHandler: IDragHandler = (
   event,
