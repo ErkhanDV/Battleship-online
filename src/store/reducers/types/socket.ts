@@ -1,7 +1,18 @@
 import { IPlayerState } from './shipLocation';
 import { IStartGame } from '@/services/axios/_types';
 
-export interface IConnectMessage {
+export interface ISocket {
+  gameInfo: null | IStartGame;
+  userName: string;
+  opponentName: string;
+  isGameFinded: boolean;
+  isStarted: boolean;
+  isAbleShoot: boolean;
+  isReady: boolean;
+  winner: string;
+}
+
+export interface IConnect {
   method: string;
   isGameFinded: boolean;
   isAbleShoot: boolean;
@@ -10,18 +21,15 @@ export interface IConnectMessage {
   opponentField?: IPlayerState;
 }
 
-export interface IStartMessage {
+export interface IStart {
   isStarted: boolean;
   field: IPlayerState;
 }
 
-export interface IShootMessage {
+export interface IShoot {
   coordinates: { target: number; isDamaged: boolean };
 }
 
-export type TSocketMessage = IStartGame &
-  IStartMessage &
-  IConnectMessage &
-  IShootMessage;
+export type TSocketMessage = IStartGame & IStart & IConnect & IShoot;
 
 export { type IStartGame };

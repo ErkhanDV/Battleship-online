@@ -1,29 +1,31 @@
 import { useEffect, type FC } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
-import { useSocket } from '@/hook/use-socket';
+import {
+  useAppSelector,
+  useShipLocationActions,
+  useSocket,
+  useSocketActions,
+} from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
-import Header from '@/components/header/Header';
-import Footer from '@/components/footer/Footer';
-import Field from '@/components/game/battleground/Field';
-import Ship from '@/components/game/ship/ship';
-import './game.scss';
+import { Header, Footer } from '@/components/_index';
+import { Field, Ship } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
-import { addShip } from '@/store/reducers/shipsLocationSlice';
 import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import { IShip } from '@/store/reducers/types/shipLocation';
+import './game.scss';
 
 const Game: FC = () => {
+  const { init, socket } = useSocket();
+  const { setIsReady } = useSocketActions();
+  const { addShip } = useShipLocationActions();
   const {
-    init,
     gameInfo,
     opponentName,
-    socket,
     isAbleShoot,
-    isStarted,
     isGameFinded,
     isReady,
-    setIsReady,
-  } = useSocket();
+    isStarted,
+  } = useAppSelector((state) => state.socketSlice);
+  const { user } = useAppSelector((state) => state.shipsLocationSlice);
 
   useEffect(() => {
     (async () => {
@@ -35,18 +37,12 @@ const Game: FC = () => {
     })();
   }, []);
 
-  const dispatch = useAppDispatch();
-
-  const field = useAppSelector((state) => state.shipsLocationSlice.user);
-  const field1 = useAppSelector((state) => state.shipsLocationSlice.rival);
-  console.log(field1);
-
   const readyHandler = () => {
     setIsReady(true);
     socket?.send(
       JSON.stringify({
         ...gameInfo,
-        field,
+        field: user,
         method: 'ready',
       }),
     );
@@ -59,7 +55,6 @@ const Game: FC = () => {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
       }
     }
-
   };
 
   const exitSocket = () => {
@@ -87,7 +82,7 @@ const Game: FC = () => {
     if (!isReady) {
       return (
         <button
-          disabled={field.shipsLocation.length < 10}
+          disabled={user.shipsLocation.length < 10}
           onClick={readyHandler}
           className="ready"
         >
@@ -108,7 +103,7 @@ const Game: FC = () => {
     ships.forEach((ship) => {
       getCorrectShip(settedShips, newShips, ship);
     });
-    newShips.forEach((ship) => dispatch(addShip({ player: 'user', ship })));
+    newShips.forEach((ship) => addShip(ship));
   };
 
   const renderStation = (ships: number[]) => {
