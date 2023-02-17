@@ -3,7 +3,7 @@ import { axiosAPI } from './_interceptors';
 import { IUser } from './_types';
 import { STATUS, CLONE_SERVER } from './_constants';
 
-export class AuthService {
+export class authService {
   static async login(name: string): Promise<IUser> {
     try {
       const { status, data } = await axiosAPI.post<IUser>('/login', { name });

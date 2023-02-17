@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { AuthService } from '@/services/axios/Auth';
+import { authService } from '@/services/axios/Auth';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
 import './Login.scss';
 import { IUser } from '@/services/axios/_types';
@@ -20,7 +20,7 @@ const LogIn: FC = () => {
   }: React.ChangeEvent<HTMLInputElement>): void => setName(target.value);
 
   const logInHandler = async () => {
-    const response: IUser = await AuthService.login(name);
+    const response: IUser = await authService.login(name);
     if (typeof response === 'string') {
       setValidation(response);
       return;

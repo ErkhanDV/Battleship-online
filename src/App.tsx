@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
 import {
   useLogInActions,
@@ -8,33 +8,37 @@ import {
 } from './hook/_index';
 import { SocketContext } from './Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
-import { AuthService } from '@/services/axios/Auth';
+import { authService } from '@/services/axios/Auth';
 import { ROUTE } from '@/router/_constants';
 import { PERSON } from './store/_constants';
 
 const App = () => {
   const location = useLocation();
-  const { socket, init } = useSocket();
+  const navigate = useNavigate();
+  const { socket, init, setSocket } = useSocket();
   const { setUser } = useLogInActions();
   const { updateShipsLocationState } = useShipLocationActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
 
   const check = async () => {
     setCheckInProccess(true);
-    const auth = await AuthService.checkAuth();
+    const auth = await authService.checkAuth();
     setCheckInProccess(false);
     if (auth) {
       setUser(auth.name);
     } else {
-      setUser('');
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     }
   };
 
   useEffect(() => {
-    const initialShips = { shipsLocation: [], misses: [] };
     if (localStorage.getItem('token') && !checkInProccess) {
       check();
     }
+  }, []);
+
+  useEffect(() => {
+    const initialShips = { shipsLocation: [], misses: [] };
 
     if (location.pathname === ROUTE.home) {
       socket?.close();
@@ -45,7 +49,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SocketContext.Provider value={{ socket, init }}>
+      <SocketContext.Provider value={{ socket, setSocket, init }}>
         <Header />
         <AppRouter />
         <Footer />

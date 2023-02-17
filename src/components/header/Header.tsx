@@ -1,11 +1,13 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { AuthService } from '@/services/axios/Auth';
-import './Header.scss';
+import { SocketContext } from '@/Context';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
+import { authService, gameService } from '@/services/axios/_index';
 import { ROUTE } from '@/router/_constants';
+import './Header.scss';
 
 const Header: FC = () => {
+  const { socket, setSocket, init } = useContext(SocketContext);
   const navigate = useNavigate();
   const { setModalOpen, setUser, setModalChildren } = useLogInActions();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -31,7 +33,10 @@ const Header: FC = () => {
 
   const logHandler = async () => {
     if (isAuthorized) {
-      await AuthService.logout();
+      await authService.logout();
+
+      socket?.close();
+      setSocket(null);
       navigate(ROUTE.home);
       setUser('');
     } else {
@@ -39,10 +44,18 @@ const Header: FC = () => {
     }
   };
 
-  const gameHandler = () => {
-    if (isAuthorized) {
+  const gameHandler = async () => {
+    if (socket) {
+      if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
+      return;
+    }
+
+    const response = await gameService.startGame();
+    if (response) {
+      init(response);
       if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
     } else {
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       setGameTryConnect(true);
       setModalOpen(true);
     }

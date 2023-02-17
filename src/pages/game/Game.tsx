@@ -1,38 +1,20 @@
-import { useContext, useEffect, type FC } from 'react';
-import { useLocation } from 'react-router-dom';
-import {
-  useAppSelector,
-  useSocketActions,
-  useShipLocationActions,
-} from '@/hook/_index';
+import { useContext, type FC } from 'react';
+import { useAppSelector, useSocketActions } from '@/hook/_index';
 import { SocketContext } from '@/Context';
-import { gameService } from '@/services/axios/Game';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 
 const Game: FC = () => {
-  const location = useLocation();
   const { socket, init } = useContext(SocketContext);
   const { setIsReady } = useSocketActions();
-  const { updateShipsLocationState } = useShipLocationActions();
 
   const { gameInfo, isReady } = useAppSelector((state) => state.socketSlice);
   const { shipsLocation } = useAppSelector(
     (state) => state.shipsLocationSlice.user,
   );
   const { user } = useAppSelector((state) => state.shipsLocationSlice);
-
-  useEffect(() => {
-    (async () => {
-      const response = await gameService.startGame();
-
-      if (response) {
-        init(response);
-      }
-    })();
-  }, []);
 
   const ships = getSettedShips(shipsLocation);
 
