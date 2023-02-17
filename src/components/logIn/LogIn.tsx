@@ -1,7 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AuthService } from '@/services/axios/Auth';
-import { useLogInActions } from '@/hook/use-login-actions';
-
+import { useLogInActions, useAppSelector } from '@/hook/_index';
 import './Login.scss';
 import { IUser } from '@/services/axios/_types';
 
@@ -9,6 +8,12 @@ const LogIn: FC = () => {
   const [name, setName] = useState('');
   const [validation, setValidation] = useState('');
   const { setUser, setModalOpen } = useLogInActions();
+  const { isModalOpen } = useAppSelector((state) => state.logInSlice);
+
+  useEffect(() => {
+    setValidation('');
+    setName('');
+  }, [isModalOpen]);
 
   const inputHandler = ({
     target,
