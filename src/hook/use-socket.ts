@@ -103,21 +103,27 @@ export const useSocket = () => {
       };
 
       const shootHandler = (data: IStartGame & IShoot) => {
-        const { user, shoot } = data;
+        const { user, shoot, isAbleShoot } = data;
         setIsAbleShoot(user.name !== userName);
 
         if (user.name === userName) {
+          setIsAbleShoot(isAbleShoot);
           checkShoot(PERSON.rival, shoot);
         } else {
+          setIsAbleShoot(!isAbleShoot ? true : false);
           checkShoot(PERSON.user, shoot);
         }
         console.log('shoot');
       };
 
       const gameOverHandler = (data: IStartGame & IShoot) => {
-        const { user, shoot } = data;
-        //set store coordinates возвращают место куда встрелил соперник, над озакидывать в стор
-        setWinner(user.name);
+        const { winner } = data;
+
+        shootHandler(data);
+        setIsAbleShoot(false);
+
+        if (winner) setWinner(winner);
+
         console.log('gameover');
       };
     }

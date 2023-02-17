@@ -37,6 +37,7 @@ const Game: FC = () => {
   const ships = getSettedShips(shipsLocation);
 
   const readyHandler = () => {
+    console.log(user);
     setIsReady(true);
     socket?.send(
       JSON.stringify({

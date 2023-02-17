@@ -28,6 +28,8 @@ export interface IStart {
 
 export interface IShoot {
   shoot: number;
+  isAbleShoot: boolean;
+  winner?: string;
 }
 
 export type TSocketMessage = IStartGame & IStart & IConnect & IShoot;
