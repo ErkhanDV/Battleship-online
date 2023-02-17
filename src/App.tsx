@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
 import {
@@ -6,11 +6,9 @@ import {
   useShipLocationActions,
   useSocket,
 } from './hook/_index';
+import { SocketContext } from './Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { AuthService } from '@/services/axios/Auth';
-import { ISocketContext } from './hook/_types';
-
-export const SocketContext = createContext({} as ISocketContext);
 
 const App = () => {
   const location = useLocation();
@@ -28,14 +26,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    const initial = { shipsLocation: [], misses: [] };
+    const initialShips = { shipsLocation: [], misses: [] };
     if (localStorage.getItem('token')) {
       check();
     }
 
     if (location.pathname !== '/game') {
-      updateShipsLocationState(initial, 'user');
-      updateShipsLocationState(initial, 'rival');
+      socket?.close();
+      updateShipsLocationState(initialShips, 'user');
+      updateShipsLocationState(initialShips, 'rival');
     }
   }, [location]);
 

@@ -5,7 +5,7 @@ import {
   useSocketActions,
   useShipLocationActions,
 } from '@/hook/_index';
-import { SocketContext } from '@/App';
+import { SocketContext } from '@/Context';
 import { gameService } from '@/services/axios/Game';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
