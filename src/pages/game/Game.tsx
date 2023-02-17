@@ -1,26 +1,15 @@
 import { useEffect, type FC } from 'react';
-import { useLocation } from 'react-router-dom';
-import {
-  useAppSelector,
-  useSocket,
-  useSocketActions,
-  useShipLocationActions,
-} from '@/hook/_index';
+import { useAppSelector, useSocket, useSocketActions } from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
-import { Field, RivalField, ShipStation } from '@/components/game/_index';
-import { getSettedShips } from '@/lib/utils/getSettedShips';
 import './game.scss';
+import GameField from '@/components/game/gameField/gameField';
+import { useGameStateActions } from '@/hook/use-game-state-actios';
 
 const Game: FC = () => {
-  const location = useLocation();
   const { init, socket } = useSocket();
   const { setIsReady } = useSocketActions();
-  const { updateShipsLocationState } = useShipLocationActions();
 
   const { gameInfo, isReady } = useAppSelector((state) => state.socketSlice);
-  const { shipsLocation } = useAppSelector(
-    (state) => state.shipsLocationSlice.user,
-  );
   const { user } = useAppSelector((state) => state.shipsLocationSlice);
 
   useEffect(() => {
@@ -32,8 +21,6 @@ const Game: FC = () => {
       }
     })();
   }, []);
-
-  const ships = getSettedShips(shipsLocation);
 
   const readyHandler = () => {
     setIsReady(true);
@@ -50,34 +37,11 @@ const Game: FC = () => {
     socket?.send(JSON.stringify({ ...gameInfo, method: 'exit' }));
   };
 
-  const renderButton = () => {
-    if (!isReady) {
-      return (
-        <button
-          disabled={user.shipsLocation.length < 10}
-          onClick={readyHandler}
-          className="ready"
-        >
-          Ready
-        </button>
-      );
-    }
-  };
+  const { changeGameMode } = useGameStateActions();
+  changeGameMode(false);
 
   return (
-    <div className="game">
-      <main className="game-wrapper">
-        {renderButton()}
-        <div className="fields">
-          <div className="user">
-            <div className="name">You</div>
-            <Field isRival={false} />
-          </div>
-          <RivalField socket={socket} />
-        </div>
-        <ShipStation ships={ships} />
-      </main>
-    </div>
+    <GameField isReady={isReady} socket={socket} readyHandler={readyHandler} />
   );
 };
 

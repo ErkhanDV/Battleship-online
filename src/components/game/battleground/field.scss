@@ -3,7 +3,7 @@
 .battle-row {
   display: flex;
 }
-.battleground {
+.field {
   display: grid;
   position: relative;
   grid-template-columns: repeat(10, 30px);
