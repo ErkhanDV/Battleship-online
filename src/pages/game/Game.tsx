@@ -1,11 +1,11 @@
-import { useEffect, type FC } from 'react';
+import { useContext, useEffect, type FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   useAppSelector,
-  useSocket,
   useSocketActions,
   useShipLocationActions,
 } from '@/hook/_index';
+import { SocketContext } from '@/App';
 import { gameService } from '@/services/axios/Game';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
@@ -13,7 +13,7 @@ import './game.scss';
 
 const Game: FC = () => {
   const location = useLocation();
-  const { init, socket } = useSocket();
+  const { socket, init } = useContext(SocketContext);
   const { setIsReady } = useSocketActions();
   const { updateShipsLocationState } = useShipLocationActions();
 

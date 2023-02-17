@@ -1,13 +1,20 @@
-import { useEffect } from 'react';
+import { createContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import { useLogInActions, useShipLocationActions } from './hook/_index';
+import {
+  useLogInActions,
+  useShipLocationActions,
+  useSocket,
+} from './hook/_index';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { AuthService } from '@/services/axios/Auth';
-import { IUser } from '@/services/axios/_types';
+import { ISocketContext } from './hook/_types';
+
+export const SocketContext = createContext({} as ISocketContext);
 
 const App = () => {
   const location = useLocation();
+  const { socket, init } = useSocket();
   const { setUser } = useLogInActions();
   const { updateShipsLocationState } = useShipLocationActions();
 
@@ -34,10 +41,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      <AppRouter />
-      <Footer />
-      <Modal />
+      <SocketContext.Provider value={{ socket, init }}>
+        <Header />
+        <AppRouter />
+        <Footer />
+        <Modal />
+      </SocketContext.Provider>
       <Background />
     </div>
   );
