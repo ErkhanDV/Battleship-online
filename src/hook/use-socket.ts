@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector } from '@/hook/use-redux';
-import { SOCKET } from '@/services/axios/_constants';
+import { useSocketActions, useShipLocationActions } from './_index';
+import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import {
   IStartGame,
   TSocketMessage,
@@ -8,7 +9,7 @@ import {
   IShoot,
   IStart,
 } from '@/store/reducers/types/socket';
-import { useSocketActions, useShipLocationActions } from './_index';
+import { PERSON } from '@/store/_constants';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<null | WebSocket>(null);
@@ -28,31 +29,34 @@ export const useSocket = () => {
   useEffect(() => {
     if (gameInfo && socket && userName) {
       socket.onopen = () => {
-        socket.send(JSON.stringify({ ...gameInfo, method: 'connection' }));
+        socket.send(
+          JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.connect }),
+        );
       };
 
       socket.onmessage = (response) => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
+        const { shoot, connect, start, gameover, exit } = SOCKETMETHOD;
 
         switch (method) {
-          case 'connection':
+          case connect:
             connectHandler(data);
             break;
 
-          case 'start':
+          case start:
             startHandler(data);
             break;
 
-          case 'shoot':
+          case shoot:
             shootHandler(data);
             break;
 
-          case 'gameOver':
+          case gameover:
             gameOverHandler(data);
             break;
 
-          case 'exit':
+          case exit:
             socket.close();
         }
       };
@@ -72,7 +76,7 @@ export const useSocket = () => {
         } else {
           if (field) {
             setIsReady(true);
-            updateShipsLocationState(field, 'user');
+            updateShipsLocationState(field, PERSON.user);
           }
 
           if (opponentName) {
@@ -80,7 +84,7 @@ export const useSocket = () => {
           }
 
           if (opponentField) {
-            updateShipsLocationState(opponentField, 'opponent');
+            updateShipsLocationState(opponentField, PERSON.rival);
           }
           setIsAbleShoot(isAbleShoot);
         }
@@ -94,7 +98,7 @@ export const useSocket = () => {
         const { isStarted, field, user } = data;
         setIsStarted(!!isStarted);
         if (user.name !== userName) {
-          updateShipsLocationState(field, 'opponent');
+          updateShipsLocationState(field, PERSON.rival);
         }
       };
 
@@ -103,9 +107,9 @@ export const useSocket = () => {
         setIsAbleShoot(user.name !== userName);
 
         if (user.name === userName) {
-          checkShoot('rival', shoot);
+          checkShoot(PERSON.rival, shoot);
         } else {
-          checkShoot('user', shoot);
+          checkShoot(PERSON.user, shoot);
         }
         console.log('shoot');
       };

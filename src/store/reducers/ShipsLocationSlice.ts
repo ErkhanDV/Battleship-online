@@ -5,6 +5,7 @@ import {
   IGameState,
   IShoot,
 } from './types/shipLocation';
+import { PERSON } from '../_constants';
 
 const initialState: IShipsLocation = {
   user: {
@@ -45,7 +46,7 @@ const shipsLocationSlice = createSlice({
     },
 
     updateShipsLocationState(state, action: PayloadAction<IGameState>) {
-      if (action.payload.person === 'user') {
+      if (action.payload.person === PERSON.user) {
         state.user = action.payload.state;
       } else {
         state.rival = action.payload.state;

@@ -1,22 +1,23 @@
-import { Home, Rules, LogIn, Game } from '@/pages/_index';
+import { Home, Rules, Game } from '@/pages/_index';
 import { Settings } from '@/components/_index';
 import { IRoute } from './_types';
+import { ROUTE } from './_constants';
 
 const routes: IRoute[] = [
   {
-    path: '/',
+    path: ROUTE.home,
     element: <Home />,
   },
   {
-    path: '/game',
+    path: ROUTE.game,
     element: <Game />,
   },
   {
-    path: '/rules',
+    path: ROUTE.rules,
     element: <Rules />,
   },
   {
-    path: '/settings',
+    path: ROUTE.settings,
     element: <Settings />,
   },
 ];

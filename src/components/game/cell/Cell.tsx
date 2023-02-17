@@ -5,10 +5,12 @@ import { addShip } from '@/store/reducers/ShipsLocationSlice';
 import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
 import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';
+import { PERSON } from '@/store/_constants';
+import { CELLCLASS } from './_constants';
 import './Cell.scss';
 
 const Cell: FC<ICell> = ({ coordinate, isRival }) => {
-  const key = isRival ? 'rival' : 'user';
+  const key = isRival ? PERSON.rival : PERSON.user;
 
   const { decks, isHorizontal } = useAppSelector(
     (state) => state.currentShipSlice.currentDragedShip,
@@ -52,19 +54,15 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
 
   const dispatch = useAppDispatch();
   const setLocations = (ship: IShip) =>
-    dispatch(addShip({ player: 'user', ship }));
+    dispatch(addShip({ player: PERSON.user, ship }));
   const successfullyDrop = () => dispatch(setDropped(true));
 
-  let classList = 'cell';
-  if (isShooted) {
-    classList += ' hit';
-  }
-  if (isMissed) {
-    classList += ' miss';
-  }
-  if (isShip()) {
-    classList += ' ship-1';
-  }
+  const { shoot, initial, miss, ship } = CELLCLASS;
+
+  let classList = initial as string;
+  classList += isShooted ? shoot : '';
+  classList += isMissed ? miss : '';
+  classList += isShip() ? ship : '';
 
   return (
     <div

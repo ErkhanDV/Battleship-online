@@ -9,6 +9,7 @@ import { SocketContext } from '@/Context';
 import { gameService } from '@/services/axios/Game';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 
 const Game: FC = () => {
@@ -41,13 +42,13 @@ const Game: FC = () => {
       JSON.stringify({
         ...gameInfo,
         field: user,
-        method: 'ready',
+        method: SOCKETMETHOD.ready,
       }),
     );
   };
 
   const exitHandler = () => {
-    socket?.send(JSON.stringify({ ...gameInfo, method: 'exit' }));
+    socket?.send(JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.exit }));
   };
 
   const renderButton = () => {

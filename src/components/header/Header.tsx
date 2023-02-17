@@ -1,23 +1,29 @@
 import { useState, useEffect, FC } from 'react';
-import { Settings, LogIn } from '@/components/_index';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { AuthService } from '@/services/axios/Auth';
 import './Header.scss';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
+import { ROUTE } from '@/router/_constants';
 
 const Header: FC = () => {
   const navigate = useNavigate();
   const { setModalOpen, setUser, setModalChildren } = useLogInActions();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
 
   const { user, isAuthorized } = useAppSelector((state) => state.logInSlice);
 
   useEffect(() => {
     setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
+
+    if (isAuthorized && gameTryConnect) {
+      setGameTryConnect(false);
+      navigate(ROUTE.game);
+    }
   }, [isAuthorized]);
 
-  const handlerOpenModal = (component: string) => {
+  const modalHandler = (component: string) => {
     setModalOpen(true);
     setModalChildren(component);
     setMenuVisible(false);
@@ -26,17 +32,18 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       await AuthService.logout();
-      navigate('/');
+      navigate(ROUTE.home);
       setUser('');
     } else {
-      handlerOpenModal('log');
+      modalHandler('log');
     }
   };
 
   const gameHandler = () => {
     if (isAuthorized) {
-      if (location.pathname !== '/game') navigate('/game');
+      if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
     } else {
+      setGameTryConnect(true);
       setModalOpen(true);
     }
   };
@@ -67,7 +74,7 @@ const Header: FC = () => {
           </li>
           <li
             className="navigation_item"
-            onClick={() => handlerOpenModal('settings')}
+            onClick={() => modalHandler('settings')}
           >
             Settings
           </li>
