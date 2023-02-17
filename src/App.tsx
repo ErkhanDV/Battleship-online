@@ -8,7 +8,7 @@ import {
 } from './hook/_index';
 import { SocketContext } from './Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
-import { authService } from '@/services/axios/Auth';
+import { authService, gameService } from '@/services/axios/_index';
 import { ROUTE } from '@/router/_constants';
 import { PERSON } from './store/_constants';
 
@@ -25,6 +25,12 @@ const App = () => {
     const auth = await authService.checkAuth();
     setCheckInProccess(false);
     if (auth) {
+      if (location.pathname === ROUTE.game) {
+        const response = await gameService.startGame();
+        if (response) {
+          init(response);
+        }
+      }
       setUser(auth.name);
     } else {
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);

@@ -60,6 +60,72 @@ export const useSocket = () => {
             socket.close();
         }
       };
+
+      const connectHandler = (data: IStartGame & IConnect) => {
+        const {
+          isAbleShoot,
+          isGameFinded,
+          field,
+          user,
+          opponentName,
+          opponentField,
+        } = data;
+
+        if (user.name !== userName) {
+          setOpponentName(user.name);
+        } else {
+          if (field) {
+            setIsReady(true);
+            updateShipsLocationState(field, PERSON.user);
+          }
+
+          if (opponentName) {
+            setOpponentName(opponentName);
+          }
+
+          if (opponentField) {
+            updateShipsLocationState(opponentField, PERSON.rival);
+          }
+          setIsAbleShoot(isAbleShoot);
+        }
+
+        setIsGameFinded(isGameFinded);
+        console.log('connection');
+      };
+
+      const startHandler = (data: IStartGame & IStart) => {
+        console.log('start');
+        const { isStarted, field, user } = data;
+        setIsStarted(!!isStarted);
+        if (user.name !== userName) {
+          updateShipsLocationState(field, PERSON.rival);
+        }
+      };
+
+      const shootHandler = (data: IStartGame & IShoot) => {
+        const { user, shoot, isAbleShoot } = data;
+        setIsAbleShoot(user.name !== userName);
+
+        if (user.name === userName) {
+          setIsAbleShoot(isAbleShoot);
+          checkShoot(PERSON.rival, shoot);
+        } else {
+          setIsAbleShoot(!isAbleShoot ? true : false);
+          checkShoot(PERSON.user, shoot);
+        }
+        console.log('shoot');
+      };
+
+      const gameOverHandler = (data: IStartGame & IShoot) => {
+        const { winner } = data;
+
+        shootHandler(data);
+        setIsAbleShoot(false);
+
+        if (winner) setWinner(winner);
+
+        console.log('gameover');
+      };
     }
   }, [gameInfo, socket, userName]);
 
@@ -67,72 +133,6 @@ export const useSocket = () => {
     setSocket(new WebSocket(SOCKET));
     setGameInfo(response);
     setUserName(response.user.name);
-  };
-
-  const connectHandler = (data: IStartGame & IConnect) => {
-    const {
-      isAbleShoot,
-      isGameFinded,
-      field,
-      user,
-      opponentName,
-      opponentField,
-    } = data;
-
-    if (user.name !== userName) {
-      setOpponentName(user.name);
-    } else {
-      if (field) {
-        setIsReady(true);
-        updateShipsLocationState(field, PERSON.user);
-      }
-
-      if (opponentName) {
-        setOpponentName(opponentName);
-      }
-
-      if (opponentField) {
-        updateShipsLocationState(opponentField, PERSON.rival);
-      }
-      setIsAbleShoot(isAbleShoot);
-    }
-
-    setIsGameFinded(isGameFinded);
-    console.log('connection');
-  };
-
-  const startHandler = (data: IStartGame & IStart) => {
-    console.log('start');
-    const { isStarted, field, user } = data;
-    setIsStarted(!!isStarted);
-    if (user.name !== userName) {
-      updateShipsLocationState(field, PERSON.rival);
-    }
-  };
-
-  const shootHandler = (data: IStartGame & IShoot) => {
-    const { user, shoot, isAbleShoot } = data;
-    setIsAbleShoot(user.name !== userName);
-
-    if (user.name === userName) {
-      setIsAbleShoot(isAbleShoot);
-      checkShoot(PERSON.rival, shoot);
-    } else {
-      setIsAbleShoot(!isAbleShoot ? true : false);
-      checkShoot(PERSON.user, shoot);
-    }
-    console.log('shoot');
-  };
-
-  const gameOverHandler = (data: IStartGame & IShoot) => {
-    const { winner } = data;
-
-    shootHandler(data);
-    setIsAbleShoot(false);
-
-    if (winner) setWinner(winner);
-
-    console.log('gameover');
   };
 
   return { init, socket, setSocket };
