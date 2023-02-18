@@ -41,7 +41,7 @@ const GameField = ({ isReady, socket, readyHandler }: IGameField) => {
         <button
           disabled={user.shipsLocation.length < 10}
           onClick={() => readyButtonHandler(readyHandler)}
-          className="ready"
+          className="button-render"
         >
           {!!singlePlayer ? 'Start game' : 'Ready'}
         </button>
@@ -51,11 +51,11 @@ const GameField = ({ isReady, socket, readyHandler }: IGameField) => {
 
   return (
     <div className="game">
-      <main className="game-wrapper">
+      <main className="main">
         {renderButton()}
-        <div className="fields">
-          <div className="user">
-            <div className="name">You</div>
+        <div className="game_fields">
+          <div className="field">
+            <h2 className="field_name">User Name</h2>
             <Field isRival={false} />
           </div>
           <RivalField socket={socket} />

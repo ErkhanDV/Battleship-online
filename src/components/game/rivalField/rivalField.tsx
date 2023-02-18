@@ -30,8 +30,8 @@ const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
     : 'Unknown';
 
   return (
-    <div onClick={shootHandler} className="opponent">
-      <div className="opponent-name">{opponentTitle}</div>
+    <div onClick={shootHandler} className="field">
+      <h2 className="field_name">{opponentTitle}</h2>
       <Field isRival={true} />
     </div>
   );
