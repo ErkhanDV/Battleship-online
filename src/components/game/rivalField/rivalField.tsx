@@ -12,7 +12,7 @@ const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
   const { checkShoot } = useShipLocationActions();
 
   const shootHandler = (e: React.MouseEvent): void => {
-    if (e.target instanceof HTMLDivElement) {
+    if (e.target instanceof HTMLDivElement && e.target.id) {
       const shoot: number = Number(e.target.id);
       if (isAbleShoot && isStarted) {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
