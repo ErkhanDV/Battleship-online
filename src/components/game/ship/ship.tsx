@@ -4,7 +4,7 @@ import { setCurrentShip, setDropped } from '@/store/reducers/CurrentShipSlice';
 import { ICurrentShip } from '@/store/reducers/types/currentShip';
 import { IDecks } from './_types';
 
-import './ship.scss';
+import './Ship.scss';
 
 const Ship = ({ decks }: IDecks) => {
   const [isHorizontal, setHorizonal] = useState(false);
