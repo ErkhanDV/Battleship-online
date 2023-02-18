@@ -11,6 +11,7 @@ const GameField = ({ isReady, socket, readyHandler }: IGameField) => {
   const { shipsLocation } = useAppSelector(
     (state) => state.shipsLocationSlice.user,
   );
+  const userName = useAppSelector((state) => state.logInSlice.user);
   const ships = getSettedShips(shipsLocation);
   const { user } = useAppSelector((state) => state.shipsLocationSlice);
   const { singlePlayer, isStartSingle } = useAppSelector(
@@ -51,7 +52,7 @@ const GameField = ({ isReady, socket, readyHandler }: IGameField) => {
         {renderButton()}
         <div className="game_fields">
           <div className="field">
-            <h2 className="field_name">User Name</h2>
+            <h2 className="field_name">{userName}</h2>
             <Field isRival={false} />
           </div>
           <RivalField socket={socket} />

@@ -38,7 +38,7 @@ const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
             onClick={resetShipsHandler}
             disabled={!!isStartSingle}
           >
-            Reset ships
+            Reset
           </button>
           <p>
             Drag and drop your ships on the field
