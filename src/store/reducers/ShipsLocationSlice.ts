@@ -44,6 +44,10 @@ const shipsLocationSlice = createSlice({
       }
     },
 
+    resetShips(state) {
+      state.user.shipsLocation = [];
+    },
+
     updateShipsLocationState(state, action: PayloadAction<IGameState>) {
       if (action.payload.person === 'user') {
         state.user = action.payload.state;
@@ -54,7 +58,7 @@ const shipsLocationSlice = createSlice({
   },
 });
 
-export const { addShip, updateShipsLocationState, addShoot } =
+export const { addShip, updateShipsLocationState, addShoot, resetShips } =
   shipsLocationSlice.actions;
 
 export default shipsLocationSlice.reducer;

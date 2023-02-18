@@ -9,17 +9,20 @@ const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   const { isAbleShoot, isGameFinded } = useAppSelector(
     (state) => state.socketSlice,
   );
+  const { singlePlayer, isStartSingle } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
 
   return (
     <div
-      style={{ opacity: isAbleShoot && isRival ? 0.5 : 1 }}
+      style={{ opacity: !isAbleShoot && isRival && !isStartSingle ? 0.5 : 1 }}
       className="battleground"
     >
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
-      {isGameFinded || !isRival ? null : (
-        <h2 className="connection">Waiting for an opponent...</h2>
+      {isGameFinded || !isRival || !!singlePlayer ? null : (
+        <div className="connection">Waiting for opponent...</div>
       )}
     </div>
   );
