@@ -1,5 +1,6 @@
 import { useEffect, type FC } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import {
   useAppSelector,
   useSocket,
@@ -8,8 +9,10 @@ import {
 } from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
+
+import './Game.scss';
+
 import { getSettedShips } from '@/lib/utils/getSettedShips';
-import './game.scss';
 
 const Game: FC = () => {
   const location = useLocation();
@@ -56,9 +59,9 @@ const Game: FC = () => {
         <button
           disabled={user.shipsLocation.length < 10}
           onClick={readyHandler}
-          className="ready"
+          className="button-render"
         >
-          Ready
+          {user.shipsLocation.length < 10 ? 'Arrange your ships' : 'Ready'}
         </button>
       );
     }
@@ -66,11 +69,11 @@ const Game: FC = () => {
 
   return (
     <div className="game">
-      <main className="game-wrapper">
+      <main className="main">
         {renderButton()}
-        <div className="fields">
-          <div className="user">
-            <div className="name">You</div>
+        <div className="game_fields">
+          <div className="field">
+            <h2 className="field_name">User Name</h2>
             <Field isRival={false} />
           </div>
           <RivalField socket={socket} />

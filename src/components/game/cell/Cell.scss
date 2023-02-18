@@ -1,9 +1,16 @@
+@import '../../../scss/variables.scss';
+
 .cell {
-  width: 30px;
-  height: 30px;
-  background-color: aliceblue;
-  border: solid 1px black;
+  width: 40px;
+  height: 40px;
+  margin: 1px;
+  border-radius: 2px;
+  background: $cellCornerGradient;
+  background-repeat: no-repeat;
+  background-size: 33% 33%;
+  background-color: rgb(0, 0, 0, .75);
 }
+
 .hit {
   position: relative;
   background: red;

@@ -4,6 +4,8 @@ import { Ship } from '../_index';
 import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import { IShip } from '@/store/reducers/types/shipLocation';
 
+import './ShipStation.scss';
+
 const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
   const { shipsLocation } = useAppSelector(
     (state) => state.shipsLocationSlice.user,
@@ -23,10 +25,19 @@ const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
   if (!isReady) {
     return (
       <div className="ship-station">
-        {ships.map((decks, i) => (
-          <Ship decks={decks} key={i} />
-        ))}
-        <button onClick={getRandomShipSet}>Random</button>
+        <div className="ship-station_container">
+          {ships.map((decks, i) => (
+            <Ship decks={decks} key={i} />
+          ))}
+        </div>
+        <div className="ship-station_discription">
+          <button className="ship-station_button" onClick={getRandomShipSet}>
+            Random
+          </button>
+          <p>
+          Drag and drop your ships on the field<br/> or press the button for a random arrangement
+          </p>
+        </div>
       </div>
     );
   }

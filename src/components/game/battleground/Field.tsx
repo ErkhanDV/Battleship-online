@@ -3,7 +3,7 @@ import { useAppSelector } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
 import { FIELD } from '@/store/_constants';
 
-import './field.scss';
+import './Field.scss';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   const { isAbleShoot, isGameFinded } = useAppSelector(
@@ -19,7 +19,7 @@ const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
       {isGameFinded || !isRival ? null : (
-        <div className="connection">Waiting for opponent...</div>
+        <h2 className="connection">Waiting for an opponent...</h2>
       )}
     </div>
   );

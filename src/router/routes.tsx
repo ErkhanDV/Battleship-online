@@ -1,4 +1,4 @@
-import { Home, Rules, LogIn, Game } from '@/pages/_index';
+import { Home, Rules, Game } from '@/pages/_index';
 import { Settings } from '@/components/_index';
 import { IRoute } from './_types';
 
