@@ -51,3 +51,18 @@ $modalCornerGradient: linear-gradient(
   linear-gradient(to bottom, $primaryColor-75 4px, transparent 4px) 100% 0,
   linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 0 100%,
   linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 100% 100%;
+
+
+  $cellCornerGradient: linear-gradient(
+      to right,
+      $primaryColor-75 1px,
+      transparent 1px
+    )
+    0 0,
+  linear-gradient(to right, $primaryColor-75 1px, transparent 1px) 0 100%,
+  linear-gradient(to left, $primaryColor-75 1px, transparent 1px) 100% 0,
+  linear-gradient(to left, $primaryColor-75 1px, transparent 1px) 100% 100%,
+  linear-gradient(to bottom, $primaryColor-75 1px, transparent 1px) 0 0,
+  linear-gradient(to bottom, $primaryColor-75 1px, transparent 1px) 100% 0,
+  linear-gradient(to top, $primaryColor-75 1px, transparent 1px) 0 100%,
+  linear-gradient(to top, $primaryColor-75 1px, transparent 1px) 100% 100%;

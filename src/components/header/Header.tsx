@@ -57,7 +57,7 @@ const Header: FC = () => {
           </li>
           <li className="navigation_item">
             <div onClick={gameHandler} className="navigation_link">
-              Play
+              Game
             </div>
           </li>
           <li className="navigation_item">

@@ -63,7 +63,7 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
     classList += ' miss';
   }
   if (isShip()) {
-    classList += ' ship-1';
+    classList += ' ship-cell';
   }
 
   return (

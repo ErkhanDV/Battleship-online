@@ -3,6 +3,8 @@ import { useAppSelector, useShipLocationActions } from '@/hook/_index';
 import { Ship } from '../_index';
 import { setRandomShips } from '@/lib/utils/setRandomShips';
 
+import './ShipStation.scss';
+
 const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
   const { shipsLocation } = useAppSelector(
     (state) => state.shipsLocationSlice.user,

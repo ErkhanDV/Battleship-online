@@ -19,8 +19,6 @@ const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
       } else if (!!isStartSingle) {
         console.log(e.target.id);
         checkShoot('rival', Number(e.target.id));
-        
-        
       }
     }
   };

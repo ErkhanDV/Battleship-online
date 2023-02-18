@@ -3,7 +3,7 @@ import { useAppSelector } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
 import { FIELD } from '@/store/_constants';
 
-import './field.scss';
+import './Field.scss';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   const { isAbleShoot, isGameFinded } = useAppSelector(
