@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { setCurrentShip, setDropped } from '@/store/reducers/CurrentShipSlice';
 import { ICurrentShip } from '@/store/reducers/types/currentShip';
 import { IDecks } from './_types';
+
 import './ship.scss';
 
 const Ship = ({ decks }: IDecks) => {
@@ -80,7 +81,7 @@ const Ship = ({ decks }: IDecks) => {
       }}
     >
       {new Array(decks).fill(null).map((_, index) => (
-        <div className="cell" key={index}></div>
+        <div className="ship-cell" key={index}></div>
       ))}
     </div>
   );

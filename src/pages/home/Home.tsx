@@ -12,7 +12,7 @@ const Home: FC = () => {
             This is a strategy type guessing game for two players. It is played
             on ruled grids on which each player's fleet of warships are marked.
           </p>
-          <Link to="/play" className="section_button">
+          <Link to="/game" className="section_button">
             Play BattleShip
           </Link>
           <p className="section_paragraph">
