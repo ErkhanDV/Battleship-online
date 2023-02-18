@@ -5,6 +5,8 @@ const initialState: IGameState = {
   singlePlayer: false,
   isWin: false,
   isStartSingle: false,
+  userTurn: false,
+  gameDifficulty: 0,
 };
 
 const gameStateSlice = createSlice({
@@ -22,10 +24,23 @@ const gameStateSlice = createSlice({
     changeGameStatus(state, action: PayloadAction<boolean>) {
       state.isStartSingle = action.payload;
     },
+
+    changeTurn(state, action: PayloadAction<boolean>) {
+      state.userTurn = action.payload;
+    },
+
+    changeGameDifficulty(state, action: PayloadAction<number>) {
+      state.gameDifficulty = action.payload;
+    },
   },
 });
 
-export const { changeGameMode, setWinGame, changeGameStatus } =
-  gameStateSlice.actions;
+export const {
+  changeGameMode,
+  setWinGame,
+  changeGameStatus,
+  changeTurn,
+  changeGameDifficulty,
+} = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

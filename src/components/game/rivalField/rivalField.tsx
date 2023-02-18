@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { useAppSelector } from '@/hook/_index';
+import { useAppSelector, useShipLocationActions } from '@/hook/_index';
 import { Field } from '../_index';
 
 const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
@@ -9,6 +9,7 @@ const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
   const { singlePlayer, isStartSingle } = useAppSelector(
     (state) => state.gameStateSlice,
   );
+  const { checkShoot } = useShipLocationActions();
 
   const shootHandler = (e: React.MouseEvent): void => {
     if (e.target instanceof HTMLDivElement) {
@@ -17,6 +18,9 @@ const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
       } else if (!!isStartSingle) {
         console.log(e.target.id);
+        checkShoot('rival', Number(e.target.id));
+        
+        
       }
     }
   };

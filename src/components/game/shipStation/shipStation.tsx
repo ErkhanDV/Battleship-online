@@ -9,6 +9,7 @@ const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
   );
   const { addShip, resetShips } = useShipLocationActions();
   const { isReady } = useAppSelector((state) => state.socketSlice);
+  const { isStartSingle } = useAppSelector((state) => state.gameStateSlice);
 
   const resetShipsHandler = () => resetShips();
   const currentUser = 'user';
@@ -23,10 +24,13 @@ const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
           onClick={() =>
             setRandomShips(shipsLocation, ships, currentUser, addShip)
           }
+          disabled={!!isStartSingle}
         >
           Random
         </button>
-        <button onClick={resetShipsHandler}>Reset ships</button>
+        <button onClick={resetShipsHandler} disabled={!!isStartSingle}>
+          Reset ships
+        </button>
       </div>
     );
   }

@@ -16,9 +16,19 @@ export const useGameStateActions = () => {
     dispatch(gameState.changeGameStatus(isStarted));
   };
 
+  const changeTurn = (userTurn: boolean) => {
+    dispatch(gameState.changeTurn(userTurn));
+  };
+
+  const changeGameDifficulty = (gameDifficulty: number) => {
+    dispatch(gameState.changeGameDifficulty(gameDifficulty));
+  };
+
   return {
     changeGameMode,
     setWinGame,
     changeGameStatus,
+    changeTurn,
+    changeGameDifficulty,
   };
 };
