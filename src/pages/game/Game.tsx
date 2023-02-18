@@ -2,7 +2,7 @@ import { useEffect, type FC } from 'react';
 import { useAppSelector, useSocket, useSocketActions } from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
 import './game.scss';
-import GameField from '@/components/game/gameField/gameField';
+import GameField from '@/components/game/gameField/GameField';
 import { useGameStateActions } from '@/hook/use-game-state-actios';
 
 const Game: FC = () => {
