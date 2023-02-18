@@ -18,27 +18,6 @@ const ShipStation: FC<{ ships: number[] }> = ({ ships }) => {
 
   if (!isReady) {
     return (
-      // <div className="ship-station">
-      //   {ships.map((decks, i) => (
-      //     <Ship decks={decks} key={i} />
-      //   ))}
-      //   <button
-      //     className="ship-station_button"
-      //     onClick={() =>
-      //       setRandomShips(shipsLocation, ships, currentUser, addShip)
-      //     }
-      //     disabled={!!isStartSingle}
-      //   >
-      //     Random
-      //   </button>
-      // <button
-      //   className="ship-station_button"
-      //   onClick={resetShipsHandler}
-      //   disabled={!!isStartSingle}
-      // >
-      //   Reset ships
-      // </button>
-      // </div>
       <div className="ship-station">
         <div className="ship-station_container">
           {ships.map((decks, i) => (

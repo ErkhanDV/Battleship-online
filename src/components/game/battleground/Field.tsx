@@ -22,7 +22,7 @@ const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
       {isGameFinded || !isRival || !!singlePlayer ? null : (
-        <div className="connection">Waiting for opponent...</div>
+        <div className="connection">Waiting for an opponent...</div>
       )}
     </div>
   );

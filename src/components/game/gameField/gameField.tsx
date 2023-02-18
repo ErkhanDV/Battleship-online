@@ -3,6 +3,7 @@ import { useAppSelector } from '@/hook/use-redux';
 import { useShipLocationActions } from '@/hook/use-shipLocation-actions';
 import { getSettedShips } from '@/lib/utils/getSettedShips';
 import { setRandomShips } from '@/lib/utils/setRandomShips';
+import { SHIPS } from '@/store/_constants';
 import { Field, RivalField, ShipStation } from '../_index';
 import { IGameField } from './_types';
 
@@ -25,12 +26,7 @@ const GameField = ({ isReady, socket, readyHandler }: IGameField) => {
   const readyButtonHandler = (readyHandler: (() => void) | undefined) => {
     if (!!singlePlayer) {
       changeGameStatus(true);
-      setRandomShips(
-        computerShipsLocation,
-        [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
-        currentUser,
-        addShip,
-      );
+      setRandomShips(computerShipsLocation, SHIPS, currentUser, addShip);
     }
     return readyHandler;
   };
