@@ -45,15 +45,19 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
 
   return (
     <div className="game">
-      <main className="game-wrapper">
+      <main className="main">
         {!isReady ? (
-          <button disabled={isFilled} onClick={readyHandler} className="ready">
+          <button
+            disabled={isFilled}
+            onClick={readyHandler}
+            className="button-render"
+          >
             {isOnline ? 'Ready' : 'Start game'}
           </button>
         ) : null}
-        <div className="fields">
-          <div className="user">
-            <div className="name">{userName}</div>
+        <div className="game_fields">
+          <div className="field">
+            <h2 className="field_name">{userName}</h2>
             <Field isRival={false} />
           </div>
           <RivalField isOnline={isOnline} />
