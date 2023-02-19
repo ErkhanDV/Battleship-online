@@ -1,3 +1,4 @@
+@import '../../scss/index.scss';
 @import '../../scss/variables.scss';
 
 .settings {
@@ -7,7 +8,6 @@
   align-items: center;
   &_title {
     position: relative;
-    position: relative;
     width: 100%;
     padding-bottom: 20px;
     padding-bottom: 20px;
@@ -16,7 +16,8 @@
     font-weight: 100;
     line-height: 1.4;
     letter-spacing: 5px;
-    border-bottom: 2px dashed $primaryColor-50;
+    color: rgb(255, 255, 255, 1);
+    border-bottom: 2px dashed $primary-color-50;
     &::before,
     &::after {
       position: absolute;
@@ -26,7 +27,7 @@
       font-family: 'Material Symbols Outlined';
       font-size: 52px;
       font-weight: 100;
-      color: $primaryColor-100;
+      color: $primary-color-100;
       animation: settingsAnimation 10s infinite;
     }
     &::after {
@@ -43,7 +44,7 @@
       font-family: 'Material Symbols Outlined';
       font-size: 52px;
       font-weight: 100;
-      color: $primaryColor-100;
+      color: $primary-color-100;
       animation: settingsAnimation 10s infinite;
     }
     &::after {
@@ -59,7 +60,7 @@
     width: 100%;
     padding: 10px 20px;
     margin: 10px;
-    border: 2px dotted $primaryColor-25;
+    border: 2px dotted $primary-color-25;
   }
   &_subtitle {
     width: 50%;
@@ -67,7 +68,8 @@
     font-size: 20px;
     text-align: center;
     font-weight: 100;
-    background-color: $primaryColor-25;
+    color: rgb(255, 255, 255, 1);
+    background-color: $primary-color-25;
   }
   &_options {
     display: flex;
@@ -81,20 +83,20 @@
     padding: 4px;
     font-family: $primaryFont;
     font-size: 20px;
-    color: $primaryColor-100;
+    color: $primary-color-100;
     border: none;
     border-radius: 4px;
-    background: $primaryCornerGradient;
+    background: $primary-corner-gradient;
     background-repeat: no-repeat;
     background-size: 10px 8px;
-    background-color: $primaryColor-25;
+    background-color: $primary-color-25;
     cursor: pointer;
     transition: ease-in-out 0.3s;
     &:hover,
     &.active {
-      color: #fff;
+      color: rgb(255, 255, 255, 1);
       background-size: 100% 8px;
-      background-color: $primaryColor-50;
+      background-color: $primary-color-50;
     }
   }
 }
@@ -123,7 +125,6 @@
     }
     &_subtitle {
       margin: 0 auto 10px;
-
     }
     &_section {
       flex-direction: column;

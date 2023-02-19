@@ -12,7 +12,7 @@
     font-weight: 100;
     line-height: 1.4;
     letter-spacing: 5px;
-    border-bottom: 2px dashed $primaryColor-50;
+    border-bottom: 2px dashed $primary-color-50;
   }
   &_input {
     width: 60%;
@@ -40,19 +40,19 @@
     font-weight: 100;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: $primaryColor-100;
+    color: $primary-color-100;
     border: none;
     border-radius: 4px;
-    background: $primaryCornerGradient;
+    background: $primary-corner-gradient;
     background-repeat: no-repeat;
     background-size: 25% 10px;
-    background-color: $primaryColor-25;
+    background-color: $primary-color-25;
     cursor: pointer;
     transition: ease-in-out 0.5s;
     &:hover {
       color: #fff;
       background-size: 100% 10px;
-      background-color: $primaryColor-50;
+      background-color: $primary-color-50;
     }
   }
 }
