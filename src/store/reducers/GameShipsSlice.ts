@@ -49,6 +49,8 @@ const gameShipsSlice = createSlice({
       state.user.shipsLocation = [];
     },
 
+    resetGameShips: () => initialState,
+
     updateShipsState(state, action: PayloadAction<IPersonState>) {
       state[action.payload.person] = action.payload.state;
     },
@@ -75,6 +77,7 @@ export const {
   setRandomShips,
   addShoot,
   resetShips,
+  resetGameShips,
 } = gameShipsSlice.actions;
 
 export default gameShipsSlice.reducer;

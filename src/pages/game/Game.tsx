@@ -1,8 +1,8 @@
-import { useContext, type FC } from 'react';
+import { useContext, useEffect, type FC } from 'react';
 import {
   useAppSelector,
   useGameShipsActions,
-  usegameStateActions,
+  useGameStateActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/Context';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
@@ -11,10 +11,11 @@ import './game.scss';
 import { PERSON } from '@/store/_constants';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
+
   const isOnline = mode === 'online';
   const { sendSocket } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
-    usegameStateActions();
+    useGameStateActions();
   const { setRandomShips } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);

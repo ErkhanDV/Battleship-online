@@ -47,6 +47,8 @@ export const gameStateSlice = createSlice({
     setWinner(state, action: PayloadAction<string>) {
       state.winner = action.payload;
     },
+
+    resetGameState: () => initialState,
   },
 });
 
@@ -59,6 +61,7 @@ export const {
   setAbleShoot,
   setReady,
   setWinner,
+  resetGameState,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

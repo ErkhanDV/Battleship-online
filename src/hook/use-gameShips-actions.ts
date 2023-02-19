@@ -25,11 +25,14 @@ export const useGameShipsActions = () => {
   const setRandomShips = (person: keyof IGameShips, ships?: number[]) =>
     dispatch(shipActions.setRandomShips({ person, ships }));
 
+  const resetGameShips = () => dispatch(shipActions.resetGameShips());
+
   return {
     updateShipsLocationState,
     checkShoot,
     addShip,
     resetShips,
     setRandomShips,
+    resetGameShips,
   };
 };

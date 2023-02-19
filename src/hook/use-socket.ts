@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector } from '@/hook/use-redux';
-import { usegameStateActions, useGameShipsActions } from './_index';
+import { useGameStateActions, useGameShipsActions } from './_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import {
   IStartGame,
@@ -23,7 +23,7 @@ export const useSocket = () => {
     setOpponentName,
     setUserName,
     setWinner,
-  } = usegameStateActions();
+  } = useGameStateActions();
   const { updateShipsLocationState, checkShoot } = useGameShipsActions();
   const { gameInfo, userName } = useAppSelector((state) => state.gameStateSlice);
 

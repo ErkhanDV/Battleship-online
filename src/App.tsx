@@ -5,6 +5,7 @@ import {
   useLogInActions,
   useGameShipsActions,
   useSocket,
+  useGameStateActions,
 } from './hook/_index';
 import { SocketContext } from './Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
@@ -17,7 +18,8 @@ const App = () => {
   const navigate = useNavigate();
   const { socket, init, setSocket, sendSocket } = useSocket();
   const { setUser } = useLogInActions();
-  const { updateShipsLocationState } = useGameShipsActions();
+  const { resetGameShips } = useGameShipsActions();
+  const { resetGameState } = useGameStateActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
 
   const check = async () => {
@@ -44,12 +46,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const initialShips = { shipsLocation: [], misses: [] };
-
-    if (location.pathname === ROUTE.home) {
+    if (
+      location.pathname !== ROUTE.settings ||
+      location.pathname !== ROUTE.rules
+    ) {
       socket?.close();
-      updateShipsLocationState(initialShips, PERSON.user);
-      updateShipsLocationState(initialShips, PERSON.rival);
+      resetGameShips();
+      resetGameState();
     }
   }, [location]);
 
