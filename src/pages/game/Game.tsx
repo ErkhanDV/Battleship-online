@@ -1,43 +1,59 @@
 import { useContext, type FC } from 'react';
-import { useAppSelector, useSocketActions } from '@/hook/_index';
+import {
+  useAppSelector,
+  useShipLocationActions,
+  useSocketActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/Context';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
-import { getSettedShips } from '@/lib/utils/getSettedShips';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
-import GameField from '@/components/game/gameField/GameField';
-import { useGameStateActions } from '@/hook/use-game-state-actios';
+import { PERSON } from '@/store/_constants';
 
-const Game: FC = () => {
-  const { socket, init } = useContext(SocketContext);
+const Game: FC<{ mode: string }> = ({ mode }) => {
+  const isOnline = mode === 'online';
+  const { sendSocket } = useContext(SocketContext);
+
   const { setIsReady } = useSocketActions();
+  const { setRandomShips } = useShipLocationActions();
 
-  const { gameInfo, isReady } = useAppSelector((state) => state.socketSlice);
-  const { user } = useAppSelector((state) => state.shipsLocationSlice);
-
-  const ships = getSettedShips(shipsLocation);
+  const userName = useAppSelector((state) => state.logInSlice.user);
+  const { isReady } = useAppSelector((state) => state.socketSlice);
+  const { shipsLocationSlice } = useAppSelector((state) => state);
+  const { user } = shipsLocationSlice;
+  const isFilled = user.shipsLocation.length < 10;
 
   const readyHandler = () => {
-    console.log(user);
     setIsReady(true);
-    socket?.send(
-      JSON.stringify({
-        ...gameInfo,
-        field: user,
-        method: SOCKETMETHOD.ready,
-      }),
-    );
+    if (isOnline) {
+      sendSocket(SOCKETMETHOD.ready, { field: user });
+    } else {
+      setRandomShips(PERSON.rival);
+    }
   };
 
   const exitHandler = () => {
-    socket?.send(JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.exit }));
+    sendSocket(SOCKETMETHOD.exit);
   };
 
-  const { changeGameMode } = useGameStateActions();
-  changeGameMode(false);
-
   return (
-    <GameField isReady={isReady} socket={socket} readyHandler={readyHandler} />
+    <div className="game">
+      <main className="game-wrapper">
+        {!isReady ? (
+          <button disabled={isFilled} onClick={readyHandler} className="ready">
+            {isOnline ? 'Ready' : 'Start game'}
+          </button>
+        ) : null}
+        <div className="fields">
+          <div className="user">
+            <div className="name">{userName}</div>
+            <Field isRival={false} />
+          </div>
+          <RivalField isOnline={isOnline} />
+        </div>
+        <ShipStation />
+      </main>
+    </div>
   );
 };
 

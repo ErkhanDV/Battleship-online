@@ -3,4 +3,5 @@ export enum ROUTE {
   game = '/game',
   rules = '/rules',
   settings = '/settings',
+  single = '/singleplayer',
 }

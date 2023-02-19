@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hook/use-redux';
 import * as logInActions from '@/store/reducers/LogInSlice';
+import { MODAL } from '@/components/modal/_constants';
 
 export const useLogInActions = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ export const useLogInActions = () => {
   const setModalOpen = (state: boolean) =>
     dispatch(logInActions.setModalOpen(state));
 
-  const setModalChildren = (component: string) =>
+  const setModalChildren = (component: keyof typeof MODAL) =>
     dispatch(logInActions.setModalChildren(component));
 
   return {

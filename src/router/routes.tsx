@@ -1,7 +1,6 @@
 import { Home, Rules, Game } from '@/pages/_index';
 import { Settings } from '@/components/_index';
 import { IRoute } from './_types';
-import SinglePlayer from '@/pages/singlePlayer/SinglePlayer';
 import { ROUTE } from './_constants';
 
 const routes: IRoute[] = [
@@ -10,12 +9,12 @@ const routes: IRoute[] = [
     element: <Home />,
   },
   {
-    path: '/singleplayer',
-    element: <SinglePlayer />,
+    path: ROUTE.single,
+    element: <Game mode={'single'} />,
   },
   {
     path: ROUTE.game,
-    element: <Game />,
+    element: <Game mode={'online'} />,
   },
   {
     path: ROUTE.rules,

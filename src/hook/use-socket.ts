@@ -10,6 +10,7 @@ import {
   IStart,
 } from '@/store/reducers/types/socket';
 import { PERSON } from '@/store/_constants';
+import { IPlayerState } from '@/store/reducers/types/shipLocation';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<null | WebSocket>(null);
@@ -135,5 +136,18 @@ export const useSocket = () => {
     setUserName(response.user.name);
   };
 
-  return { init, socket, setSocket };
+  const sendSocket = (
+    method: string,
+    data?: { feild: IPlayerState } | { shoot: number },
+  ) => {
+    socket?.send(
+      JSON.stringify({
+        ...gameInfo,
+        ...data,
+        method: SOCKETMETHOD.ready,
+      }),
+    );
+  };
+
+  return { init, socket, setSocket, sendSocket };
 };

@@ -4,7 +4,7 @@ import { ISocket, IStartGame } from './types/socket';
 const initialState: ISocket = {
   gameInfo: null,
   userName: '',
-  opponentName: '',
+  opponentName: 'Unknown',
   isGameFinded: false,
   isStarted: false,
   isAbleShoot: false,

@@ -1,7 +1,10 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hook/_index';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useShipLocationActions,
+} from '@/hook/_index';
 import { setDropped } from '@/store/reducers/CurrentShipSlice';
-import { addShip } from '@/store/reducers/ShipsLocationSlice';
 import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
 import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';
@@ -11,6 +14,7 @@ import './Cell.scss';
 
 const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   const key = isRival ? PERSON.rival : PERSON.user;
+  const { addShip } = useShipLocationActions();
 
   const { decks, isHorizontal } = useAppSelector(
     (state) => state.currentShipSlice.currentDragedShip,
@@ -53,8 +57,7 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   };
 
   const dispatch = useAppDispatch();
-  const setLocations = (ship: IShip) =>
-    dispatch(addShip({ player: PERSON.user, ship }));
+  const setLocations = (ship: IShip) => addShip(PERSON.user, ship);
   const successfullyDrop = () => dispatch(setDropped(true));
 
   const { shoot, initial, miss, ship } = CELLCLASS;

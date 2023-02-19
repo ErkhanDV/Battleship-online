@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import {
-  IShipsLocation,
+  IGame,
   IAddShip,
-  IGameState,
+  IPersonState,
   IShoot,
+  IRandomState,
+  IShip,
 } from './types/shipLocation';
-import { PERSON } from '../_constants';
+import { SHIPS } from '../_constants';
 
-const initialState: IShipsLocation = {
+const initialState: IGame = {
   user: {
     shipsLocation: [],
     misses: [],
@@ -23,25 +26,22 @@ const shipsLocationSlice = createSlice({
   initialState,
   reducers: {
     addShip(state, action: PayloadAction<IAddShip>) {
-      state[action.payload.player as keyof typeof state].shipsLocation.push(
-        action.payload.ship,
-      );
+      const { person } = action.payload;
+      state[person].shipsLocation.push(action.payload.ship);
     },
 
     addShoot(state, action: PayloadAction<IShoot>) {
-      const player = action.payload.player;
-      const ships = state[player as keyof typeof state].shipsLocation.map(
+      const { person, cell } = action.payload;
+      const ships = state[person].shipsLocation.map(
         (ship) => ship.shipLocation,
       );
       const index = ships.findIndex((coordinates) =>
-        coordinates.includes(action.payload.cell),
+        coordinates.includes(cell),
       );
       if (index !== -1) {
-        state[player as keyof typeof state].shipsLocation[
-          index
-        ].woundedCells.push(action.payload.cell);
+        state[person].shipsLocation[index].woundedCells.push(cell);
       } else {
-        state[player as keyof typeof state].misses.push(action.payload.cell);
+        state[person].misses.push(cell);
       }
     },
 
@@ -49,17 +49,25 @@ const shipsLocationSlice = createSlice({
       state.user.shipsLocation = [];
     },
 
-    updateShipsLocationState(state, action: PayloadAction<IGameState>) {
-      if (action.payload.person === PERSON.user) {
-        state.user = action.payload.state;
-      } else {
-        state.rival = action.payload.state;
-      }
+    updateShipsState(state, action: PayloadAction<IPersonState>) {
+      state[action.payload.person] = action.payload.state;
+    },
+
+    setRandomShips(state, action: PayloadAction<IRandomState>) {
+      const person = action.payload.person;
+      const ships = action.payload.ships ? action.payload.ships : SHIPS;
+
+      const settedShips = [...state[person].shipsLocation];
+      const newShips: IShip[] = [];
+      ships.forEach((ship) => {
+        getCorrectShip(settedShips, newShips, ship);
+      });
+      newShips.forEach((ship) => addShip({ person, ship }));
     },
   },
 });
 
-export const { addShip, updateShipsLocationState, addShoot, resetShips } =
+export const { addShip, updateShipsState, setRandomShips, addShoot, resetShips } =
   shipsLocationSlice.actions;
 
 export default shipsLocationSlice.reducer;

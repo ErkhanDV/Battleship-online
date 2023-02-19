@@ -1,6 +1,31 @@
-export interface IAddShip {
-  player: string;
+export interface IPlayerState {
+  shipsLocation: IShip[];
+  misses: number[];
+}
+
+export interface IGame {
+  user: IPlayerState;
+  rival: IPlayerState;
+}
+
+interface IPerson {
+  person: keyof IGame;
+}
+
+export interface IAddShip extends IPerson {
   ship: IShip;
+}
+
+export interface IPersonState extends IPerson {
+  state: IPlayerState;
+}
+
+export interface IShoot extends IPerson {
+  cell: number;
+}
+
+export interface IRandomState extends IPerson {
+  ships?: number[];
 }
 
 export interface IShip {
@@ -8,29 +33,4 @@ export interface IShip {
   decks: number;
   occupiedCells: number[];
   woundedCells: number[];
-}
-
-export interface IAddMiss {
-  player: string;
-  miss: number;
-}
-
-export interface IShipsLocation {
-  user: IPlayerState;
-  rival: IPlayerState;
-}
-
-export interface IPlayerState {
-  shipsLocation: IShip[];
-  misses: number[];
-}
-
-export interface IGameState {
-  state: IPlayerState;
-  person: string;
-}
-
-export interface IShoot {
-  player: string;
-  cell: number;
 }

@@ -15,9 +15,7 @@ const Ship = ({ decks }: IDecks) => {
     dispatch(setCurrentShip(currentShip));
   };
 
-  const isSuccessfullyDrop = useAppSelector(
-    (state) => state.currentShipSlice.wasDropped,
-  );
+  const { wasDropped } = useAppSelector((state) => state.currentShipSlice);
   const setNotDrop = () => dispatch(setDropped(false));
 
   const dragStartHandler = (
@@ -31,7 +29,7 @@ const Ship = ({ decks }: IDecks) => {
 
   const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
     setShipHandler({ decks: null, isHorizontal: false });
-    if (!!isSuccessfullyDrop) {
+    if (!!wasDropped) {
       setNotDrop();
     }
   };

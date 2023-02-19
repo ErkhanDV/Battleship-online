@@ -4,6 +4,7 @@ import { useShipLocationActions } from './use-shipLocation-actions';
 import { useSocketActions } from './use-socket-actions';
 import { useLogInActions } from './use-login-actions';
 import { useAppSettingsActions } from './use-app-settings';
+import { useGetSettedShips } from './use-get-setted-ships';
 
 export {
   useAppDispatch,
@@ -13,4 +14,5 @@ export {
   useSocketActions,
   useLogInActions,
   useAppSettingsActions,
+  useGetSettedShips,
 };

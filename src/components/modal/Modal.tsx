@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { useAppSelector, useLogInActions } from '@/hook/_index';
-
+import { MODAL } from './_constants';
 import './Modal.scss';
-import { Settings, LogIn } from '../_index';
 
 const Modal: FC = () => {
   const { setModalOpen } = useLogInActions();
@@ -19,7 +18,7 @@ const Modal: FC = () => {
         className={`modal_content ${isModalOpen && 'open'}`}
         onClick={(event) => event.stopPropagation()}
       >
-        {modalChildren === 'log' ? <LogIn /> : <Settings />}
+        {MODAL[modalChildren]}
       </div>
     </div>
   );
