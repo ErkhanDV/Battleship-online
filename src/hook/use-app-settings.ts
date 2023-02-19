@@ -12,6 +12,10 @@ export const useAppSettingsActions = () => {
     dispatch(appSettings.changeTheme(theme));
   };
 
+  const changeScheme = (scheme: string) => {
+    dispatch(appSettings.changeScheme(scheme));
+  };
+
   const toggleSound = (sound: boolean) => {
     dispatch(appSettings.toggleSound(sound));
   };
@@ -19,6 +23,7 @@ export const useAppSettingsActions = () => {
   return {
     changeLanguage,
     changeTheme,
+    changeScheme,
     toggleSound,
   };
 };

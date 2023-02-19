@@ -8,7 +8,7 @@
   "endOfLine": "auto",
   "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",
-  "htmlWhitespaceSensitivity": "css",
+  "htmlvar(--text-color)spaceSensitivity": "css",
   "insertPragma": false,
   "quoteProps": "as-needed",
   "requirePragma": false,

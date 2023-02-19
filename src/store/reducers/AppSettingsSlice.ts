@@ -4,7 +4,8 @@ import { IAppSettings } from './types/appSettings';
 
 const initialState: IAppSettings = {
   language: 'en',
-  theme: 'green',
+  theme: 'dark',
+  scheme: 'green',
   sound: true,
 };
 
@@ -20,12 +21,16 @@ const appSettingsSlice = createSlice({
       state.theme = action.payload;
     },
 
+    changeScheme(state, action: PayloadAction<string>) {
+      state.scheme = action.payload;
+    },
+
     toggleSound(state, action: PayloadAction<boolean>) {
       state.sound = action.payload;
     },
   },
 });
 
-export const { changeLanguage, changeTheme, toggleSound } =
+export const { changeLanguage, changeTheme, changeScheme, toggleSound } =
   appSettingsSlice.actions;
 export default appSettingsSlice.reducer;
