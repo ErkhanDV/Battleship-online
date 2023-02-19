@@ -10,7 +10,7 @@ export const useLogInActions = () => {
   const setModalOpen = (state: boolean) =>
     dispatch(logInActions.setModalOpen(state));
 
-  const setModalChildren = (component: keyof typeof MODAL) =>
+  const setModalChildren = (component: string) =>
     dispatch(logInActions.setModalChildren(component));
 
   return {

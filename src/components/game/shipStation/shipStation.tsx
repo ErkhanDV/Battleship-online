@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import {
   useAppSelector,
-  useShipLocationActions,
+  useGameShipsActions,
   useGetSettedShips,
 } from '@/hook/_index';
 import { Ship } from '../_index';
@@ -11,8 +11,8 @@ import './ShipStation.scss';
 
 const ShipStation: FC = () => {
   const { restShips } = useGetSettedShips();
-  const { resetShips, setRandomShips } = useShipLocationActions();
-  const { isReady } = useAppSelector((state) => state.socketSlice);
+  const { resetShips, setRandomShips } = useGameShipsActions();
+  const { isReady } = useAppSelector((state) => state.gameStateSlice);
 
   const resetShipsHandler = () => {
     resetShips();
@@ -29,7 +29,7 @@ const ShipStation: FC = () => {
         <div className="ship-station_discription">
           <button
             className="ship-station_button"
-            onClick={() => setRandomShips(PERSON.user)}
+            onClick={() => setRandomShips(PERSON.user, restShips)}
           >
             Random
           </button>

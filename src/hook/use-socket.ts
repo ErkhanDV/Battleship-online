@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector } from '@/hook/use-redux';
-import { useSocketActions, useShipLocationActions } from './_index';
+import { usegameStateActions, useGameShipsActions } from './_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import {
   IStartGame,
@@ -23,9 +23,9 @@ export const useSocket = () => {
     setOpponentName,
     setUserName,
     setWinner,
-  } = useSocketActions();
-  const { updateShipsLocationState, checkShoot } = useShipLocationActions();
-  const { gameInfo, userName } = useAppSelector((state) => state.socketSlice);
+  } = usegameStateActions();
+  const { updateShipsLocationState, checkShoot } = useGameShipsActions();
+  const { gameInfo, userName } = useAppSelector((state) => state.gameStateSlice);
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -138,7 +138,7 @@ export const useSocket = () => {
 
   const sendSocket = (
     method: string,
-    data?: { feild: IPlayerState } | { shoot: number },
+    data?: { field: IPlayerState } | { shoot: number },
   ) => {
     socket?.send(
       JSON.stringify({

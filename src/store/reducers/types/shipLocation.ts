@@ -3,13 +3,13 @@ export interface IPlayerState {
   misses: number[];
 }
 
-export interface IGame {
+export interface IGameShips {
   user: IPlayerState;
   rival: IPlayerState;
 }
 
 interface IPerson {
-  person: keyof IGame;
+  person: keyof IGameShips;
 }
 
 export interface IAddShip extends IPerson {

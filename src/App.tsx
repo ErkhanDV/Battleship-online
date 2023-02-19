@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
 import {
   useLogInActions,
-  useShipLocationActions,
+  useGameShipsActions,
   useSocket,
 } from './hook/_index';
 import { SocketContext } from './Context';
@@ -15,9 +15,9 @@ import { PERSON } from './store/_constants';
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { socket, init, setSocket } = useSocket();
+  const { socket, init, setSocket, sendSocket } = useSocket();
   const { setUser } = useLogInActions();
-  const { updateShipsLocationState } = useShipLocationActions();
+  const { updateShipsLocationState } = useGameShipsActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
 
   const check = async () => {
@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SocketContext.Provider value={{ socket, setSocket, init }}>
+      <SocketContext.Provider value={{ socket, setSocket, init, sendSocket }}>
         <Header />
         <AppRouter />
         <Footer />

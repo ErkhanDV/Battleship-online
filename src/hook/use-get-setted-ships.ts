@@ -2,7 +2,7 @@ import { useAppSelector } from '@/hook/_index';
 
 export const useGetSettedShips = () => {
   const { shipsLocation } = useAppSelector(
-    (state) => state.shipsLocationSlice.user,
+    (state) => state.gameShipsSlice.user,
   );
 
   const shipsList = shipsLocation.map((ship) => ship.decks);

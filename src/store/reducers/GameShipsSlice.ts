@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getCorrectShip } from '@/lib/API/ShipsPlacer/ShipsPlacer';
 import {
-  IGame,
+  IGameShips,
   IAddShip,
   IPersonState,
   IShoot,
@@ -10,7 +10,7 @@ import {
 } from './types/shipLocation';
 import { SHIPS } from '../_constants';
 
-const initialState: IGame = {
+const initialState: IGameShips = {
   user: {
     shipsLocation: [],
     misses: [],
@@ -21,8 +21,8 @@ const initialState: IGame = {
   },
 };
 
-const shipsLocationSlice = createSlice({
-  name: 'shipsLocation',
+const gameShipsSlice = createSlice({
+  name: 'gameShips',
   initialState,
   reducers: {
     addShip(state, action: PayloadAction<IAddShip>) {
@@ -62,12 +62,19 @@ const shipsLocationSlice = createSlice({
       ships.forEach((ship) => {
         getCorrectShip(settedShips, newShips, ship);
       });
-      newShips.forEach((ship) => addShip({ person, ship }));
+      newShips.forEach((ship) => {
+        state[person].shipsLocation.push(ship);
+      });
     },
   },
 });
 
-export const { addShip, updateShipsState, setRandomShips, addShoot, resetShips } =
-  shipsLocationSlice.actions;
+export const {
+  addShip,
+  updateShipsState,
+  setRandomShips,
+  addShoot,
+  resetShips,
+} = gameShipsSlice.actions;
 
-export default shipsLocationSlice.reducer;
+export default gameShipsSlice.reducer;

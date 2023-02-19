@@ -7,7 +7,7 @@ import './Field.scss';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   const { isAbleShoot, isGameFinded, isStarted } = useAppSelector(
-    (state) => state.socketSlice,
+    (state) => state.gameStateSlice,
   );
 
   return (

@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import { useAppSelector, useLogInActions } from '@/hook/_index';
-import { MODAL } from './_constants';
 import './Modal.scss';
+import { LogIn, Settings } from '../_index';
 
 const Modal: FC = () => {
   const { setModalOpen } = useLogInActions();
   const { modalChildren, isModalOpen } = useAppSelector(
     (state) => state.logInSlice,
   );
+  const modalComponent = modalChildren === 'log' ? <LogIn /> : <Settings />;
 
   return (
     <div
@@ -18,7 +19,7 @@ const Modal: FC = () => {
         className={`modal_content ${isModalOpen && 'open'}`}
         onClick={(event) => event.stopPropagation()}
       >
-        {MODAL[modalChildren]}
+        {modalComponent}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ISocket, IStartGame } from './types/socket';
+import { IGameState, IStartGame } from './types/socket';
 
-const initialState: ISocket = {
+const initialState: IGameState = {
   gameInfo: null,
   userName: '',
   opponentName: 'Unknown',
@@ -12,8 +12,8 @@ const initialState: ISocket = {
   winner: '',
 };
 
-export const socketSlice = createSlice({
-  name: 'socket',
+export const gameStateSlice = createSlice({
+  name: 'gameState',
   initialState,
   reducers: {
     setGameInfo(state, action: PayloadAction<IStartGame>) {
@@ -59,6 +59,6 @@ export const {
   setAbleShoot,
   setReady,
   setWinner,
-} = socketSlice.actions;
+} = gameStateSlice.actions;
 
-export default socketSlice.reducer;
+export default gameStateSlice.reducer;

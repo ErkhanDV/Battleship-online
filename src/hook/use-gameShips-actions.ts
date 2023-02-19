@@ -1,32 +1,29 @@
 import { useAppDispatch } from '@/hook/use-redux';
-import * as shipActions from '@/store/reducers/ShipsLocationSlice';
+import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,
   IShip,
-  IShipsLocation,
+  IGameShips,
 } from '@/store/reducers/types/shipLocation';
-import { SHIPS } from '@/store/_constants';
 
-export const useShipLocationActions = () => {
+export const useGameShipsActions = () => {
   const dispatch = useAppDispatch();
 
   const updateShipsLocationState = (
     state: IPlayerState,
-    person: keyof IShipsLocation,
+    person: keyof IGameShips,
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
-  const checkShoot = (person: keyof IShipsLocation, cell: number) =>
+  const checkShoot = (person: keyof IGameShips, cell: number) =>
     dispatch(shipActions.addShoot({ person, cell }));
 
-  const addShip = (person: keyof IShipsLocation, ship: IShip) =>
+  const addShip = (person: keyof IGameShips, ship: IShip) =>
     dispatch(shipActions.addShip({ person, ship }));
 
   const resetShips = () => dispatch(shipActions.resetShips());
 
-  const setRandomShips = (
-    person: keyof IShipsLocation,
-    ships?: number[],
-  ) => dispatch(shipActions.setRandomShips({ person, ships }));
+  const setRandomShips = (person: keyof IGameShips, ships?: number[]) =>
+    dispatch(shipActions.setRandomShips({ person, ships }));
 
   return {
     updateShipsLocationState,

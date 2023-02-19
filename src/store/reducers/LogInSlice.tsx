@@ -22,7 +22,7 @@ const logInSlice = createSlice({
       state.isModalOpen = action.payload;
     },
 
-    setModalChildren(state, action: PayloadAction<keyof typeof MODAL>) {
+    setModalChildren(state, action: PayloadAction<string>) {
       state.modalChildren = action.payload;
     },
   },

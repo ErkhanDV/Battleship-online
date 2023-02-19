@@ -1,16 +1,17 @@
 import { useContext, type FC } from 'react';
 import { SocketContext } from '@/Context';
-import { useAppSelector, useShipLocationActions } from '@/hook/_index';
+import { useAppSelector, useGameShipsActions } from '@/hook/_index';
 import { Field } from '../_index';
+import { getRandomNum } from '@/lib/utils/getRandomNum';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const RivalField: FC<{ isOnline: boolean }> = ({ isOnline }) => {
   const { sendSocket } = useContext(SocketContext);
   const { opponentName, isAbleShoot, isStarted } = useAppSelector(
-    (state) => state.socketSlice,
+    (state) => state.gameStateSlice,
   );
 
-  const { checkShoot } = useShipLocationActions();
+  const { checkShoot } = useGameShipsActions();
 
   const shootHandler = (e: React.MouseEvent): void => {
     if (e.target instanceof HTMLDivElement && e.target.id) {
@@ -21,6 +22,9 @@ const RivalField: FC<{ isOnline: boolean }> = ({ isOnline }) => {
           sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
         } else {
           checkShoot('rival', shoot);
+          setTimeout(() => {
+            checkShoot('user', getRandomNum(1, 100));
+          }, 1000);
         }
       }
     }

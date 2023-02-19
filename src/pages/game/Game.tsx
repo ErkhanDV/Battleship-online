@@ -1,8 +1,8 @@
 import { useContext, type FC } from 'react';
 import {
   useAppSelector,
-  useShipLocationActions,
-  useSocketActions,
+  useGameShipsActions,
+  usegameStateActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/Context';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
@@ -13,15 +13,21 @@ import { PERSON } from '@/store/_constants';
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
   const { sendSocket } = useContext(SocketContext);
-
-  const { setIsReady } = useSocketActions();
-  const { setRandomShips } = useShipLocationActions();
+  const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
+    usegameStateActions();
+  const { setRandomShips } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
-  const { isReady } = useAppSelector((state) => state.socketSlice);
-  const { shipsLocationSlice } = useAppSelector((state) => state);
-  const { user } = shipsLocationSlice;
+  const { isReady } = useAppSelector((state) => state.gameStateSlice);
+  const { gameShipsSlice } = useAppSelector((state) => state);
+  const { user } = gameShipsSlice;
   const isFilled = user.shipsLocation.length < 10;
+
+  if (!isOnline) {
+    setIsStarted(true);
+    setIsGameFinded(true);
+    setIsAbleShoot(true);
+  }
 
   const readyHandler = () => {
     setIsReady(true);

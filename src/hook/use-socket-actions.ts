@@ -1,32 +1,32 @@
 import { useAppDispatch } from '@/hook/use-redux';
-import * as socketActions from '@/store/reducers/SocketSlice';
+import * as gameStateActions from '@/store/reducers/GameStateSlice';
 import { IStartGame } from '@/store/reducers/types/socket';
 
-export const useSocketActions = () => {
+export const usegameStateActions = () => {
   const dispatch = useAppDispatch();
 
   const setGameInfo = (info: IStartGame) =>
-    dispatch(socketActions.setGameInfo(info));
+    dispatch(gameStateActions.setGameInfo(info));
 
   const setOpponentName = (name: string) =>
-    dispatch(socketActions.setOpponentName(name));
+    dispatch(gameStateActions.setOpponentName(name));
 
   const setUserName = (name: string) =>
-    dispatch(socketActions.setUserName(name));
+    dispatch(gameStateActions.setUserName(name));
 
   const setIsReady = (state: boolean) =>
-    dispatch(socketActions.setReady(state));
+    dispatch(gameStateActions.setReady(state));
 
   const setIsAbleShoot = (state: boolean) =>
-    dispatch(socketActions.setAbleShoot(state));
+    dispatch(gameStateActions.setAbleShoot(state));
 
   const setIsGameFinded = (state: boolean) =>
-    dispatch(socketActions.setGameFinded(state));
+    dispatch(gameStateActions.setGameFinded(state));
 
   const setIsStarted = (state: boolean) =>
-    dispatch(socketActions.setStarted(state));
+    dispatch(gameStateActions.setStarted(state));
 
-  const setWinner = (name: string) => dispatch(socketActions.setWinner(name));
+  const setWinner = (name: string) => dispatch(gameStateActions.setWinner(name));
 
   return {
     setWinner,
