@@ -15,13 +15,13 @@
     letter-spacing: 2px;
     text-align: center;
     text-transform: uppercase;
-    color: $primaryColor-100;
-    border-bottom: 2px dotted $primaryColor-50;
+    color: $primary-color-100;
+    border-bottom: 2px dotted $primary-color-50;
   }
   &_subtitle {
     font-weight: 100;
-    color: $primaryColor-75;
-    border-bottom: 2px dotted $primaryColor-50;
+    color: $primary-color-100;
+    border-bottom: 2px dotted $primary-color-50;
   }
   &_section {
     display: flex;
@@ -31,14 +31,14 @@
     margin-bottom: 20px;
     padding: 20px 50px;
     border-radius: 4px;
-    background: $primaryCornerGradient;
+    background: $primary-corner-gradient;
     background-repeat: no-repeat;
     background-size: 25% 20%;
-    background-color: $primaryColor-25;
+    background-color: $primary-color-25;
   }
   &_paragrath {
     padding: 20px;
-    border: 1px dashed $primaryColor-50;
+    border: 1px dashed $primary-color-50;
     line-height: 1.4;
   }
 }

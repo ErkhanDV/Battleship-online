@@ -22,10 +22,10 @@
     width: 720px;
     padding: 20px 40px;
     border-radius: 8px;
-    background: $modalCornerGradient;
+    background: $modal-corner-gradient;
     background-repeat: no-repeat;
     background-size: 40px 40px;
-    background-color: $primaryColor-50;
+    background-color: $primary-color-50;
     transform: scale(0.5);
     transition: ease-in-out 0.3s;
     &.open {

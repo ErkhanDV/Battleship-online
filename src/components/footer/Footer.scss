@@ -7,9 +7,13 @@
   min-height: 120px;
   padding: 0 40px;
   margin-top: auto;
-  color: $primaryColor-100;
-  background: linear-gradient(90deg, $primaryColor-50 0%, rgba(0, 0, 0, 0.75) 100%);
-  border-top: 1px dotted $primaryColor-100;
+  color: $primary-color-100;
+  background: linear-gradient(
+    90deg,
+    $primary-color-50 0%,
+    $background-color-100 100%
+  );
+  border-top: 1px dotted $primary-color-100;
   &_authors {
     display: flex;
     flex-direction: column;
@@ -52,19 +56,27 @@
       top: 0px;
       width: 20px;
       height: 20px;
-      background-image: url(../../assets/svg/github-mark-white.svg);
-      background-repeat: no-repeat;
-      background-size: contain;
+
+      -webkit-mask-image: url(../../assets/svg/github-mark-white.svg);
+      mask-image: url(../../assets/svg/github-mark-white.svg);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      background-color: $text-color-100;
+      // background-image: url(../../assets/svg/github-mark-white.svg);
+      // background-repeat: no-repeat;
+      // background-size: contain;
     }
     &:nth-child(3) {
       margin-right: 0;
     }
   }
   &_link {
-    color: $primaryColor-100;
+    color: $primary-color-100;
     transition: ease-in-out 0.4s;
     &:hover {
-      color: #fff;
+      color: $text-color-100;
     }
   }
 }
@@ -72,16 +84,16 @@
 .school-logo {
   width: 100px;
   height: 36px;
-  fill: $primaryColor-100;
+  fill: $primary-color-100;
   transition: ease-in-out 0.4s;
   &:hover {
-    fill: #fff;
+    fill: $text-color-100;
     transform: scale(1.05);
   }
 }
 
 .title-accent {
-  color: #fff;
+  color: $text-color-100;
 }
 
 .title-copyright {
@@ -95,7 +107,7 @@
     font-family: 'Material Symbols Outlined';
     font-size: 22px;
     font-weight: 400;
-    color: #fff;
+    color: $text-color-100;
   }
 }
 
@@ -118,7 +130,6 @@
 
 @media (max-width: 560px) {
   .footer {
-
     &_title {
       font-size: 14px;
     }

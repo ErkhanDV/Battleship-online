@@ -11,7 +11,7 @@
   height: 100vmax;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px dashed $primaryColor-50;
+  border: 1px dashed $primary-color-50;
   z-index: -100;
   &::before {
     position: absolute;
@@ -21,7 +21,7 @@
     left: 17%;
     top: 17%;
     border-radius: 50%;
-    border: 1px dashed $primaryColor-50;
+    border: 1px dashed $primary-color-50;
   }
   &::after {
     position: absolute;
@@ -31,7 +31,7 @@
     left: 33%;
     top: 33%;
     border-radius: 50%;
-    border: 1px dashed $primaryColor-50;
+    border: 1px dashed $primary-color-50;
   }
 }
 
@@ -41,9 +41,9 @@
   top: 0;
   width: 50%;
   height: 50%;
-  border-right: 1px dashed $primaryColor-50;
+  border-right: 1px dashed $primary-color-50;
   transform-origin: 100% 100%;
-  background: linear-gradient(52deg, transparent 55%, $primaryColor-75 100%);
+  background: linear-gradient(52deg, transparent 55%, $primary-color-100 100%);
   animation: radarAnimation 10s infinite linear;
 }
 
@@ -63,7 +63,7 @@
   top: 45%;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid $primaryColor-50;
+  border: 1px solid $primary-color-50;
   animation: shipFirstAnimation 10s infinite;
   &::before {
     position: absolute;
@@ -73,7 +73,7 @@
     left: calc(17% - 0.5px);
     top: calc(17% - 0.5px);
     border-radius: 50%;
-    border: 1px solid $primaryColor-50;
+    border: 1px solid $primary-color-50;
   }
   &::after {
     position: absolute;
@@ -83,7 +83,7 @@
     left: calc(33% - 0.5px);
     top: calc(33% - 0.5px);
     border-radius: 50%;
-    border: 1px solid $primaryColor-50;
+    border: 1px solid $primary-color-50;
   }
 }
 

@@ -1,68 +1,67 @@
 $primaryFont: 'Russo One', sans-serif;
 
-$primaryColor-100: rgb(102, 204, 102, 1);
-$primaryColor-75: rgb(102, 204, 102, 0.75);
-$primaryColor-50: rgb(102, 204, 102, 0.5);
-$primaryColor-25: rgb(102, 204, 102, 0.25);
+$primary-color-100: var(--primary-color-100);
+$primary-color-75: var(--primary-color-75);
+$primary-color-50: var(--primary-color-50);
+$primary-color-25: var(--primary-color-25);
 
-$dark: #000;
+$text-color-100: var(--text-color-100);
+$text-color-50: var(--text-color-50);
 
-$primaryCornerGradient: linear-gradient(
+$background-color-100: var(--background-color-100);
+
+$primary-corner-gradient: linear-gradient(
       to right,
-      $primaryColor-75 2px,
+      $primary-color-75 2px,
       transparent 2px
     )
     0 0,
-  linear-gradient(to right, $primaryColor-75 2px, transparent 2px) 0 100%,
-  linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 0,
-  linear-gradient(to left, $primaryColor-75 2px, transparent 2px) 100% 100%,
-  linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 0 0,
-  linear-gradient(to bottom, $primaryColor-75 2px, transparent 2px) 100% 0,
-  linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 0 100%,
-  linear-gradient(to top, $primaryColor-75 2px, transparent 2px) 100% 100%;
+  linear-gradient(to right, $primary-color-75 2px, transparent 2px) 0 100%,
+  linear-gradient(to left, $primary-color-75 2px, transparent 2px) 100% 0,
+  linear-gradient(to left, $primary-color-75 2px, transparent 2px) 100% 100%,
+  linear-gradient(to bottom, $primary-color-75 2px, transparent 2px) 0 0,
+  linear-gradient(to bottom, $primary-color-75 2px, transparent 2px) 100% 0,
+  linear-gradient(to top, $primary-color-75 2px, transparent 2px) 0 100%,
+  linear-gradient(to top, $primary-color-75 2px, transparent 2px) 100% 100%;
 
-$logoCornerGradient: linear-gradient(
+$logo-corner-gradient: linear-gradient(
       to right,
-      rgb(255, 255, 255, 0.5) 2px,
+      $text-color-50 2px,
       transparent 2px
     )
     0 0,
-  linear-gradient(to right, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 100%,
-  linear-gradient(to left, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100% 0,
-  linear-gradient(to left, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
-    100%,
-  linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 0,
-  linear-gradient(to bottom, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
-    0,
-  linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 0 100%,
-  linear-gradient(to top, rgb(255, 255, 255, 0.5) 2px, transparent 2px) 100%
-    100%;
+  linear-gradient(to right, $text-color-50 2px, transparent 2px) 0 100%,
+  linear-gradient(to left, $text-color-50 2px, transparent 2px) 100% 0,
+  linear-gradient(to left, $text-color-50 2px, transparent 2px) 100% 100%,
+  linear-gradient(to bottom, $text-color-50 2px, transparent 2px) 0 0,
+  linear-gradient(to bottom, $text-color-50 2px, transparent 2px) 100% 0,
+  linear-gradient(to top, $text-color-50 2px, transparent 2px) 0 100%,
+  linear-gradient(to top, $text-color-50 2px, transparent 2px) 100% 100%;
 
-$modalCornerGradient: linear-gradient(
+$modal-corner-gradient: linear-gradient(
       to right,
-      $primaryColor-75 4px,
+      $primary-color-75 4px,
       transparent 4px
     )
     0 0,
-  linear-gradient(to right, $primaryColor-75 4px, transparent 4px) 0 100%,
-  linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 0,
-  linear-gradient(to left, $primaryColor-75 4px, transparent 4px) 100% 100%,
-  linear-gradient(to bottom, $primaryColor-75 4px, transparent 4px) 0 0,
-  linear-gradient(to bottom, $primaryColor-75 4px, transparent 4px) 100% 0,
-  linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 0 100%,
-  linear-gradient(to top, $primaryColor-75 4px, transparent 4px) 100% 100%;
+  linear-gradient(to right, $primary-color-75 4px, transparent 4px) 0 100%,
+  linear-gradient(to left, $primary-color-75 4px, transparent 4px) 100% 0,
+  linear-gradient(to left, $primary-color-75 4px, transparent 4px) 100% 100%,
+  linear-gradient(to bottom, $primary-color-75 4px, transparent 4px) 0 0,
+  linear-gradient(to bottom, $primary-color-75 4px, transparent 4px) 100% 0,
+  linear-gradient(to top, $primary-color-75 4px, transparent 4px) 0 100%,
+  linear-gradient(to top, $primary-color-75 4px, transparent 4px) 100% 100%;
 
-
-  $cellCornerGradient: linear-gradient(
+$cell-corner-gradient: linear-gradient(
       to right,
-      $primaryColor-75 1px,
+      $primary-color-75 1px,
       transparent 1px
     )
     0 0,
-  linear-gradient(to right, $primaryColor-75 1px, transparent 1px) 0 100%,
-  linear-gradient(to left, $primaryColor-75 1px, transparent 1px) 100% 0,
-  linear-gradient(to left, $primaryColor-75 1px, transparent 1px) 100% 100%,
-  linear-gradient(to bottom, $primaryColor-75 1px, transparent 1px) 0 0,
-  linear-gradient(to bottom, $primaryColor-75 1px, transparent 1px) 100% 0,
-  linear-gradient(to top, $primaryColor-75 1px, transparent 1px) 0 100%,
-  linear-gradient(to top, $primaryColor-75 1px, transparent 1px) 100% 100%;
+  linear-gradient(to right, $primary-color-75 1px, transparent 1px) 0 100%,
+  linear-gradient(to left, $primary-color-75 1px, transparent 1px) 100% 0,
+  linear-gradient(to left, $primary-color-75 1px, transparent 1px) 100% 100%,
+  linear-gradient(to bottom, $primary-color-75 1px, transparent 1px) 0 0,
+  linear-gradient(to bottom, $primary-color-75 1px, transparent 1px) 100% 0,
+  linear-gradient(to top, $primary-color-75 1px, transparent 1px) 0 100%,
+  linear-gradient(to top, $primary-color-75 1px, transparent 1px) 100% 100%;

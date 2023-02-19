@@ -1,5 +1,6 @@
 export interface IAppSettings {
-  lang: string;
+  language: string;
   theme: string;
+  scheme: string;
   sound: boolean;
 }
