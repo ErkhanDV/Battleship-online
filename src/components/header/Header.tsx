@@ -52,8 +52,8 @@ const Header: FC = () => {
 
     const response = await gameService.startGame();
     if (response) {
-      init(response);
       if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
+      init(response);
     } else {
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       setGameTryConnect(true);

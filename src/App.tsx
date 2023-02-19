@@ -11,7 +11,6 @@ import { SocketContext } from './Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { authService, gameService } from '@/services/axios/_index';
 import { ROUTE } from '@/router/_constants';
-import { PERSON } from './store/_constants';
 
 const App = () => {
   const location = useLocation();
@@ -50,6 +49,7 @@ const App = () => {
       location.pathname !== ROUTE.settings ||
       location.pathname !== ROUTE.rules
     ) {
+      setSocket(null);
       socket?.close();
       resetGameShips();
       resetGameState();
