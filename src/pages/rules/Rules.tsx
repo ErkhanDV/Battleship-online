@@ -46,7 +46,7 @@ const Rules = () => {
           The attacking player marks the hit or miss on their own "tracking" or
           "target" grid with a pencil marking in the paper version of the game,
           or the appropriate color peg in the pegboard version (red for "hit",
-          var(--text-color) for "miss"), in order to build up a picture of the
+          white for "miss"), in order to build up a picture of the
           opponent's fleet.
         </p>
       </section>
