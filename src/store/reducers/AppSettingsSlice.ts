@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAppSettings } from './types/appSettings';
 
 const initialState: IAppSettings = {
-  lang: 'en',
+  language: 'en',
   theme: 'green',
   sound: true,
 };
@@ -12,8 +12,8 @@ const appSettingsSlice = createSlice({
   name: 'appSettings',
   initialState,
   reducers: {
-    changeLang(state, action: PayloadAction<string>) {
-      state.lang = action.payload;
+    changeLanguage(state, action: PayloadAction<string>) {
+      state.language = action.payload;
     },
 
     changeTheme(state, action: PayloadAction<string>) {
@@ -26,6 +26,6 @@ const appSettingsSlice = createSlice({
   },
 });
 
-export const { changeLang, changeTheme, toggleSound } =
+export const { changeLanguage, changeTheme, toggleSound } =
   appSettingsSlice.actions;
 export default appSettingsSlice.reducer;

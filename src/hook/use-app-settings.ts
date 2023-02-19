@@ -4,8 +4,8 @@ import * as appSettings from '@/store/reducers/AppSettingsSlice';
 export const useAppSettingsActions = () => {
   const dispatch = useAppDispatch();
 
-  const changeLang = (lang: string) => {
-    dispatch(appSettings.changeLang(lang));
+  const changeLanguage = (language: string) => {
+    dispatch(appSettings.changeLanguage(language));
   };
 
   const changeTheme = (theme: string) => {
@@ -17,7 +17,7 @@ export const useAppSettingsActions = () => {
   };
 
   return {
-    changeLang,
+    changeLanguage,
     changeTheme,
     toggleSound,
   };
