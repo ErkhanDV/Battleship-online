@@ -1,4 +1,44 @@
-// @import "../../index.scss";
+@import '../../scss/variables.scss';
+@import '../../scss/index.scss';
 
-
-
+.rules {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  &_title {
+    width: 100%;
+    margin: 0 auto 40px;
+    font-weight: 100;
+    line-height: 1.4;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $primaryColor-100;
+    border-bottom: 2px dotted $primaryColor-50;
+  }
+  &_subtitle {
+    font-weight: 100;
+    color: $primaryColor-75;
+    border-bottom: 2px dotted $primaryColor-50;
+  }
+  &_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    padding: 20px 50px;
+    border-radius: 4px;
+    background: $primaryCornerGradient;
+    background-repeat: no-repeat;
+    background-size: 25% 20%;
+    background-color: $primaryColor-25;
+  }
+  &_paragrath {
+    padding: 20px;
+    border: 1px dashed $primaryColor-50;
+    line-height: 1.4;
+  }
+}

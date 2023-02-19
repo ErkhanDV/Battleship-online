@@ -1,6 +1,19 @@
+import { useAppSettingsActions } from '@/hook/use-app-settings';
+import { useAppSelector } from '@/hook/use-redux';
 import './Settings.scss';
 
 const Settings = () => {
+  const { lang, theme, sound } = useAppSelector(
+    (state) => state.appSettingsSlice,
+  );
+  console.log(lang);
+
+  const { changeLang, changeTheme, toggleSound } = useAppSettingsActions();
+
+  const handlerLangButton = () => {
+    changeLang('ru');
+  };
+
   return (
     <div className="settings">
       <h2 className="settings_title">Settings</h2>
@@ -8,7 +21,9 @@ const Settings = () => {
         <h3 className="settings_subtitle">Language</h3>
         <div className="settings_options">
           <button className="settings_button active">English</button>
-          <button className="settings_button">Russian</button>
+          <button className="settings_button" onClick={handlerLangButton}>
+            Russian
+          </button>
         </div>
       </div>
       <div className="settings_section">

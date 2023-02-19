@@ -1,23 +1,37 @@
 import { type FC } from 'react';
-import { useAppSelector } from '@/hook/_index';
+import { useAppSelector, useShipLocationActions } from '@/hook/_index';
 import { Field } from '../_index';
 
-const RivalField: FC<{ socket: WebSocket | null }> = ({ socket }) => {
+const RivalField: FC<{ socket?: WebSocket | null }> = ({ socket }) => {
   const { gameInfo, opponentName, isAbleShoot, isGameFinded, isStarted } =
     useAppSelector((state) => state.socketSlice);
 
+  const { singlePlayer, isStartSingle } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
+  const { checkShoot } = useShipLocationActions();
+
   const shootHandler = (e: React.MouseEvent): void => {
-    if (e.target instanceof HTMLDivElement) {
+    if (e.target instanceof HTMLDivElement && e.target.id) {
       const shoot: number = Number(e.target.id);
       if (isAbleShoot && isStarted) {
         socket?.send(JSON.stringify({ ...gameInfo, shoot, method: 'shoot' }));
+      } else if (!!isStartSingle) {
+        console.log(e.target.id);
+        checkShoot('rival', Number(e.target.id));
       }
     }
   };
 
+  const opponentTitle = opponentName
+    ? opponentName
+    : !!singlePlayer
+    ? 'Computer'
+    : 'Unknown';
+
   return (
-    <div onClick={shootHandler} className="opponent">
-      <div className="opponent-name">{opponentName ? opponentName : 'Unknown'}</div>
+    <div onClick={shootHandler} className="field">
+      <h2 className="field_name">{opponentTitle}</h2>
       <Field isRival={true} />
     </div>
   );

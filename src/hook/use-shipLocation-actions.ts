@@ -12,12 +12,15 @@ export const useShipLocationActions = () => {
   const checkShoot = (player: string, cell: number) =>
     dispatch(shipActions.addShoot({ player, cell }));
 
-  const addShip = (ship: IShip) =>
-    dispatch(shipActions.addShip({ player: PERSON.user, ship }));
+  const addShip = (player: string, ship: IShip) =>
+    dispatch(shipActions.addShip({ player, ship }));
+
+  const resetShips = () => dispatch(shipActions.resetShips());
 
   return {
     updateShipsLocationState,
     checkShoot,
     addShip,
+    resetShips,
   };
 };
