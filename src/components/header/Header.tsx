@@ -57,6 +57,7 @@ const Header: FC = () => {
     } else {
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       setGameTryConnect(true);
+      setModalChildren('log');
       setModalOpen(true);
     }
   };
