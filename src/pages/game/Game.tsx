@@ -14,12 +14,10 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
 
   useEffect(() => {
-    (async () => {
-      if (!isOnline) {
-        setIsGameFinded(true);
-      }
-    })();
-  }, []);
+    if (!isOnline) {
+      setIsGameFinded(true);
+    }
+  });
 
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
@@ -27,9 +25,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { setRandomShips } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
-  const { isReady, isAbleShoot, isStarted, isGameFinded } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
+  const { isReady } = useAppSelector((state) => state.gameStateSlice);
   const { gameShipsSlice } = useAppSelector((state) => state);
   const { user } = gameShipsSlice;
   const isFilled = user.shipsLocation.length < 10;

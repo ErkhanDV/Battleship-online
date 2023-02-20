@@ -10,6 +10,7 @@ const initialState: IGameState = {
   isAbleShoot: false,
   isReady: false,
   winner: '',
+  // gameDifficult: null,
 };
 
 export const gameStateSlice = createSlice({
