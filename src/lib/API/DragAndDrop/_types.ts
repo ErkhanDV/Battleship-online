@@ -1,9 +1,6 @@
 import { DragEvent } from 'react';
 
-import {
-  IAddShip,
-  IShip,
-} from '@/store/reducers/types/shipLocation';
+import { IAddShip, IShip } from '@/store/reducers/types/shipLocation';
 
 export type IDragHandler = (
   event: DragEvent<HTMLDivElement>,
@@ -18,10 +15,10 @@ export type IDropHandler = (
   shipLength: number | null,
   callback: (ship: IShip) => {
     payload: IAddShip;
-    type: 'shipsLocation/addShip';
+    type: 'gameShips/addShip';
   },
   successfullyDrop: () => {
     payload: boolean;
-    type: 'currentShip/setDropped';
+    type: 'ship/setDropped';
   },
 ) => void;
