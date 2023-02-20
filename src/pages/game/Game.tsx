@@ -5,7 +5,12 @@ import {
   useGameStateActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/Context';
-import { Field, RivalField, ShipStation } from '@/components/game/_index';
+import {
+  Field,
+  RivalField,
+  ShipStation,
+  Gameover,
+} from '@/components/game/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 import { PERSON } from '@/store/_constants';
@@ -16,7 +21,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
-  const { isReady } = useAppSelector((state) => state.gameStateSlice);
+  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
 
   if (!isOnline) {
     setIsGameFinded(true);
@@ -41,13 +46,10 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     }
   };
 
-  const exitHandler = () => {
-    sendSocket(SOCKETMETHOD.exit);
-  };
-
   return (
     <div className="game">
       <main className="main">
+        <Gameover />
         {!isReady ? (
           <button
             disabled={isFilled}
