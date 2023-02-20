@@ -19,10 +19,12 @@ const Header: FC = () => {
   useEffect(() => {
     setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
 
-    if (isAuthorized && gameTryConnect) {
-      setGameTryConnect(false);
-      navigate(ROUTE.game);
-    }
+    (async () => {
+      if (isAuthorized && gameTryConnect) {
+        setGameTryConnect(false);
+        gameHandler();
+      }
+    })();
   }, [isAuthorized]);
 
   const modalHandler = (component: string) => {
@@ -44,11 +46,6 @@ const Header: FC = () => {
   };
 
   const gameHandler = async () => {
-    if (socket) {
-      if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
-      return;
-    }
-
     const response = await gameService.startGame();
     if (response) {
       if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
