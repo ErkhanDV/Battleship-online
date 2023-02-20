@@ -11,9 +11,8 @@ import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const RivalField: FC<{ isOnline: boolean }> = ({ isOnline }) => {
   const { sendSocket } = useContext(SocketContext);
-  const { opponentName, isAbleShoot, isStarted } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
+  const { opponentName, isAbleShoot, isStarted, gameDifficult } =
+    useAppSelector((state) => state.gameStateSlice);
 
   const { checkShoot } = useGameShipsActions();
   const { setIsAbleShoot } = useGameStateActions();

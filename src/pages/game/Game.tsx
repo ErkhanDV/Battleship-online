@@ -8,7 +8,8 @@ import { SocketContext } from '@/Context';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
-import { PERSON } from '@/store/_constants';
+import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
+import { getRandomNum } from '@/lib/utils/getRandomNum';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -22,12 +23,14 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
-  const { setRandomShips } = useGameShipsActions();
+  const { setRandomShips, checkShoot } = useGameShipsActions();
+  const { setGameDifficult } = useGameStateActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
   const { isReady } = useAppSelector((state) => state.gameStateSlice);
-  const { gameShipsSlice } = useAppSelector((state) => state);
-  const { user } = gameShipsSlice;
+  // const { gameShipsSlice } = useAppSelector((state) => state);
+  // const { user } = gameShipsSlice;
+  const { user } = useAppSelector((state) => state.gameShipsSlice);
   const isFilled = user.shipsLocation.length < 10;
 
   const readyHandler = () => {
@@ -35,10 +38,19 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
-      setIsAbleShoot(true);
+      // setIsAbleShoot(true);
       setIsStarted(true);
       setRandomShips(PERSON.rival);
+      // if (game)
+      //   setTimeout(() => {
+      //     checkShoot('user', getRandomNum(0, 99));
+      //     setIsAbleShoot(true);
+      //   }, 2000);
     }
+  };
+
+  const gameDifficultHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setGameDifficult(Number(e.target.value));
   };
 
   const exitHandler = () => {
@@ -48,6 +60,21 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
+        {!isOnline && !isReady ? (
+          <div className="game_difficult">
+            <select
+              name="difficult"
+              id="difficult"
+              onChange={(e) => gameDifficultHandler(e)}
+            >
+              {GAMEDIFFICULTS.map((difficult, i) => (
+                <option value={i} key={i}>
+                  {difficult}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
         {!isReady ? (
           <button
             disabled={isFilled}
