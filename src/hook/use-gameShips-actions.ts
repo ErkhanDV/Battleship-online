@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/use-redux';
+import { useAppDispatch } from '@/hook/_index';
 import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,

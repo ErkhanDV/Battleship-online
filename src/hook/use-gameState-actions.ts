@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/use-redux';
+import { useAppDispatch } from '@/hook/_index';
 import * as gameStateActions from '@/store/reducers/GameStateSlice';
 import { IStartGame } from '@/store/reducers/types/socket';
 

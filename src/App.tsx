@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
 import {
@@ -42,18 +42,18 @@ const App = () => {
     if (localStorage.getItem('token') && !checkInProccess) {
       check();
     }
+    if (!localStorage.getItem('token') && !checkInProccess) {
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
+    }
   }, []);
 
   useEffect(() => {
-    if (
-      location.pathname !== ROUTE.settings ||
-      location.pathname !== ROUTE.rules
-    ) {
-      setSocket(null);
+    if (location.pathname !== ROUTE.game) {
       socket?.close();
-      resetGameShips();
-      resetGameState();
+      setSocket(null);
     }
+    resetGameShips();
+    resetGameState();
   }, [location]);
 
   return (

@@ -1,4 +1,4 @@
-import { useAppDispatch } from './use-redux';
+import { useAppDispatch } from '@/hook/_index';
 import * as appSettings from '@/store/reducers/AppSettingsSlice';
 
 export const useAppSettingsActions = () => {

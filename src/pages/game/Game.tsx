@@ -5,7 +5,12 @@ import {
   useGameStateActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/Context';
-import { Field, RivalField, ShipStation } from '@/components/game/_index';
+import {
+  Field,
+  RivalField,
+  ShipStation,
+  Gameover,
+} from '@/components/game/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
@@ -23,14 +28,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
-  const { setRandomShips, checkShoot } = useGameShipsActions();
+  const { setRandomShips } = useGameShipsActions();
   const { setGameDifficult } = useGameStateActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
-  const { isReady } = useAppSelector((state) => state.gameStateSlice);
-  // const { gameShipsSlice } = useAppSelector((state) => state);
-  // const { user } = gameShipsSlice;
   const { user } = useAppSelector((state) => state.gameShipsSlice);
+  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
+
   const isFilled = user.shipsLocation.length < 10;
 
   const readyHandler = () => {
@@ -60,6 +64,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
+        <Gameover />
         {!isOnline && !isReady ? (
           <div className="game_difficult">
             <select
@@ -75,6 +80,12 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             </select>
           </div>
         ) : null}
+        {/* =======
+  return (
+    <div className="game">
+      <main className="main">
+        <Gameover />
+>>>>>>> pa4ka1992 */}
         {!isReady ? (
           <button
             disabled={isFilled}
@@ -87,7 +98,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
         <div className="game_fields">
           <div className="field">
             <h2 className="field_name">{userName}</h2>
-            <Field isRival={false} />
+            <Field isRival={false} isOnline={isOnline} />
           </div>
           <RivalField isOnline={isOnline} />
         </div>
