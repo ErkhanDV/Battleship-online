@@ -49,8 +49,8 @@ const App = () => {
       location.pathname !== ROUTE.settings ||
       location.pathname !== ROUTE.rules
     ) {
-      setSocket(null);
       socket?.close();
+      setSocket(null);
       resetGameShips();
       resetGameState();
     }

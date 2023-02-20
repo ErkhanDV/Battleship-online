@@ -20,10 +20,6 @@ const routes: IRoute[] = [
     path: ROUTE.rules,
     element: <Rules />,
   },
-  {
-    path: ROUTE.settings,
-    element: <Settings />,
-  },
 ];
 
 export default routes;
