@@ -49,11 +49,11 @@ export const gameStateSlice = createSlice({
       state.winner = action.payload;
     },
 
+    resetGameState: () => initialState,
+
     setGameDifficult(state, action: PayloadAction<number>) {
       state.gameDifficult = action.payload;
     },
-
-    resetGameState: () => initialState,
   },
 });
 

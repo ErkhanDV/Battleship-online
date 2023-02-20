@@ -14,7 +14,6 @@ import {
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
-import { getRandomNum } from '@/lib/utils/getRandomNum';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -34,7 +33,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const userName = useAppSelector((state) => state.logInSlice.user);
   const { user } = useAppSelector((state) => state.gameShipsSlice);
   const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
-
   const isFilled = user.shipsLocation.length < 10;
 
   const readyHandler = () => {
@@ -42,14 +40,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
-      // setIsAbleShoot(true);
+      setIsAbleShoot(true);
       setIsStarted(true);
       setRandomShips(PERSON.rival);
-      // if (game)
-      //   setTimeout(() => {
-      //     checkShoot('user', getRandomNum(0, 99));
-      //     setIsAbleShoot(true);
-      //   }, 2000);
     }
   };
 
@@ -80,12 +73,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             </select>
           </div>
         ) : null}
-        {/* =======
-  return (
-    <div className="game">
-      <main className="main">
-        <Gameover />
->>>>>>> pa4ka1992 */}
         {!isReady ? (
           <button
             disabled={isFilled}

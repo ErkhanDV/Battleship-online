@@ -5,6 +5,7 @@ export const GAMEDIFFICULTS = [
   'Easy',
   'Medium',
   'Hard',
+  'GODMODE',
 ];
 
 export enum PERSON {
