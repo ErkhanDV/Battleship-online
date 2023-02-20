@@ -34,7 +34,6 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       await authService.logout();
-
       socket?.close();
       setSocket(null);
       navigate(ROUTE.home);
@@ -57,8 +56,7 @@ const Header: FC = () => {
     } else {
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       setGameTryConnect(true);
-      setModalChildren('log');
-      setModalOpen(true);
+      modalHandler('log');
     }
   };
 
