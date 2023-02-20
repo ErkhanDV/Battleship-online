@@ -4,7 +4,7 @@ import {
   useAppSelector,
   useGameShipsActions,
 } from '@/hook/_index';
-import { setDropped } from '@/store/reducers/shipSlice';
+import { setDropped } from '@/store/reducers/ShipSlice';
 import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
 import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';
