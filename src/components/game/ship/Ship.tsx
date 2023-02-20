@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
-import { setShip, setDropped } from '@/store/reducers/shipSlice';
+import { setShip, setDropped } from '@/store/reducers/ShipSlice';
 import { ICurrentShip } from '@/store/reducers/types/currentShip';
 import { IDecks } from './_types';
 
