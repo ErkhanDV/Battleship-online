@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILogIn } from './types/logIn';
-import { MODAL } from '@/components/modal/_constants';
+// import { MODAL } from '@/components/modal/_constants';
 
 const initialState: ILogIn = {
   user: '',

@@ -1,4 +1,4 @@
-import { useContext, type FC } from 'react';
+import { useContext, useEffect, type FC } from 'react';
 import {
   useAppSelector,
   useGameShipsActions,
@@ -18,16 +18,16 @@ import { PERSON } from '@/store/_constants';
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
 
+  useEffect(() => {
+    if (!isOnline) {
+      setIsGameFinded(true);
+    }
+  });
+
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
   const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
-
-  if (!isOnline) {
-    setIsGameFinded(true);
-    setIsAbleShoot(true);
-    setIsStarted(true);
-  }
 
   const { setRandomShips } = useGameShipsActions();
 
@@ -42,6 +42,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
+      setIsAbleShoot(true);
+      setIsStarted(true);
       setRandomShips(PERSON.rival);
     }
   };

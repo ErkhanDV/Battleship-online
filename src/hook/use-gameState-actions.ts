@@ -17,8 +17,9 @@ export const useGameStateActions = () => {
   const setIsReady = (state: boolean) =>
     dispatch(gameStateActions.setReady(state));
 
-  const setIsAbleShoot = (state: boolean) =>
+  const setIsAbleShoot = (state: boolean) => {
     dispatch(gameStateActions.setAbleShoot(state));
+  };
 
   const setIsGameFinded = (state: boolean) =>
     dispatch(gameStateActions.setGameFinded(state));
