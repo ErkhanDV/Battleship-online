@@ -45,12 +45,11 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      location.pathname !== ROUTE.settings ||
-      location.pathname !== ROUTE.rules
-    ) {
-      socket?.close();
-      setSocket(null);
+    if (location.pathname !== ROUTE.rules) {
+      if (location.pathname !== ROUTE.game) {
+        socket?.close();
+        setSocket(null);
+      }
       resetGameShips();
       resetGameState();
     }
