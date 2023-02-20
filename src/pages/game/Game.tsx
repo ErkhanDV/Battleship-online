@@ -1,4 +1,4 @@
-import { useContext, type FC } from 'react';
+import { useContext, useEffect, type FC } from 'react';
 import {
   useAppSelector,
   useGameShipsActions,
@@ -23,11 +23,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { user } = gameShipsSlice;
   const isFilled = user.shipsLocation.length < 10;
 
+  useEffect(() => {
     if (!isOnline) {
       setIsStarted(true);
       setIsGameFinded(true);
       setIsAbleShoot(true);
     }
+  });
 
   const readyHandler = () => {
     setIsReady(true);
