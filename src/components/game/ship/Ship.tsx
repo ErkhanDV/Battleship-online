@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
-import { setCurrentShip, setDropped } from '@/store/reducers/CurrentShipSlice';
+import { setShip, setDropped } from '@/store/reducers/shipSlice';
 import { ICurrentShip } from '@/store/reducers/types/currentShip';
 import { IDecks } from './_types';
 
@@ -12,12 +12,10 @@ const Ship = ({ decks }: IDecks) => {
 
   const dispatch = useAppDispatch();
   const setShipHandler = (currentShip: ICurrentShip) => {
-    dispatch(setCurrentShip(currentShip));
+    dispatch(setShip(currentShip));
   };
 
-  const isSuccessfullyDrop = useAppSelector(
-    (state) => state.currentShipSlice.wasDropped,
-  );
+  const { wasDropped } = useAppSelector((state) => state.shipSlice);
   const setNotDrop = () => dispatch(setDropped(false));
 
   const dragStartHandler = (
@@ -31,7 +29,7 @@ const Ship = ({ decks }: IDecks) => {
 
   const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
     setShipHandler({ decks: null, isHorizontal: false });
-    if (!!isSuccessfullyDrop) {
+    if (!!wasDropped) {
       setNotDrop();
     }
   };

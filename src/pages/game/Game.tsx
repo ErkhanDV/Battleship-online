@@ -1,47 +1,69 @@
-import { useEffect, type FC } from 'react';
-import { useAppSelector, useSocket, useSocketActions } from '@/hook/_index';
-import { gameService } from '@/services/axios/Game';
+import { useContext, type FC } from 'react';
+import {
+  useAppSelector,
+  useGameShipsActions,
+  useGameStateActions,
+} from '@/hook/_index';
+import { SocketContext } from '@/Context';
+import { Field, RivalField, ShipStation } from '@/components/game/_index';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
-import GameField from '@/components/game/gameField/GameField';
-import { useGameStateActions } from '@/hook/use-game-state-actios';
+import { PERSON } from '@/store/_constants';
 
-const Game: FC = () => {
-  const { init, socket } = useSocket();
-  const { setIsReady } = useSocketActions();
+const Game: FC<{ mode: string }> = ({ mode }) => {
+  const isOnline = mode === 'online';
+  const { socket, sendSocket, init } = useContext(SocketContext);
+  const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
+    useGameStateActions();
+  const { setRandomShips } = useGameShipsActions();
 
-  const { gameInfo, isReady } = useAppSelector((state) => state.socketSlice);
-  const { user } = useAppSelector((state) => state.shipsLocationSlice);
+  const userName = useAppSelector((state) => state.logInSlice.user);
+  const { isReady } = useAppSelector((state) => state.gameStateSlice);
+  const { gameShipsSlice } = useAppSelector((state) => state);
+  const { user } = gameShipsSlice;
+  const isFilled = user.shipsLocation.length < 10;
 
-  useEffect(() => {
-    (async () => {
-      const response = await gameService.startGame();
-
-      if (response) {
-        init(response);
-      }
-    })();
-  }, []);
+    if (!isOnline) {
+      setIsStarted(true);
+      setIsGameFinded(true);
+      setIsAbleShoot(true);
+    }
 
   const readyHandler = () => {
     setIsReady(true);
-    socket?.send(
-      JSON.stringify({
-        ...gameInfo,
-        field: user,
-        method: 'ready',
-      }),
-    );
+    if (isOnline) {
+      sendSocket(SOCKETMETHOD.ready, { field: user });
+    } else {
+      setRandomShips(PERSON.rival);
+    }
   };
 
   const exitHandler = () => {
-    socket?.send(JSON.stringify({ ...gameInfo, method: 'exit' }));
+    sendSocket(SOCKETMETHOD.exit);
   };
 
-  const { changeGameMode } = useGameStateActions();
-  changeGameMode(false);
-
   return (
-    <GameField isReady={isReady} socket={socket} readyHandler={readyHandler} />
+    <div className="game">
+      <main className="main">
+        {!isReady ? (
+          <button
+            disabled={isFilled}
+            onClick={readyHandler}
+            className="button-render"
+          >
+            {isOnline ? 'Ready' : 'Start game'}
+          </button>
+        ) : null}
+        <div className="game_fields">
+          <div className="field">
+            <h2 className="field_name">{userName}</h2>
+            <Field isRival={false} />
+          </div>
+          <RivalField isOnline={isOnline} />
+        </div>
+        <ShipStation />
+      </main>
+    </div>
   );
 };
 

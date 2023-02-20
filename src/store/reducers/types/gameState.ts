@@ -1,4 +1,4 @@
-export interface IGameState {
+export interface IGameShipsState {
   singlePlayer: boolean;
   isWin: boolean;
   isStartSingle: boolean;

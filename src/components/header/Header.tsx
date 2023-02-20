@@ -1,23 +1,31 @@
-import { useState, useEffect, FC } from 'react';
-import { Settings, LogIn } from '@/components/_index';
+import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { AuthService } from '@/services/axios/Auth';
-import './Header.scss';
+import { SocketContext } from '@/Context';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
+import { authService, gameService } from '@/services/axios/_index';
+import { ROUTE } from '@/router/_constants';
+import './Header.scss';
 
 const Header: FC = () => {
+  const { socket, setSocket, init } = useContext(SocketContext);
   const navigate = useNavigate();
   const { setModalOpen, setUser, setModalChildren } = useLogInActions();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
 
   const { user, isAuthorized } = useAppSelector((state) => state.logInSlice);
 
   useEffect(() => {
     setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
+
+    if (isAuthorized && gameTryConnect) {
+      setGameTryConnect(false);
+      navigate(ROUTE.game);
+    }
   }, [isAuthorized]);
 
-  const handlerOpenModal = (component: string) => {
+  const modalHandler = (component: string) => {
     setModalOpen(true);
     setModalChildren(component);
     setMenuVisible(false);
@@ -25,18 +33,30 @@ const Header: FC = () => {
 
   const logHandler = async () => {
     if (isAuthorized) {
-      await AuthService.logout();
-      navigate('/');
+      await authService.logout();
+
+      socket?.close();
+      setSocket(null);
+      navigate(ROUTE.home);
       setUser('');
     } else {
-      handlerOpenModal('log');
+      modalHandler('log');
     }
   };
 
-  const gameHandler = () => {
-    if (isAuthorized) {
-      if (location.pathname !== '/game') navigate('/game');
+  const gameHandler = async () => {
+    if (socket) {
+      if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
+      return;
+    }
+
+    const response = await gameService.startGame();
+    if (response) {
+      if (location.pathname !== ROUTE.game) navigate(ROUTE.game);
+      init(response);
     } else {
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
+      setGameTryConnect(true);
       setModalOpen(true);
     }
   };
@@ -72,7 +92,7 @@ const Header: FC = () => {
           </li>
           <li
             className="navigation_item"
-            onClick={() => handlerOpenModal('settings')}
+            onClick={() => modalHandler('settings')}
           >
             Settings
           </li>

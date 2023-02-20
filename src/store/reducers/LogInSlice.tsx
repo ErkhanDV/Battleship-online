@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILogIn } from './types/logIn';
-import { Settings } from '@/components/_index';
+import { MODAL } from '@/components/modal/_constants';
 
 const initialState: ILogIn = {
   user: '',
@@ -28,7 +28,6 @@ const logInSlice = createSlice({
   },
 });
 
-export const { setUser, setModalOpen, setModalChildren } =
-  logInSlice.actions;
+export const { setUser, setModalOpen, setModalChildren } = logInSlice.actions;
 
 export default logInSlice.reducer;

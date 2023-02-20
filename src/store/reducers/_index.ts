@@ -1,17 +1,15 @@
 import userSlice from './UserSlice';
-import currentShipSlice from './CurrentShipSlice';
-import shipsLocationSlice from './ShipsLocationSlice';
-import socketSlice from './SocketSlice';
-import logInSlice from './LogInSlice';
+import shipSlice from './ShipSlice';
+import gameShipsSlice from './GameShipsSlice';
 import gameStateSlice from './GameStateSlice';
+import logInSlice from './LogInSlice';
 import appSettingsSlice from './AppSettingsSlice';
 
 export {
   userSlice,
-  shipsLocationSlice,
-  currentShipSlice,
-  socketSlice,
-  logInSlice,
+  gameShipsSlice,
+  shipSlice,
   gameStateSlice,
+  logInSlice,
   appSettingsSlice,
 };

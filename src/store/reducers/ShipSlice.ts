@@ -9,11 +9,11 @@ const initialState: IDragedShip = {
   wasDropped: false,
 };
 
-const currentShipSlice = createSlice({
-  name: 'currentShip',
+const shipSlice = createSlice({
+  name: 'ship',
   initialState,
   reducers: {
-    setCurrentShip(state, action: PayloadAction<ICurrentShip>) {
+    setShip(state, action: PayloadAction<ICurrentShip>) {
       state.currentDragedShip.decks = action.payload.decks;
       state.currentDragedShip.isHorizontal = action.payload.isHorizontal;
     },
@@ -24,5 +24,5 @@ const currentShipSlice = createSlice({
   },
 });
 
-export const { setCurrentShip, setDropped } = currentShipSlice.actions;
-export default currentShipSlice.reducer;
+export const { setShip, setDropped } = shipSlice.actions;
+export default shipSlice.reducer;

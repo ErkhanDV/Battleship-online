@@ -1,46 +1,67 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IGameState } from './types/gameState';
+import { IGameState, IStartGame } from './types/socket';
 
 const initialState: IGameState = {
-  singlePlayer: false,
-  isWin: false,
-  isStartSingle: false,
-  userTurn: false,
-  gameDifficulty: 0,
+  gameInfo: null,
+  userName: '',
+  opponentName: 'Unknown',
+  isGameFinded: false,
+  isStarted: false,
+  isAbleShoot: false,
+  isReady: false,
+  winner: '',
 };
 
-const gameStateSlice = createSlice({
+export const gameStateSlice = createSlice({
   name: 'gameState',
   initialState,
   reducers: {
-    changeGameMode(state, action: PayloadAction<boolean>) {
-      state.singlePlayer = action.payload;
+    setGameInfo(state, action: PayloadAction<IStartGame>) {
+      state.gameInfo = action.payload;
     },
 
-    setWinGame(state, action: PayloadAction<boolean>) {
-      state.singlePlayer = action.payload;
+    setUserName(state, action: PayloadAction<string>) {
+      state.userName = action.payload;
     },
 
-    changeGameStatus(state, action: PayloadAction<boolean>) {
-      state.isStartSingle = action.payload;
+    setOpponentName(state, action: PayloadAction<string>) {
+      state.opponentName = action.payload;
     },
 
-    changeTurn(state, action: PayloadAction<boolean>) {
-      state.userTurn = action.payload;
+    setGameFinded(state, action: PayloadAction<boolean>) {
+      state.isGameFinded = action.payload;
     },
 
-    changeGameDifficulty(state, action: PayloadAction<number>) {
-      state.gameDifficulty = action.payload;
+    setStarted(state, action: PayloadAction<boolean>) {
+      state.isStarted = action.payload;
     },
+
+    setAbleShoot(state, action: PayloadAction<boolean>) {
+      state.isAbleShoot = action.payload;
+    },
+
+    setReady(state, action: PayloadAction<boolean>) {
+      state.isReady = action.payload;
+    },
+
+    setWinner(state, action: PayloadAction<string>) {
+      state.winner = action.payload;
+    },
+
+    resetGameState: () => initialState,
   },
 });
 
 export const {
-  changeGameMode,
-  setWinGame,
-  changeGameStatus,
-  changeTurn,
-  changeGameDifficulty,
+  setGameInfo,
+  setUserName,
+  setOpponentName,
+  setGameFinded,
+  setStarted,
+  setAbleShoot,
+  setReady,
+  setWinner,
+  resetGameState,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

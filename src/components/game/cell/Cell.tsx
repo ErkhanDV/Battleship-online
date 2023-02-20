@@ -1,30 +1,36 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hook/_index';
-import { setDropped } from '@/store/reducers/CurrentShipSlice';
-import { addShip } from '@/store/reducers/ShipsLocationSlice';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useGameShipsActions,
+} from '@/hook/_index';
+import { setDropped } from '@/store/reducers/shipSlice';
 import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
 import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';
+import { PERSON } from '@/store/_constants';
+import { CELLCLASS } from './_constants';
 import './Cell.scss';
 
 const Cell: FC<ICell> = ({ coordinate, isRival }) => {
-  const key = isRival ? 'rival' : 'user';
+  const key = isRival ? PERSON.rival : PERSON.user;
+  const { addShip } = useGameShipsActions();
 
   const { decks, isHorizontal } = useAppSelector(
-    (state) => state.currentShipSlice.currentDragedShip,
+    (state) => state.shipSlice.currentDragedShip,
   );
 
   const userShips = useAppSelector(
-    (state) => state.shipsLocationSlice.user.shipsLocation,
+    (state) => state.gameShipsSlice.user.shipsLocation,
   );
 
   const isShooted = useAppSelector((state) => {
-    return state.shipsLocationSlice[key].shipsLocation.find((ship) =>
+    return state.gameShipsSlice[key].shipsLocation.find((ship) =>
       ship.woundedCells.includes(coordinate),
     );
   });
   const isMissed = useAppSelector((state) => {
-    return state.shipsLocationSlice[key].misses.some((id) => id === coordinate);
+    return state.gameShipsSlice[key].misses.some((id) => id === coordinate);
   });
 
   const isShip = () => {
@@ -38,7 +44,7 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
       return true;
     } else {
       const rivalShips = useAppSelector(
-        (state) => state.shipsLocationSlice.rival.shipsLocation,
+        (state) => state.gameShipsSlice.rival.shipsLocation,
       );
       const index = rivalShips.findIndex((ship) =>
         ship.shipLocation.some((id) => id === coordinate),
@@ -51,20 +57,15 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   };
 
   const dispatch = useAppDispatch();
-  const setLocations = (ship: IShip) =>
-    dispatch(addShip({ player: 'user', ship }));
+  const setLocations = (ship: IShip) => addShip(PERSON.user, ship);
   const successfullyDrop = () => dispatch(setDropped(true));
 
-  let classList = 'cell';
-  if (isShooted) {
-    classList += ' hit';
-  }
-  if (isMissed) {
-    classList += ' miss';
-  }
-  if (isShip()) {
-    classList += ' ship-cell';
-  }
+  const { shoot, initial, miss, ship } = CELLCLASS;
+
+  let classList = initial as string;
+  classList += isShooted ? shoot : '';
+  classList += isMissed ? miss : '';
+  classList += isShip() ? ship : '';
 
   return (
     <div
