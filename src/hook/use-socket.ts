@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   useAppSelector,
   useGameStateActions,
@@ -155,18 +155,22 @@ export const useSocket = () => {
     setUserName(response.user.name);
   };
 
-  const sendSocket = (
-    method: string,
-    data?: { field: IPlayerState } | { shoot: number },
-  ) => {
-    socket?.send(
-      JSON.stringify({
-        ...gameInfo,
-        ...data,
-        method: SOCKETMETHOD.ready,
-      }),
-    );
-  };
+  const sendSocket = useMemo(() => {
+    if (gameInfo) {
+      return (
+        method: string,
+        data?: { field: IPlayerState } | { shoot: number },
+      ) => {
+        socket?.send(
+          JSON.stringify({
+            ...gameInfo,
+            ...data,
+            method: method,
+          }),
+        );
+      };
+    }
+  }, [gameInfo]);
 
   return { init, socket, setSocket, sendSocket };
 };

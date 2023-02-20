@@ -10,10 +10,11 @@ import { ICell } from './_types';
 import { IShip } from '@/store/reducers/types/shipLocation';
 import { PERSON } from '@/store/_constants';
 import { CELLCLASS } from './_constants';
+import { IGameShips } from '@/store/reducers/types/shipLocation';
 import './Cell.scss';
 
 const Cell: FC<ICell> = ({ coordinate, isRival }) => {
-  const key = isRival ? PERSON.rival : PERSON.user;
+  const key = (isRival ? PERSON.rival : PERSON.user) as keyof IGameShips;
   const { addShip } = useGameShipsActions();
 
   const { decks, isHorizontal } = useAppSelector(
