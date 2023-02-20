@@ -1,6 +1,5 @@
-import { dragEndHandler } from './DragAndDrop/dragEnd';
-import { dragOverHandler } from './DragAndDrop/dragOver';
-import { dropHadler } from './DragAndDrop/drop';
-import { isCanDrop } from './ShipsPlacer/isCanDrop';
+export * from './DragAndDrop/dragEnd';
+export * from './DragAndDrop/dragOver';
+export * from './DragAndDrop/drop';
+export * from './ShipsPlacer/isCanDrop';
 
-export { dragEndHandler, dragOverHandler, dropHadler, isCanDrop };

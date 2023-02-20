@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAppSelector } from '@/hook/use-redux';
-import { useGameStateActions, useGameShipsActions } from './_index';
+import {
+  useAppSelector,
+  useGameStateActions,
+  useGameShipsActions,
+} from './_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import {
   IStartGame,
@@ -25,7 +28,9 @@ export const useSocket = () => {
     setWinner,
   } = useGameStateActions();
   const { updateShipsLocationState, checkShoot } = useGameShipsActions();
-  const { gameInfo, userName } = useAppSelector((state) => state.gameStateSlice);
+  const { gameInfo, userName } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -33,6 +38,13 @@ export const useSocket = () => {
         socket.send(
           JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.connect }),
         );
+      };
+
+      socket.onclose = () => {
+        setWinner('Противник вышел из боя');
+        setTimeout(() => {
+          setWinner('');
+        }, 3000);
       };
 
       socket.onmessage = (response) => {
@@ -56,9 +68,6 @@ export const useSocket = () => {
           case gameover:
             gameOverHandler(data);
             break;
-
-          case exit:
-            socket.close();
         }
       };
 
@@ -123,7 +132,17 @@ export const useSocket = () => {
         shootHandler(data);
         setIsAbleShoot(false);
 
-        if (winner) setWinner(winner);
+        if (winner) {
+          if (winner === userName) {
+            setWinner('Ты засадил вялого этому парню');
+          } else {
+            setWinner('Тебя отшлепали как собаку сутулую');
+          }
+        }
+
+        setTimeout(() => {
+          setWinner('');
+        }, 3000);
 
         console.log('gameover');
       };

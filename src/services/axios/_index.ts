@@ -1,4 +1,4 @@
-import { gameService } from './Game';
-import { authService } from './Auth';
+export * from './Game';
+export * from './Auth';
 
-export { gameService, authService };
+
