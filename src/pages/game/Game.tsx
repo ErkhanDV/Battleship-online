@@ -12,30 +12,35 @@ import { PERSON } from '@/store/_constants';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
+
+  useEffect(() => {
+    (async () => {
+      if (!isOnline) {
+        setIsGameFinded(true);
+      }
+    })();
+  }, []);
+
   const { socket, sendSocket, init } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
   const { setRandomShips } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
-  const { isReady } = useAppSelector((state) => state.gameStateSlice);
+  const { isReady, isAbleShoot, isStarted, isGameFinded } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
   const { gameShipsSlice } = useAppSelector((state) => state);
   const { user } = gameShipsSlice;
   const isFilled = user.shipsLocation.length < 10;
-
-  useEffect(() => {
-    if (!isOnline) {
-      setIsStarted(true);
-      setIsGameFinded(true);
-      setIsAbleShoot(true);
-    }
-  });
 
   const readyHandler = () => {
     setIsReady(true);
     if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
+      setIsAbleShoot(true);
+      setIsStarted(true);
       setRandomShips(PERSON.rival);
     }
   };
