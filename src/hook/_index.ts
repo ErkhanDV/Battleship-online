@@ -7,3 +7,4 @@ export * from './use-app-settings';
 export * from './use-get-setted-ships';
 export * from './use-check-auth';
 export * from './use-dnd-actions';
+export * from './use-chat-actions';

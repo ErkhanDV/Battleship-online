@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import './Home.scss';
 import { Link } from 'react-router-dom';
+import { Chat } from '@/components/_index';
 
 const Home: FC = () => {
   return (
@@ -37,6 +38,7 @@ const Home: FC = () => {
           <p className="section_paragraph">Please login to your account.</p>
         </section>
       </main>
+      <Chat />
     </div>
   );
 };

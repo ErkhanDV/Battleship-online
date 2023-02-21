@@ -1,0 +1,11 @@
+.chat {
+  .chat_messages {
+    height: 10rem;
+    background-color: #fff;
+    overflow-y: auto;
+  }
+
+  .chat_write {
+    width: 100%;
+  }
+}

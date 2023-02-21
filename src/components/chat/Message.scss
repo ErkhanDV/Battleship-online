@@ -1,0 +1,17 @@
+.message {
+  display: flex;
+  gap: 1rem;
+  justify-content: start;
+}
+
+.my {
+  justify-content: flex-end;
+
+  .date {
+    order: 3;
+  }
+
+  .text {
+    order: 1;
+  }
+}
