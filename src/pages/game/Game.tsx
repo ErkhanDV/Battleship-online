@@ -4,7 +4,7 @@ import {
   useGameShipsActions,
   useGameStateActions,
 } from '@/hook/_index';
-import { SocketContext } from '@/Context';
+import { SocketContext } from '@/context/Context';
 import {
   Field,
   RivalField,

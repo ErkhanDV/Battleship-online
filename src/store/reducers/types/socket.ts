@@ -35,6 +35,11 @@ export interface IShoot {
   winner?: string;
 }
 
+export interface ISendData {
+  field?: IPlayerState;
+  shoot?: number;
+}
+
 export type TSocketMessage = IStartGame & IReady & IConnect & IShoot;
 
 export { type IStartGame };

@@ -1,5 +1,5 @@
 import { useContext, FC } from 'react';
-import { SocketContext } from '@/Context';
+import { SocketContext } from '@/context/Context';
 import { useAppSelector, useGameShipsActions } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
 import { getRandomNum } from '@/lib/utils/getRandomNum';
