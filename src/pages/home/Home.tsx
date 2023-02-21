@@ -29,8 +29,8 @@ const Home: FC = () => {
           <p className="section_paragraph">Games: 0</p>
           <p className="section_paragraph">Wins: 0</p>
           <p className="section_paragraph">Losses: 0</p>
-          <button className="section_button">Login</button>
-          <p className="section_paragraph">Please login to your account.</p>
+          <button className="section_button">{t('login')}</button>
+          <p className="section_paragraph">{t('loginPlease')}</p>
         </section>
       </main>
     </div>

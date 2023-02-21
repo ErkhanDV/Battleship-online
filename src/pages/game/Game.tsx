@@ -6,8 +6,11 @@ import {
 } from '@/hook/_index';
 import { SocketContext } from '@/Context';
 import { Field, RivalField, ShipStation } from '@/components/game/_index';
-import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { useTranslation } from 'react-i18next';
+
 import './game.scss';
+
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
@@ -16,6 +19,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
   const { setRandomShips } = useGameShipsActions();
+
+  const { t } = useTranslation();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
   const { isReady } = useAppSelector((state) => state.gameStateSlice);
@@ -45,7 +50,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
-        {!isReady ? (
+        {!isReady && (
           <button
             disabled={isFilled}
             onClick={readyHandler}
@@ -53,7 +58,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           >
             {isOnline ? 'Ready' : 'Start game'}
           </button>
-        ) : null}
+        )}
         <div className="game_fields">
           <div className="field">
             <h2 className="field_name">{userName}</h2>

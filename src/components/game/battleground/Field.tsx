@@ -1,14 +1,19 @@
 import { FC } from 'react';
+
 import { useAppSelector } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
-import { FIELD } from '@/store/_constants';
+import { useTranslation } from 'react-i18next';
 
 import './Field.scss';
+
+import { FIELD } from '@/store/_constants';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
   const { isAbleShoot, isGameFinded, isStarted } = useAppSelector(
     (state) => state.gameStateSlice,
   );
+
+  const { t } = useTranslation();
 
   return (
     <div
@@ -19,7 +24,7 @@ const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
       {isGameFinded || !isRival ? null : (
-        <div className="connection">Waiting for an opponent...</div>
+        <div className="connection">{t('waiting')}</div>
       )}
     </div>
   );
