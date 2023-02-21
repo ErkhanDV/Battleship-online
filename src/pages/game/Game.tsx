@@ -41,7 +41,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     (state) => state.gameStateSlice,
   );
   const isFilled = user.shipsLocation.length < 10;
-  // console.log(isFilled, !gameDifficult);
 
   const readyHandler = () => {
     setIsReady(true);

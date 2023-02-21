@@ -10,7 +10,7 @@ export interface IGameState {
   isAbleShoot: boolean;
   isReady: boolean;
   winner: string;
-  gameDifficult: null | number;
+  gameDifficult: number;
 }
 
 export interface IConnect {
