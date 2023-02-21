@@ -8,5 +8,5 @@ export interface IChatMessage {
   name: string;
   date: Date;
   text: string;
-  isMy: false;
+  gameId?: string;
 }

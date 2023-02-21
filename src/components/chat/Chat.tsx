@@ -1,32 +1,49 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo, useState, useContext } from 'react';
+import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { CHAT } from '@/store/_constants';
 import './Chat.scss';
 
 const Chat: FC = () => {
-  const [message, setMessage] = useState('');
-  const { currentChat } = useAppSelector((state) => state.ChatSlice);
+  const { sendSocket } = useContext(SocketContext);
   const { changeChat } = useChatActions();
+  const { currentChat } = useAppSelector((state) => state.ChatSlice);
+  const { user } = useAppSelector((state) => state.logInSlice);
+  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
+  const [text, setText] = useState('');
 
   const messages = useMemo(() => {
     const { game, common } = useAppSelector((state) => state.ChatSlice);
-    return currentChat === 'common' ? common : game;
+    return currentChat === CHAT.common ? common : game;
   }, [currentChat]);
 
   const inputHandler = ({
     target,
-  }: React.ChangeEvent<HTMLInputElement>): void => setMessage(target.value);
+  }: React.ChangeEvent<HTMLInputElement>): void => setText(target.value);
 
   const sendHandler = () => {
+    const message = {
+      name: user,
+      date: new Date(),
+      text: text,
+      gameId: undefined as undefined | string,
+    };
 
-  }
+    message.gameId = currentChat === CHAT.common ? gameInfo?.gameId : undefined;
+
+    if (sendSocket) {
+      sendSocket(SOCKETMETHOD.chat, { message });
+    }
+  };
 
   return (
     <div className="chat">
       <button onClick={() => changeChat()} type="button">
         Common
       </button>
-      <button onClick={() => changeChat()} type="button">
+      <button disabled={!!gameInfo} onClick={() => changeChat()} type="button">
         Game
       </button>
       <div className="chat_messages">
@@ -39,9 +56,11 @@ const Chat: FC = () => {
           onChange={inputHandler}
           className="chat_write"
           type="text"
-          value={message}
+          value={text}
         />
-        <button onClick={sendHandler} type="button">Отправить</button>
+        <button onClick={sendHandler} type="button">
+          Отправить
+        </button>
       </div>
     </div>
   );
