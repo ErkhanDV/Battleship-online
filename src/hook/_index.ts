@@ -6,3 +6,4 @@ export * from './use-login-actions';
 export * from './use-app-settings';
 export * from './use-get-setted-ships';
 export * from './use-check-auth';
+export * from './use-dnd-actions';

@@ -1,7 +1,7 @@
 import { getOccupiedCells } from '../ShipsPlacer/ShipsPlacer';
 import { IDropHandler } from './_types';
 
-export const dropHadler: IDropHandler = (
+export const drop: IDropHandler = (
   event,
   horizontalRotation,
   shipLength,
