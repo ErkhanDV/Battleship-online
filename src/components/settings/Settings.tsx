@@ -1,15 +1,24 @@
+import { useTranslation } from 'react-i18next';
+
 import { useAppSettingsActions } from '@/hook/use-app-settings';
 import { useAppSelector } from '@/hook/use-redux';
 
 import './Settings.scss';
 
 const Settings = () => {
+  const { t, i18n } = useTranslation();
+
   const { language, theme, scheme, sound } = useAppSelector(
     (state) => state.appSettingsSlice,
   );
 
   const { changeLanguage, changeTheme, changeScheme, toggleSound } =
     useAppSettingsActions();
+
+  const handleLanguageButton = (language: string) => {
+    changeLanguage(language);
+    i18n.changeLanguage(language);
+  };
 
   const handleLightButton = () => {
     changeTheme('light');
@@ -59,72 +68,72 @@ const Settings = () => {
 
   return (
     <div className="settings">
-      <h2 className="settings_title">Settings</h2>
+      <h2 className="settings_title">{t('settings')}</h2>
       <div className="settings_section">
-        <h3 className="settings_subtitle">Language</h3>
+        <h3 className="settings_subtitle">{t('language')}</h3>
         <div className="settings_options">
           <button
             className={`settings_button ${language === 'en' && 'active'}`}
-            onClick={() => changeLanguage('en')}
+            onClick={() => handleLanguageButton('en')}
           >
-            English
+            {t('english')}
           </button>
           <button
             className={`settings_button ${language === 'ru' && 'active'}`}
-            onClick={() => changeLanguage('ru')}
+            onClick={() => handleLanguageButton('ru')}
           >
-            Russian
+            {t('russian')}
           </button>
         </div>
       </div>
       <div className="settings_section">
-        <h3 className="settings_subtitle">Theme mode</h3>
+        <h3 className="settings_subtitle">{t('theme')}</h3>
         <div className="settings_options">
           <button
             className={`settings_button ${theme === 'light' && 'active'}`}
             onClick={handleLightButton}
           >
-            Light
+            {t('light')}
           </button>
           <button
             className={`settings_button ${theme === 'dark' && 'active'}`}
             onClick={handleDarkButton}
           >
-            Dark
+            {t('dark')}
           </button>
         </div>
       </div>
       <div className="settings_section">
-        <h3 className="settings_subtitle">Color scheme</h3>
+        <h3 className="settings_subtitle">{t('scheme')}</h3>
         <div className="settings_options">
           <button
             className={`settings_button ${scheme === 'green' && 'active'}`}
             onClick={handleGreenButton}
           >
-            Green
+            {t('green')}
           </button>
           <button
             className={`settings_button ${scheme === 'blue' && 'active'}`}
             onClick={handleBlueButton}
           >
-            Blue
+            {t('blue')}
           </button>
         </div>
       </div>
       <div className="settings_section">
-        <h3 className="settings_subtitle">Sound</h3>
+        <h3 className="settings_subtitle">{t('sound')}</h3>
         <div className="settings_options">
           <button
             className={`settings_button ${sound && 'active'}`}
             onClick={() => toggleSound(true)}
           >
-            On
+            {t('on')}
           </button>
           <button
             className={`settings_button ${!sound && 'active'}`}
             onClick={() => toggleSound(false)}
           >
-            Off
+            {t('off')}
           </button>
         </div>
       </div>

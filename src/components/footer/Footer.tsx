@@ -1,19 +1,22 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as RssLogo } from '../../assets/svg/rs_school_js.svg';
 
 import './Footer.scss';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <h4 className="footer_copyright">
-        BattleShip Online <span className="title-copyright">2023</span>
+        {t('battleship')} <span className="title-copyright">2023</span>
       </h4>
 
       <div className="footer_authors">
         <h4 className="footer_title">
-          Created by <span className="title-accent">Power Rangers</span>
+        {t('createdBy')} <span className="title-accent">{t('powerRangers')}</span>
         </h4>
         <ul className="authors-list">
           <li className="authors-list_item">
@@ -46,8 +49,12 @@ const Footer = () => {
         </ul>
       </div>
 
-      <Link to="https://rs.school/js/" className="footer_school" title="RS School">
-        <RssLogo className="school-logo"/>
+      <Link
+        to="https://rs.school/js/"
+        className="footer_school"
+        title="RS School"
+      >
+        <RssLogo className="school-logo" />
       </Link>
     </footer>
   );

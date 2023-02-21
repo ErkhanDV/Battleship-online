@@ -3,9 +3,7 @@ import { useAppSelector } from '@/hook/_index';
 import { Field } from '../_index';
 
 const RivalField: FC<{ isOnline: boolean }> = ({ isOnline }) => {
-  const { opponentName } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
+  const { opponentName } = useAppSelector((state) => state.gameStateSlice);
 
   return (
     <div className="field">

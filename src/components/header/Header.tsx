@@ -1,10 +1,15 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
+
 import { SocketContext } from '@/context/Context';
+
 import { useLogInActions, useAppSelector } from '@/hook/_index';
 import { authService, gameService } from '@/services/axios/_index';
-import { ROUTE } from '@/router/_constants';
+import { useTranslation } from 'react-i18next';
+
 import './Header.scss';
+
+import { ROUTE } from '@/router/_constants';
 
 const Header: FC = () => {
   const { init, sendSocket } = useContext(SocketContext);
@@ -15,6 +20,8 @@ const Header: FC = () => {
   const [logStatus, setlogStatus] = useState('LogIn');
 
   const { user, isAuthorized } = useAppSelector((state) => state.logInSlice);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
@@ -62,36 +69,37 @@ const Header: FC = () => {
     <header className="header">
       <Link to="/" className="header_link">
         <h1 className="header_logo">
-          Battle<span className="logo-image">Ship</span>
+          {t('battle')}
+          <span className="logo-image">{t('ship')}</span>
         </h1>
       </Link>
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
           <li className="navigation_item">
-            <NavLink to={ROUTE.home} className="navigation_link">
-              Home
+            <NavLink to="/" className="navigation_link">
+              {t('home')}
             </NavLink>
           </li>
           <li className="navigation_item">
             <div onClick={gameHandler} className="navigation_link">
-              Game
+              {t('game')}
             </div>
           </li>
           <li className="navigation_item">
-            <NavLink to={ROUTE.single} className="navigation_link">
-              Single Player
+            <NavLink to="/singleplayer" className="navigation_link">
+              {t('single')}
             </NavLink>
           </li>
           <li className="navigation_item">
-            <NavLink to={ROUTE.rules} className="navigation_link">
-              Rules
+            <NavLink to="/rules" className="navigation_link">
+              {t('rules')}
             </NavLink>
           </li>
           <li
             className="navigation_item"
             onClick={() => modalHandler('settings')}
           >
-            Settings
+            {t('settings')}
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
             {logStatus}

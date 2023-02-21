@@ -5,6 +5,7 @@ import {
   useGetSettedShips,
 } from '@/hook/_index';
 import { Ship } from '../_index';
+import { useTranslation } from 'react-i18next';
 
 import { PERSON } from '@/store/_constants';
 import './ShipStation.scss';
@@ -13,6 +14,8 @@ const ShipStation: FC = () => {
   const { restShips } = useGetSettedShips();
   const { resetShips, setRandomShips } = useGameShipsActions();
   const { isReady } = useAppSelector((state) => state.gameStateSlice);
+
+  const { t } = useTranslation();
 
   const resetShipsHandler = () => {
     resetShips();
@@ -31,15 +34,12 @@ const ShipStation: FC = () => {
             className="ship-station_button"
             onClick={() => setRandomShips(PERSON.user, restShips)}
           >
-            Random
+            {t('random')}
           </button>
           <button className="ship-station_button" onClick={resetShipsHandler}>
-            Reset
+            {t('reset')}
           </button>
-          <p>
-            Drag and drop your ships on the field
-            <br /> or press the button for a random arrangement
-          </p>
+          <p>{t('dragAndDrop')}</p>
         </div>
       </div>
     );
