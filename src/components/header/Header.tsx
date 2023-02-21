@@ -7,7 +7,7 @@ import { ROUTE } from '@/router/_constants';
 import './Header.scss';
 
 const Header: FC = () => {
-  const { init, sendSocket } = useContext(SocketContext);
+  const { startOnlineGame, sendSocket } = useContext(SocketContext);
   const navigate = useNavigate();
   const { setModalOpen, setUser, setModalChildren } = useLogInActions();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -46,11 +46,10 @@ const Header: FC = () => {
   const gameHandler = async () => {
     if (isAuthorized) {
       const response = await gameService.startGame();
-      if (response) {
-        init(response);
-        if (location.pathname !== ROUTE.game) {
-          navigate(ROUTE.game);
-        }
+      await startOnlineGame(response);
+
+      if (location.pathname !== ROUTE.game) {
+        navigate(ROUTE.game);
       }
     } else {
       setGameTryConnect(true);

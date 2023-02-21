@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService, gameService } from '@/services/axios/_index';
-import { useLogInActions, useSocket } from '@/hook/_index';
+import { useLogInActions } from '@/hook/_index';
 import { ROUTE } from '@/router/_constants';
+import { IStartGame } from '@/services/axios/_types';
 
-export const useCheckAuth = () => {
+export const useCheckAuth = (
+  startOnlineGame: (response: IStartGame | undefined) => void,
+) => {
   const navigate = useNavigate();
   const [checkInProccess, setCheckInProccess] = useState(false);
-  const { init } = useSocket();
   const { setUser } = useLogInActions();
 
   const checkAuth = async () => {
@@ -18,9 +20,8 @@ export const useCheckAuth = () => {
       if (auth) {
         if (location.pathname === ROUTE.game) {
           const response = await gameService.startGame();
-          if (response) {
-            init(response);
-          }
+
+          startOnlineGame(response);
         }
         setUser(auth.name);
       } else {

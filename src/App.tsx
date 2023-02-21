@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
 import { useSocket, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from './context/Context';
@@ -8,8 +8,8 @@ import { ROUTE } from '@/router/_constants';
 
 const App = () => {
   const location = useLocation();
-  const { socket, init, setSocket, sendSocket } = useSocket();
-  const { checkAuth } = useCheckAuth();
+  const { socket, startOnlineGame, sendSocket } = useSocket();
+  const { checkAuth } = useCheckAuth(startOnlineGame);
 
   useEffect(() => {
     checkAuth();
@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SocketContext.Provider value={{ socket, setSocket, init, sendSocket }}>
+      <SocketContext.Provider value={{ socket, startOnlineGame, sendSocket }}>
         <Header />
         <AppRouter />
         <Footer />
