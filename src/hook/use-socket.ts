@@ -10,7 +10,7 @@ import {
   TSocketMessage,
   IConnect,
   IShoot,
-  IStart,
+  IReady,
 } from '@/store/reducers/types/socket';
 import { PERSON } from '@/store/_constants';
 import { IPlayerState } from '@/store/reducers/types/shipLocation';
@@ -50,15 +50,15 @@ export const useSocket = () => {
       socket.onmessage = (response) => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
-        const { shoot, connect, start, gameover, exit } = SOCKETMETHOD;
+        const { shoot, connect, ready, gameover } = SOCKETMETHOD;
 
         switch (method) {
           case connect:
             connectHandler(data);
             break;
 
-          case start:
-            startHandler(data);
+          case ready:
+            readyHandler(data);
             break;
 
           case shoot:
@@ -103,20 +103,19 @@ export const useSocket = () => {
         console.log('connection');
       };
 
-      const startHandler = (data: IStartGame & IStart) => {
-        console.log('start');
+      const readyHandler = (data: IReady) => {
+        console.log('ready');
         const { isStarted, field, user } = data;
         setIsStarted(!!isStarted);
-        if (user.name !== userName) {
+        if (user !== userName) {
           updateShipsLocationState(field, PERSON.rival);
         }
       };
 
-      const shootHandler = (data: IStartGame & IShoot) => {
+      const shootHandler = (data: IShoot) => {
         const { user, shoot, isAbleShoot } = data;
-        setIsAbleShoot(user.name !== userName);
 
-        if (user.name === userName) {
+        if (user === userName) {
           setIsAbleShoot(isAbleShoot);
           checkShoot(PERSON.rival, shoot);
         } else {
@@ -126,7 +125,7 @@ export const useSocket = () => {
         console.log('shoot');
       };
 
-      const gameOverHandler = (data: IStartGame & IShoot) => {
+      const gameOverHandler = (data: IShoot) => {
         const { winner } = data;
 
         shootHandler(data);
@@ -156,21 +155,20 @@ export const useSocket = () => {
   };
 
   const sendSocket = useMemo(() => {
-    if (gameInfo) {
+    if (socket) {
       return (
         method: string,
         data?: { field: IPlayerState } | { shoot: number },
       ) => {
         socket?.send(
           JSON.stringify({
-            ...gameInfo,
             ...data,
             method: method,
           }),
         );
       };
     }
-  }, [gameInfo]);
+  }, [socket]);
 
   return { init, socket, setSocket, sendSocket };
 };
