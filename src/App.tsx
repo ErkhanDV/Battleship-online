@@ -53,7 +53,7 @@ const App = () => {
       setSocket(null);
     }
     resetGameShips();
-    resetGameState();
+    // resetGameState();
   }, [location]);
 
   return (

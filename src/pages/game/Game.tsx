@@ -14,6 +14,7 @@ import {
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
+import { computerTurn } from '@/lib/API/AI/ai';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -25,24 +26,35 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   });
 
   const { socket, sendSocket, init } = useContext(SocketContext);
-  const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
-    useGameStateActions();
-  const { setRandomShips } = useGameShipsActions();
-  const { setGameDifficult } = useGameStateActions();
+  const {
+    setIsReady,
+    setIsGameFinded,
+    setIsAbleShoot,
+    setIsStarted,
+    setGameDifficult,
+  } = useGameStateActions();
+  const { setRandomShips, checkShoot } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
   const { user } = useAppSelector((state) => state.gameShipsSlice);
-  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
+  const { isReady, winner, gameDifficult } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
   const isFilled = user.shipsLocation.length < 10;
+  // console.log(isFilled, !gameDifficult);
 
   const readyHandler = () => {
     setIsReady(true);
     if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
-      setIsAbleShoot(true);
       setIsStarted(true);
       setRandomShips(PERSON.rival);
+      if (gameDifficult && gameDifficult > 1) {
+        computerTurn(checkShoot, setIsAbleShoot, user);
+      } else {
+        setIsAbleShoot(true);
+      }
     }
   };
 
@@ -75,7 +87,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
         ) : null}
         {!isReady ? (
           <button
-            disabled={isFilled}
+            disabled={isFilled || !gameDifficult}
             onClick={readyHandler}
             className="button-render"
           >
