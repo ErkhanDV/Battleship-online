@@ -51,7 +51,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
       setIsStarted(true);
       setRandomShips(PERSON.rival);
       if (gameDifficult && gameDifficult > 1) {
-        computerTurn(checkShoot, setIsAbleShoot, user);
+        computerTurn(checkShoot, setIsAbleShoot, user, gameDifficult);
       } else {
         setIsAbleShoot(true);
       }

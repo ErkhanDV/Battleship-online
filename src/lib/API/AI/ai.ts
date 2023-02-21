@@ -41,12 +41,15 @@ export const computerTurn = (
     const target = getShootTarget();
     checkShoot('user', target);
     const index = checkShootToShip(cloneUser, target);
-    index !== -1
-      ? cloneUser.shipsLocation[index].woundedCells.push(target)
-      : cloneUser.misses.push(target);
-    checkWinner(cloneUser)
-      ? console.log('We have a winner!')
-      : console.log('Not win yet :(');
+    if (index !== -1) {
+      cloneUser.shipsLocation[index].woundedCells.push(target);
+      checkWinner(cloneUser)
+        ? console.log('We have a winner!')
+        : console.log('Not win yet :(');
+      computerTurn(checkShoot, setIsAbleShoot, cloneUser, difficult);
+    } else {
+      cloneUser.misses.push(target);
+    }
     setIsAbleShoot(true);
   }, 100);
 };
