@@ -1,6 +1,10 @@
 import './Rules.scss';
+import { useTranslation } from 'react-i18next';
 
 const Rules = () => {
+  const { t } = useTranslation();
+
+
   return (
     <main className="rules">
       <h1 className="rules_title">BattleShip Rules</h1>

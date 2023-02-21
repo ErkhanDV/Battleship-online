@@ -1,0 +1,41 @@
+{
+  "battle": "Battle",
+  "ship": "Ship",
+
+  "home": "Home",
+  "game": "Game",
+  "single": "Single Player",
+  "rules": "Rules",
+  "login": "Login",
+  "logout": "Logout",
+
+  "settings": "Settings",
+
+  "language": "Language",
+  "english": "English",
+  "russian": "Русский",
+
+  "theme": "Theme mode",
+  "light": "Light",
+  "dark": "Dark",
+
+  "scheme": "Color scheme",
+  "green": "Green",
+  "blue": "Blue",
+
+  "sound": "Sound",
+  "on": "On",
+  "off": "Off",
+
+  "battleship": "BattleShip Online",
+  "createdBy": "Created by",
+  "powerRangers": "Power Rangers",
+
+  "welcomeTitle": "Welcome to the ButtleShip Online!",
+  "welcomeFirst": "This is a strategy type guessing game for two players. It is played on ruled grids on which each player's fleet of warships are marked.",
+  "playBattleShip": "Play BattleShip",
+  "welcomeSecond": "The locations of the fleets are concealed from the other player. Players alternate turns calling \"shots\" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.",
+  "rulesOfTheGame": "Rules of the game",
+
+  "profile": "Gaming profile"
+}
