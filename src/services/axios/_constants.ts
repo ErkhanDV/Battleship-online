@@ -7,6 +7,7 @@ export enum SOCKETMETHOD {
   shoot = 'shoot',
   gameover = 'gameover',
   ready = 'ready',
+  exit = 'exit',
 }
 
 export enum STATUS {
