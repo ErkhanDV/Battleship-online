@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/use-redux';
+import { useAppDispatch } from '@/hook/_index';
 import * as gameStateActions from '@/store/reducers/GameStateSlice';
 import { IStartGame } from '@/store/reducers/types/socket';
 
@@ -17,8 +17,9 @@ export const useGameStateActions = () => {
   const setIsReady = (state: boolean) =>
     dispatch(gameStateActions.setReady(state));
 
-  const setIsAbleShoot = (state: boolean) =>
+  const setIsAbleShoot = (state: boolean) => {
     dispatch(gameStateActions.setAbleShoot(state));
+  };
 
   const setIsGameFinded = (state: boolean) =>
     dispatch(gameStateActions.setGameFinded(state));

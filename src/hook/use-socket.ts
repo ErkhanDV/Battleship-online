@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useAppSelector } from '@/hook/use-redux';
-import { useGameStateActions, useGameShipsActions } from './_index';
+import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  useAppSelector,
+  useGameStateActions,
+  useGameShipsActions,
+} from './_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
+import { PERSON } from '@/store/_constants';
+import { ROUTE } from '@/router/_constants';
 import {
   IStartGame,
   TSocketMessage,
   IConnect,
   IShoot,
-  IStart,
+  IReady,
 } from '@/store/reducers/types/socket';
-import { PERSON } from '@/store/_constants';
-import { IPlayerState } from '@/store/reducers/types/shipLocation';
+import { ISendData } from '@/store/reducers/types/socket';
 
 export const useSocket = () => {
+  const navigate = useNavigate();
   const [socket, setSocket] = useState<null | WebSocket>(null);
   const {
     setGameInfo,
@@ -23,9 +29,13 @@ export const useSocket = () => {
     setOpponentName,
     setUserName,
     setWinner,
+    resetGameState,
   } = useGameStateActions();
-  const { updateShipsLocationState, checkShoot } = useGameShipsActions();
-  const { gameInfo, userName } = useAppSelector((state) => state.gameStateSlice);
+  const { updateShipsLocationState, checkShoot, resetGameShips } =
+    useGameShipsActions();
+  const { gameInfo, userName } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
 
   useEffect(() => {
     if (gameInfo && socket && userName) {
@@ -35,18 +45,26 @@ export const useSocket = () => {
         );
       };
 
+      // socket.onclose = () => {
+      //   setWinner('Противник вышел из боя');
+      //   setTimeout(() => {
+      //     navigate(ROUTE.home);
+      //     setWinner('');
+      //   }, 3000);
+      // };
+
       socket.onmessage = (response) => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
-        const { shoot, connect, start, gameover, exit } = SOCKETMETHOD;
+        const { shoot, connect, ready, gameover, exit } = SOCKETMETHOD;
 
         switch (method) {
           case connect:
             connectHandler(data);
             break;
 
-          case start:
-            startHandler(data);
+          case ready:
+            readyHandler(data);
             break;
 
           case shoot:
@@ -58,7 +76,8 @@ export const useSocket = () => {
             break;
 
           case exit:
-            socket.close();
+            exitHandler();
+            break;
         }
       };
 
@@ -94,20 +113,19 @@ export const useSocket = () => {
         console.log('connection');
       };
 
-      const startHandler = (data: IStartGame & IStart) => {
-        console.log('start');
+      const readyHandler = (data: IReady) => {
+        console.log('ready');
         const { isStarted, field, user } = data;
         setIsStarted(!!isStarted);
-        if (user.name !== userName) {
+        if (user !== userName) {
           updateShipsLocationState(field, PERSON.rival);
         }
       };
 
-      const shootHandler = (data: IStartGame & IShoot) => {
+      const shootHandler = (data: IShoot) => {
         const { user, shoot, isAbleShoot } = data;
-        setIsAbleShoot(user.name !== userName);
 
-        if (user.name === userName) {
+        if (user === userName) {
           setIsAbleShoot(isAbleShoot);
           checkShoot(PERSON.rival, shoot);
         } else {
@@ -117,15 +135,36 @@ export const useSocket = () => {
         console.log('shoot');
       };
 
-      const gameOverHandler = (data: IStartGame & IShoot) => {
+      const gameOverHandler = (data: IShoot) => {
         const { winner } = data;
 
         shootHandler(data);
         setIsAbleShoot(false);
 
-        if (winner) setWinner(winner);
+        if (winner) {
+          if (winner === userName) {
+            setWinner('Ты засадил вялого этому парню');
+          } else {
+            setWinner('Тебя отшлепали как собаку сутулую');
+          }
+        }
+
+        setTimeout(() => {
+          setWinner('');
+        }, 3000);
 
         console.log('gameover');
+      };
+
+      const exitHandler = () => {
+        setWinner('Противник вышел из боя');
+        setTimeout(() => {
+          navigate(ROUTE.home);
+          setWinner('');
+        }, 3000);
+
+        resetGameState();
+        resetGameShips();
       };
     }
   }, [gameInfo, socket, userName]);
@@ -136,18 +175,18 @@ export const useSocket = () => {
     setUserName(response.user.name);
   };
 
-  const sendSocket = (
-    method: string,
-    data?: { field: IPlayerState } | { shoot: number },
-  ) => {
-    socket?.send(
-      JSON.stringify({
-        ...gameInfo,
-        ...data,
-        method: SOCKETMETHOD.ready,
-      }),
-    );
-  };
+  const sendSocket = useMemo(() => {
+    if (socket) {
+      return (method: string, data?: ISendData) => {
+        socket?.send(
+          JSON.stringify({
+            ...data,
+            method: method,
+          }),
+        );
+      };
+    }
+  }, [socket]);
 
   return { init, socket, setSocket, sendSocket };
 };

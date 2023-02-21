@@ -12,11 +12,11 @@ import { SHIPS } from '../_constants';
 
 const initialState: IGameShips = {
   user: {
-    shipsLocation: [],
+    ships: [],
     misses: [],
   },
   rival: {
-    shipsLocation: [],
+    ships: [],
     misses: [],
   },
 };
@@ -27,26 +27,26 @@ const gameShipsSlice = createSlice({
   reducers: {
     addShip(state, action: PayloadAction<IAddShip>) {
       const { person } = action.payload;
-      state[person].shipsLocation.push(action.payload.ship);
+      state[person].ships.push(action.payload.ship);
     },
 
     addShoot(state, action: PayloadAction<IShoot>) {
       const { person, cell } = action.payload;
-      const ships = state[person].shipsLocation.map(
+      const ships = state[person].ships.map(
         (ship) => ship.shipLocation,
       );
       const index = ships.findIndex((coordinates) =>
         coordinates.includes(cell),
       );
       if (index !== -1) {
-        state[person].shipsLocation[index].woundedCells.push(cell);
+        state[person].ships[index].woundedCells.push(cell);
       } else {
         state[person].misses.push(cell);
       }
     },
 
     resetShips(state) {
-      state.user.shipsLocation = [];
+      state.user.ships = [];
     },
 
     resetGameShips: () => initialState,
@@ -59,13 +59,13 @@ const gameShipsSlice = createSlice({
       const person = action.payload.person;
       const ships = action.payload.ships ? action.payload.ships : SHIPS;
 
-      const settedShips = [...state[person].shipsLocation];
+      const settedShips = [...state[person].ships];
       const newShips: IShip[] = [];
       ships.forEach((ship) => {
         getCorrectShip(settedShips, newShips, ship);
       });
       newShips.forEach((ship) => {
-        state[person].shipsLocation.push(ship);
+        state[person].ships.push(ship);
       });
     },
   },
