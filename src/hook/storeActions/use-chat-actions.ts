@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/hook/_index';
 import * as chatActions from '@/store/reducers/ChatSlice';
-import { IChatMessage, IChat } from '@/store/reducers/types/chat';
+import { IChatMessage } from '@/store/reducers/types/chat';
 
 export const useChatActions = () => {
   const dispatch = useAppDispatch();
