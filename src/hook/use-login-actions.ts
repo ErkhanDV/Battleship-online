@@ -1,6 +1,5 @@
-import { useAppDispatch } from '@/hook/use-redux';
+import { useAppDispatch } from '@/hook/_index';
 import * as logInActions from '@/store/reducers/LogInSlice';
-// import { MODAL } from '@/components/modal/_constants';
 
 export const useLogInActions = () => {
   const dispatch = useAppDispatch();

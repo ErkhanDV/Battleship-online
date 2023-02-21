@@ -21,17 +21,25 @@ export interface IConnect {
   opponentField?: IPlayerState;
 }
 
-export interface IStart {
+export interface IReady {
+  user: string;
+  method: string;
   isStarted: boolean;
   field: IPlayerState;
 }
 
 export interface IShoot {
+  user: string;
   shoot: number;
   isAbleShoot: boolean;
   winner?: string;
 }
 
-export type TSocketMessage = IStartGame & IStart & IConnect & IShoot;
+export interface ISendData {
+  field?: IPlayerState;
+  shoot?: number;
+}
+
+export type TSocketMessage = IStartGame & IReady & IConnect & IShoot;
 
 export { type IStartGame };
