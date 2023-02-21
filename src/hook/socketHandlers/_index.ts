@@ -3,7 +3,7 @@ import { useReadyHandler } from './use-ready';
 import { useShootHandler } from './use-shoot';
 import { useGameoverHandler } from './use-gameover';
 import { useExitHandler } from './use-exit';
-import { useChatHandler } from './chatHandler';
+import { useChatHandler } from './use-chat';
 
 export const useSocketHandlers = () => {
   const { connectHandler } = useConnectionHandler();

@@ -10,7 +10,6 @@ const initialState: IGameState = {
   isAbleShoot: false,
   isReady: false,
   winner: '',
-  // gameDifficult: null,
 };
 
 export const gameStateSlice = createSlice({
@@ -19,6 +18,7 @@ export const gameStateSlice = createSlice({
   reducers: {
     setGameInfo(state, action: PayloadAction<IStartGame>) {
       state.gameInfo = action.payload;
+      console.log(state.gameInfo);
     },
 
     setUserName(state, action: PayloadAction<string>) {

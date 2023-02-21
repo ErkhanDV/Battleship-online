@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useGameStateActions } from './_index';
 import { useSocketHandlers } from './socketHandlers/_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
@@ -6,7 +6,7 @@ import { IStartGame, TSocketMessage } from '@/store/reducers/types/socket';
 import { TSendData } from '@/store/reducers/types/socket';
 
 export const useSocket = () => {
-  const socket = new WebSocket(SOCKET);
+  const [socket, setSocket] = useState(new WebSocket(SOCKET));
   const {
     connectHandler,
     shootHandler,
@@ -16,13 +16,12 @@ export const useSocket = () => {
     chatHandler,
   } = useSocketHandlers();
 
-  const { setGameInfo, setUserName } = useGameStateActions();
   const { gameInfo, userName } = useAppSelector(
     (state) => state.gameStateSlice,
   );
 
   useEffect(() => {
-    if (gameInfo && socket && userName) {
+    if (gameInfo && userName) {
       // socket.onopen = () => {
       //   socket.send(
       //     JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.connect }),
@@ -69,18 +68,7 @@ export const useSocket = () => {
         }
       };
     }
-  }, [gameInfo, socket, userName]);
-
-  const startOnlineGame = async (response: IStartGame | undefined) => {
-    if (response) {
-      await setGameInfo(response);
-      await setUserName(response.user.name);
-
-      if (gameInfo) {
-        sendSocket(SOCKETMETHOD.connect, gameInfo);
-      }
-    }
-  };
+  }, [gameInfo, userName]);
 
   const sendSocket = (method: string, data?: TSendData) => {
     socket.send(
@@ -91,5 +79,5 @@ export const useSocket = () => {
     );
   };
 
-  return { startOnlineGame, socket, sendSocket };
+  return { socket, sendSocket };
 };

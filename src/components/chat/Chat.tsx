@@ -12,10 +12,10 @@ const Chat: FC = () => {
   const { currentChat } = useAppSelector((state) => state.ChatSlice);
   const { user } = useAppSelector((state) => state.logInSlice);
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
+  const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
 
   const messages = useMemo(() => {
-    const { game, common } = useAppSelector((state) => state.ChatSlice);
     return currentChat === CHAT.common ? common : game;
   }, [currentChat]);
 

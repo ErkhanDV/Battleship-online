@@ -1,15 +1,21 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { SocketContext } from '@/context/Context';
-import { useLogInActions, useAppSelector } from '@/hook/_index';
+import {
+  useLogInActions,
+  useAppSelector,
+  useGameStateActions,
+} from '@/hook/_index';
 import { authService, gameService } from '@/services/axios/_index';
 import { ROUTE } from '@/router/_constants';
 import './Header.scss';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const Header: FC = () => {
-  const { startOnlineGame, sendSocket } = useContext(SocketContext);
+  const { sendSocket } = useContext(SocketContext);
   const navigate = useNavigate();
   const { setModalOpen, setUser, setModalChildren } = useLogInActions();
+  const { setUserName } = useGameStateActions();
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
@@ -36,7 +42,7 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       await authService.logout();
-      if (sendSocket) sendSocket('exit');
+      if (sendSocket) sendSocket(SOCKETMETHOD.exit);
       setUser('');
     } else {
       modalHandler('log');
@@ -46,7 +52,11 @@ const Header: FC = () => {
   const gameHandler = async () => {
     if (isAuthorized) {
       const response = await gameService.startGame();
-      await startOnlineGame(response);
+
+      if (response) {
+        setUserName(response.user.name);
+        if (sendSocket) sendSocket(SOCKETMETHOD.connect, response);
+      }
 
       if (location.pathname !== ROUTE.game) {
         navigate(ROUTE.game);
