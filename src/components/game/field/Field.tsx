@@ -18,29 +18,26 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     (state) => state.gameStateSlice,
   );
 
-  const shootHandler = (e: React.MouseEvent): void => {
-    if (e.target instanceof HTMLDivElement && e.target.id) {
-      const shoot: number = Number(e.target.id);
-      if (isAbleShoot && isStarted) {
-        if (isOnline && sendSocket) {
-          sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
-        } else {
-          checkShoot('rival', shoot);
+  const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
-          setTimeout(() => {
-            checkShoot('user', getRandomNum(1, 100));
-          }, 1000);
-        }
+  const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
+    const shoot: number = Number((target as HTMLDivElement).id);
+
+    if (isAbleShoot && isStarted) {
+      if (isOnline && sendSocket) {
+        sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
+      } else {
+        checkShoot('rival', shoot);
+
+        setTimeout(() => {
+          checkShoot('user', getRandomNum(1, 100));
+        }, 1000);
       }
     }
   };
 
   return (
-    <div
-      onClick={shootHandler}
-      style={{ opacity: !isAbleShoot && isRival ? 0.5 : 1 }}
-      className="battleground"
-    >
+    <div onClick={shootHandler} className={bgClass}>
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
