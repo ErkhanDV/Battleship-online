@@ -35,7 +35,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
 
   const { gameShipsSlice } = useAppSelector((state) => state);
   const { user } = gameShipsSlice;
-  const isFilled = user.shipsLocation.length < 10;
+  const isFilled = user.ships.length < 10;
 
   const readyHandler = () => {
     setIsReady(true);

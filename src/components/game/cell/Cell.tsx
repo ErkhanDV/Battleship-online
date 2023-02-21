@@ -22,11 +22,11 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   );
 
   const userShips = useAppSelector(
-    (state) => state.gameShipsSlice.user.shipsLocation,
+    (state) => state.gameShipsSlice.user.ships,
   );
 
   const isShooted = useAppSelector((state) => {
-    return state.gameShipsSlice[key].shipsLocation.find((ship) =>
+    return state.gameShipsSlice[key].ships.find((ship) =>
       ship.woundedCells.includes(coordinate),
     );
   });
@@ -45,7 +45,7 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
       return true;
     } else {
       const rivalShips = useAppSelector(
-        (state) => state.gameShipsSlice.rival.shipsLocation,
+        (state) => state.gameShipsSlice.rival.ships,
       );
       const index = rivalShips.findIndex((ship) =>
         ship.shipLocation.some((id) => id === coordinate),
