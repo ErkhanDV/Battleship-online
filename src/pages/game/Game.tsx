@@ -39,7 +39,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
 
   const readyHandler = () => {
     setIsReady(true);
-    if (isOnline) {
+    if (isOnline && sendSocket) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
       setIsAbleShoot(true);

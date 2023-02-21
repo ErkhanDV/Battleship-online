@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction } from 'react';
 export interface IGameStateContext {
   socket: WebSocket | null;
   setSocket: Dispatch<SetStateAction<WebSocket | null>>;
-  sendSocket: (
+  sendSocket: ((
     method: string,
     data?: { field: IPlayerState } | { shoot: number },
-  ) => void;
+  ) => void) | undefined;
   init: (response: IStartGame) => void;
 }
