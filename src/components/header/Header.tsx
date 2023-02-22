@@ -87,29 +87,37 @@ const Header: FC = () => {
               {t('home')}
             </NavLink>
           </li>
-          <li className="navigation_item">
-            <div onClick={gameHandler} className="navigation_link">
-              {t('game')}
-            </div>
-          </li>
-          <li className="navigation_item">
-            <NavLink to="/singleplayer" className="navigation_link">
-              {t('single')}
-            </NavLink>
+
+          <li className="navigation_item item-dropdown">
+            <span className="navigation_link">{t('game')}</span>
+            <ul className="navigation_dropdown">
+              <li className="dropdown-item">
+                <span className="navigation_link" onClick={gameHandler}>
+                  {t('vsPlayer')}
+                </span>
+              </li>
+              <li className="dropdown-item">
+                <NavLink to="/singleplayer" className="navigation_link" >
+                  {t('vsComputer')}
+                </NavLink>
+              </li>
+            </ul>
           </li>
           <li className="navigation_item">
             <NavLink to="/rules" className="navigation_link">
               {t('rules')}
             </NavLink>
           </li>
-          <li
-            className="navigation_item"
-            onClick={() => modalHandler('settings')}
-          >
-            {t('settings')}
+          <li className="navigation_item">
+            <span
+              className="navigation_link"
+              onClick={() => modalHandler('settings')}
+            >
+              {t('settings')}
+            </span>
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
-            {logStatus}
+            <span className="navigation_link">{logStatus}</span>
           </li>
         </ul>
       </nav>
