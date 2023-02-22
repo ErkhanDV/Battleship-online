@@ -1,84 +1,66 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import {
-  useAppDispatch,
   useAppSelector,
+  useDnDActions,
   useGameShipsActions,
 } from '@/hook/_index';
-import { setDropped } from '@/store/reducers/ShipSlice';
-import { dragOverHandler, dragEndHandler, dropHadler } from '@/lib/API/_index';
-import { ICell } from './_types';
-import { IShip } from '@/store/reducers/types/shipLocation';
+import { dragOver, dragEnd, drop } from '@/lib/API/_index';
 import { PERSON } from '@/store/_constants';
+import { IShip } from '@/store/reducers/types/shipLocation';
+import { ICell, TDnDHandler } from './_types';
 import { CELLCLASS } from './_constants';
 import { IGameShips } from '@/store/reducers/types/shipLocation';
 import './Cell.scss';
 
 const Cell: FC<ICell> = ({ coordinate, isRival }) => {
-  const key = (isRival ? PERSON.rival : PERSON.user) as keyof IGameShips;
+  const person = (isRival ? PERSON.rival : PERSON.user) as keyof IGameShips;
+
   const { addShip } = useGameShipsActions();
+  const { setDropped } = useDnDActions();
 
   const { decks, isHorizontal } = useAppSelector(
-    (state) => state.shipSlice.currentDragedShip,
+    (state) => state.shipSlice.shipDnD,
   );
+  const personState = useAppSelector((state) => state.gameShipsSlice[person]);
 
-  const userShips = useAppSelector(
-    (state) => state.gameShipsSlice.user.ships,
-  );
+  const classList = useMemo(() => {
+    const { shoot, initial, miss, shiper } = CELLCLASS;
+    let classList = initial as string;
 
-  const isShooted = useAppSelector((state) => {
-    return state.gameShipsSlice[key].ships.find((ship) =>
-      ship.woundedCells.includes(coordinate),
-    );
-  });
-  const isMissed = useAppSelector((state) => {
-    return state.gameShipsSlice[key].misses.some((id) => id === coordinate);
-  });
+    personState.ships.forEach((ship) => {
+      classList += ship.woundedCells.includes(coordinate) ? shoot : '';
+      classList += ship.shipLocation.includes(coordinate) ? shiper : '';
+    });
 
-  const isShip = () => {
-    if (!isRival) {
-      const index = userShips.findIndex((ship) =>
-        ship.shipLocation.some((id) => id === coordinate),
-      );
-      if (index === -1) {
-        return false;
-      }
-      return true;
-    } else {
-      const rivalShips = useAppSelector(
-        (state) => state.gameShipsSlice.rival.ships,
-      );
-      const index = rivalShips.findIndex((ship) =>
-        ship.shipLocation.some((id) => id === coordinate),
-      );
-      if (index === -1) {
-        return false;
-      }
-      return true;
-    }
+    personState.misses.forEach((id) => {
+      classList += id === coordinate ? miss : '';
+    });
+
+    return classList;
+  }, [personState]);
+
+  const successfullyDrop = () => setDropped(true);
+  const setLocations = (ship: IShip) => addShip(PERSON.user, ship);
+
+  const dragOverHandler: TDnDHandler = (event) => {
+    dragOver(event, isHorizontal, decks, personState.ships);
   };
 
-  const dispatch = useAppDispatch();
-  const setLocations = (ship: IShip) => addShip(PERSON.user, ship);
-  const successfullyDrop = () => dispatch(setDropped(true));
+  const dragEndHandler: TDnDHandler = (event) => {
+    dragEnd(event, isHorizontal, decks);
+  };
 
-  const { shoot, initial, miss, ship } = CELLCLASS;
-
-  let classList = initial as string;
-  classList += isShooted ? shoot : '';
-  classList += isMissed ? miss : '';
-  classList += isShip() ? ship : '';
+  const dropHandler: TDnDHandler = (event) => {
+    drop(event, isHorizontal, decks, setLocations, successfullyDrop);
+  };
 
   return (
     <div
       id={coordinate.toString()}
       className={classList}
-      onDragOver={(event) =>
-        dragOverHandler(event, isHorizontal, decks, userShips)
-      }
-      onDragLeave={(event) => dragEndHandler(event, isHorizontal, decks)}
-      onDrop={(event) =>
-        dropHadler(event, isHorizontal, decks, setLocations, successfullyDrop)
-      }
+      onDragOver={isRival ? dragOverHandler : undefined}
+      onDragLeave={isRival ? dragEndHandler : undefined}
+      onDrop={isRival ? dropHandler : undefined}
     ></div>
   );
 };

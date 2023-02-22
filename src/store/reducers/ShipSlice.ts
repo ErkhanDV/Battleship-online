@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICurrentShip, IDragedShip } from './types/currentShip';
+import { ISetShip, IShipDnD } from './types/ship';
 
-const initialState: IDragedShip = {
-  currentDragedShip: {
+const initialState: IShipDnD = {
+  shipDnD: {
     decks: null,
     isHorizontal: false,
   },
@@ -13,9 +13,9 @@ const shipSlice = createSlice({
   name: 'ship',
   initialState,
   reducers: {
-    setShip(state, action: PayloadAction<ICurrentShip>) {
-      state.currentDragedShip.decks = action.payload.decks;
-      state.currentDragedShip.isHorizontal = action.payload.isHorizontal;
+    setShip(state, action: PayloadAction<ISetShip>) {
+      state.shipDnD.decks = action.payload.decks;
+      state.shipDnD.isHorizontal = action.payload.isHorizontal;
     },
 
     setDropped(state, action: PayloadAction<boolean>) {

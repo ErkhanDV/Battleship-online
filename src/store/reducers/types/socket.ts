@@ -1,5 +1,6 @@
 import { IPlayerState } from './shipLocation';
-import { IStartGame } from '@/services/axios/_types';
+import { IPlayer, IStartGame } from '@/services/axios/_types';
+import { IChatMessage } from './chat';
 
 export interface IGameState {
   gameInfo: null | IStartGame;
@@ -35,11 +36,29 @@ export interface IShoot {
   winner?: string;
 }
 
-export interface ISendData {
-  field?: IPlayerState;
-  shoot?: number;
+export interface IMessage {
+  mail: IChatMessage;
 }
 
-export type TSocketMessage = IStartGame & IReady & IConnect & IShoot;
+export interface ISendConnect {
+  gameId: string;
+  user: IPlayer;
+}
+
+export interface ISendReady {
+  field: IPlayerState;
+}
+
+export interface ISendShoot {
+  shoot: number;
+}
+
+export interface ISendChat {
+  mail: IChatMessage;
+}
+
+export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
+
+export type TSocketMessage = IStartGame & IReady & IConnect & IShoot & IMessage;
 
 export { type IStartGame };

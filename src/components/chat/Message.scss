@@ -1,0 +1,23 @@
+.message {
+  display: flex;
+  gap: 1rem;
+  justify-content: start;
+
+  color: #000;
+}
+
+.my {
+  justify-content: flex-end;
+
+  .date {
+    order: 3;
+  }
+
+  .name {
+    order: 2;
+  }
+
+  .text {
+    order: 1;
+  }
+}

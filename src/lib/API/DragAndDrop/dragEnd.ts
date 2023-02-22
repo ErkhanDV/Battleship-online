@@ -1,6 +1,6 @@
 import { IDragHandler } from './_types';
 
-export const dragEndHandler: IDragHandler = (
+export const dragEnd: IDragHandler = (
   event,
   horizontalRotation,
   shipLength,

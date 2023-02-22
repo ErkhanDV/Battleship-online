@@ -19,6 +19,7 @@ import './game.scss';
 
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
+import { Chat } from '@/components/_index';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -29,7 +30,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     }
   });
 
-  const { socket, sendSocket, init } = useContext(SocketContext);
+  const { sendSocket } = useContext(SocketContext);
   const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
     useGameStateActions();
   const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
@@ -58,7 +59,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
-        <Gameover />
         {!isReady ? (
           <button
             disabled={isFilled}
@@ -76,7 +76,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
         </div>
         <ShipStation />
+        <Gameover />
       </main>
+      <Chat />
     </div>
   );
 };

@@ -11,6 +11,10 @@
   grid-template-columns: repeat(10, 42px);
 }
 
+.inactive {
+  opacity: 0.5;
+}
+
 .connection {
   position: absolute;
   width: 100%;

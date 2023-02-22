@@ -2,7 +2,7 @@ import { isCanDrop } from '../ShipsPlacer/isCanDrop';
 
 import { IDragHandler } from './_types';
 
-export const dragOverHandler: IDragHandler = (
+export const dragOver: IDragHandler = (
   event,
   horizontalRotation,
   shipLength,

@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import { useSocket, useCheckAuth } from '@/hook/_index';
+import { useSocket, useCheckAuth, useAppSelector } from '@/hook/_index';
 import { SocketContext } from './context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
 
 const App = () => {
   const location = useLocation();
-  const { socket, init, setSocket, sendSocket } = useSocket();
-  const { checkAuth } = useCheckAuth();
+  const { socket, sendSocket } = useSocket();
+  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
+  const { checkAuth } = useCheckAuth(sendSocket);
 
   useEffect(() => {
     checkAuth();
@@ -21,14 +22,14 @@ const App = () => {
         return route === location.pathname;
       },
     );
-    if (isMatchRoute && sendSocket) {
+    if (isMatchRoute && sendSocket && gameInfo) {
       sendSocket('exit');
     }
   }, [location]);
 
   return (
     <div className="App">
-      <SocketContext.Provider value={{ socket, setSocket, init, sendSocket }}>
+      <SocketContext.Provider value={{ socket, sendSocket }}>
         <Header />
         <AppRouter />
         <Footer />

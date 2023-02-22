@@ -4,6 +4,7 @@ import gameShipsSlice from './GameShipsSlice';
 import gameStateSlice from './GameStateSlice';
 import logInSlice from './LogInSlice';
 import appSettingsSlice from './AppSettingsSlice';
+import ChatSlice from './ChatSlice';
 
 export {
   userSlice,
@@ -12,4 +13,5 @@ export {
   gameStateSlice,
   logInSlice,
   appSettingsSlice,
+  ChatSlice
 };

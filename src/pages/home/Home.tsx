@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { Chat } from '@/components/_index';
 
 import { useTranslation } from 'react-i18next';
 
@@ -33,6 +34,7 @@ const Home: FC = () => {
           <p className="section_paragraph">{t('loginPlease')}</p>
         </section>
       </main>
+      <Chat />
     </div>
   );
 };
