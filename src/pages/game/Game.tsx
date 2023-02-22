@@ -4,6 +4,9 @@ import {
   useGameShipsActions,
   useGameStateActions,
 } from '@/hook/_index';
+
+import { useTranslation } from 'react-i18next';
+
 import { SocketContext } from '@/context/Context';
 import {
   Field,
@@ -11,8 +14,10 @@ import {
   ShipStation,
   Gameover,
 } from '@/components/game/_index';
-import { SOCKETMETHOD } from '@/services/axios/_constants';
+
 import './game.scss';
+
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
 import { Chat } from '@/components/_index';
 
@@ -31,6 +36,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
 
   const { setRandomShips } = useGameShipsActions();
+
+  const { t } = useTranslation();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
 
