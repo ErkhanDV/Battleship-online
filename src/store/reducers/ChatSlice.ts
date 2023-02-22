@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IChat, IChatMessage } from './types/chat';
+import { CHAT } from '../_constants';
 
 const initialState: IChat = {
-  currentChat: 'common',
+  currentChat: CHAT.common,
   common: [],
   game: [],
 };
@@ -27,8 +28,8 @@ const chatSlice = createSlice({
       state.common = [];
     },
 
-    changeChat(state) {
-      state.currentChat = state.currentChat === 'common' ? 'game' : 'common';
+    changeChat(state, action: PayloadAction<keyof typeof CHAT>) {
+      state.currentChat = CHAT[action.payload];
     },
   },
 });

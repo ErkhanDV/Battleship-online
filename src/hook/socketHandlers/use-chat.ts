@@ -6,7 +6,7 @@ export const useChatHandler = () => {
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
 
   const chatHandler = (data: IMessage) => {
-    console.log('chat111');
+    console.log('chat listener');
 
     if (gameInfo?.gameId === data.mail.gameId) {
       pushGameMessage(data.mail);

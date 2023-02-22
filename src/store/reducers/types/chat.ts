@@ -1,3 +1,5 @@
+import { CHAT } from '@/store/_constants';
+
 export interface IChat {
   currentChat: string;
   common: IChatMessage[];

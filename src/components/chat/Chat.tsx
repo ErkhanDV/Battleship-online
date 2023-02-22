@@ -1,4 +1,4 @@
-import { FC, useMemo, useState, useContext } from 'react';
+import { FC, useState, useContext } from 'react';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
@@ -15,10 +15,6 @@ const Chat: FC = () => {
   const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
 
-  const messages = useMemo(() => {
-    return currentChat === CHAT.common ? common : game;
-  }, [currentChat]);
-
   const inputHandler = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setText(target.value);
@@ -33,7 +29,10 @@ const Chat: FC = () => {
 
     mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
 
+ 
+
     if (sendSocket) {
+      console.log(mail);
       sendSocket(SOCKETMETHOD.chat, { mail });
     }
     setText('');
@@ -41,14 +40,14 @@ const Chat: FC = () => {
 
   return (
     <div className="chat">
-      <button onClick={() => changeChat()} type="button">
+      <button onClick={() => changeChat(CHAT.common)} type="button">
         Common
       </button>
-      <button disabled={!gameInfo} onClick={() => changeChat()} type="button">
+      <button disabled={!gameInfo} onClick={() => changeChat(CHAT.game)} type="button">
         Game
       </button>
       <div className="chat_messages">
-        {(currentChat === CHAT.common ? common : game).map((mail) => (
+        {(currentChat === CHAT.common || !gameInfo ? common : game).map((mail) => (
           <Message key={mail.date.toString()} mail={mail} />
         ))}
       </div>

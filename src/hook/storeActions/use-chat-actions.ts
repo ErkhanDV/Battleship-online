@@ -1,6 +1,7 @@
 import { useAppDispatch } from '@/hook/_index';
 import * as chatActions from '@/store/reducers/ChatSlice';
 import { IChatMessage } from '@/store/reducers/types/chat';
+import { CHAT } from '@/store/_constants';
 
 export const useChatActions = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export const useChatActions = () => {
 
   const resetCommonChat = () => dispatch(chatActions.resetCommonChat());
 
-  const changeChat = () => dispatch(chatActions.changeChat());
+  const changeChat = (chatName: keyof typeof CHAT) => dispatch(chatActions.changeChat(chatName));
 
   return {
     pushGameMessage,
