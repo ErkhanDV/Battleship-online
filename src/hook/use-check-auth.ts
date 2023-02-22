@@ -17,8 +17,11 @@ export const useCheckAuth = (
   const checkAuth = async () => {
     if (localStorage.getItem('token') && !checkInProccess) {
       setCheckInProccess(true);
+
       const auth = await authService.checkAuth();
+
       setCheckInProccess(false);
+
       if (auth) {
         if (location.pathname === ROUTE.game) {
           const response = await gameService.startGame();
@@ -28,6 +31,7 @@ export const useCheckAuth = (
             if (sendSocket) sendSocket(SOCKETMETHOD.connect, response);
           }
         }
+
         setUser(auth.name);
       } else {
         if (location.pathname === ROUTE.game) navigate(ROUTE.home);

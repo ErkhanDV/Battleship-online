@@ -8,7 +8,7 @@ export const useChatHandler = () => {
   const chatHandler = (data: IMessage) => {
     console.log('chat listener');
 
-    if (gameInfo?.gameId === data.mail.gameId) {
+    if (gameInfo?.gameId && gameInfo?.gameId === data.mail.gameId) {
       pushGameMessage(data.mail);
     }
 

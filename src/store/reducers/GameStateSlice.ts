@@ -18,7 +18,6 @@ export const gameStateSlice = createSlice({
   reducers: {
     setGameInfo(state, action: PayloadAction<IStartGame | null>) {
       state.gameInfo = action.payload;
-      console.log(state.gameInfo);
     },
 
     setUserName(state, action: PayloadAction<string>) {

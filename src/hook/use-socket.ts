@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useAppSelector, useGameStateActions } from './_index';
+import { useRef } from 'react';
+import { useGameStateActions } from './_index';
 import { useSocketHandlers } from './socketHandlers/_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
-import { IStartGame, TSocketMessage } from '@/store/reducers/types/socket';
+import { TSocketMessage } from '@/store/reducers/types/socket';
 import { TSendData, ISendConnect } from '@/store/reducers/types/socket';
 
 export const useSocket = () => {
-  const [socket, setSocket] = useState(new WebSocket(SOCKET));
+  const socket = useRef<WebSocket>(new WebSocket(SOCKET));
   const {
     connectHandler,
     shootHandler,
@@ -18,66 +18,49 @@ export const useSocket = () => {
 
   const { setGameInfo } = useGameStateActions();
 
-  const { gameInfo, userName } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
+  window.onunload = () => {
+    socket.current.close();
+  };
 
-  useEffect(() => {
-    if (userName && socket && gameInfo) {
-      // socket.onopen = () => {
-      //   socket.send(
-      //     JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.connect }),
-      //   );
-      // };
+  socket.current.onmessage = (response) => {
+    console.log('socketMain');
+    const data: TSocketMessage = JSON.parse(response.data);
+    const { method } = data;
+    const { shoot, connect, ready, gameover, exit, chat } = SOCKETMETHOD;
 
-      // socket.onclose = () => {
-      //   setWinner('Противник вышел из боя');
-      //   setTimeout(() => {
-      //     navigate(ROUTE.home);
-      //     setWinner('');
-      //   }, 3000);
-      // };
+    switch (method) {
+      case connect:
+        connectHandler(data);
+        break;
 
-      socket.onmessage = (response) => {
-        const data: TSocketMessage = JSON.parse(response.data);
-        const { method } = data;
-        const { shoot, connect, ready, gameover, exit, chat } = SOCKETMETHOD;
+      case ready:
+        readyHandler(data);
+        break;
 
-        switch (method) {
-          case connect:
-            connectHandler(data);
-            break;
+      case shoot:
+        shootHandler(data);
+        break;
 
-          case ready:
-            readyHandler(data);
-            break;
+      case gameover:
+        gameoverHandler(data);
+        break;
 
-          case shoot:
-            shootHandler(data);
-            break;
+      case chat:
+        chatHandler(data);
+        break;
 
-          case gameover:
-            gameoverHandler(data);
-            break;
-
-          case chat:
-            chatHandler(data);
-            break;
-
-          case exit:
-            exitHandler();
-            break;
-        }
-      };
+      case exit:
+        exitHandler();
+        break;
     }
-  }, [userName, socket, gameInfo]);
+  };
 
   const sendSocket = <T extends TSendData>(method: string, data?: T) => {
     if (method === SOCKETMETHOD.connect) {
       setGameInfo(data ? (data as ISendConnect) : null);
     }
 
-    socket.send(
+    socket.current.send(
       JSON.stringify({
         ...data,
         method: method,
