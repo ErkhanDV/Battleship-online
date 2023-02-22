@@ -3,7 +3,7 @@ import { useAppSelector, useGameStateActions } from './_index';
 import { useSocketHandlers } from './socketHandlers/_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import { IStartGame, TSocketMessage } from '@/store/reducers/types/socket';
-import { TSendData } from '@/store/reducers/types/socket';
+import { TSendData, ISendConnect } from '@/store/reducers/types/socket';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState(new WebSocket(SOCKET));
@@ -16,12 +16,14 @@ export const useSocket = () => {
     chatHandler,
   } = useSocketHandlers();
 
+  const { setGameInfo } = useGameStateActions();
+
   const { gameInfo, userName } = useAppSelector(
     (state) => state.gameStateSlice,
   );
 
   useEffect(() => {
-    if (gameInfo && userName) {
+    if (userName && socket && gameInfo) {
       // socket.onopen = () => {
       //   socket.send(
       //     JSON.stringify({ ...gameInfo, method: SOCKETMETHOD.connect }),
@@ -68,9 +70,13 @@ export const useSocket = () => {
         }
       };
     }
-  }, [gameInfo, userName]);
+  }, [userName, socket, gameInfo]);
 
-  const sendSocket = (method: string, data?: TSendData) => {
+  const sendSocket = <T extends TSendData>(method: string, data?: T) => {
+    if (method === SOCKETMETHOD.connect) {
+      setGameInfo(data ? (data as ISendConnect) : null);
+    }
+
     socket.send(
       JSON.stringify({
         ...data,

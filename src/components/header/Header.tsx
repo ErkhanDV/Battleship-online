@@ -55,7 +55,9 @@ const Header: FC = () => {
 
       if (response) {
         setUserName(response.user.name);
-        if (sendSocket) sendSocket(SOCKETMETHOD.connect, response);
+        if (sendSocket) {
+          sendSocket(SOCKETMETHOD.connect, response);
+        } 
       }
 
       if (location.pathname !== ROUTE.game) {

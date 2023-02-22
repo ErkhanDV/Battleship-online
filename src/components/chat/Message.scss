@@ -2,6 +2,8 @@
   display: flex;
   gap: 1rem;
   justify-content: start;
+
+  color: #000;
 }
 
 .my {
@@ -9,6 +11,10 @@
 
   .date {
     order: 3;
+  }
+
+  .name {
+    order: 2;
   }
 
   .text {

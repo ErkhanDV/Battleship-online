@@ -24,18 +24,19 @@ const Chat: FC = () => {
   }: React.ChangeEvent<HTMLInputElement>): void => setText(target.value);
 
   const sendHandler = () => {
-    const message = {
+    const mail = {
       name: user,
-      date: new Date(),
+      date: new Date().toString(),
       text: text,
       gameId: undefined as undefined | string,
     };
 
-    message.gameId = currentChat === CHAT.common ? gameInfo?.gameId : undefined;
+    mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
 
     if (sendSocket) {
-      sendSocket(SOCKETMETHOD.chat, { message });
+      sendSocket(SOCKETMETHOD.chat, { mail });
     }
+    setText('');
   };
 
   return (
@@ -43,11 +44,11 @@ const Chat: FC = () => {
       <button onClick={() => changeChat()} type="button">
         Common
       </button>
-      <button disabled={!!gameInfo} onClick={() => changeChat()} type="button">
+      <button disabled={!gameInfo} onClick={() => changeChat()} type="button">
         Game
       </button>
       <div className="chat_messages">
-        {messages.map((mail) => (
+        {(currentChat === CHAT.common ? common : game).map((mail) => (
           <Message key={mail.date.toString()} mail={mail} />
         ))}
       </div>

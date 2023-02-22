@@ -6,7 +6,7 @@ export interface IChat {
 
 export interface IChatMessage {
   name: string;
-  date: Date;
+  date: string;
   text: string;
   gameId?: string;
 }

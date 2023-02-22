@@ -37,16 +37,27 @@ export interface IShoot {
 }
 
 export interface IMessage {
-  message: IChatMessage;
+  mail: IChatMessage;
 }
 
-export type TSendData = Partial<{
+export interface ISendConnect {
   gameId: string;
   user: IPlayer;
+}
+
+export interface ISendReady {
   field: IPlayerState;
+}
+
+export interface ISendShoot {
   shoot: number;
-  message: IChatMessage;
-}>;
+}
+
+export interface ISendChat {
+  mail: IChatMessage;
+}
+
+export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
 
 export type TSocketMessage = IStartGame & IReady & IConnect & IShoot & IMessage;
 
