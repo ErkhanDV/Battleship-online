@@ -30,12 +30,12 @@ export const gameTurn = (
 ) => {
   const index = checkShootToShip(cloneUser, target);
   if (index !== -1) {
-    cloneUser.shipsLocation[index].woundedCells.push(target);
+    cloneUser.ships[index].woundedCells.push(target);
     if (
-      cloneUser.shipsLocation[index].woundedCells.length ===
-      cloneUser.shipsLocation[index].decks
+      cloneUser.ships[index].woundedCells.length ===
+      cloneUser.ships[index].decks
     ) {
-      const occupied = cloneUser.shipsLocation[index].occupiedCells;
+      const occupied = cloneUser.ships[index].occupiedCells;
       addNotAllowed('user', occupied);
       console.log('Корабль чаловека убит!');
     }

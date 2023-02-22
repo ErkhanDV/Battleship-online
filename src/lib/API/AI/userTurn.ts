@@ -31,18 +31,18 @@ export const userTurn = (
 ) => {
   if (
     !rival.misses.includes(shoot) &&
-    !rival.shipsLocation.some((ship) => ship.woundedCells.includes(shoot))
+    !rival.ships.some((ship) => ship.woundedCells.includes(shoot))
   ) {
     checkShoot('rival', shoot);
     const cloneRival: IPlayerState = JSON.parse(JSON.stringify(rival));
     const index = checkShootToShip(rival, shoot);
     if (index !== -1) {
-      cloneRival.shipsLocation[index].woundedCells.push(shoot);
+      cloneRival.ships[index].woundedCells.push(shoot);
       if (
-        cloneRival.shipsLocation[index].woundedCells.length ===
-        cloneRival.shipsLocation[index].decks
+        cloneRival.ships[index].woundedCells.length ===
+        cloneRival.ships[index].decks
       ) {
-        const occupied = cloneRival.shipsLocation[index].occupiedCells;
+        const occupied = cloneRival.ships[index].occupiedCells;
         addNotAllowed('rival', occupied);
         console.log('Корабль компуктера убит!');
       }

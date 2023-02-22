@@ -85,25 +85,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
-        {/* <<<<<<< HEAD
-        <Gameover />
-        {!isOnline && !isReady ? (
-          <div className="game_difficult">
-            <select
-              name="difficult"
-              id="difficult"
-              onChange={(e) => gameDifficultHandler(e)}
-            >
-              {GAMEDIFFICULTS.map((difficult, i) => (
-                <option value={i} key={i}>
-                  {difficult}
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : null}
-=======
->>>>>>> develop */}
         <div className="game_difficult">
           <select
             name="difficult"
