@@ -5,7 +5,7 @@ import { IStartGame } from '@/store/reducers/types/socket';
 export const useGameStateActions = () => {
   const dispatch = useAppDispatch();
 
-  const setGameInfo = (info: IStartGame) =>
+  const setGameInfo = (info: IStartGame | null) =>
     dispatch(gameStateActions.setGameInfo(info));
 
   const setOpponentName = (name: string) =>

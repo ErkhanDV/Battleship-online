@@ -1,6 +1,6 @@
 export enum ROUTE {
   home = '/',
-  game = '/game',
+  game = '/gameMP',
   rules = '/rules',
-  single = '/singleplayer',
+  single = '/gameSP',
 }

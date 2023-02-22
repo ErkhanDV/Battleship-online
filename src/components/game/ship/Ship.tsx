@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
 import { setShip, setDropped } from '@/store/reducers/ShipSlice';
-import { ICurrentShip } from '@/store/reducers/types/currentShip';
+import { ISetShip } from '@/store/reducers/types/ship';
 import { IDecks } from './_types';
 
 import './Ship.scss';
@@ -11,7 +11,7 @@ const Ship = ({ decks }: IDecks) => {
   const [clickCount, setClickCount] = useState(0);
 
   const dispatch = useAppDispatch();
-  const setShipHandler = (currentShip: ICurrentShip) => {
+  const setShipHandler = (currentShip: ISetShip) => {
     dispatch(setShip(currentShip));
   };
 

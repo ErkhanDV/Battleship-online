@@ -12,3 +12,8 @@ export enum PERSON {
   user = 'user',
   rival = 'rival',
 }
+
+export enum CHAT {
+  common = 'common',
+  game = 'game',
+}

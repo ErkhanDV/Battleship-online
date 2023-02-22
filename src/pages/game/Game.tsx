@@ -4,17 +4,23 @@ import {
   useGameShipsActions,
   useGameStateActions,
 } from '@/hook/_index';
-import { SocketContext } from '@/Context';
+
+import { useTranslation } from 'react-i18next';
+
+import { SocketContext } from '@/context/Context';
 import {
   Field,
   RivalField,
   ShipStation,
   Gameover,
 } from '@/components/game/_index';
-import { SOCKETMETHOD } from '@/services/axios/_constants';
+
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
 import { computerTurn } from '@/lib/API/AI/ai';
+
+import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { Chat } from '@/components/_index';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -25,7 +31,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     }
   });
 
-  const { socket, sendSocket, init } = useContext(SocketContext);
   const {
     setIsReady,
     setIsGameFinded,
@@ -35,16 +40,22 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   } = useGameStateActions();
   const { setRandomShips, checkShoot, addNotAllowed } = useGameShipsActions();
 
+  const { sendSocket } = useContext(SocketContext);
+
+  const { t } = useTranslation();
+
   const userName = useAppSelector((state) => state.logInSlice.user);
-  const { user } = useAppSelector((state) => state.gameShipsSlice);
   const { isReady, winner, gameDifficult } = useAppSelector(
     (state) => state.gameStateSlice,
   );
-  const isFilled = user.shipsLocation.length < 10;
+
+  const { gameShipsSlice } = useAppSelector((state) => state);
+  const { user } = gameShipsSlice;
+  const isFilled = user.ships.length < 10;
 
   const readyHandler = () => {
     setIsReady(true);
-    if (isOnline) {
+    if (isOnline && sendSocket) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
       setIsStarted(true);
@@ -74,6 +85,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
+        {/* <<<<<<< HEAD
         <Gameover />
         {!isOnline && !isReady ? (
           <div className="game_difficult">
@@ -90,6 +102,21 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             </select>
           </div>
         ) : null}
+=======
+>>>>>>> develop */}
+        <div className="game_difficult">
+          <select
+            name="difficult"
+            id="difficult"
+            onChange={(e) => gameDifficultHandler(e)}
+          >
+            {GAMEDIFFICULTS.map((difficult, i) => (
+              <option value={i} key={i}>
+                {difficult}
+              </option>
+            ))}
+          </select>
+        </div>
         {!isReady ? (
           <button
             disabled={isFilled || !gameDifficult}
@@ -107,7 +134,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
         </div>
         <ShipStation />
+        <Gameover />
       </main>
+      <Chat />
     </div>
   );
 };

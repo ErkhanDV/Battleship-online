@@ -2,11 +2,11 @@ import { useAppSelector } from '@/hook/_index';
 import { useMemo } from 'react';
 
 export const useGetSettedShips = () => {
-  const { shipsLocation } = useAppSelector(
+  const { ships } = useAppSelector(
     (state) => state.gameShipsSlice.user,
   );
   const restShips = useMemo(() => {
-    const shipsList = shipsLocation.map((ship) => ship.decks);
+    const shipsList = ships.map((ship) => ship.decks);
     const shipsSetter = shipsList.reduce(
       (acc, curr) => {
         acc[curr as keyof typeof acc].pop();
@@ -17,7 +17,7 @@ export const useGetSettedShips = () => {
     return Object.values(shipsSetter)
       .flat()
       .sort((a, b) => b - a);
-  }, [shipsLocation]);
+  }, [ships]);
 
   return { restShips };
 };

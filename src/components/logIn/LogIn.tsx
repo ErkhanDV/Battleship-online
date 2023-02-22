@@ -1,7 +1,11 @@
 import { FC, useEffect, useState } from 'react';
+
 import { authService } from '@/services/axios/Auth';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
+import { useTranslation } from 'react-i18next';
+
 import './Login.scss';
+
 import { IUser } from '@/services/axios/_types';
 
 const LogIn: FC = () => {
@@ -9,6 +13,8 @@ const LogIn: FC = () => {
   const [validation, setValidation] = useState('');
   const { setUser, setModalOpen } = useLogInActions();
   const { isModalOpen } = useAppSelector((state) => state.logInSlice);
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     setValidation('');
@@ -35,7 +41,7 @@ const LogIn: FC = () => {
 
   return (
     <div className="login">
-      <h2 className="login_title">Login</h2>
+      <h2 className="login_title">{t('authorization')}</h2>
       <input
         className="login_input"
         onChange={inputHandler}
@@ -45,7 +51,7 @@ const LogIn: FC = () => {
       />
       <div className="login_validation">{validation}</div>
       <button className="login_button" onClick={logInHandler}>
-        Войти
+        {t('login')}
       </button>
     </div>
   );

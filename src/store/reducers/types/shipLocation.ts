@@ -1,5 +1,5 @@
 export interface IPlayerState {
-  shipsLocation: IShip[];
+  ships: IShip[];
   misses: number[];
   notAllowed: number[];
 }
