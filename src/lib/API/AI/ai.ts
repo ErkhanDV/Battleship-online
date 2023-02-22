@@ -1,16 +1,16 @@
 import { getRandomNum } from '@/lib/utils/getRandomNum';
 import {
+  IAddNotAllowed,
   IGameShips,
   IPlayerState,
   IShoot,
 } from '@/store/reducers/types/shipLocation';
 import {
-  checkAttackToMiss,
-  checkAttackToOccupiedCell,
-  checkAttackToWoundedDeck,
+  checkComputerAttack,
   checkShootToShip,
   checkWinner,
 } from './checkAttacks';
+import { gameTurn } from './gameTurn';
 
 export const computerTurn = (
   checkShoot: (
@@ -23,16 +23,19 @@ export const computerTurn = (
   setIsAbleShoot: (state: boolean) => void,
   user: IPlayerState,
   difficult: number,
+  addNotAllowed: (
+    person: keyof IGameShips,
+    notAllowed: number[],
+  ) => {
+    payload: IAddNotAllowed;
+    type: 'gameShips/addNotAllowed';
+  },
 ) => {
-  const cloneUser = JSON.parse(JSON.stringify(user));
+  const cloneUser: IPlayerState = JSON.parse(JSON.stringify(user));
   const timer = getRandomNum(1500, 7000);
   const getShootTarget = (): number => {
     const target = getRandomNum(0, 99);
-    if (
-      checkAttackToMiss(user, target) ||
-      checkAttackToWoundedDeck(user, target) ||
-      checkAttackToOccupiedCell(user, target)
-    ) {
+    if (checkComputerAttack(user, target)) {
       return getShootTarget();
     }
     return target;
@@ -40,17 +43,15 @@ export const computerTurn = (
   setTimeout(() => {
     const target = getShootTarget();
     checkShoot('user', target);
-    const index = checkShootToShip(cloneUser, target);
-    if (index !== -1) {
-      cloneUser.shipsLocation[index].woundedCells.push(target);
-      if (checkWinner(cloneUser)) {
-        console.log('We have a winner!');
-        return;
-      }
-      computerTurn(checkShoot, setIsAbleShoot, cloneUser, difficult);
-    } else {
-      cloneUser.misses.push(target);
-    }
-    setIsAbleShoot(true);
+    gameTurn(
+      cloneUser,
+      target,
+      addNotAllowed,
+      checkShootToShip,
+      checkWinner,
+      setIsAbleShoot,
+      checkShoot,
+      difficult,
+    );
   }, 100);
 };

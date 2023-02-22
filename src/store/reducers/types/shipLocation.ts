@@ -1,6 +1,7 @@
 export interface IPlayerState {
   shipsLocation: IShip[];
   misses: number[];
+  notAllowed: number[];
 }
 
 export interface IGameShips {
@@ -33,4 +34,9 @@ export interface IShip {
   decks: number;
   occupiedCells: number[];
   woundedCells: number[];
+}
+
+export interface IAddNotAllowed {
+  person: keyof IGameShips;
+  notAllowed: number[];
 }

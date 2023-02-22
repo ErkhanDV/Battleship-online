@@ -32,6 +32,9 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   const isMissed = useAppSelector((state) => {
     return state.gameShipsSlice[key].misses.some((id) => id === coordinate);
   });
+  const isOccupied = useAppSelector((state) => {
+    return state.gameShipsSlice[key].notAllowed.some((id) => id === coordinate);
+  });
 
   const isShip = () => {
     if (!isRival) {
@@ -64,7 +67,7 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
 
   let classList = initial as string;
   classList += isShooted ? shoot : '';
-  classList += isMissed ? miss : '';
+  classList += isMissed || isOccupied ? miss : '';
   classList += isShip() ? ship : '';
 
   return (

@@ -24,16 +24,27 @@ export const checkAttackToOccupiedCell = (
   return killedShips.some((ship) => ship.occupiedCells.includes(target));
 };
 
+export const checkShootNotAllowed = (user: IPlayerState, target: number) => {
+  return user.notAllowed.includes(target);
+};
+
 export const checkWinner = (user: IPlayerState) => {
   const killedShips = user.shipsLocation.filter(
     (ship) => ship.decks === ship.woundedCells.length,
   );
-  console.log(killedShips);
-
   return killedShips.length === 10;
 };
 
 export const checkShootToShip = (currUser: IPlayerState, target: number) => {
   const ships = currUser.shipsLocation.map((ship) => ship.shipLocation);
   return ships.findIndex((coordinates) => coordinates.includes(target));
+};
+
+export const checkComputerAttack = (user: IPlayerState, target: number) => {
+  return (
+    checkAttackToMiss(user, target) ||
+    checkAttackToWoundedDeck(user, target) ||
+    checkAttackToOccupiedCell(user, target) ||
+    checkShootNotAllowed(user, target)
+  );
 };

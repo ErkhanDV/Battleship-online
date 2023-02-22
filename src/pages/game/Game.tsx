@@ -33,7 +33,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     setIsStarted,
     setGameDifficult,
   } = useGameStateActions();
-  const { setRandomShips, checkShoot } = useGameShipsActions();
+  const { setRandomShips, checkShoot, addNotAllowed } = useGameShipsActions();
 
   const userName = useAppSelector((state) => state.logInSlice.user);
   const { user } = useAppSelector((state) => state.gameShipsSlice);
@@ -50,7 +50,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
       setIsStarted(true);
       setRandomShips(PERSON.rival);
       if (gameDifficult && gameDifficult > 1) {
-        computerTurn(checkShoot, setIsAbleShoot, user, gameDifficult);
+        computerTurn(
+          checkShoot,
+          setIsAbleShoot,
+          user,
+          gameDifficult,
+          addNotAllowed,
+        );
       } else {
         setIsAbleShoot(true);
       }

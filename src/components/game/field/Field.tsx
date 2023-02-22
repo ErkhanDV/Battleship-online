@@ -12,13 +12,15 @@ import { SOCKETMETHOD } from '@/services/axios/_constants';
 import './Field.scss';
 import { computerTurn } from '@/lib/API/AI/ai';
 import { checkShootToShip, checkWinner } from '@/lib/API/AI/checkAttacks';
+import { IPlayerState } from '@/store/reducers/types/shipLocation';
+import { gameTurn } from '@/lib/API/AI/gameTurn';
 
 const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
   isRival,
   isOnline,
 }) => {
   const { sendSocket } = useContext(SocketContext);
-  const { checkShoot } = useGameShipsActions();
+  const { checkShoot, addNotAllowed } = useGameShipsActions();
   const { setIsAbleShoot } = useGameStateActions();
   const { isAbleShoot, isGameFinded, isStarted, gameDifficult } =
     useAppSelector((state) => state.gameStateSlice);
@@ -27,28 +29,43 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
   const shootHandler = (e: React.MouseEvent): void => {
     if (e.target instanceof HTMLDivElement && e.target.id) {
       const shoot: number = Number(e.target.id);
-      if (isAbleShoot && isStarted) {
+      if (isAbleShoot && isStarted && isRival) {
         if (isOnline) {
           sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
         } else {
           if (
-            !rival.misses.includes(Number(e.target.id)) &&
+            !rival.misses.includes(shoot) &&
             !rival.shipsLocation.some((ship) =>
-              ship.woundedCells.includes(Number(e.target.id)),
+              ship.woundedCells.includes(shoot),
             )
           ) {
             checkShoot('rival', shoot);
-            const cloneRival = JSON.parse(JSON.stringify(rival));
-            const index = checkShootToShip(cloneRival, shoot);
+            const cloneRival: IPlayerState = JSON.parse(JSON.stringify(rival));
+            const index = checkShootToShip(rival, shoot);
             if (index !== -1) {
               cloneRival.shipsLocation[index].woundedCells.push(shoot);
+              if (
+                cloneRival.shipsLocation[index].woundedCells.length ===
+                cloneRival.shipsLocation[index].decks
+              ) {
+                const occupied = cloneRival.shipsLocation[index].occupiedCells;
+                addNotAllowed('rival', occupied);
+                console.log('Корабль компуктера убит!');
+              }
               if (checkWinner(cloneRival)) {
                 console.log('We have a winner!');
+                setIsAbleShoot(false);
                 return;
               }
-              cloneRival.misses.push(shoot);
+            } else {
               setIsAbleShoot(false);
-              computerTurn(checkShoot, setIsAbleShoot, user, gameDifficult);
+              computerTurn(
+                checkShoot,
+                setIsAbleShoot,
+                user,
+                gameDifficult,
+                addNotAllowed,
+              );
             }
           }
         }
