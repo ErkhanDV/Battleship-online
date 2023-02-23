@@ -1,5 +1,5 @@
 export interface ILogIn {
-  user: string;
+  userName: string;
   isAuthorized: boolean;
   isModalOpen: boolean;
   modalChildren: string;

@@ -4,7 +4,7 @@ import * as logInActions from '@/store/reducers/LogInSlice';
 export const useLogInActions = () => {
   const dispatch = useAppDispatch();
 
-  const setUser = (user: string) => dispatch(logInActions.setUser(user));
+  const setUserName = (user: string) => dispatch(logInActions.setUserName(user));
 
   const setModalOpen = (state: boolean) =>
     dispatch(logInActions.setModalOpen(state));
@@ -13,7 +13,7 @@ export const useLogInActions = () => {
     dispatch(logInActions.setModalChildren(component));
 
   return {
-    setUser,
+    setUserName,
     setModalOpen,
     setModalChildren,
   };

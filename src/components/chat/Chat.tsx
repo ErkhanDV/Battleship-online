@@ -10,7 +10,7 @@ const Chat: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { changeChat } = useChatActions();
   const { currentChat } = useAppSelector((state) => state.ChatSlice);
-  const { user } = useAppSelector((state) => state.logInSlice);
+  const { userName } = useAppSelector((state) => state.logInSlice);
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
@@ -21,20 +21,15 @@ const Chat: FC = () => {
 
   const sendHandler = () => {
     const mail = {
-      name: user,
+      name: userName,
       date: new Date().toString(),
       text: text,
       gameId: undefined as undefined | string,
     };
 
     mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
+    sendSocket(SOCKETMETHOD.chat, { mail });
 
- 
-
-    if (sendSocket) {
-      console.log(mail);
-      sendSocket(SOCKETMETHOD.chat, { mail });
-    }
     setText('');
   };
 
@@ -43,13 +38,19 @@ const Chat: FC = () => {
       <button onClick={() => changeChat(CHAT.common)} type="button">
         Common
       </button>
-      <button disabled={!gameInfo} onClick={() => changeChat(CHAT.game)} type="button">
+      <button
+        disabled={!gameInfo}
+        onClick={() => changeChat(CHAT.game)}
+        type="button"
+      >
         Game
       </button>
       <div className="chat_messages">
-        {(currentChat === CHAT.common || !gameInfo ? common : game).map((mail) => (
-          <Message key={mail.date.toString()} mail={mail} />
-        ))}
+        {(currentChat === CHAT.common || !gameInfo ? common : game).map(
+          (mail) => (
+            <Message key={mail.date.toString()} mail={mail} />
+          ),
+        )}
       </div>
       <div className="chat_input">
         <input
