@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService, gameService } from '@/services/axios/_index';
 import { useLogInActions, useGameStateActions } from '@/hook/_index';
+import { SocketContext } from '@/context/Context';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
-import { TSendData } from '@/store/reducers/types/socket';
 
-export const useCheckAuth = (
-  sendSocket: ((method: string, data?: TSendData) => void) | undefined,
-) => {
+export const useCheckAuth = () => {
+  const { sendSocket } = useContext(SocketContext);
   const navigate = useNavigate();
   const [checkInProccess, setCheckInProccess] = useState(false);
   const { setUser } = useLogInActions();
