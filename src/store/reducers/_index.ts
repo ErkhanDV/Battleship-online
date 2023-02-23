@@ -5,6 +5,7 @@ import gameStateSlice from './GameStateSlice';
 import logInSlice from './LogInSlice';
 import appSettingsSlice from './AppSettingsSlice';
 import ChatSlice from './ChatSlice';
+import AIStateSlice from './AIState';
 
 export {
   userSlice,
@@ -13,5 +14,6 @@ export {
   gameStateSlice,
   logInSlice,
   appSettingsSlice,
-  ChatSlice
+  ChatSlice,
+  AIStateSlice,
 };

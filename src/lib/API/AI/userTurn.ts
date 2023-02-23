@@ -53,6 +53,7 @@ export const userTurn = (
       }
     } else {
       setIsAbleShoot(false);
+      // computerTurn();
       computerTurn(checkShoot, setIsAbleShoot, user, difficult, addNotAllowed);
     }
   }

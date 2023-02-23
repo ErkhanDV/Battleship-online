@@ -17,10 +17,10 @@ import {
 
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
-import { computerTurn } from '@/lib/API/AI/ai';
 
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { Chat } from '@/components/_index';
+import { useComputerTurn } from '@/hook/AIActions/use-computerturn';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';
@@ -39,6 +39,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     setGameDifficult,
   } = useGameStateActions();
   const { setRandomShips, checkShoot, addNotAllowed } = useGameShipsActions();
+  const { computerTurn } = useComputerTurn();
 
   const { sendSocket } = useContext(SocketContext);
 
@@ -61,13 +62,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
       setIsStarted(true);
       setRandomShips(PERSON.rival);
       if (gameDifficult && gameDifficult > 1) {
-        computerTurn(
-          checkShoot,
-          setIsAbleShoot,
-          user,
-          gameDifficult,
-          addNotAllowed,
-        );
+        computerTurn();
       } else {
         setIsAbleShoot(true);
       }
