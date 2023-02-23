@@ -1,17 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService, gameService } from '@/services/axios/_index';
-import { useLogInActions, useGameStateActions } from '@/hook/_index';
-import { SocketContext } from '@/context/Context';
+import { useLogInActions, useAppSelector } from '@/hook/_index';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { TSendSocket } from '@/store/reducers/types/socket';
 
-export const useCheckAuth = () => {
-  const { sendSocket } = useContext(SocketContext);
+export const useCheckAuth = (sendSocket: TSendSocket) => {
   const navigate = useNavigate();
+  const { setUserName } = useLogInActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
-  const { setUser } = useLogInActions();
-  const { setUserName } = useGameStateActions();
 
   const checkAuth = async () => {
     if (localStorage.getItem('token') && !checkInProccess) {
@@ -22,16 +20,15 @@ export const useCheckAuth = () => {
       setCheckInProccess(false);
 
       if (auth) {
+        setUserName(auth.name);
+
         if (location.pathname === ROUTE.game) {
           const response = await gameService.startGame();
 
           if (response) {
-            setUserName(response.user.name);
-            if (sendSocket) sendSocket(SOCKETMETHOD.connect, response);
+            sendSocket(SOCKETMETHOD.connect, response);
           }
         }
-
-        setUser(auth.name);
       } else {
         if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       }

@@ -10,7 +10,7 @@ export const useConnectionHandler = () => {
   const { setIsAbleShoot, setIsGameFinded, setIsReady, setOpponentName } =
     useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
-  const { userName } = useAppSelector((state) => state.gameStateSlice);
+  const { userName } = useAppSelector((state) => state.logInSlice);
 
   const connectHandler = (data: IStartGame & IConnect) => {
     const {

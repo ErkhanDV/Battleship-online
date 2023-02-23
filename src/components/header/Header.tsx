@@ -1,32 +1,31 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  useLogInActions,
-  useAppSelector,
-  useGameStateActions,
-} from '@/hook/_index';
+import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-import { authService, gameService } from '@/services/axios/_index';
+import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
 import './Header.scss';
 
 const Header: FC = () => {
   const { sendSocket } = useContext(SocketContext);
+  const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
-  const { setModalOpen, setUser, setModalChildren } = useLogInActions();
-  const { setUserName } = useGameStateActions();
+
+  const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
+  const { userName, isAuthorized } = useAppSelector(
+    (state) => state.logInSlice,
+  );
+
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
 
-  const { user, isAuthorized } = useAppSelector((state) => state.logInSlice);
-
   const { t } = useTranslation();
 
   useEffect(() => {
-    setlogStatus(isAuthorized ? `${user}: logout` : 'Login');
+    setlogStatus(isAuthorized ? `${userName}: logout` : 'Login');
 
     (async () => {
       if (isAuthorized && gameTryConnect) {
@@ -44,9 +43,9 @@ const Header: FC = () => {
 
   const logHandler = async () => {
     if (isAuthorized) {
+      setUserName('');
       await authService.logout();
-      if (sendSocket) sendSocket(SOCKETMETHOD.exit);
-      setUser('');
+      sendSocket(SOCKETMETHOD.exit);
     } else {
       modalHandler('log');
     }
@@ -54,14 +53,7 @@ const Header: FC = () => {
 
   const gameHandler = async () => {
     if (isAuthorized) {
-      const response = await gameService.startGame();
-
-      if (response) {
-        setUserName(response.user.name);
-        if (sendSocket) {
-          sendSocket(SOCKETMETHOD.connect, response);
-        }
-      }
+      checkAuth();
 
       if (location.pathname !== ROUTE.game) {
         navigate(ROUTE.game);
@@ -97,14 +89,14 @@ const Header: FC = () => {
                 </span>
               </li>
               <li className="dropdown-item">
-                <NavLink to="/singleplayer" className="navigation_link" >
+                <NavLink to={ROUTE.single} className="navigation_link">
                   {t('vsComputer')}
                 </NavLink>
               </li>
             </ul>
           </li>
           <li className="navigation_item">
-            <NavLink to="/rules" className="navigation_link">
+            <NavLink to={ROUTE.rules} className="navigation_link">
               {t('rules')}
             </NavLink>
           </li>

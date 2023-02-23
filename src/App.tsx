@@ -10,7 +10,7 @@ const App = () => {
   const location = useLocation();
   const { sendSocket } = useSocket();
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
-  const { checkAuth } = useCheckAuth();
+  const { checkAuth } = useCheckAuth(sendSocket);
 
   useEffect(() => {
     checkAuth();
@@ -22,7 +22,7 @@ const App = () => {
         return route === location.pathname;
       },
     );
-    if (isMatchRoute && sendSocket && gameInfo) {
+    if (isMatchRoute && gameInfo) {
       sendSocket('exit');
     }
   }, [location]);
