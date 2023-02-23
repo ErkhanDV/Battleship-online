@@ -1,4 +1,4 @@
-import { FC, useState, useContext } from 'react';
+import { FC, useState, useContext, useRef, useEffect } from 'react';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
@@ -14,6 +14,13 @@ const Chat: FC = () => {
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
+  const chatElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatElement.current) {
+      chatElement.current.scrollTop = chatElement.current.scrollHeight;
+    }
+  }, [game, common]);
 
   const inputHandler = ({
     target,
@@ -45,7 +52,7 @@ const Chat: FC = () => {
       >
         Game
       </button>
-      <div className="chat_messages">
+      <div ref={chatElement} className="chat_messages">
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail) => (
             <Message key={mail.date.toString()} mail={mail} />
