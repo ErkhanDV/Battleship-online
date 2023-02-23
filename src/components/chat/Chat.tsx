@@ -2,6 +2,7 @@ import { FC, useState, useContext } from 'react';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
+import { useTranslation } from 'react-i18next';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { CHAT } from '@/store/_constants';
 import './Chat.scss';
@@ -14,6 +15,8 @@ const Chat: FC = () => {
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
+
+  const { t } = useTranslation();
 
   const inputHandler = ({
     target,
@@ -29,8 +32,6 @@ const Chat: FC = () => {
 
     mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
 
- 
-
     if (sendSocket) {
       console.log(mail);
       sendSocket(SOCKETMETHOD.chat, { mail });
@@ -40,16 +41,28 @@ const Chat: FC = () => {
 
   return (
     <div className="chat">
-      <button onClick={() => changeChat(CHAT.common)} type="button">
-        Common
+      <h2 className="section_title">{t('chat')}</h2>
+      <button
+        className={`chat_button`}
+        onClick={() => changeChat(CHAT.common)}
+        type="button"
+      >
+        {t('generalChat')}
       </button>
-      <button disabled={!gameInfo} onClick={() => changeChat(CHAT.game)} type="button">
-        Game
+      <button
+        className={`chat_button`}
+        disabled={!gameInfo}
+        onClick={() => changeChat(CHAT.game)}
+        type="button"
+      >
+        {t('gameChat')}
       </button>
       <div className="chat_messages">
-        {(currentChat === CHAT.common || !gameInfo ? common : game).map((mail) => (
-          <Message key={mail.date.toString()} mail={mail} />
-        ))}
+        {(currentChat === CHAT.common || !gameInfo ? common : game).map(
+          (mail) => (
+            <Message key={mail.date.toString()} mail={mail} />
+          ),
+        )}
       </div>
       <div className="chat_input">
         <input
@@ -58,8 +71,8 @@ const Chat: FC = () => {
           type="text"
           value={text}
         />
-        <button onClick={sendHandler} type="button">
-          Отправить
+        <button className="chat_button" onClick={sendHandler} type="button">
+          {t('send')}
         </button>
       </div>
     </div>

@@ -87,10 +87,6 @@
     -webkit-mask-size: contain;
     mask-size: contain;
     background-color: $text-color-100;
-    // background-image: url(../../assets/svg/battleship.svg);
-    // background-repeat: no-repeat;
-    // background-size: contain;
-
     transition: ease-in-out 1s;
     animation: logoAnimation 6s infinite;
   }
@@ -132,10 +128,11 @@
   font-size: 20px;
   color: $primary-color-100;
   border-radius: 4px;
-  background: $primary-corner-gradient;
-  background-repeat: no-repeat;
-  background-size: 10px 8px;
-  background-color: $primary-color-25;
+  background: $primary-corner-gradient {
+    repeat: no-repeat;
+    size: 10px 8px;
+    color: $primary-color-25;
+  }
   cursor: pointer;
   transition: ease-in-out 0.3s;
   &:hover {
@@ -178,10 +175,11 @@
   text-align: center;
   color: $primary-color-100;
   border-radius: 4px;
-  background: $primary-corner-gradient;
-  background-repeat: no-repeat;
-  background-size: 10px 8px;
-  background-color: $primary-color-25;
+  background: $primary-corner-gradient {
+    repeat: no-repeat;
+    size: 10px 8px;
+    color: $primary-color-25;
+  }
   cursor: pointer;
   transition: ease-in-out 0.3s;
   &:hover {

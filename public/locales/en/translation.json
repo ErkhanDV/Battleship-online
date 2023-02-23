@@ -29,6 +29,12 @@
   "on": "On",
   "off": "Off",
 
+  "chat": "Chat for players",
+  "generalChat": "General Chat",
+  "gameChat": "Game Chat",
+  "you": "You:",
+  "send": "Send a message",
+
   "battleship": "BattleShip Online",
   "createdBy": "Created by",
   "powerRangers": "Power Rangers",
