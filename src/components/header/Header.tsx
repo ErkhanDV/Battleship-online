@@ -3,7 +3,7 @@ import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-import { authService, gameService } from '@/services/axios/_index';
+import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
 import './Header.scss';
@@ -89,14 +89,14 @@ const Header: FC = () => {
                 </span>
               </li>
               <li className="dropdown-item">
-                <NavLink to="/singleplayer" className="navigation_link">
+                <NavLink to={ROUTE.single} className="navigation_link">
                   {t('vsComputer')}
                 </NavLink>
               </li>
             </ul>
           </li>
           <li className="navigation_item">
-            <NavLink to="/rules" className="navigation_link">
+            <NavLink to={ROUTE.rules} className="navigation_link">
               {t('rules')}
             </NavLink>
           </li>
