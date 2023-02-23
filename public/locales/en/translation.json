@@ -4,6 +4,8 @@
 
   "home": "Home",
   "game": "Game",
+  "vsPlayer": "Vs Player",
+  "vsComputer": "Vs Computer",
   "single": "Single Player",
   "rules": "Rules",
   "login": "Login",

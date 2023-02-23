@@ -11,6 +11,7 @@
     $primary-color-50 100%
   );
   border-bottom: 1px dotted $primary-color-100;
+  z-index: 100;
   &_logo {
     margin: 16px 0;
     padding: 6px 12px 4px;
@@ -126,8 +127,8 @@
 }
 
 .navigation_item {
+  position: relative;
   margin-left: 40px;
-  padding: 2px 10px;
   font-size: 20px;
   color: $primary-color-100;
   border-radius: 4px;
@@ -143,15 +144,50 @@
     background-color: $primary-color-50;
     transform: scale(1.2);
   }
+  &.item-dropdown {
+    &:hover .navigation_dropdown {
+      display: block;
+    }
+  }
 }
 
 .navigation_link {
+  padding: 2px 10px;
   color: $primary-color-100;
   text-decoration: none;
   transition: ease-in-out 0.3s;
   &:hover,
   &.active {
     color: $text-color-100;
+  }
+}
+
+.navigation_dropdown {
+  position: absolute;
+  left: 0;
+  top: 15px;
+  padding: 10px 0 0 0;
+  border-left: 2px dashed $primary-color-100;
+  list-style: none;
+  display: none;
+}
+
+.dropdown-item {
+  margin: 10px;
+  white-space: nowrap;
+  text-align: center;
+  color: $primary-color-100;
+  border-radius: 4px;
+  background: $primary-corner-gradient;
+  background-repeat: no-repeat;
+  background-size: 10px 8px;
+  background-color: $primary-color-25;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
+  &:hover {
+    color: $text-color-100;
+    background-size: 100% 8px;
+    background-color: $primary-color-50;
   }
 }
 
@@ -177,13 +213,23 @@
       }
     }
   }
+
   .navigation_list {
     flex-direction: column;
     margin: 100px auto;
   }
 
   .navigation_item {
+    text-align: center;
     margin: 20px auto;
+  }
+
+  .navigation_dropdown {
+    position: relative;
+    top: 0;
+    padding: 0;
+    display: block;
+    border: none;
   }
 }
 
