@@ -20,7 +20,7 @@ import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
 
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { Chat } from '@/components/_index';
-import { useComputerTurn } from '@/hook/AIActions/use-computerturn';
+import { useComputerTurn } from '@/hook/AIActions/use-computer-turn';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const isOnline = mode === 'online';

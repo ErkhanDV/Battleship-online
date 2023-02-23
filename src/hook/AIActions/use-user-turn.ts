@@ -1,4 +1,3 @@
-import { checkShootToShip, checkWinner } from '@/lib/API/AI/checkAttacks';
 import {
   IAddNotAllowed,
   IGameShips,
@@ -7,23 +6,29 @@ import {
 } from '@/store/reducers/types/shipLocation';
 import { useAppSelector } from '../use-redux';
 import { useGameShipsActions, useGameStateActions } from '../_index';
-import { useComputerTurn } from './use-computerturn';
+import { useCheckAttacks } from './use-check-attacks';
+import { useComputerTurn } from './use-computer-turn';
 
 export const useUserTurn = () => {
   const { rival } = useAppSelector((state) => state.gameShipsSlice);
+  const { misses, ships } = useAppSelector(
+    (state) => state.gameShipsSlice.rival,
+  );
+
   const { checkShoot } = useGameShipsActions();
   const { computerTurn } = useComputerTurn();
   const { addNotAllowed } = useGameShipsActions();
   const { setIsAbleShoot } = useGameStateActions();
+  const { checkShootToShip, checkWinner } = useCheckAttacks();
 
   const userTurn = (shoot: number) => {
     if (
-      !rival.misses.includes(shoot) &&
-      !rival.ships.some((ship) => ship.woundedCells.includes(shoot))
+      !misses.includes(shoot) &&
+      !ships.some((ship) => ship.woundedCells.includes(shoot))
     ) {
       checkShoot('rival', shoot);
       const cloneRival: IPlayerState = JSON.parse(JSON.stringify(rival));
-      const index = checkShootToShip(rival, shoot);
+      const index = checkShootToShip(true, shoot);
       if (index !== -1) {
         cloneRival.ships[index].woundedCells.push(shoot);
         if (
@@ -34,7 +39,7 @@ export const useUserTurn = () => {
           addNotAllowed('rival', occupied);
           console.log('Корабль компуктера убит!');
         }
-        if (checkWinner(cloneRival)) {
+        if (checkWinner(true)) {
           console.log('We have a winner!');
           setIsAbleShoot(false);
           return;

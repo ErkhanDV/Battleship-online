@@ -1,10 +1,6 @@
 import { useContext, FC } from 'react';
 import { SocketContext } from '@/context/Context';
-import {
-  useAppSelector,
-  useGameShipsActions,
-  useGameStateActions,
-} from '@/hook/_index';
+import { useAppSelector } from '@/hook/_index';
 
 import Cell from '@/components/game/cell/Cell';
 import { FIELD } from '@/store/_constants';
@@ -12,20 +8,18 @@ import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 import './Field.scss';
 
-import { useUserTurn } from '@/hook/AIActions/use-userturn';
+import { useUserTurn } from '@/hook/AIActions/use-user-turn';
 
 const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
   isRival,
   isOnline,
 }) => {
   const { sendSocket } = useContext(SocketContext);
-  const { checkShoot, addNotAllowed } = useGameShipsActions();
-  const { setIsAbleShoot } = useGameStateActions();
   const { userTurn } = useUserTurn();
 
-  const { isAbleShoot, isGameFinded, isStarted, gameDifficult } =
-    useAppSelector((state) => state.gameStateSlice);
-  const { user, rival } = useAppSelector((state) => state.gameShipsSlice);
+  const { isAbleShoot, isGameFinded, isStarted } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
   const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
@@ -35,17 +29,6 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
       if (isOnline && sendSocket) {
         sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
       } else {
-        // userTurn(
-        //   rival,
-        //   shoot,
-        //   checkShoot,
-        //   checkShootToShip,
-        //   addNotAllowed,
-        //   checkWinner,
-        //   setIsAbleShoot,
-        //   gameDifficult,
-        //   user,
-        // );
         userTurn(shoot);
       }
     }
