@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import AppRouter from '@/router/AppRouter';
-import { useSocket, useCheckAuth, useAppSelector } from '@/hook/_index';
+import {
+  useSocket,
+  useCheckAuth,
+  useAppSelector,
+  useChatActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
@@ -12,6 +17,7 @@ const App = () => {
   const { sendSocket } = useSocket();
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { checkAuth } = useCheckAuth(sendSocket);
+  const { resetGameChat } = useChatActions();
 
   useEffect(() => {
     checkAuth();
@@ -26,6 +32,7 @@ const App = () => {
 
     if (isMatchRoute && gameInfo) {
       sendSocket(SOCKETMETHOD.exit);
+      resetGameChat();
     }
   }, [location]);
 

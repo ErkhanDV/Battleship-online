@@ -5,15 +5,12 @@
   flex-direction: column;
   justify-content: space-between;
 
-  .main {
-    position: relative;
-  }
-
   &_fields {
     display: flex;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 40px;
+    position: relative;
   }
 }
 

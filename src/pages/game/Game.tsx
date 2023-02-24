@@ -75,10 +75,10 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             <Field isRival={false} isOnline={isOnline} />
           </div>
           <RivalField isOnline={isOnline} />
+          <Gameover />
         </div>
         <ShipStation />
         <Chat />
-        <Gameover />
       </main>
     </div>
   );

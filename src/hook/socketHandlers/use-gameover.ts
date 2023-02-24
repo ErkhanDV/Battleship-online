@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useAppSelector, useGameStateActions } from '@/hook/_index';
 import { useShootHandler } from './use-shoot';
 import { IShoot } from '@/store/reducers/types/socket';
 
 export const useGameoverHandler = () => {
+  const { t } = useTranslation();
   const { setIsAbleShoot, setWinner } = useGameStateActions();
   const { shootHandler } = useShootHandler();
   const { userName } = useAppSelector((state) => state.logInSlice);
@@ -15,9 +17,9 @@ export const useGameoverHandler = () => {
 
     if (winner) {
       if (winner === userName) {
-        setWinner('Ты засадил вялого этому парню');
+        setWinner(t('You have sunk all enemy ships'));
       } else {
-        setWinner('Тебя отшлепали как собаку сутулую');
+        setWinner(t(`${winner} destroyed all your ships`));
       }
     }
   };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, FC } from 'react';
-import { Link, useNavigate, NavLink } from 'react-router-dom';
+import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
@@ -10,9 +10,11 @@ import './Header.scss';
 import { MODAL } from '@/store/_constants';
 
 const Header: FC = () => {
+  const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
   const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
   const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
@@ -26,8 +28,6 @@ const Header: FC = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     setlogStatus(isAuthorized ? `${userName}: logout` : 'Login');
@@ -52,6 +52,7 @@ const Header: FC = () => {
       await authService.logout();
 
       if (gameInfo) sendSocket(SOCKETMETHOD.exit);
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     } else {
       modalHandler(MODAL.log);
     }
@@ -81,7 +82,7 @@ const Header: FC = () => {
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
           <li className="navigation_item">
-            <NavLink to="/" className="navigation_link">
+            <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}
             </NavLink>
           </li>
