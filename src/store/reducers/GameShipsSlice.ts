@@ -35,9 +35,7 @@ const gameShipsSlice = createSlice({
 
     addShoot(state, action: PayloadAction<IShoot>) {
       const { person, cell } = action.payload;
-      const ships = state[person].ships.map(
-        (ship) => ship.shipLocation,
-      );
+      const ships = state[person].ships.map((ship) => ship.shipLocation);
       const index = ships.findIndex((coordinates) =>
         coordinates.includes(cell),
       );

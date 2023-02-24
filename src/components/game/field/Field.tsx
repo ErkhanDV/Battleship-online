@@ -28,7 +28,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     if (isAbleShoot && isStarted && isRival) {
       if (isOnline && sendSocket) {
         sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
-      } else {
+      } else if (target.id) {
         userTurn(shoot);
       }
     }

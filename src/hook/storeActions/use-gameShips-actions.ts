@@ -4,7 +4,6 @@ import {
   IPlayerState,
   IShip,
   IGameShips,
-  IAddNotAllowed,
 } from '@/store/reducers/types/shipLocation';
 
 export const useGameShipsActions = () => {
@@ -15,8 +14,9 @@ export const useGameShipsActions = () => {
     person: keyof IGameShips,
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
-  const checkShoot = (person: keyof IGameShips, cell: number) =>
+  const checkShoot = (person: keyof IGameShips, cell: number) => {
     dispatch(shipActions.addShoot({ person, cell }));
+  };
 
   const addShip = (person: keyof IGameShips, ship: IShip) =>
     dispatch(shipActions.addShip({ person, ship }));

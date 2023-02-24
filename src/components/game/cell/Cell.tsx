@@ -27,25 +27,11 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
     const { shoot, initial, miss, shiper } = CELLCLASS;
     let classList = initial as string;
 
-    // <<<<<<< HEAD
-    //   const isShooted = useAppSelector((state) => {
-    //     return state.gameShipsSlice[key].shipsLocation.find((ship) =>
-    //       ship.woundedCells.includes(coordinate),
-    //     );
-    //   });
-    //   const isMissed = useAppSelector((state) => {
-    //     return state.gameShipsSlice[key].misses.some((id) => id === coordinate);
-    //   });
-    //   const isOccupied = useAppSelector((state) => {
-    //     return state.gameShipsSlice[key].notAllowed.some((id) => id === coordinate);
-    //   });
-    // =======
     personState.ships.forEach((ship) => {
       classList += ship.woundedCells.includes(coordinate) ? shoot : '';
       classList += ship.shipLocation.includes(coordinate) ? shiper : '';
       classList += ship.shipLocation.includes(coordinate) ? shiper : '';
     });
-    // >>>>>>> develop
 
     personState.misses.forEach((id) => {
       classList += id === coordinate ? miss : '';
