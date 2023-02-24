@@ -25,6 +25,10 @@ export interface IShoot extends IPerson {
   cell: number;
 }
 
+export interface ISPShoot extends IShoot {
+  index: number;
+}
+
 export interface IRandomState extends IPerson {
   ships?: number[];
 }

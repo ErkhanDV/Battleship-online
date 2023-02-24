@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/_index';
+import { useAppDispatch, useAppSelector } from '@/hook/_index';
 import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,
@@ -8,6 +8,7 @@ import {
 
 export const useGameShipsActions = () => {
   const dispatch = useAppDispatch();
+  const { user, rival } = useAppSelector((state) => state.gameShipsSlice);
 
   const updateShipsLocationState = (
     state: IPlayerState,
@@ -15,6 +16,14 @@ export const useGameShipsActions = () => {
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
   const checkShoot = (person: keyof IGameShips, cell: number) => {
+    dispatch(shipActions.addShoot({ person, cell }));
+  };
+
+  const checkSPShoot = (person: keyof IGameShips, cell: number) => {
+    const key = person === 'user' ? user : rival;
+    const ships = key.ships.map((ship) => ship.shipLocation);
+    const index = ships.findIndex((coordinates) => coordinates.includes(cell));
+    if (index !== -1)
     dispatch(shipActions.addShoot({ person, cell }));
   };
 

@@ -8,6 +8,7 @@ import {
   IRandomState,
   IShip,
   IAddNotAllowed,
+  ISPShoot,
 } from './types/shipLocation';
 import { SHIPS } from '../_constants';
 
@@ -44,6 +45,16 @@ const gameShipsSlice = createSlice({
       } else {
         state[person].misses.push(cell);
       }
+    },
+
+    addSPHit(state, action: PayloadAction<ISPShoot>) {
+      const { person, index, cell } = action.payload;
+      state[person].ships[index].woundedCells.push(cell);
+    },
+
+    addSPMiss(state, action: PayloadAction<ISPShoot>) {
+      const { person, index, cell } = action.payload;
+      state[person].misses.push(cell);
     },
 
     resetShips(state) {

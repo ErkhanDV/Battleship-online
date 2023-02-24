@@ -13,8 +13,5 @@ export {
   logInSlice,
   appSettingsSlice,
   ChatSlice,
-<<<<<<< HEAD
   AIStateSlice,
-=======
->>>>>>> develop
 };

@@ -4,24 +4,24 @@ import { useAppSelector } from '../use-redux';
 export const useCheckAttacks = () => {
   const { user, rival } = useAppSelector((state) => state.gameShipsSlice);
 
-  const checkAttackToMiss = (target: number) => {
-    return !user.misses.includes(target);
+  const checkAttackToMiss = (person: IPlayerState, target: number) => {
+    return !person.misses.includes(target);
   };
 
-  const checkAttackToWoundedDeck = (target: number) => {
-    const woundedDecksList = user.ships.map((ship) => ship.woundedCells).flat();
+  const checkAttackToWoundedDeck = (person: IPlayerState, target: number) => {
+    const woundedDecksList = person.ships.map((ship) => ship.woundedCells).flat();
     return !woundedDecksList.includes(target);
   };
 
-  const checkAttackToOccupiedCell = (target: number) => {
-    const killedShips = user.ships.filter(
+  const checkAttackToOccupiedCell = (person: IPlayerState, target: number) => {
+    const killedShips = person.ships.filter(
       (ship) => ship.decks === ship.woundedCells.length,
     );
     return !killedShips.some((ship) => ship.occupiedCells.includes(target));
   };
 
-  const checkShootNotAllowed = (target: number) => {
-    return !user.notAllowed.includes(target);
+  const checkShootNotAllowed = (person: IPlayerState, target: number) => {
+    return !person.notAllowed.includes(target);
   };
 
   const checkWinner = (person: IPlayerState) => {
@@ -37,18 +37,19 @@ export const useCheckAttacks = () => {
     return ships.findIndex((coordinates) => coordinates.includes(target));
   };
 
-  const checkAttacks = (target: number) => {
+  const checkAttacks = (person: IPlayerState, target: number) => {
     return (
-      checkAttackToMiss(target) &&
-      checkAttackToWoundedDeck(target) &&
-      checkAttackToOccupiedCell(target) &&
-      checkShootNotAllowed(target)
+      checkAttackToMiss(person, target) &&
+      checkAttackToWoundedDeck(person, target) &&
+      checkAttackToOccupiedCell(person, target) &&
+      checkShootNotAllowed(person, target)
     );
   };
 
-  const checkDestroyShip = () => {
-    const { ships } = user;
-    return ships.filter((ship) => ship.decks === ship.woundedCells.length);
+  const checkDestroyShip = (person: IPlayerState, index: number) => {
+    return (
+      person.ships[index].decks === person.ships[index].woundedCells.length
+    );
   };
 
   return { checkWinner, checkShootToShip, checkAttacks, checkDestroyShip };

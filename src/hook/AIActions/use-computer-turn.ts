@@ -1,38 +1,34 @@
-import {
-  useAppSelector,
-  useGameShipsActions,
-  useGameStateActions,
-  useLogInActions,
-} from '@/hook/_index';
+import { useAppSelector, useGameShipsActions } from '@/hook/_index';
 import { getRandomNum } from '@/lib/utils/getRandomNum';
-import { IPlayerState, IShip } from '@/store/reducers/types/shipLocation';
+import { FIELD } from '@/store/_constants';
 import { useEffect, useState } from 'react';
 import { useCheckAttacks } from './use-check-attacks';
 
 export const useComputerTurn = () => {
-  const { user, rival } = useAppSelector((state) => state.gameShipsSlice);
+  const { user } = useAppSelector((state) => state.gameShipsSlice);
 
-  const { checkShoot, addNotAllowed } = useGameShipsActions();
-  const { setIsAbleShoot } = useGameStateActions();
-  const { checkAttacks, checkShootToShip, checkWinner, checkDestroyShip } =
-    useCheckAttacks();
-  const { setModalOpen, setModalChildren } = useLogInActions();
+  const { checkShoot } = useGameShipsActions();
+  const { checkAttacks } = useCheckAttacks();
 
-  const timer = getRandomNum(1500, 7000);
+  const cellsList = FIELD.map((_, i) => i);
+
+  const [availableShoots, setAvailableShoot] = useState(cellsList);
+
+  useEffect(() => {
+    const availableCellsList = cellsList.filter((item) =>
+      checkAttacks(user, item),
+    );
+    setAvailableShoot(availableCellsList);
+  }, [user]);
 
   const getShootTarget = (): number => {
-    const target = getRandomNum(0, 99);
-    if (!checkAttacks(target)) {
-      return getShootTarget();
-    }
-    return target;
+    const index = getRandomNum(0, availableShoots.length - 1);
+    return availableShoots[index];
   };
 
   const computerTurn = () => {
-    setTimeout(() => {
-      const target = getShootTarget();
-      checkShoot('user', target);
-    }, 100);
+    const target = getShootTarget();
+    checkShoot('user', target);
   };
 
   return { computerTurn };

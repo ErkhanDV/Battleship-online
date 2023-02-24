@@ -34,22 +34,19 @@ export const useUserTurn = () => {
       if (index !== -1) {
         cloneRival.ships[index].woundedCells.push(shoot);
         const { woundedCells, decks, occupiedCells } = cloneRival.ships[index];
-
         if (woundedCells.length === decks) {
           addNotAllowed('rival', occupiedCells);
           console.log('Корабль компуктера убит!');
         }
-
         if (checkWinner(cloneRival)) {
           console.log('We have a winner!');
           setModalOpen(true);
           setModalChildren('gameover');
-          setIsAbleShoot(false);
           return;
         }
       } else {
-        setIsAbleShoot(false);
         computerTurn();
+        setIsAbleShoot(false);
       }
     }
   };

@@ -89,11 +89,7 @@ const Header: FC = () => {
                 </span>
               </li>
               <li className="dropdown-item">
-<<<<<<< HEAD
-                <NavLink to="/gameSP" className="navigation_link">
-=======
                 <NavLink to={ROUTE.single} className="navigation_link">
->>>>>>> develop
                   {t('vsComputer')}
                 </NavLink>
               </li>
