@@ -90,3 +90,20 @@
     }
   }
 }
+
+@media (max-width: 1040px) {
+  .chat_messages {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat {
+    padding: 20px;
+    text-align: center;
+    &_button {
+      margin: 0 5px 10px;
+      font-size: 14px;
+    }
+  }
+}

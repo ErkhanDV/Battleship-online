@@ -2,13 +2,15 @@ import { FC } from 'react';
 import { useAppSelector } from '@/hook/_index';
 import { useTranslation } from 'react-i18next';
 
-import { IChatMessage } from '@/store/reducers/types/chat';
 import './Message.scss';
+
+import { IChatMessage } from '@/store/reducers/types/chat';
 
 const Message: FC<{ mail: IChatMessage }> = ({ mail }) => {
   const { userName } = useAppSelector((state) => state.logInSlice);
+
   const { t } = useTranslation();
-  const bgClass = ` ${mail.name === userName ? 'my' : ''} message`;
+
   const date = new Date(Date.parse(mail.date));
   const hours = date.getHours();
   const minutes = date.getMinutes();
