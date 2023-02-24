@@ -39,8 +39,9 @@ const Chat: FC = () => {
   };
 
   const sendHandler = () => {
+    const sendName  = userName ? userName : 'Unknown user'
     const mail = {
-      name: userName,
+      name: sendName,
       date: new Date().toString(),
       text: text,
       gameId: undefined as undefined | string,

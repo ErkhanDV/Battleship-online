@@ -14,6 +14,7 @@ export const useSocket = () => {
     readyHandler,
     exitHandler,
     chatHandler,
+    mailingHandler,
   } = useSocketHandlers();
 
   const { setGameInfo } = useGameStateActions();
@@ -24,7 +25,7 @@ export const useSocket = () => {
     return { userName, gameInfo };
   });
 
-  const { shoot, connect, ready, gameover, exit, chat } = SOCKETMETHOD;
+  const { shoot, connect, ready, gameover, exit, chat, mailing } = SOCKETMETHOD;
 
   useEffect(() => {
     socket.current = new WebSocket(SOCKET);
@@ -42,6 +43,10 @@ export const useSocket = () => {
 
         case chat:
           chatHandler(data);
+          break;
+
+        case mailing:
+          mailingHandler(data);
           break;
       }
     };
@@ -76,6 +81,10 @@ export const useSocket = () => {
 
           case exit:
             exitHandler();
+            break;
+
+          case mailing:
+            mailingHandler(data);
             break;
         }
       };

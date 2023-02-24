@@ -13,6 +13,7 @@ export enum SOCKETMETHOD {
   ready = 'ready',
   exit = 'exit',
   chat = 'chat',
+  mailing = 'mailing',
 }
 
 export enum STATUS {
