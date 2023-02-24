@@ -16,10 +16,10 @@ const Message: FC<{ mail: IChatMessage }> = ({ mail }) => {
   const minutesView = minutes < 9 ? `0${minutes}` : `${minutes}`;
 
   return (
-    <div className={`message ${mail.name === user ? 'user' : 'player'}`}>
+    <div className={`message ${mail.name === userName ? 'user' : 'player'}`}>
       <div className="message_caption">
         <div className="message_name">
-          {mail.name === user ? t('you') : `${mail.name}:`}
+          {mail.name === userName ? t('you') : `${mail.name}:`}
         </div>
         <div className="message_date">
           {hoursView}:{minutesView}
