@@ -1,7 +1,6 @@
 import { IPlayerState } from './shipLocation';
 import { IPlayer, IStartGame } from '@/services/axios/_types';
 import { IChatMessage } from './chat';
-import { CHAT } from '@/store/_constants';
 
 export interface IGameState {
   gameInfo: null | IStartGame;

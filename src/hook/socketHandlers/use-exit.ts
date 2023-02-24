@@ -1,10 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import {
-  useGameStateActions,
-  useGameShipsActions,
-  useChatActions,
-} from '@/hook/_index';
+import { useGameStateActions, useGameShipsActions } from '@/hook/_index';
 
 export const useExitHandler = () => {
   const { t } = useTranslation();

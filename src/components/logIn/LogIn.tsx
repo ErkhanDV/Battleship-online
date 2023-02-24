@@ -14,7 +14,7 @@ const LogIn: FC = () => {
   const { setUserName, setModalOpen } = useLogInActions();
   const { isModalOpen } = useAppSelector((state) => state.logInSlice);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setValidation('');

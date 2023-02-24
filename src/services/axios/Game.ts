@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { axiosAPI } from './_interceptors';
 import { STATUS, CLONE_SERVER } from './_constants';
 import { IStartGame } from './_types';

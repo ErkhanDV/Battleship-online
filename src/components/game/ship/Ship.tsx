@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector, useDnDActions } from '@/hook/_index';
+import { useAppSelector, useDnDActions } from '@/hook/_index';
 import { ISetShip } from '@/store/reducers/types/ship';
 import { DECKS } from './_constants';
 
@@ -28,9 +28,9 @@ const Ship: FC<{ decks: number }> = ({ decks }) => {
     setShipHandler({ decks, isHorizontal });
   };
 
-  const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const dragEndHandler = () => {
     setShipHandler({ decks: null, isHorizontal: false });
-    if (!!wasDropped) {
+    if (wasDropped) {
       setNotDrop();
     }
   };
@@ -76,8 +76,8 @@ const Ship: FC<{ decks: number }> = ({ decks }) => {
       onDragStart={(event) => {
         dragStartHandler(event, isHorizontal);
       }}
-      onDragEnd={(event) => {
-        dragEndHandler(event);
+      onDragEnd={() => {
+        dragEndHandler();
       }}
     >
       {new Array(decks).fill(null).map((_, index) => (
