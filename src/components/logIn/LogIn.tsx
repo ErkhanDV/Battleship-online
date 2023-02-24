@@ -39,8 +39,13 @@ const LogIn: FC = () => {
     }
   };
 
+  const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    logInHandler();
+  };
+
   return (
-    <div className="login">
+    <form onSubmit={formHandler} className="login">
       <h2 className="login_title">{t('authorization')}</h2>
       <input
         className="login_input"
@@ -53,7 +58,7 @@ const LogIn: FC = () => {
       <button className="login_button" onClick={logInHandler}>
         {t('login')}
       </button>
-    </div>
+    </form>
   );
 };
 
