@@ -23,6 +23,7 @@ const App = () => {
         return route === location.pathname;
       },
     );
+
     if (isMatchRoute && gameInfo) {
       sendSocket(SOCKETMETHOD.exit);
     }

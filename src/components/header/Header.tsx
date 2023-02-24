@@ -7,6 +7,7 @@ import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
 import './Header.scss';
+import { MODAL } from '@/store/_constants';
 
 const Header: FC = () => {
   const { sendSocket } = useContext(SocketContext);
@@ -52,7 +53,7 @@ const Header: FC = () => {
 
       if (gameInfo) sendSocket(SOCKETMETHOD.exit);
     } else {
-      modalHandler('log');
+      modalHandler(MODAL.log);
     }
   };
 
@@ -65,7 +66,7 @@ const Header: FC = () => {
       }
     } else {
       setGameTryConnect(true);
-      modalHandler('log');
+      modalHandler(MODAL.log);
     }
   };
 
@@ -108,7 +109,7 @@ const Header: FC = () => {
           <li className="navigation_item">
             <span
               className="navigation_link"
-              onClick={() => modalHandler('settings')}
+              onClick={() => modalHandler(MODAL.settings)}
             >
               {t('settings')}
             </span>
