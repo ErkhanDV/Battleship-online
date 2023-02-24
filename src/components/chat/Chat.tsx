@@ -40,14 +40,14 @@ const Chat: FC = () => {
     <div className="chat">
       <h2 className="section_title">{t('chat')}</h2>
       <button
-        className={`chat_button`}
+        className={`chat_button ${currentChat === CHAT.common ? 'active' : ''}`}
         onClick={() => changeChat(CHAT.common)}
         type="button"
       >
         {t('generalChat')}
       </button>
       <button
-        className={`chat_button`}
+        className={`chat_button ${currentChat === CHAT.game ? 'active' : ''}`}
         disabled={!gameInfo}
         onClick={() => changeChat(CHAT.game)}
         type="button"

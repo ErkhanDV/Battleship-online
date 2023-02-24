@@ -26,8 +26,6 @@ const Message: FC<{ mail: IChatMessage }> = ({ mail }) => {
         </div>
       </div>
       <div className="message_text">{mail.text}</div>
-      <div className="name">{mail.name === userName ? ':Me' : `${mail.name}:`}</div>
-      <div className="text">{mail.text}</div>
     </div>
   );
 };
