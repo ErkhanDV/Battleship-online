@@ -33,10 +33,6 @@ const Chat: FC = () => {
     mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
     sendSocket(SOCKETMETHOD.chat, { mail });
 
-    if (sendSocket) {
-      console.log(mail);
-      sendSocket(SOCKETMETHOD.chat, { mail });
-    }
     setText('');
   };
 
