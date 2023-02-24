@@ -70,9 +70,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             <h2 className="field_name">{userName}</h2>
             <Field isRival={false} isOnline={isOnline} />
           </div>
+          <ShipStation />
           <RivalField isOnline={isOnline} />
         </div>
-        <ShipStation />
         <Chat />
         <Gameover />
       </main>

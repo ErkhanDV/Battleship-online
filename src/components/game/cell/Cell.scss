@@ -40,3 +40,18 @@
 .miss {
   background-color: blueviolet;
 }
+
+@media (max-width: 640px) {
+  .cell {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width:480px) {
+  .cell {
+    width: 20px;
+    height: 20px;
+  }
+}
+
