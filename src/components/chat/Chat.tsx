@@ -57,7 +57,6 @@ const Chat: FC = () => {
         type="button"
       >
         {t('gameChat')}
-        Game
       </button>
       <div className="chat_messages">
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
