@@ -12,9 +12,10 @@ import {
   ShipStation,
   Gameover,
 } from '@/components/game/_index';
+import { Chat } from '@/components/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
-import { Chat } from '@/components/_index';
+import { GAMEMODE } from '@/router/_constants';
 import './game.scss';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
@@ -25,14 +26,14 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { setRandomShips } = useGameShipsActions();
 
   const { userName } = useAppSelector((state) => state.logInSlice);
-  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
+  const { isReady } = useAppSelector((state) => state.gameStateSlice);
   const { user } = useAppSelector((state) => state.gameShipsSlice);
 
   const [isOnline, setIsOnline] = useState(false);
   const isFilled = user.ships.length < 10;
 
   useEffect(() => {
-    setIsOnline(mode === 'online' ? true : false);
+    setIsOnline(mode === GAMEMODE.MP ? true : false);
   }, [mode]);
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             onClick={readyHandler}
             className="button-render"
           >
-            {isOnline ? t('ready') : t('start')}
+            {isOnline ? t(GAMEMODE.ready) : t(GAMEMODE.start)}
           </button>
         ) : null}
         <div className="game_fields">
