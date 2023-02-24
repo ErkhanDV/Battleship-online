@@ -52,8 +52,8 @@ const gameShipsSlice = createSlice({
       state[person].ships[index].woundedCells.push(cell);
     },
 
-    addSPMiss(state, action: PayloadAction<ISPShoot>) {
-      const { person, index, cell } = action.payload;
+    addSPMiss(state, action: PayloadAction<IShoot>) {
+      const { person, cell } = action.payload;
       state[person].misses.push(cell);
     },
 
@@ -93,6 +93,8 @@ export const {
   updateShipsState,
   setRandomShips,
   addShoot,
+  addSPHit,
+  addSPMiss,
   resetShips,
   resetGameShips,
   addNotAllowed,

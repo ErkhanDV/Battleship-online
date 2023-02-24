@@ -1,14 +1,19 @@
-import { useAppSelector, useGameShipsActions } from '@/hook/_index';
+import {
+  useAppSelector,
+  useGameShipsActions,
+  useGameStateActions,
+} from '@/hook/_index';
 import { getRandomNum } from '@/lib/utils/getRandomNum';
 import { FIELD } from '@/store/_constants';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCheckAttacks } from './use-check-attacks';
 
 export const useComputerTurn = () => {
   const { user } = useAppSelector((state) => state.gameShipsSlice);
 
-  const { checkShoot } = useGameShipsActions();
+  const { checkSPShoot } = useGameShipsActions();
   const { checkAttacks } = useCheckAttacks();
+  const { setIsAbleShoot } = useGameStateActions();
 
   const cellsList = FIELD.map((_, i) => i);
 
@@ -27,8 +32,19 @@ export const useComputerTurn = () => {
   };
 
   const computerTurn = () => {
-    const target = getShootTarget();
-    checkShoot('user', target);
+    setTimeout(() => {
+      const target = getShootTarget();
+      checkSPShoot('user', target);
+      const ships = user.ships.map((ship) => ship.shipLocation);
+      const index = ships.findIndex((coordinates) =>
+        coordinates.includes(target),
+      );
+      if (index !== -1) {
+        computerTurn();
+      } else {
+        setIsAbleShoot(true);
+      }
+    }, 500);
   };
 
   return { computerTurn };
