@@ -4,6 +4,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { TSendData } from '@/store/reducers/types/socket';
 export interface IGameStateContext {
   // socket: WebSocket | null;
-  socket: React.MutableRefObject<WebSocket>;
+  // socket: React.MutableRefObject<WebSocket>;
   sendSocket: <T extends TSendData>(method: string, data?: T) => void;
 }

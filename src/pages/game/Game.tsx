@@ -1,12 +1,10 @@
-import { useContext, useEffect, type FC } from 'react';
+import { useContext, useEffect, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useAppSelector,
   useGameShipsActions,
   useGameStateActions,
 } from '@/hook/_index';
-
-import { useTranslation } from 'react-i18next';
-
 import { SocketContext } from '@/context/Context';
 import {
   Field,
@@ -14,15 +12,28 @@ import {
   ShipStation,
   Gameover,
 } from '@/components/game/_index';
-
-import './game.scss';
-
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
 import { Chat } from '@/components/_index';
+import './game.scss';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
-  const isOnline = mode === 'online';
+  const { sendSocket } = useContext(SocketContext);
+  const { t } = useTranslation();
+  const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
+    useGameStateActions();
+  const { setRandomShips } = useGameShipsActions();
+
+  const { userName } = useAppSelector((state) => state.logInSlice);
+  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
+  const { user } = useAppSelector((state) => state.gameShipsSlice);
+
+  const [isOnline, setIsOnline] = useState(false);
+  const isFilled = user.ships.length < 10;
+
+  useEffect(() => {
+    setIsOnline(mode === 'online' ? true : false);
+  }, [mode]);
 
   useEffect(() => {
     if (!isOnline) {
@@ -30,24 +41,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     }
   });
 
-  const { sendSocket } = useContext(SocketContext);
-  const { setIsReady, setIsGameFinded, setIsAbleShoot, setIsStarted } =
-    useGameStateActions();
-  const { isReady, winner } = useAppSelector((state) => state.gameStateSlice);
-
-  const { setRandomShips } = useGameShipsActions();
-
-  const { t } = useTranslation();
-
-  const userName = useAppSelector((state) => state.logInSlice.user);
-
-  const { gameShipsSlice } = useAppSelector((state) => state);
-  const { user } = gameShipsSlice;
-  const isFilled = user.ships.length < 10;
-
   const readyHandler = () => {
     setIsReady(true);
-    if (isOnline && sendSocket) {
+    if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
       setIsAbleShoot(true);

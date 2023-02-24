@@ -11,7 +11,7 @@ const Chat: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { changeChat } = useChatActions();
   const { currentChat } = useAppSelector((state) => state.ChatSlice);
-  const { user } = useAppSelector((state) => state.logInSlice);
+  const { userName } = useAppSelector((state) => state.logInSlice);
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { game, common } = useAppSelector((state) => state.ChatSlice);
   const [text, setText] = useState('');
@@ -24,13 +24,14 @@ const Chat: FC = () => {
 
   const sendHandler = () => {
     const mail = {
-      name: user,
+      name: userName,
       date: new Date().toString(),
       text: text,
       gameId: undefined as undefined | string,
     };
 
     mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
+    sendSocket(SOCKETMETHOD.chat, { mail });
 
     if (sendSocket) {
       console.log(mail);
@@ -56,6 +57,7 @@ const Chat: FC = () => {
         type="button"
       >
         {t('gameChat')}
+        Game
       </button>
       <div className="chat_messages">
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(

@@ -4,7 +4,6 @@ import { IChatMessage } from './chat';
 
 export interface IGameState {
   gameInfo: null | IStartGame;
-  userName: string;
   opponentName: string;
   isGameFinded: boolean;
   isStarted: boolean;
@@ -60,5 +59,7 @@ export interface ISendChat {
 export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
 
 export type TSocketMessage = IStartGame & IReady & IConnect & IShoot & IMessage;
+
+export type TSendSocket = <T extends TSendData>(method: string, data?: T) => void
 
 export { type IStartGame };

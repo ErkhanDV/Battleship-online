@@ -3,7 +3,6 @@ import { IGameState, IStartGame } from './types/socket';
 
 const initialState: IGameState = {
   gameInfo: null,
-  userName: '',
   opponentName: 'Unknown',
   isGameFinded: false,
   isStarted: false,
@@ -18,10 +17,6 @@ export const gameStateSlice = createSlice({
   reducers: {
     setGameInfo(state, action: PayloadAction<IStartGame | null>) {
       state.gameInfo = action.payload;
-    },
-
-    setUserName(state, action: PayloadAction<string>) {
-      state.userName = action.payload;
     },
 
     setOpponentName(state, action: PayloadAction<string>) {
@@ -54,7 +49,6 @@ export const gameStateSlice = createSlice({
 
 export const {
   setGameInfo,
-  setUserName,
   setOpponentName,
   setGameFinded,
   setStarted,

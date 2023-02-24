@@ -24,12 +24,12 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   const personState = useAppSelector((state) => state.gameShipsSlice[person]);
 
   const classList = useMemo(() => {
-    const { shoot, initial, miss, shiper } = CELLCLASS;
+    const { shoot, initial, miss, boat } = CELLCLASS;
     let classList = initial as string;
 
     personState.ships.forEach((ship) => {
       classList += ship.woundedCells.includes(coordinate) ? shoot : '';
-      classList += ship.shipLocation.includes(coordinate) ? shiper : '';
+      classList += ship.shipLocation.includes(coordinate) ? boat : '';
     });
 
     personState.misses.forEach((id) => {
@@ -58,9 +58,9 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
     <div
       id={coordinate.toString()}
       className={classList}
-      onDragOver={isRival ? dragOverHandler : undefined}
-      onDragLeave={isRival ? dragEndHandler : undefined}
-      onDrop={isRival ? dropHandler : undefined}
+      onDragOver={!isRival ? dragOverHandler : undefined}
+      onDragLeave={!isRival ? dragEndHandler : undefined}
+      onDrop={!isRival ? dropHandler : undefined}
     ></div>
   );
 };

@@ -9,9 +9,10 @@ import { IReady } from '@/store/reducers/types/socket';
 export const useReadyHandler = () => {
   const { setIsStarted } = useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
-  const { userName } = useAppSelector((state) => state.gameStateSlice);
+  const { userName } = useAppSelector((state) => state.logInSlice);
 
   const readyHandler = (data: IReady) => {
+    console.log(data);
     console.log('ready');
     const { isStarted, field, user } = data;
     setIsStarted(!!isStarted);

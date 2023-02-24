@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILogIn } from './types/logIn';
-// import { MODAL } from '@/components/modal/_constants';
 
 const initialState: ILogIn = {
-  user: '',
+  userName: '',
   isAuthorized: false,
   isModalOpen: false,
   modalChildren: 'log',
@@ -13,9 +12,9 @@ const logInSlice = createSlice({
   name: 'logIn',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<string>) {
-      state.user = action.payload;
-      state.isAuthorized = !!state.user;
+    setUserName(state, action: PayloadAction<string>) {
+      state.userName = action.payload;
+      state.isAuthorized = !!state.userName;
     },
 
     setModalOpen(state, action: PayloadAction<boolean>) {
@@ -28,6 +27,7 @@ const logInSlice = createSlice({
   },
 });
 
-export const { setUser, setModalOpen, setModalChildren } = logInSlice.actions;
+export const { setUserName, setModalOpen, setModalChildren } =
+  logInSlice.actions;
 
 export default logInSlice.reducer;
