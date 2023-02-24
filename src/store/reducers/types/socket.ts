@@ -23,7 +23,6 @@ export interface IConnect {
 
 export interface IReady {
   user: string;
-  method: string;
   isStarted: boolean;
   field: IPlayerState;
 }
@@ -37,6 +36,11 @@ export interface IShoot {
 
 export interface IMessage {
   mail: IChatMessage;
+}
+
+export interface IMailing {
+  chatName: string;
+  chatMessage: IChatMessage[];
 }
 
 export interface ISendConnect {
@@ -58,8 +62,16 @@ export interface ISendChat {
 
 export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
 
-export type TSocketMessage = IStartGame & IReady & IConnect & IShoot & IMessage;
+export type TSocketMessage = IStartGame &
+  IReady &
+  IConnect &
+  IShoot &
+  IMessage &
+  IMailing;
 
-export type TSendSocket = <T extends TSendData>(method: string, data?: T) => void
+export type TSendSocket = <T extends TSendData>(
+  method: string,
+  data?: T,
+) => void;
 
 export { type IStartGame };

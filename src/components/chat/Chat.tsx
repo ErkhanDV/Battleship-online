@@ -1,4 +1,4 @@
-import { FC, useState, useContext } from 'react';
+import { FC, useState, useContext, useRef, useEffect } from 'react';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
@@ -10,30 +10,52 @@ import './Chat.scss';
 const Chat: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { changeChat } = useChatActions();
-  const { currentChat } = useAppSelector((state) => state.ChatSlice);
-  const { userName } = useAppSelector((state) => state.logInSlice);
-  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
-  const { game, common } = useAppSelector((state) => state.ChatSlice);
+  const { currentChat, game, common, userName, gameInfo } = useAppSelector(
+    (state) => {
+      const { game } = state.ChatSlice;
+      const { common } = state.ChatSlice;
+      const { currentChat } = state.ChatSlice;
+      const { userName } = state.logInSlice;
+      const { gameInfo } = state.gameStateSlice;
+
+      return { game, common, currentChat, userName, gameInfo };
+    },
+  );
   const [text, setText] = useState('');
+  const chatElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatElement.current) {
+      chatElement.current.scrollTop = chatElement.current.scrollHeight;
+    }
+  }, [game, common]);
 
   const { t } = useTranslation();
 
   const inputHandler = ({
     target,
-  }: React.ChangeEvent<HTMLInputElement>): void => setText(target.value);
+  }: React.ChangeEvent<HTMLInputElement>): void => {
+    setText(target.value);
+  };
 
   const sendHandler = () => {
+    const sendName = userName ? userName : 'Unknown user';
     const mail = {
-      name: userName,
+      name: sendName,
       date: new Date().toString(),
       text: text,
-      gameId: undefined as undefined | string,
+      gameId: gameInfo?.gameId,
+      chatName: currentChat,
     };
 
-    mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
     sendSocket(SOCKETMETHOD.chat, { mail });
 
     setText('');
+  };
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    sendHandler();
   };
 
   return (
@@ -54,24 +76,25 @@ const Chat: FC = () => {
       >
         {t('gameChat')}
       </button>
-      <div className="chat_messages">
+      <div ref={chatElement} className="chat_messages">
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail) => (
             <Message key={mail.date.toString()} mail={mail} />
           ),
         )}
       </div>
-      <div className="chat_input">
+      <form onSubmit={submitHandler} className="chat_input">
         <input
           onChange={inputHandler}
           className="chat_write"
           type="text"
           value={text}
+          placeholder={t('Write your message...') as string}
         />
         <button className="chat_button" onClick={sendHandler} type="button">
           {t('send')}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

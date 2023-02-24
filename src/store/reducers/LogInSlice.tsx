@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MODAL } from '../_constants';
 import { ILogIn } from './types/logIn';
 
 const initialState: ILogIn = {
   userName: '',
   isAuthorized: false,
   isModalOpen: false,
-  modalChildren: 'log',
+  modalChildren: MODAL.log,
 };
 
 const logInSlice = createSlice({

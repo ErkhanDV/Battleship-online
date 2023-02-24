@@ -1,5 +1,3 @@
-import { CHAT } from '@/store/_constants';
-
 export interface IChat {
   currentChat: string;
   common: IChatMessage[];
@@ -11,4 +9,6 @@ export interface IChatMessage {
   date: string;
   text: string;
   gameId?: string;
+  chatName: string;
+  setDate?: boolean;
 }

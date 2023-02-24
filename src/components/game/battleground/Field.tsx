@@ -9,7 +9,7 @@ import './Field.scss';
 import { FIELD } from '@/store/_constants';
 
 const Field: FC<{ isRival: boolean }> = ({ isRival }) => {
-  const { isAbleShoot, isGameFinded, isStarted } = useAppSelector(
+  const { isAbleShoot, isGameFinded } = useAppSelector(
     (state) => state.gameStateSlice,
   );
 

@@ -4,6 +4,7 @@ import { useShootHandler } from './use-shoot';
 import { useGameoverHandler } from './use-gameover';
 import { useExitHandler } from './use-exit';
 import { useChatHandler } from './use-chat';
+import { useMailingHandler } from './use-mailing';
 
 export const useSocketHandlers = () => {
   const { connectHandler } = useConnectionHandler();
@@ -12,6 +13,7 @@ export const useSocketHandlers = () => {
   const { readyHandler } = useReadyHandler();
   const { exitHandler } = useExitHandler();
   const { chatHandler } = useChatHandler();
+  const { mailingHandler } = useMailingHandler();
 
   return {
     connectHandler,
@@ -20,5 +22,6 @@ export const useSocketHandlers = () => {
     readyHandler,
     exitHandler,
     chatHandler,
+    mailingHandler,
   };
 };

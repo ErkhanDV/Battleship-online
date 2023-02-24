@@ -13,8 +13,8 @@ export class authService {
         return data;
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const { status, message } = error.response?.data;
+      if (error instanceof AxiosError && error.response) {
+        const { status, message } = error.response.data;
         console.log(`status: ${status}; error: ${message}`);
         return message;
       }
@@ -23,7 +23,7 @@ export class authService {
     return { id: '', name: '', refreshToken: '', accessToken: '' };
   }
 
-  static async logout(): Promise<Boolean | undefined> {
+  static async logout(): Promise<boolean | undefined> {
     try {
       const { status } = await axiosAPI.delete('/logout');
       if (status === STATUS.ok) {
@@ -32,8 +32,8 @@ export class authService {
       }
       return false;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const { status, message } = error.response?.data;
+      if (error instanceof AxiosError && error.response) {
+        const { status, message } = error.response.data;
         console.log(`status: ${status}; error: ${message}`);
         return message;
       }
@@ -54,8 +54,8 @@ export class authService {
       return undefined;
     } catch (error) {
       localStorage.removeItem('token');
-      if (error instanceof AxiosError) {
-        const { status, message } = error.response?.data;
+      if (error instanceof AxiosError && error.response) {
+        const { status, message } = error.response.data;
         console.log(`status: ${status}; error: ${message}`);
         return undefined;
       }
