@@ -47,7 +47,7 @@ const LogIn: FC = () => {
         onChange={inputHandler}
         value={loginValue}
         type="text"
-        placeholder="Enter name"
+        placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
       <button className="login_button" onClick={logInHandler}>

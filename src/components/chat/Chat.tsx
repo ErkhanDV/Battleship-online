@@ -2,6 +2,7 @@ import { FC, useState, useContext, useRef, useEffect } from 'react';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
+import { useTranslation } from 'react-i18next';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { CHAT } from '@/store/_constants';
 import './Chat.scss';
@@ -21,6 +22,8 @@ const Chat: FC = () => {
       chatElement.current.scrollTop = chatElement.current.scrollHeight;
     }
   }, [game, common]);
+
+  const { t } = useTranslation();
 
   const inputHandler = ({
     target,
@@ -42,15 +45,21 @@ const Chat: FC = () => {
 
   return (
     <div className="chat">
-      <button onClick={() => changeChat(CHAT.common)} type="button">
-        Common
+      <h2 className="section_title">{t('chat')}</h2>
+      <button
+        className={`chat_button ${currentChat === CHAT.common ? 'active' : ''}`}
+        onClick={() => changeChat(CHAT.common)}
+        type="button"
+      >
+        {t('generalChat')}
       </button>
       <button
+        className={`chat_button ${currentChat === CHAT.game ? 'active' : ''}`}
         disabled={!gameInfo}
         onClick={() => changeChat(CHAT.game)}
         type="button"
       >
-        Game
+        {t('gameChat')}
       </button>
       <div ref={chatElement} className="chat_messages">
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
@@ -66,8 +75,8 @@ const Chat: FC = () => {
           type="text"
           value={text}
         />
-        <button onClick={sendHandler} type="button">
-          Отправить
+        <button className="chat_button" onClick={sendHandler} type="button">
+          {t('send')}
         </button>
       </div>
     </div>

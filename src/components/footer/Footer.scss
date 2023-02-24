@@ -56,7 +56,6 @@
       top: 0px;
       width: 20px;
       height: 20px;
-
       -webkit-mask-image: url(../../assets/svg/github-mark-white.svg);
       mask-image: url(../../assets/svg/github-mark-white.svg);
       -webkit-mask-repeat: no-repeat;
@@ -64,9 +63,6 @@
       -webkit-mask-size: contain;
       mask-size: contain;
       background-color: $text-color-100;
-      // background-image: url(../../assets/svg/github-mark-white.svg);
-      // background-repeat: no-repeat;
-      // background-size: contain;
     }
     &:nth-child(3) {
       margin-right: 0;
@@ -104,9 +100,11 @@
     content: 'copyright';
     left: -26px;
     top: -4px;
-    font-family: 'Material Symbols Outlined';
-    font-size: 22px;
-    font-weight: 400;
+    font: {
+      family: 'Material Symbols Outlined';
+      size: 22px;
+      weight: 400;
+    }
     color: $text-color-100;
   }
 }
