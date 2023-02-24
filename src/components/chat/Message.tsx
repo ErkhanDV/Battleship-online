@@ -8,7 +8,6 @@ import './Message.scss';
 const Message: FC<{ mail: IChatMessage }> = ({ mail }) => {
   const { userName } = useAppSelector((state) => state.logInSlice);
   const { t } = useTranslation();
-  const bgClass = ` ${mail.name === userName ? 'my' : ''} message`;
   const date = new Date(Date.parse(mail.date));
   const hours = date.getHours();
   const minutes = date.getMinutes();

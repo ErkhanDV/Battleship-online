@@ -5,6 +5,7 @@ import { useSocket, useCheckAuth, useAppSelector } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
+import { SOCKETMETHOD } from './services/axios/_constants';
 
 const App = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const App = () => {
       },
     );
     if (isMatchRoute && gameInfo) {
-      sendSocket('exit');
+      sendSocket(SOCKETMETHOD.exit);
     }
   }, [location]);
 

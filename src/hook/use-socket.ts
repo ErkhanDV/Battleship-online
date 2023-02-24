@@ -41,10 +41,6 @@ export const useSocket = () => {
           break;
       }
     };
-
-    // window.onunload = () => {
-    //   socket.current?.close();
-    // };
   }, []);
 
   useEffect(() => {
