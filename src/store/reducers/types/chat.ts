@@ -11,4 +11,6 @@ export interface IChatMessage {
   date: string;
   text: string;
   gameId?: string;
+  chatName: string;
+  setDate?: boolean;
 }

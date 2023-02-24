@@ -39,15 +39,15 @@ const Chat: FC = () => {
   };
 
   const sendHandler = () => {
-    const sendName  = userName ? userName : 'Unknown user'
+    const sendName = userName ? userName : 'Unknown user';
     const mail = {
       name: sendName,
       date: new Date().toString(),
       text: text,
-      gameId: undefined as undefined | string,
+      gameId: gameInfo?.gameId,
+      chatName: currentChat,
     };
 
-    mail.gameId = currentChat === CHAT.common ? undefined : gameInfo?.gameId;
     sendSocket(SOCKETMETHOD.chat, { mail });
 
     setText('');

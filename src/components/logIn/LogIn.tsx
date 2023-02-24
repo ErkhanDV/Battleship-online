@@ -26,7 +26,7 @@ const LogIn: FC = () => {
   }: React.ChangeEvent<HTMLInputElement>): void => setLoginValue(target.value);
 
   const logInHandler = async () => {
-    const response: IUser = await authService.login(loginValue);
+    const response: IUser = await authService.login(loginValue.trim());
     if (typeof response === 'string') {
       setValidation(response);
       return;
