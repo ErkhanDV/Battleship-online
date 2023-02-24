@@ -1,12 +1,10 @@
-import { useContext, useEffect, type FC } from 'react';
+import { useContext, useEffect, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useAppSelector,
   useGameShipsActions,
   useGameStateActions,
 } from '@/hook/_index';
-
-import { useTranslation } from 'react-i18next';
-
 import { SocketContext } from '@/context/Context';
 import {
   Field,
@@ -17,13 +15,27 @@ import {
 
 import './game.scss';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
-
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { Chat } from '@/components/_index';
 import { useComputerTurn } from '@/hook/AIActions/use-computer-turn';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
-  const isOnline = mode === 'online';
+  const { sendSocket } = useContext(SocketContext);
+  const { t } = useTranslation();
+  const { setRandomShips } = useGameShipsActions();
+
+  const { userName } = useAppSelector((state) => state.logInSlice);
+  const { isReady, winner, gameDifficult } = useAppSelector(
+    (state) => state.gameStateSlice,
+  );
+  const { user } = useAppSelector((state) => state.gameShipsSlice);
+
+  const [isOnline, setIsOnline] = useState(false);
+  const isFilled = user.ships.length < 10;
+
+  useEffect(() => {
+    setIsOnline(mode === 'online' ? true : false);
+  }, [mode]);
 
   useEffect(() => {
     if (!isOnline) {
@@ -38,25 +50,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     setIsStarted,
     setGameDifficult,
   } = useGameStateActions();
-  const { setRandomShips } = useGameShipsActions();
   const { computerTurn } = useComputerTurn();
 
-  const { sendSocket } = useContext(SocketContext);
-
-  const { t } = useTranslation();
-
-  const userName = useAppSelector((state) => state.logInSlice.user);
-  const { isReady, winner, gameDifficult } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
-
   const { gameShipsSlice } = useAppSelector((state) => state);
-  const { user } = gameShipsSlice;
-  const isFilled = user.ships.length < 10;
 
   const readyHandler = () => {
     setIsReady(true);
-    if (isOnline && sendSocket) {
+    if (isOnline) {
       sendSocket(SOCKETMETHOD.ready, { field: user });
     } else {
       setIsStarted(true);
@@ -101,7 +101,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             onClick={readyHandler}
             className="button-render"
           >
-            {isOnline ? 'Ready' : 'Start game'}
+            {isOnline ? t('ready') : t('start')}
           </button>
         ) : null}
         <div className="game_fields">
@@ -112,9 +112,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
         </div>
         <ShipStation />
+        <Chat />
         <Gameover />
       </main>
-      <Chat />
     </div>
   );
 };

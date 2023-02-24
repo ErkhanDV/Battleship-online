@@ -11,9 +11,6 @@ export const useGameStateActions = () => {
   const setOpponentName = (name: string) =>
     dispatch(gameStateActions.setOpponentName(name));
 
-  const setUserName = (name: string) =>
-    dispatch(gameStateActions.setUserName(name));
-
   const setIsReady = (state: boolean) =>
     dispatch(gameStateActions.setReady(state));
 
@@ -39,7 +36,6 @@ export const useGameStateActions = () => {
     setWinner,
     setGameInfo,
     setOpponentName,
-    setUserName,
     setIsReady,
     setIsAbleShoot,
     setIsGameFinded,

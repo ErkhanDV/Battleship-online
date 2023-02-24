@@ -5,7 +5,7 @@ import { IShoot } from '@/store/reducers/types/socket';
 export const useGameoverHandler = () => {
   const { setIsAbleShoot, setWinner } = useGameStateActions();
   const { shootHandler } = useShootHandler();
-  const { userName } = useAppSelector((state) => state.gameStateSlice);
+  const { userName } = useAppSelector((state) => state.logInSlice);
 
   const gameoverHandler = (data: IShoot) => {
     const { winner } = data;

@@ -9,32 +9,32 @@ import './Login.scss';
 import { IUser } from '@/services/axios/_types';
 
 const LogIn: FC = () => {
-  const [name, setName] = useState('');
+  const [loginValue, setLoginValue] = useState('');
   const [validation, setValidation] = useState('');
-  const { setUser, setModalOpen } = useLogInActions();
+  const { setUserName, setModalOpen } = useLogInActions();
   const { isModalOpen } = useAppSelector((state) => state.logInSlice);
 
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
     setValidation('');
-    setName('');
+    setLoginValue('');
   }, [isModalOpen]);
 
   const inputHandler = ({
     target,
-  }: React.ChangeEvent<HTMLInputElement>): void => setName(target.value);
+  }: React.ChangeEvent<HTMLInputElement>): void => setLoginValue(target.value);
 
   const logInHandler = async () => {
-    const response: IUser = await authService.login(name);
+    const response: IUser = await authService.login(loginValue);
     if (typeof response === 'string') {
       setValidation(response);
       return;
     }
 
     if (response.name) {
-      setName('');
-      setUser(response.name);
+      setLoginValue('');
+      setUserName(response.name);
       setModalOpen(false);
     }
   };
@@ -45,9 +45,9 @@ const LogIn: FC = () => {
       <input
         className="login_input"
         onChange={inputHandler}
-        value={name}
+        value={loginValue}
         type="text"
-        placeholder="Enter name"
+        placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
       <button className="login_button" onClick={logInHandler}>

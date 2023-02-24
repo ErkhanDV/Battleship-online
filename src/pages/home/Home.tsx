@@ -33,8 +33,9 @@ const Home: FC = () => {
           <button className="section_button">{t('login')}</button>
           <p className="section_paragraph">{t('loginPlease')}</p>
         </section>
+        <Chat />
       </main>
-      <Chat />
+
     </div>
   );
 };
