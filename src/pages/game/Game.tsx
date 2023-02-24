@@ -61,7 +61,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             onClick={readyHandler}
             className="button-render"
           >
-            {isOnline ? 'Ready' : 'Start game'}
+            {isOnline ? t('ready') : t('start')}
           </button>
         ) : null}
         <div className="game_fields">
@@ -72,9 +72,9 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
         </div>
         <ShipStation />
+        <Chat />
         <Gameover />
       </main>
-      <Chat />
     </div>
   );
 };

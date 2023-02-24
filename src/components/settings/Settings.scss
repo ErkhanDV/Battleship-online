@@ -6,27 +6,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   &_title {
     position: relative;
     width: 100%;
     padding-bottom: 20px;
     padding-bottom: 20px;
-    text-align: center;
-    text-transform: uppercase;
+    text: {
+      align: center;
+      transform: uppercase;
+    }
     font-weight: 100;
     line-height: 1.4;
     letter-spacing: 5px;
-    color: rgb(255, 255, 255, 1);
+    color: $primary-color-100;
     border-bottom: 2px dashed $primary-color-50;
+
     &::before,
     &::after {
       position: absolute;
       content: 'settings';
       left: 26%;
       top: -15px;
-      font-family: 'Material Symbols Outlined';
-      font-size: 52px;
-      font-weight: 100;
+      font: {
+        family: 'Material Symbols Outlined';
+        size: 52px;
+        weight: 100;
+      }
       color: $primary-color-100;
       animation: settingsAnimation 10s infinite;
     }
@@ -39,7 +45,7 @@
     &::after {
       position: absolute;
       content: 'settings';
-      left: 26%;
+      left: 25%;
       top: -15px;
       font-family: 'Material Symbols Outlined';
       font-size: 52px;
@@ -48,11 +54,12 @@
       animation: settingsAnimation 10s infinite;
     }
     &::after {
-      left: 64%;
+      left: 65%;
       top: -32px;
       font-weight: 200;
     }
   }
+
   &_section {
     display: flex;
     justify-content: space-between;
@@ -62,6 +69,7 @@
     margin: 10px;
     border: 2px dotted $primary-color-25;
   }
+
   &_subtitle {
     width: 50%;
     padding: 4px;
@@ -71,6 +79,7 @@
     color: rgb(255, 255, 255, 1);
     background-color: $primary-color-25;
   }
+
   &_options {
     display: flex;
     justify-content: space-between;
@@ -78,6 +87,7 @@
     width: calc(50% - 20px);
     height: 40px;
   }
+
   &_button {
     width: 48%;
     padding: 4px;
@@ -86,17 +96,21 @@
     color: $primary-color-100;
     border: none;
     border-radius: 4px;
-    background: $primary-corner-gradient;
-    background-repeat: no-repeat;
-    background-size: 10px 8px;
-    background-color: $primary-color-25;
+    background: $primary-corner-gradient {
+      repeat: no-repeat;
+      size: 10px 8px;
+      color: $primary-color-25;
+    }
     cursor: pointer;
     transition: ease-in-out 0.3s;
+
     &:hover,
     &.active {
       color: rgb(255, 255, 255, 1);
-      background-size: 100% 8px;
-      background-color: $primary-color-50;
+      background: {
+        size: 100% 8px;
+        color: $primary-color-50;
+      }
     }
   }
 }
@@ -123,16 +137,20 @@
         left: 0%;
       }
     }
+
     &_subtitle {
       margin: 0 auto 10px;
     }
+
     &_section {
       flex-direction: column;
       padding: 10px;
     }
+
     &_subtitle {
       width: 100%;
     }
+
     &_options {
       width: 100%;
     }
