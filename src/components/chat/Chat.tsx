@@ -10,10 +10,17 @@ import './Chat.scss';
 const Chat: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { changeChat } = useChatActions();
-  const { currentChat } = useAppSelector((state) => state.ChatSlice);
-  const { userName } = useAppSelector((state) => state.logInSlice);
-  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
-  const { game, common } = useAppSelector((state) => state.ChatSlice);
+  const { currentChat, game, common, userName, gameInfo } = useAppSelector(
+    (state) => {
+      const { game } = state.ChatSlice;
+      const { common } = state.ChatSlice;
+      const { currentChat } = state.ChatSlice;
+      const { userName } = state.logInSlice;
+      const { gameInfo } = state.gameStateSlice;
+
+      return { game, common, currentChat, userName, gameInfo };
+    },
+  );
   const [text, setText] = useState('');
   const chatElement = useRef<HTMLDivElement>(null);
 

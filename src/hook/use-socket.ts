@@ -17,8 +17,12 @@ export const useSocket = () => {
   } = useSocketHandlers();
 
   const { setGameInfo } = useGameStateActions();
-  const { userName } = useAppSelector((state) => state.logInSlice);
-  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
+  const { userName, gameInfo } = useAppSelector((state) => {
+    const { userName } = state.logInSlice;
+    const { gameInfo } = state.gameStateSlice;
+
+    return { userName, gameInfo };
+  });
 
   const { shoot, connect, ready, gameover, exit, chat } = SOCKETMETHOD;
 

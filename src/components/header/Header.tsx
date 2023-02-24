@@ -14,9 +14,13 @@ const Header: FC = () => {
   const navigate = useNavigate();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
-  const { userName, isAuthorized } = useAppSelector(
-    (state) => state.logInSlice,
-  );
+  const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
+    const { isAuthorized } = state.logInSlice;
+    const { userName } = state.logInSlice;
+    const { gameInfo } = state.gameStateSlice;
+
+    return { isAuthorized, userName, gameInfo };
+  });
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
@@ -45,7 +49,8 @@ const Header: FC = () => {
     if (isAuthorized) {
       setUserName('');
       await authService.logout();
-      sendSocket(SOCKETMETHOD.exit);
+
+      if (gameInfo) sendSocket(SOCKETMETHOD.exit);
     } else {
       modalHandler('log');
     }

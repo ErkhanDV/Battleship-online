@@ -25,9 +25,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     useGameStateActions();
   const { setRandomShips } = useGameShipsActions();
 
-  const { userName } = useAppSelector((state) => state.logInSlice);
-  const { isReady } = useAppSelector((state) => state.gameStateSlice);
-  const { user } = useAppSelector((state) => state.gameShipsSlice);
+  const { userName, isReady, user } = useAppSelector((state) => {
+    const { userName } = state.logInSlice;
+    const { isReady } = state.gameStateSlice;
+    const { user } = state.gameShipsSlice;
+
+    return { userName, isReady, user };
+  });
 
   const [isOnline, setIsOnline] = useState(false);
   const isFilled = user.ships.length < 10;

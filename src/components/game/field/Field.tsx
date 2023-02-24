@@ -3,7 +3,7 @@ import { SocketContext } from '@/context/Context';
 import { useAppSelector, useGameShipsActions } from '@/hook/_index';
 import Cell from '@/components/game/cell/Cell';
 import { getRandomNum } from '@/lib/utils/getRandomNum';
-import { FIELD } from '@/store/_constants';
+import { FIELD, PERSON } from '@/store/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 import './Field.scss';
@@ -27,10 +27,10 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
       if (isOnline) {
         sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
       } else {
-        checkShoot('rival', shoot);
+        checkShoot(PERSON.rival, shoot);
 
         setTimeout(() => {
-          checkShoot('user', getRandomNum(1, 100));
+          checkShoot(PERSON.user, getRandomNum(1, 100));
         }, 1000);
       }
     }
