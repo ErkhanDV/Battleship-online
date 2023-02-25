@@ -16,7 +16,7 @@ import { Chat } from '@/components/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { PERSON } from '@/store/_constants';
 import { GAMEMODE } from '@/router/_constants';
-import './game.scss';
+import './Game.scss';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const { sendSocket } = useContext(SocketContext);

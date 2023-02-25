@@ -11,7 +11,7 @@ import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
 
-import i18n from './i18n';
+import i18n from './i18n/i18n';
 
 import { SOCKETMETHOD } from './services/axios/_constants';
 
@@ -40,9 +40,9 @@ const App = () => {
   }, [location]);
 
   // ДОБАВИТЬ В lib/utils checkLocalStorage
-  if (localStorage.getItem('language') === 'ru') {
-    i18n.changeLanguage('ru');
-  }
+  // if (localStorage.getItem('language') === 'ru') {
+  //   i18n.changeLanguage('ru');
+  // }
 
   if (localStorage.getItem('theme_mode') === 'light') {
     document.body.style.setProperty(
