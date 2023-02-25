@@ -21,7 +21,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
   const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
-    const shoot: number = Number((target as HTMLDivElement).id);
+    const shoot = Number((target as HTMLDivElement).id);
 
     if (isAbleShoot && isStarted) {
       if (isOnline) {

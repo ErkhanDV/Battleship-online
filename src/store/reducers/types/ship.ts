@@ -1,6 +1,6 @@
 export interface ISetShip {
   decks: number | null;
-  isHorizontal: Boolean;
+  isHorizontal: boolean;
 }
 
 export interface IShipDnD {

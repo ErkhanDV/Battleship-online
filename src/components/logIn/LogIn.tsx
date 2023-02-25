@@ -14,7 +14,7 @@ const LogIn: FC = () => {
   const { setUserName, setModalOpen } = useLogInActions();
   const { isModalOpen } = useAppSelector((state) => state.logInSlice);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setValidation('');
@@ -26,7 +26,7 @@ const LogIn: FC = () => {
   }: React.ChangeEvent<HTMLInputElement>): void => setLoginValue(target.value);
 
   const logInHandler = async () => {
-    const response: IUser = await authService.login(loginValue);
+    const response: IUser = await authService.login(loginValue.trim());
     if (typeof response === 'string') {
       setValidation(response);
       return;
@@ -39,8 +39,13 @@ const LogIn: FC = () => {
     }
   };
 
+  const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    logInHandler();
+  };
+
   return (
-    <div className="login">
+    <form onSubmit={formHandler} className="login">
       <h2 className="login_title">{t('authorization')}</h2>
       <input
         className="login_input"
@@ -53,7 +58,7 @@ const LogIn: FC = () => {
       <button className="login_button" onClick={logInHandler}>
         {t('login')}
       </button>
-    </div>
+    </form>
   );
 };
 

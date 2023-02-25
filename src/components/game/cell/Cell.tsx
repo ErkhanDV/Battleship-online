@@ -18,10 +18,12 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   const { addShip } = useGameShipsActions();
   const { setDropped } = useDnDActions();
 
-  const { decks, isHorizontal } = useAppSelector(
-    (state) => state.shipSlice.shipDnD,
-  );
-  const personState = useAppSelector((state) => state.gameShipsSlice[person]);
+  const { decks, isHorizontal, personState } = useAppSelector((state) => {
+    const { decks, isHorizontal } = state.shipSlice.shipDnD;
+    const personState = state.gameShipsSlice[person];
+
+    return { decks, isHorizontal, personState };
+  });
 
   const classList = useMemo(() => {
     const { shoot, initial, miss, boat } = CELLCLASS;

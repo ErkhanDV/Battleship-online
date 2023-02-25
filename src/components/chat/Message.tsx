@@ -17,17 +17,26 @@ const Message: FC<{ mail: IChatMessage }> = ({ mail }) => {
   const hoursView = hours < 9 ? `0${hours}` : `${hours}`;
   const minutesView = minutes < 9 ? `0${minutes}` : `${minutes}`;
 
+  const renderDate = () => {
+    if (mail.setDate) {
+      return <div className="common_date">{mail.date.slice(0, 15)}</div>;
+    }
+  };
+
   return (
-    <div className={`message ${mail.name === userName ? 'user' : 'player'}`}>
-      <div className="message_caption">
-        <div className="message_name">
-          {mail.name === userName ? t('you') : `${mail.name}:`}
+    <div>
+      {renderDate()}
+      <div className={`message ${mail.name === userName ? 'user' : 'player'}`}>
+        <div className="message_caption">
+          <div className="message_name">
+            {mail.name === userName ? t('you') : `${mail.name}:`}
+          </div>
+          <div className="message_date">
+            {hoursView}:{minutesView}
+          </div>
         </div>
-        <div className="message_date">
-          {hoursView}:{minutesView}
-        </div>
+        <div className="message_text">{mail.text}</div>
       </div>
-      <div className="message_text">{mail.text}</div>
     </div>
   );
 };

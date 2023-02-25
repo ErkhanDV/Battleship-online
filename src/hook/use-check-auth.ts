@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService, gameService } from '@/services/axios/_index';
-import { useLogInActions, useAppSelector } from '@/hook/_index';
+import { useLogInActions } from '@/hook/_index';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { TSendSocket } from '@/store/reducers/types/socket';

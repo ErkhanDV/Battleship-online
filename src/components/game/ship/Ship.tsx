@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hook/use-redux';
-import { setShip, setDropped } from '@/store/reducers/ShipSlice';
+import { FC, useEffect, useState } from 'react';
+import { useAppSelector, useDnDActions } from '@/hook/_index';
 import { ISetShip } from '@/store/reducers/types/ship';
-import { IDecks } from './_types';
+import { DECKS } from './_constants';
 
 import './Ship.scss';
 
-const Ship = ({ decks }: IDecks) => {
+const Ship: FC<{ decks: number }> = ({ decks }) => {
+  const { setDropped, setShip } = useDnDActions();
+
   const [isHorizontal, setHorizonal] = useState(false);
   const [clickCount, setClickCount] = useState(0);
 
-  const dispatch = useAppDispatch();
+  const { wasDropped } = useAppSelector((state) => state.shipSlice);
+
   const setShipHandler = (currentShip: ISetShip) => {
-    dispatch(setShip(currentShip));
+    setShip(currentShip);
   };
 
-  const { wasDropped } = useAppSelector((state) => state.shipSlice);
-  const setNotDrop = () => dispatch(setDropped(false));
+  const setNotDrop = () => setDropped(false);
 
   const dragStartHandler = (
     event: React.DragEvent<HTMLDivElement>,
@@ -27,9 +28,9 @@ const Ship = ({ decks }: IDecks) => {
     setShipHandler({ decks, isHorizontal });
   };
 
-  const dragEndHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const dragEndHandler = () => {
     setShipHandler({ decks: null, isHorizontal: false });
-    if (!!wasDropped) {
+    if (wasDropped) {
       setNotDrop();
     }
   };
@@ -50,15 +51,16 @@ const Ship = ({ decks }: IDecks) => {
   }, [clickCount]);
 
   const getDeckClass = (decks: number) => {
+    const { one, two, three, four } = DECKS;
     switch (decks) {
       case 1:
-        return 'one-deck';
+        return one;
       case 2:
-        return 'two-deck';
+        return two;
       case 3:
-        return 'three-deck';
+        return three;
       case 4:
-        return 'four-deck';
+        return four;
       default:
         return '';
     }
@@ -74,8 +76,8 @@ const Ship = ({ decks }: IDecks) => {
       onDragStart={(event) => {
         dragStartHandler(event, isHorizontal);
       }}
-      onDragEnd={(event) => {
-        dragEndHandler(event);
+      onDragEnd={() => {
+        dragEndHandler();
       }}
     >
       {new Array(decks).fill(null).map((_, index) => (
