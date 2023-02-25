@@ -3,9 +3,11 @@ import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
 import Message from './Message';
 import { useTranslation } from 'react-i18next';
+
+import './Chat.scss';
+
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { CHAT } from '@/store/_constants';
-import './Chat.scss';
 
 const Chat: FC = () => {
   const { sendSocket } = useContext(SocketContext);
@@ -49,9 +51,14 @@ const Chat: FC = () => {
     };
 
     sendSocket(SOCKETMETHOD.chat, { mail });
-
     setText('');
   };
+
+  const date = new Date();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const hoursView = hours < 9 ? `0${hours}` : `${hours}`;
+  const minutesView = minutes < 9 ? `0${minutes}` : `${minutes}`;
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +83,16 @@ const Chat: FC = () => {
       >
         {t('gameChat')}
       </button>
+
       <div ref={chatElement} className="chat_messages">
+      <div className="message player">
+          <div className="message_caption">
+            <div className="message_name">{t('admiral')}</div>
+            <div className="message_date">{hoursView}:{minutesView}</div>
+          </div>
+          <div className="message_text">{t('welcomeMessage')}</div>
+        </div>
+        
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail) => (
             <Message key={mail.date.toString()} mail={mail} />
