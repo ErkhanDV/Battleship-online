@@ -11,8 +11,6 @@ import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
 
-import i18n from './i18n/i18n';
-
 import { SOCKETMETHOD } from './services/axios/_constants';
 
 const App = () => {
