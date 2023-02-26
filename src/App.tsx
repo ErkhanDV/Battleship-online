@@ -10,7 +10,6 @@ import {
 import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
 import { ROUTE } from '@/router/_constants';
-
 import { SOCKETMETHOD } from './services/axios/_constants';
 import { checkLocalStorage } from './lib/utils/checkLocalStorage';
 
@@ -20,8 +19,6 @@ const App = () => {
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { checkAuth } = useCheckAuth(sendSocket);
   const { resetGameChat } = useChatActions();
-
-  checkLocalStorage();
 
   useEffect(() => {
     checkAuth();
@@ -39,6 +36,8 @@ const App = () => {
       resetGameChat();
     }
   }, [location]);
+
+  checkLocalStorage();
 
   return (
     <div className="App">
