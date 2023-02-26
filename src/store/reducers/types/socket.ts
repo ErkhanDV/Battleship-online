@@ -34,6 +34,10 @@ export interface IShoot {
   winner?: string;
 }
 
+export interface IExit {
+  user: string;
+}
+
 export interface IMessage {
   mail: IChatMessage;
 }
@@ -67,7 +71,8 @@ export type TSocketMessage = IStartGame &
   IConnect &
   IShoot &
   IMessage &
-  IMailing;
+  IMailing &
+  IExit;
 
 export type TSendSocket = <T extends TSendData>(
   method: string,

@@ -16,7 +16,14 @@ export const useChatActions = () => {
 
   const resetCommonChat = () => dispatch(chatActions.resetCommonChat());
 
-  const changeChat = (chatName: keyof typeof CHAT) => dispatch(chatActions.changeChat(chatName));
+  const changeChat = (chatName: keyof typeof CHAT) =>
+    dispatch(chatActions.changeChat(chatName));
+
+  const setUnreadCommon = (reset = false) =>
+    dispatch(chatActions.setUnreadCommon(reset));
+
+  const setUnreadGame = (reset = false) =>
+    dispatch(chatActions.setUnreadCommon(reset));
 
   return {
     pushGameMessage,
@@ -24,5 +31,7 @@ export const useChatActions = () => {
     resetGameChat,
     resetCommonChat,
     changeChat,
+    setUnreadGame,
+    setUnreadCommon,
   };
 };

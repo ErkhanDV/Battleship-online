@@ -80,7 +80,7 @@ export const useSocket = () => {
             break;
 
           case exit:
-            exitHandler();
+            exitHandler(data);
             break;
 
           case mailing:
