@@ -53,18 +53,9 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
     dragEnd(event, isHorizontal, decks);
   };
 
-  // <<<<<<< HEAD
-  //   const { shoot, initial, miss, ship } = CELLCLASS;
-
-  //   let classList = initial as string;
-  //   classList += isShooted ? shoot : '';
-  //   classList += isMissed || isOccupied ? miss : '';
-  //   classList += isShip() ? ship : '';
-  // =======
   const dropHandler: TDnDHandler = (event) => {
     drop(event, isHorizontal, decks, setLocations, successfullyDrop);
   };
-  // >>>>>>> develop
 
   return (
     <div
