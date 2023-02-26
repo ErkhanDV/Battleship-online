@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector, useGameStateActions } from '@/hook/_index';
 import { useShootHandler } from './use-shoot';
 import { IShoot } from '@/store/reducers/types/socket';
+import { WINNER } from './_constants';
 
 export const useGameoverHandler = () => {
   const { t } = useTranslation();
@@ -17,9 +18,9 @@ export const useGameoverHandler = () => {
 
     if (winner) {
       if (winner === userName) {
-        setWinner(t('You have sunk all enemy ships'));
+        setWinner(t(WINNER.win));
       } else {
-        setWinner(t(`${winner} destroyed all your ships`));
+        setWinner(t(WINNER.lose(winner)));
       }
     }
   };

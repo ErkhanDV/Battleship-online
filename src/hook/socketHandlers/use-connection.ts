@@ -5,10 +5,16 @@ import {
 } from '@/hook/_index';
 import { PERSON } from '@/store/_constants';
 import { IStartGame, IConnect } from '@/store/reducers/types/socket';
+import { WINNER } from './_constants';
 
 export const useConnectionHandler = () => {
-  const { setIsAbleShoot, setIsGameFinded, setIsReady, setOpponentName } =
-    useGameStateActions();
+  const {
+    setIsAbleShoot,
+    setWinner,
+    setIsGameFinded,
+    setIsReady,
+    setOpponentName,
+  } = useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
   const { userName } = useAppSelector((state) => state.logInSlice);
 
@@ -25,6 +31,8 @@ export const useConnectionHandler = () => {
     if (user.name !== userName) {
       setOpponentName(user.name);
     } else {
+      setIsAbleShoot(isAbleShoot);
+
       if (field) {
         setIsReady(true);
         updateShipsLocationState(field, PERSON.user);
@@ -37,10 +45,18 @@ export const useConnectionHandler = () => {
       if (opponentField) {
         updateShipsLocationState(opponentField, PERSON.rival);
       }
-      setIsAbleShoot(isAbleShoot);
     }
 
     setIsGameFinded(isGameFinded);
+
+    if (data.isReconnect && user.name !== userName) {
+      setWinner(WINNER.reconnect);
+
+      setTimeout(() => {
+        setWinner('');
+      }, 1000);
+    }
+
     console.log('connection');
   };
 

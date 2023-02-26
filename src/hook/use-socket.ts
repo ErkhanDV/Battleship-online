@@ -9,6 +9,7 @@ export const useSocket = () => {
   const socket = useRef<WebSocket>();
   const {
     connectHandler,
+    disconnectHandler,
     shootHandler,
     gameoverHandler,
     readyHandler,
@@ -25,10 +26,19 @@ export const useSocket = () => {
     return { userName, gameInfo };
   });
 
-  const { shoot, connect, ready, gameover, exit, chat, mailing } = SOCKETMETHOD;
+  const { shoot, connect, disconnect, ready, gameover, exit, chat, mailing } =
+    SOCKETMETHOD;
 
   useEffect(() => {
     socket.current = new WebSocket(SOCKET);
+
+    window.onunload = () => {
+      if (socket.current) {
+        if (gameInfo) {
+          sendSocket('disconnect');
+        }
+      }
+    };
 
     socket.current.onopen = () => console.log('socket opened');
 
@@ -61,6 +71,10 @@ export const useSocket = () => {
         switch (method) {
           case connect:
             connectHandler(data);
+            break;
+
+          case disconnect:
+            disconnectHandler(data);
             break;
 
           case ready:
