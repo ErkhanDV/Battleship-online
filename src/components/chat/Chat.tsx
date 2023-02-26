@@ -1,15 +1,15 @@
 import { FC, useState, useContext, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
-import Message from './Message';
-import { useTranslation } from 'react-i18next';
-
-import './Chat.scss';
-
+import Welcome from './welcome/Welcome';
+import Message from './message/Message';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { CHAT } from '@/store/_constants';
+import './Chat.scss';
 
 const Chat: FC = () => {
+  const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
   const { changeChat, setUnreadCommon, setUnreadGame } = useChatActions();
   const {
@@ -50,8 +50,6 @@ const Chat: FC = () => {
     }
   }, [game, common]);
 
-  const { t } = useTranslation();
-
   const inputHandler = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => {
@@ -80,12 +78,6 @@ const Chat: FC = () => {
     setText('');
   };
 
-  const date = new Date();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const hoursView = hours < 9 ? `0${hours}` : `${hours}`;
-  const minutesView = minutes < 9 ? `0${minutes}` : `${minutes}`;
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendHandler();
@@ -100,7 +92,9 @@ const Chat: FC = () => {
         type="button"
       >
         {t('generalChat')}
-        <span className="unread"> {unreadCommon ? `: ${unreadCommon}` : ''}</span>
+        <span className="unread">
+          {unreadCommon ? `: ${unreadCommon}` : ''}
+        </span>
       </button>
       <button
         className={`chat_button ${currentChat === CHAT.game ? 'active' : ''}`}
@@ -113,14 +107,7 @@ const Chat: FC = () => {
       </button>
 
       <div ref={chatElement} className="chat_messages">
-      <div className="message player">
-          <div className="message_caption">
-            <div className="message_name">{t('admiral')}</div>
-            <div className="message_date">{hoursView}:{minutesView}</div>
-          </div>
-          <div className="message_text">{t('welcomeMessage')}</div>
-        </div>
-        
+        <Welcome />
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail, i, messages) => (
             <div key={mail.date.toString()}>
