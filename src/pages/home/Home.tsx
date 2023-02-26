@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Chat } from '@/components/_index';
-
 import { useTranslation } from 'react-i18next';
 
 import './Home.scss';
+
+import { Chat } from '@/components/_index';
 
 const Home: FC = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const Home: FC = () => {
     <div className="home">
       <main className="main">
         <section className="section">
-          <h2 className="section_title">{t('welcomeTitle')}</h2>
+          <h2 className="section_title">{t('Welcome to the BattleShip!')}</h2>
           <p className="section_paragraph">{t('welcomeFirst')}</p>
           <Link to="/game" className="section_button">
             {t('playBattleShip')}
@@ -35,7 +35,6 @@ const Home: FC = () => {
         </section>
         <Chat />
       </main>
-
     </div>
   );
 };

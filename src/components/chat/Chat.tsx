@@ -69,14 +69,14 @@ const Chat: FC = () => {
     <div className="chat">
       <h2 className="section_title">{t('chat')}</h2>
       <button
-        className={`chat_button ${currentChat === CHAT.common ? 'active' : ''}`}
+        className={`chat_button ${currentChat === CHAT.common && 'active'}`}
         onClick={() => changeChat(CHAT.common)}
         type="button"
       >
         {t('generalChat')}
       </button>
       <button
-        className={`chat_button ${currentChat === CHAT.game ? 'active' : ''}`}
+        className={`chat_button ${currentChat === CHAT.game && 'active'}`}
         disabled={!gameInfo}
         onClick={() => changeChat(CHAT.game)}
         type="button"
@@ -85,14 +85,16 @@ const Chat: FC = () => {
       </button>
 
       <div ref={chatElement} className="chat_messages">
-      <div className="message player">
+        <div className="message player">
           <div className="message_caption">
             <div className="message_name">{t('admiral')}</div>
-            <div className="message_date">{hoursView}:{minutesView}</div>
+            <div className="message_date">
+              {hoursView}:{minutesView}
+            </div>
           </div>
           <div className="message_text">{t('welcomeMessage')}</div>
         </div>
-        
+
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail) => (
             <Message key={mail.date.toString()} mail={mail} />

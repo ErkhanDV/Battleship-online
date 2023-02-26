@@ -36,13 +36,13 @@
   "send": "Send a message",
   "admiral": "Admiral:",
   "welcomeMessage": "Hello! Have a nice chat :)",
-
+  "Write your message...": "Write your message...",
 
   "battleship": "BattleShip Online",
   "createdBy": "Created by",
   "powerRangers": "Power Rangers",
 
-  "welcomeTitle": "Welcome to the ButtleShip Online!",
+  "Welcome to the BattleShip!": "Welcome to the BattleShip!",
   "welcomeFirst": "This is a strategy type guessing game for two players. It is played on ruled grids on which each player's fleet of warships are marked.",
   "playBattleShip": "Play BattleShip",
   "welcomeSecond": "The locations of the fleets are concealed from the other player. Players alternate turns calling \"shots\" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.",
@@ -54,17 +54,18 @@
   "authorization": "Authorization",
   "enterName": "Enter name",
 
-  "description": "Description",
-  "descriptionFirst": "The game is played on two grids, two for each player. The grids are typically square 10×10 and the individual squares in the grid are identified by letter and number. On one grid the player arranges ships and records the shots by the opponent. On the other grid, the player records their own shots.",
+  "description": "Game description",
+  "descriptionFirst": "BattleShip is played on two 10x10 square maps. On his map, the player arranges ships, on the other, shots at enemy ships are shown.",
   "arrange": "Arrange the ships",
-  "arrangeFirst": "Before play begins, each player secretly arranges their ships on their primary grid. Each ship occupies a number of consecutive squares on the grid, arranged either horizontally or vertically. The number of squares for each ship is determined by the type of ship. The ships cannot overlap (only one ship can occupy any given square in the grid).",
-  "arrangeSecond": "The types and numbers of ships allowed are the same for each player. These may vary depending on the rules. The ships should be hidden from players sight and it's not allowed to see each other's pieces. The game is a discovery game which players need to discover their opponents ship positions.",
-  "shipAttack": "Ship attack",
-  "shipAttackFirst": "After the ships have been positioned, the game proceeds in a series of rounds. In each round, each player takes a turn to announce a target square in the opponent's grid which is to be shot at. The opponent announces whether or not the square is occupied by a ship.",
-  "shipAttackSecond": "The attacking player marks the hit or miss on their own tracking or target grid with a pencil marking in the paper version of the game, or the appropriate color peg in the pegboard version (red for hit, white for miss), in order to build up a picture of the opponent's fleet.",
-
+  "arrangeParagraph": "Before the start of BattleShip, players place their ships in secret on the main map. Each ship occupies a series of consecutive squares either horizontally or vertically. Ships cannot cross each other.",
+  "Ship types": "Ship types",
+  "Ship types paragraph": "The military fleet of each player consists of 10 ships of various types. These are 1 battleship of 4 cells, 2 cruisers of 3 cells, 3 destroyers of 2 cells and 4 torpedo boats of 1 cell each.",
+  "shipAttack": "Ship Attack",
+  "shipAttack paragraph": "After the ships are placed, the game continues for several rounds. Each player, in turn, selects one cell on the opponent's card and fires a shot.",
+  "game progress": "Game progress",
+  "game progress paragraph": "When hitting an enemy ship, a cross is placed on a foreign field, and a dot is placed on a blank shot. The goal of the game is to find and destroy the entire enemy fleet.",
   "battleWinner": "Battle Winner",
-  "battleWinnerFirst": "When all of the squares of a ship have been hit, the ship's owner announces the sinking of the Carrier, Submarine, Cruiser/Destroyer/Patrol Boat, or the titular Battleship. If all of a player's ships have been sunk, the game is over and their opponent wins.",
+  "battleWinnerFirst": "Once all ships of one of the players are sunk, the game ends. The winner in a naval battle is the player who first manages to determine the location of all enemy ships.",
 
   "waiting": "Waiting for an opponent...",
   "random": "Random",

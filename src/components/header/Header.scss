@@ -146,6 +146,9 @@
       display: block;
     }
   }
+  @media (max-width: 1280px) {
+    margin-left: 20px;
+  }
 }
 
 .navigation_link {
