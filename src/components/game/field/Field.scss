@@ -58,3 +58,17 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 640px) {
+  .battleground {
+    grid-template-columns: repeat(10, 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .battleground {
+    grid-template-columns: repeat(10, 22px);
+  }
+}
+
+

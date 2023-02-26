@@ -7,10 +7,9 @@
 
   &_fields {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 40px;
-    position: relative;
   }
 }
 
@@ -18,6 +17,7 @@
   display: flex;
   flex-direction: column;
   width: calc(50% - 20px);
+  margin-bottom: 40px;
   padding: 10px 0 32px;
   border-radius: 4px;
   background: $primary-corner-gradient;
@@ -79,5 +79,15 @@
   &:disabled {
     pointer-events: none;
     background-size: 0;
+  }
+}
+
+@media (max-width: 1040px) {
+  .game_fields {
+    flex-direction: column;
+  }
+
+  .field {
+    width: 100%;
   }
 }
