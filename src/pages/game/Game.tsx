@@ -116,8 +116,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <Gameover isOnline={isOnline} />
           <PopUp />
         </div>
-        <Chat />
       </main>
+      <Chat />
     </div>
   );
 };

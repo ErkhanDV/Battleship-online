@@ -1,14 +1,17 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { authService } from '@/services/axios/Auth';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
-import { useTranslation } from 'react-i18next';
+import { SocketContext } from '@/context/Context';
 
 import './Login.scss';
 
 import { IUser } from '@/services/axios/_types';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const LogIn: FC = () => {
+  const { sendSocket } = useContext(SocketContext);
   const [loginValue, setLoginValue] = useState('');
   const [validation, setValidation] = useState('');
   const { setUserName, setModalOpen } = useLogInActions();
@@ -25,7 +28,9 @@ const LogIn: FC = () => {
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setLoginValue(target.value);
 
-  const logInHandler = async () => {
+  const formHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const response: IUser = await authService.login(loginValue.trim());
     if (typeof response === 'string') {
       setValidation(response);
@@ -35,13 +40,9 @@ const LogIn: FC = () => {
     if (response.name) {
       setLoginValue('');
       setUserName(response.name);
+      sendSocket(SOCKETMETHOD.setName, { socketName: response.name });
       setModalOpen(false);
     }
-  };
-
-  const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    logInHandler();
   };
 
   return (
@@ -55,7 +56,7 @@ const LogIn: FC = () => {
         placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
-      <button className="login_button" onClick={logInHandler}>
+      <button type="submit" className="login_button">
         {t('login')}
       </button>
     </form>

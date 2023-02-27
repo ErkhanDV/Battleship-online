@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   useAppSelector,
   useGameStateActions,
@@ -7,8 +8,14 @@ import { PERSON } from '@/store/_constants';
 import { IStartGame, IConnect } from '@/store/reducers/types/socket';
 
 export const useConnectionHandler = () => {
-  const { setIsAbleShoot, setIsGameFinded, setIsReady, setOpponentName } =
-    useGameStateActions();
+  const { t } = useTranslation();
+  const {
+    setIsAbleShoot,
+    setWinner,
+    setIsGameFinded,
+    setIsReady,
+    setOpponentName,
+  } = useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
   const { userName } = useAppSelector((state) => state.logInSlice);
 
@@ -25,6 +32,8 @@ export const useConnectionHandler = () => {
     if (user.name !== userName) {
       setOpponentName(user.name);
     } else {
+      setIsAbleShoot(isAbleShoot);
+
       if (field) {
         setIsReady(true);
         updateShipsLocationState(field, PERSON.user);
@@ -37,10 +46,18 @@ export const useConnectionHandler = () => {
       if (opponentField) {
         updateShipsLocationState(opponentField, PERSON.rival);
       }
-      setIsAbleShoot(isAbleShoot);
     }
 
     setIsGameFinded(isGameFinded);
+
+    if (data.isReconnect && user.name !== userName) {
+      setWinner(t('winReconnect'));
+
+      setTimeout(() => {
+        setWinner('');
+      }, 1000);
+    }
+
     console.log('connection');
   };
 

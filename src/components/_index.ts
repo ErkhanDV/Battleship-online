@@ -5,5 +5,17 @@ import Modal from './modal/Modal';
 import Settings from './settings/Settings';
 import LogIn from './logIn/LogIn';
 import Chat from './chat/Chat';
+import Friend from './friend/Friend';
+import Invite from './invite/Invite';
 
-export { Background, Header, Footer, Modal, Settings, LogIn, Chat };
+export {
+  Background,
+  Header,
+  Footer,
+  Modal,
+  Settings,
+  LogIn,
+  Chat,
+  Friend,
+  Invite,
+};

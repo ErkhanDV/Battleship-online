@@ -4,10 +4,15 @@
 
   "home": "Home",
   "game": "Game",
-  "vsPlayer": "Vs Player",
+  "vsFriend": "Vs Player",
   "vsComputer": "Vs Computer",
+  "vsRandom": "Vs Random",
+  "friendGame": "Game with friend",
   "single": "Single Player",
   "rules": "Rules",
+  "create": "Create game",
+  "connect": "Connect",
+  "or": "or",
   "login": "Login",
   "logout": "Logout",
 
@@ -72,5 +77,11 @@
   "reset": "Reset",
   "dragAndDrop": "Drag and drop your ships on the field or press the button for a random arrangement.",
   "ready": "Ready",
-  "start": "Start Game"
+  "start": "Start Game",
+
+  "winReconnect": "Opponent has returned",
+  "winDisconnect": "Opponent has left the battle, you can wait, he may to return",
+  "winExit": "The enemy has left the battle",
+  "winWin": "You have sunk all enemy ships",
+  "winLose": "Enemy has destroyed all your ships"
 }

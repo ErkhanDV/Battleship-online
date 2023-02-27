@@ -2,6 +2,8 @@ export interface IChat {
   currentChat: string;
   common: IChatMessage[];
   game: IChatMessage[];
+  unreadGame: number;
+  unreadCommon: number;
 }
 
 export interface IChatMessage {

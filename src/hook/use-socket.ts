@@ -9,12 +9,14 @@ export const useSocket = () => {
   const socket = useRef<WebSocket>();
   const {
     connectHandler,
+    disconnectHandler,
     shootHandler,
     gameoverHandler,
     readyHandler,
     exitHandler,
     chatHandler,
     mailingHandler,
+    inviteHandler,
   } = useSocketHandlers();
 
   const { setGameInfo } = useGameStateActions();
@@ -25,7 +27,17 @@ export const useSocket = () => {
     return { userName, gameInfo };
   });
 
-  const { shoot, connect, ready, gameover, exit, chat, mailing } = SOCKETMETHOD;
+  const {
+    shoot,
+    connect,
+    disconnect,
+    ready,
+    gameover,
+    exit,
+    chat,
+    mailing,
+    invite,
+  } = SOCKETMETHOD;
 
   useEffect(() => {
     socket.current = new WebSocket(SOCKET);
@@ -63,6 +75,10 @@ export const useSocket = () => {
             connectHandler(data);
             break;
 
+          case disconnect:
+            disconnectHandler(data);
+            break;
+
           case ready:
             readyHandler(data);
             break;
@@ -80,11 +96,15 @@ export const useSocket = () => {
             break;
 
           case exit:
-            exitHandler();
+            exitHandler(data);
             break;
 
           case mailing:
             mailingHandler(data);
+            break;
+
+          case invite:
+            inviteHandler(data);
             break;
         }
       };
@@ -94,7 +114,6 @@ export const useSocket = () => {
   const sendSocket: TSendSocket = useCallback(
     (method, data) => {
       if (method === SOCKETMETHOD.connect) {
-        console.log(data);
         setGameInfo(data ? (data as ISendConnect) : null);
       }
 

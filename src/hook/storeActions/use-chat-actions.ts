@@ -19,11 +19,19 @@ export const useChatActions = () => {
   const changeChat = (chatName: keyof typeof CHAT) =>
     dispatch(chatActions.changeChat(chatName));
 
+  const setUnreadCommon = (reset = false) =>
+    dispatch(chatActions.setUnreadCommon(reset));
+
+  const setUnreadGame = (reset = false) =>
+    dispatch(chatActions.setUnreadGame(reset));
+
   return {
     pushGameMessage,
     pushCommonMessage,
     resetGameChat,
     resetCommonChat,
     changeChat,
+    setUnreadGame,
+    setUnreadCommon,
   };
 };

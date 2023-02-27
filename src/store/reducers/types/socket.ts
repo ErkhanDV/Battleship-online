@@ -2,21 +2,11 @@ import { IPlayerState } from './shipLocation';
 import { IPlayer, IStartGame } from '@/services/axios/_types';
 import { IChatMessage } from './chat';
 
-export interface IGameState {
-  gameInfo: null | IStartGame;
-  opponentName: string;
-  isGameFinded: boolean;
-  isStarted: boolean;
-  isAbleShoot: boolean;
-  isReady: boolean;
-  winner: string;
-  gameDifficult: number;
-}
-
 export interface IConnect {
   method: string;
   isGameFinded: boolean;
   isAbleShoot: boolean;
+  isReconnect: boolean;
   field?: IPlayerState;
   opponentName?: string;
   opponentField?: IPlayerState;
@@ -35,6 +25,10 @@ export interface IShoot {
   winner?: string;
 }
 
+export interface IExit {
+  user: string;
+}
+
 export interface IMessage {
   mail: IChatMessage;
 }
@@ -42,6 +36,11 @@ export interface IMessage {
 export interface IMailing {
   chatName: string;
   chatMessage: IChatMessage[];
+}
+
+export interface IInvite {
+  friend: string;
+  server: string;
 }
 
 export interface ISendConnect {
@@ -61,14 +60,30 @@ export interface ISendChat {
   mail: IChatMessage;
 }
 
-export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
+export interface ISendSocketName {
+  socketName: string;
+}
+
+export interface ISendInvite {
+  friend: string;
+}
+
+export type TSendData =
+  | ISendConnect
+  | ISendReady
+  | ISendShoot
+  | ISendChat
+  | ISendSocketName
+  | ISendInvite;
 
 export type TSocketMessage = IStartGame &
   IReady &
   IConnect &
   IShoot &
   IMessage &
-  IMailing;
+  IMailing &
+  IExit &
+  IInvite;
 
 export type TSendSocket = <T extends TSendData>(
   method: string,
