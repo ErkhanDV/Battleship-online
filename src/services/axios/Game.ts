@@ -41,12 +41,4 @@ export class gameService {
 
     return undefined;
   }
-
-  static async dropGame() {
-    try {
-      await axiosAPI.patch(`${CLONE_SERVER}/dropgame`);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }

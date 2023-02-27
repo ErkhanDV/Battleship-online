@@ -78,8 +78,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
           <Gameover />
         </div>
-        <Chat />
       </main>
+      <Chat />
     </div>
   );
 };

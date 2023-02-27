@@ -11,6 +11,7 @@ export const useExitHandler = () => {
   const exitHandler = (data: IExit) => {
     console.log('exit');
 
+
     if (data.user !== userName && isAuthorized) {
       setWinner(t('winExit'));
     }

@@ -62,8 +62,6 @@ const Header: FC = () => {
       if (gameInfo) {
         sendSocket(SOCKETMETHOD.exit);
       }
-
-      // await gameService.dropGame();
       checkAuth();
 
       if (location.pathname !== ROUTE.game) {

@@ -23,7 +23,7 @@ export const useChatActions = () => {
     dispatch(chatActions.setUnreadCommon(reset));
 
   const setUnreadGame = (reset = false) =>
-    dispatch(chatActions.setUnreadCommon(reset));
+    dispatch(chatActions.setUnreadGame(reset));
 
   return {
     pushGameMessage,

@@ -32,14 +32,6 @@ export const useSocket = () => {
   useEffect(() => {
     socket.current = new WebSocket(SOCKET);
 
-    window.onunload = () => {
-      if (socket.current) {
-        if (gameInfo) {
-          sendSocket('disconnect');
-        }
-      }
-    };
-
     socket.current.onopen = () => console.log('socket opened');
 
     socket.current.onmessage = (response) => {
@@ -67,6 +59,8 @@ export const useSocket = () => {
       socket.current.onmessage = (response) => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
+
+        console.log('соббщение', data);
 
         switch (method) {
           case connect:
@@ -108,7 +102,6 @@ export const useSocket = () => {
   const sendSocket: TSendSocket = useCallback(
     (method, data) => {
       if (method === SOCKETMETHOD.connect) {
-        console.log(data);
         setGameInfo(data ? (data as ISendConnect) : null);
       }
 

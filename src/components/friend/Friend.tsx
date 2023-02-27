@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLogInActions, useCheckAuth, useAppSelector } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-// import { gameService } from '@/services/axios/Game';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
@@ -43,8 +42,6 @@ const Friend: FC = () => {
       if (gameInfo) {
         sendSocket(SOCKETMETHOD.exit);
       }
-
-      // await gameService.dropGame();
 
       if (mode === 'create') {
         error = await checkAuth('', true);

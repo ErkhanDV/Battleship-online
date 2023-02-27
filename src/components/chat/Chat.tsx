@@ -58,9 +58,9 @@ const Chat: FC = () => {
 
   const focusHandler = () => {
     if (currentChat === CHAT.common) {
-      setUnreadCommon(true);
+      setTimeout(() => setUnreadCommon(true), 1000);
     } else {
-      setUnreadGame(true);
+      setTimeout(() => setUnreadGame(true), 1000);
     }
   };
 

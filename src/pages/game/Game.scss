@@ -5,6 +5,10 @@
   flex-direction: column;
   justify-content: space-between;
 
+  .main {
+    position: relative;
+  }
+
   &_fields {
     display: flex;
     flex-wrap: wrap;
