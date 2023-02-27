@@ -104,14 +104,14 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           </button>
         ) : null}
         <div className="game_fields">
-          <PopUp />
           <div className="field">
-            <h2 className="field_name">{userName}</h2>
+            <h2 className="field_name">{userName || 'You'}</h2>
             <Field isRival={false} isOnline={isOnline} />
           </div>
           <ShipStation />
           <RivalField isOnline={isOnline} />
-          <Gameover />
+          <Gameover isOnline={isOnline} />
+          <PopUp />
         </div>
         <Chat />
       </main>

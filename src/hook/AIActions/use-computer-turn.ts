@@ -11,7 +11,7 @@ export const useComputerTurn = () => {
   const { user } = useAppSelector((state) => state.gameShipsSlice);
 
   const { checkShoot, addNotAllowed } = useGameShipsActions();
-  const { setIsAbleShoot } = useGameStateActions();
+  const { setIsAbleShoot, setWinner } = useGameStateActions();
   const { availableShoots, turnToDestroy, hitted } = useAppSelector(
     (state) => state.AIStateSlice,
   );
@@ -23,10 +23,7 @@ export const useComputerTurn = () => {
   };
 
   const computerTurn = () => {
-    // console.log('turn to destroy: ', turnToDestroy);
-
     const getShoot = () => {
-      // console.log('Hitted ship index: ', hitted);
       if (turnToDestroy !== 0) {
         return getPossibleCells(
           user.ships[hitted].woundedCells,
@@ -52,6 +49,7 @@ export const useComputerTurn = () => {
         setAvailableShoots,
         setHitted,
         setTurnToDestroy,
+        setWinner,
       );
     }, 2500);
   };

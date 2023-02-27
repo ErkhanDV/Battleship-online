@@ -46,4 +46,19 @@
       transform: scale(1.2);
     }
   }
+  .gamers-table {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .users-result {
+    display: flex;
+    flex-direction: column;
+  }
+  .winner-background {
+    background-color: red;
+  }
+  .looser-background {
+    background-color: green;
+  }
 }
