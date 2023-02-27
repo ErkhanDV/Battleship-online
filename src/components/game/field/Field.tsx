@@ -7,7 +7,7 @@ import { FIELD } from '@/store/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 import './Field.scss';
-// import Sound from '@/lib/API/Sound/Sound';
+import Sound from '@/lib/API/Sound/Sound';
 
 import { useUserTurn } from '@/hook/AIActions/use-user-turn';
 
@@ -22,7 +22,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     (state) => state.gameStateSlice,
   );
 
-  // const { sound } = useAppSelector((state) => state.appSettingsSlice);
+  const { sound } = useAppSelector((state) => state.appSettingsSlice);
 
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
@@ -30,7 +30,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     const shoot = Number((target as HTMLDivElement).id);
 
     if (isAbleShoot && isStarted && isRival) {
-      // if (sound) Sound('shot');
+      if (sound) Sound('shot');
       if (isOnline && sendSocket) {
         sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
       } else if ((target as HTMLDivElement).id) {

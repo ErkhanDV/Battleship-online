@@ -35,6 +35,11 @@
   }
 }
 
+.destroyed {
+  background: url(../../../assets/png/fire.png);
+  background-size: contain;
+}
+
 .miss {
   position: relative;
   &::before {

@@ -23,18 +23,22 @@
     width: 160px;
     height: 40px;
     margin: 0 auto;
-    font-size: 20px;
-    font-family: 'Russo One', sans-serif;
-    font-weight: 100;
+    font: {
+      family: $primaryFont;
+      size: 20px;
+      weight: 100;
+    }
     text-transform: uppercase;
     letter-spacing: 2px;
     color: $primary-color-100;
-    border: none;
-    border-radius: 4px;
-    background: $primary-corner-gradient;
-    background-repeat: no-repeat;
-    background-size: 25% 10px;
-    background-color: $primary-color-25;
+    border: none {
+      radius: 4px;
+    }
+    background: $primary-corner-gradient {
+      repeat: no-repeat;
+      size: 25% 10px;
+      color: $primary-color-25;
+    }
     cursor: pointer;
     transition: ease-in-out 0.5s;
     &:hover {

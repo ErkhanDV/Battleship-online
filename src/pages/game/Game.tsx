@@ -79,30 +79,33 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   return (
     <div className="game">
       <main className="main">
-        {!isReady && !isOnline ? (
-          <div className="game_difficult">
-            <select
-              name="difficult"
-              id="difficult"
-              onChange={(e) => gameDifficultHandler(e)}
+        <div className="game_control">
+          {!isReady && !isOnline ? (
+            <div className="game_difficult">
+              <select
+                className="game_select"
+                name="difficult"
+                id="difficult"
+                onChange={(e) => gameDifficultHandler(e)}
+              >
+                {GAMEDIFFICULTS.map((difficult, i) => (
+                  <option value={i} key={i}>
+                    {difficult}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : null}
+          {!isReady ? (
+            <button
+              disabled={isFilled || !gameDifficult}
+              onClick={readyHandler}
+              className="button-render"
             >
-              {GAMEDIFFICULTS.map((difficult, i) => (
-                <option value={i} key={i}>
-                  {difficult}
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : null}
-        {!isReady ? (
-          <button
-            disabled={isFilled || !gameDifficult}
-            onClick={readyHandler}
-            className="button-render"
-          >
-            {isOnline ? t(GAMEMODE.ready) : t(GAMEMODE.start)}
-          </button>
-        ) : null}
+              {isOnline ? t(GAMEMODE.ready) : t(GAMEMODE.start)}
+            </button>
+          ) : null}
+        </div>
         <div className="game_fields">
           <PopUp />
           <div className="field">
