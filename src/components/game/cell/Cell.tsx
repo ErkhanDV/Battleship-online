@@ -37,6 +37,9 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
     personState.misses.forEach((id) => {
       classList += id === coordinate ? miss : '';
     });
+    personState.notAllowed.forEach((id) => {
+      classList += id === coordinate ? miss : '';
+    });
 
     return classList;
   }, [personState]);

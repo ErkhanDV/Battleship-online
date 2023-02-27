@@ -35,6 +35,11 @@ const App = () => {
       sendSocket(SOCKETMETHOD.exit);
       resetGameChat();
     }
+    // <<<<<<< HEAD
+    //     resetGameShips();
+    //     // resetGameState();
+    // =======
+    // >>>>>>> develop
   }, [location]);
 
   checkLocalStorage();

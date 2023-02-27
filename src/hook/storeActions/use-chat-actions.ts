@@ -16,7 +16,8 @@ export const useChatActions = () => {
 
   const resetCommonChat = () => dispatch(chatActions.resetCommonChat());
 
-  const changeChat = (chatName: keyof typeof CHAT) => dispatch(chatActions.changeChat(chatName));
+  const changeChat = (chatName: keyof typeof CHAT) =>
+    dispatch(chatActions.changeChat(chatName));
 
   return {
     pushGameMessage,
