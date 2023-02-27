@@ -28,13 +28,11 @@ export const useComputerTurn = () => {
     const getShoot = () => {
       // console.log('Hitted ship index: ', hitted);
       if (turnToDestroy !== 0) {
-        const asdas = getPossibleCells(
+        return getPossibleCells(
           user.ships[hitted].woundedCells,
           user.notAllowed,
           user.misses,
-        );
-        console.log(asdas);
-        return asdas[0];
+        )[0];
       }
       return getShootTarget();
     };
