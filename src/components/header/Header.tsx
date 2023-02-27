@@ -4,9 +4,16 @@ import { useTranslation } from 'react-i18next';
 
 import './Header.scss';
 
-import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
+import {
+  useLogInActions,
+  useAppSelector,
+  useChatActions,
+  useGameStateActions,
+  useGameShipsActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-import { authService } from '@/services/axios/_index';
+import { authService, gameService } from '@/services/axios/_index';
+
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
 import { MODAL } from '@/store/_constants';
@@ -14,11 +21,14 @@ import { MODAL } from '@/store/_constants';
 const Header: FC = () => {
   const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
-  const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
   const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
+  const { resetGameChat } = useChatActions();
+  const { resetGameState } = useGameStateActions();
+  const { resetGameShips } = useGameShipsActions();
+
   const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
     const { isAuthorized } = state.logInSlice;
     const { userName } = state.logInSlice;
@@ -51,9 +61,11 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       setUserName('');
-      await authService.logout();
+      sendSocket(SOCKETMETHOD.setName, { socketName: '' });
 
+      await authService.logout();
       if (gameInfo) sendSocket(SOCKETMETHOD.exit);
+
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     } else {
       modalHandler(MODAL.log);
@@ -62,7 +74,18 @@ const Header: FC = () => {
 
   const gameHandler = async () => {
     if (isAuthorized) {
-      checkAuth();
+      if (gameInfo) {
+        sendSocket(SOCKETMETHOD.exit);
+        resetGameChat();
+        resetGameState();
+        resetGameShips();
+      }
+
+      const response = await gameService.startGame();
+
+      if (response && typeof response !== 'string') {
+        sendSocket(SOCKETMETHOD.connect, response);
+      }
 
       if (location.pathname !== ROUTE.game) {
         navigate(ROUTE.game);
@@ -91,15 +114,19 @@ const Header: FC = () => {
           <li className="navigation_item item-dropdown">
             <span className="navigation_link">{t('game')}</span>
             <ul className="navigation_dropdown">
-              <li className="dropdown-item">
-                <span className="navigation_link" onClick={gameHandler}>
-                  {t('vsPlayer')}
-                </span>
+              <li onClick={gameHandler} className="dropdown-item">
+                <span className="navigation_link">{t('vsRandom')}</span>
               </li>
               <li className="dropdown-item">
                 <NavLink to={ROUTE.single} className="navigation_link">
                   {t('vsComputer')}
                 </NavLink>
+              </li>
+              <li
+                onClick={() => modalHandler(MODAL.friend)}
+                className="dropdown-item"
+              >
+                <span className="navigation_link">{t('vsFriend')}</span>
               </li>
             </ul>
           </li>
@@ -108,13 +135,11 @@ const Header: FC = () => {
               {t('rules')}
             </NavLink>
           </li>
-          <li className="navigation_item">
-            <span
-              className="navigation_link"
-              onClick={() => modalHandler(MODAL.settings)}
-            >
-              {t('settings')}
-            </span>
+          <li
+            onClick={() => modalHandler(MODAL.settings)}
+            className="navigation_item"
+          >
+            <span className="navigation_link">{t('settings')}</span>
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
             <span className="navigation_link">{logStatus}</span>

@@ -1,18 +1,20 @@
 import { useTranslation } from 'react-i18next';
-
-import { useGameStateActions, useGameShipsActions } from '@/hook/_index';
+import { useGameStateActions, useAppSelector } from '@/hook/_index';
+import { IExit } from '@/store/reducers/types/socket';
 
 export const useExitHandler = () => {
   const { t } = useTranslation();
-  const { setWinner, resetGameState } = useGameStateActions();
-  const { resetGameShips } = useGameShipsActions();
+  const { setWinner } = useGameStateActions();
+  const { userName, isAuthorized } = useAppSelector((state) => state.logInSlice);
 
-  const exitHandler = () => {
+
+  const exitHandler = (data: IExit) => {
     console.log('exit');
-    setWinner(t('Противник вышел из боя'));
 
-    resetGameState();
-    resetGameShips();
+
+    if (data.user !== userName && isAuthorized) {
+      setWinner(t('winExit'));
+    }
   };
 
   return { exitHandler };

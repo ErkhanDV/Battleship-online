@@ -6,6 +6,8 @@ import {
   useCheckAuth,
   useAppSelector,
   useChatActions,
+  useGameStateActions,
+  useGameShipsActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { Header, Footer, Background, Modal } from '@/components/_index';
@@ -19,6 +21,8 @@ const App = () => {
   const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
   const { checkAuth } = useCheckAuth(sendSocket);
   const { resetGameChat } = useChatActions();
+  const { resetGameState } = useGameStateActions();
+  const { resetGameShips } = useGameShipsActions();
 
   useEffect(() => {
     checkAuth();
@@ -34,6 +38,8 @@ const App = () => {
     if (isMatchRoute && gameInfo) {
       sendSocket(SOCKETMETHOD.exit);
       resetGameChat();
+      resetGameState();
+      resetGameShips();
     }
   }, [location]);
 

@@ -98,7 +98,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           ) : null}
           {!isReady ? (
             <button
-              disabled={isFilled || !gameDifficult}
+              disabled={isFilled || (!isOnline && !gameDifficult)}
               onClick={readyHandler}
               className="button-render"
             >
@@ -116,8 +116,8 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <Gameover isOnline={isOnline} />
           <PopUp />
         </div>
-        <Chat />
       </main>
+      <Chat />
     </div>
   );
 };

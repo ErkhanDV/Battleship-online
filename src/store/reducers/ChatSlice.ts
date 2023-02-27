@@ -5,13 +5,31 @@ import { CHAT } from '../_constants';
 const initialState: IChat = {
   currentChat: CHAT.common,
   common: [],
+  unreadCommon: 0,
   game: [],
+  unreadGame: 0,
 };
 
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    setUnreadCommon(state, action: PayloadAction<boolean>) {
+      if (action.payload) {
+        state.unreadCommon = 0;
+      } else {
+        state.unreadCommon += 1;
+      }
+    },
+
+    setUnreadGame(state, action: PayloadAction<boolean>) {
+      if (action.payload) {
+        state.unreadGame = 0;
+      } else {
+        state.unreadGame += 1;
+      }
+    },
+
     pushGameMessage(state, action: PayloadAction<IChatMessage>) {
       state.game.push(action.payload);
     },
@@ -40,6 +58,8 @@ export const {
   resetGameChat,
   resetCommonChat,
   changeChat,
+  setUnreadCommon,
+  setUnreadGame,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

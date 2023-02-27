@@ -17,9 +17,9 @@ export const useGameoverHandler = () => {
 
     if (winner) {
       if (winner === userName) {
-        setWinner(t('You have sunk all enemy ships'));
+        setWinner(t('winWin'));
       } else {
-        setWinner(t(`${winner} destroyed all your ships`));
+        setWinner(t('winLose'));
       }
     }
   };
