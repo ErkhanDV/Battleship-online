@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/_index';
+import { useAppDispatch, useLogInActions } from '@/hook/_index';
 import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,
@@ -8,6 +8,10 @@ import {
 
 export const useGameShipsActions = () => {
   const dispatch = useAppDispatch();
+  const { setModalOpen, setModalChildren } = useLogInActions();
+  const modalHandler = (component: string) => {
+    setModalChildren(component);
+  };
 
   const updateShipsLocationState = (
     state: IPlayerState,
@@ -15,6 +19,8 @@ export const useGameShipsActions = () => {
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
   const checkShoot = (person: keyof IGameShips, cell: number) => {
+    modalHandler('miss');
+    setModalOpen(true);
     dispatch(shipActions.addShoot({ person, cell }));
   };
 

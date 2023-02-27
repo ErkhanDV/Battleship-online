@@ -1,0 +1,14 @@
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all ease-in-out 1s;
+  z-index: 300;
+  &.open {
+    opacity: 1;
+  }
+}
