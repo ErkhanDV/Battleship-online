@@ -1,6 +1,7 @@
 export interface IPlayerState {
   ships: IShip[];
   misses: number[];
+  notAllowed: number[];
 }
 
 export interface IGameShips {
@@ -20,8 +21,16 @@ export interface IPersonState extends IPerson {
   state: IPlayerState;
 }
 
-export interface IShoot extends IPerson {
+export interface IShoot extends ICheckShoot {
+  index: number;
+}
+
+export interface ICheckShoot extends IPerson {
   cell: number;
+}
+
+export interface ISPShoot extends IShoot {
+  index: number;
 }
 
 export interface IRandomState extends IPerson {
@@ -33,4 +42,9 @@ export interface IShip {
   decks: number;
   occupiedCells: number[];
   woundedCells: number[];
+}
+
+export interface IAddNotAllowed {
+  person: keyof IGameShips;
+  notAllowed: number[];
 }

@@ -1,0 +1,23 @@
+.popup {
+  color: green;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  z-index: 0;
+  &.open {
+    opacity: 1;
+    z-index: 300;
+  }
+}
+.text {
+  opacity: 1;
+  &.closed {
+    opacity: 0;
+  }
+}

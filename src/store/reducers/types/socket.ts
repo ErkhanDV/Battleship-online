@@ -2,17 +2,6 @@ import { IPlayerState } from './shipLocation';
 import { IPlayer, IStartGame } from '@/services/axios/_types';
 import { IChatMessage } from './chat';
 
-export interface IGameState {
-  gameInfo: null | IStartGame;
-  opponentName: string;
-  isGameFinded: boolean;
-  isStarted: boolean;
-  isAbleShoot: boolean;
-  isReady: boolean;
-  winner: string;
-  invite: string;
-}
-
 export interface IConnect {
   method: string;
   isGameFinded: boolean;

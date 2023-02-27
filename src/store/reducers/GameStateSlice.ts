@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IGameState, IStartGame } from './types/socket';
+import { IStartGame } from './types/socket';
+import { IGameState } from './types/gameState';
 
 const initialState: IGameState = {
   gameInfo: null,
@@ -10,6 +11,7 @@ const initialState: IGameState = {
   isAbleShoot: false,
   isReady: false,
   winner: '',
+  gameDifficult: 0,
 };
 
 export const gameStateSlice = createSlice({
@@ -49,6 +51,10 @@ export const gameStateSlice = createSlice({
     },
 
     resetGameState: () => initialState,
+
+    setGameDifficult(state, action: PayloadAction<number>) {
+      state.gameDifficult = action.payload;
+    },
   },
 });
 
@@ -62,6 +68,7 @@ export const {
   setWinner,
   setInvite,
   resetGameState,
+  setGameDifficult,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

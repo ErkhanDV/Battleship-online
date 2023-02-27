@@ -15,6 +15,36 @@
     justify-content: space-between;
     width: 100%;
   }
+
+  &_control {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &_select {
+    width: 280px;
+    padding: 10px;
+    font: {
+      family: $primaryFont;
+      size: 20px;
+      weight: 100;
+    }
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $primary-color-100;
+    border: none {
+      radius: 4px;
+    }
+    outline: none;
+    background: $primary-corner-gradient {
+      repeat: no-repeat;
+      size: 25% 10px;
+      color: $primary-color-25;
+    }
+  }
 }
 
 .field {
@@ -44,8 +74,9 @@
 }
 
 .button-render {
+  width: 280px;
   padding: 10px 40px;
-  margin: 0 auto 20px;
+  margin: 20px;
 
   font: {
     size: 20px;

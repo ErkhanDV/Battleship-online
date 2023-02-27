@@ -12,8 +12,7 @@ const Settings = () => {
     (state) => state.appSettingsSlice,
   );
 
-  const { changeTheme, changeScheme, toggleSound } =
-    useAppSettingsActions();
+  const { changeTheme, changeScheme, toggleSound } = useAppSettingsActions();
 
   const handleLanguageButton = (language: string) => {
     i18n.changeLanguage(language);
@@ -28,7 +27,7 @@ const Settings = () => {
     );
     document.body.style.setProperty('--text-color-100', 'rgb(0, 0, 0, 1)');
     document.body.style.setProperty('--text-color-50', 'rgb(0, 0, 0, 0.5)');
-    localStorage.setItem('theme_mode', 'light')
+    localStorage.setItem('theme_mode', 'light');
   };
 
   const handleDarkButton = () => {
@@ -70,14 +69,15 @@ const Settings = () => {
     localStorage.setItem('color_scheme', 'blue');
   };
 
+  const handleSoundOn = () => {
+    toggleSound(true);
+    localStorage.removeItem('sound');
+  };
 
-
-  if (localStorage.getItem('color_scheme') === 'blue') {
-    changeScheme('blue');
-  }
-  if (localStorage.getItem('theme_mode') === 'light') {
-    changeTheme('light');
-  }
+  const handleSoundOff = () => {
+    toggleSound(false);
+    localStorage.setItem('sound', 'false');
+  };
 
   return (
     <div className="settings">
@@ -138,13 +138,13 @@ const Settings = () => {
         <div className="settings_options">
           <button
             className={`settings_button ${sound && 'active'}`}
-            onClick={() => toggleSound(true)}
+            onClick={handleSoundOn}
           >
             {t('on')}
           </button>
           <button
             className={`settings_button ${!sound && 'active'}`}
-            onClick={() => toggleSound(false)}
+            onClick={handleSoundOff}
           >
             {t('off')}
           </button>

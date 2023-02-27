@@ -111,7 +111,6 @@ const Header: FC = () => {
               {t('home')}
             </NavLink>
           </li>
-
           <li className="navigation_item item-dropdown">
             <span className="navigation_link">{t('game')}</span>
             <ul className="navigation_dropdown">

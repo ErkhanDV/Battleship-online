@@ -7,6 +7,8 @@ import {
   IShoot,
   IRandomState,
   IShip,
+  IAddNotAllowed,
+  ICheckShoot,
 } from './types/shipLocation';
 import { SHIPS } from '../_constants';
 
@@ -14,10 +16,12 @@ const initialState: IGameShips = {
   user: {
     ships: [],
     misses: [],
+    notAllowed: [],
   },
   rival: {
     ships: [],
     misses: [],
+    notAllowed: [],
   },
 };
 
@@ -31,18 +35,13 @@ const gameShipsSlice = createSlice({
     },
 
     addShoot(state, action: PayloadAction<IShoot>) {
+      const { person, cell, index } = action.payload;
+      state[person].ships[index].woundedCells.push(cell);
+    },
+
+    addMiss(state, action: PayloadAction<ICheckShoot>) {
       const { person, cell } = action.payload;
-      const ships = state[person].ships.map(
-        (ship) => ship.shipLocation,
-      );
-      const index = ships.findIndex((coordinates) =>
-        coordinates.includes(cell),
-      );
-      if (index !== -1) {
-        state[person].ships[index].woundedCells.push(cell);
-      } else {
-        state[person].misses.push(cell);
-      }
+      state[person].misses.push(cell);
     },
 
     resetShips(state) {
@@ -68,6 +67,11 @@ const gameShipsSlice = createSlice({
         state[person].ships.push(ship);
       });
     },
+
+    addNotAllowed(state, action: PayloadAction<IAddNotAllowed>) {
+      const { person, notAllowed } = action.payload;
+      state[person].notAllowed.push(...notAllowed);
+    },
   },
 });
 
@@ -76,8 +80,10 @@ export const {
   updateShipsState,
   setRandomShips,
   addShoot,
+  addMiss,
   resetShips,
   resetGameShips,
+  addNotAllowed,
 } = gameShipsSlice.actions;
 
 export default gameShipsSlice.reducer;

@@ -32,6 +32,9 @@ export const useGameStateActions = () => {
 
   const resetGameState = () => dispatch(gameStateActions.resetGameState());
 
+  const setGameDifficult = (difficult: number) =>
+    dispatch(gameStateActions.setGameDifficult(difficult));
+
   return {
     setWinner,
     setGameInfo,
@@ -42,5 +45,6 @@ export const useGameStateActions = () => {
     setIsStarted,
     setInvite,
     resetGameState,
+    setGameDifficult,
   };
 };
