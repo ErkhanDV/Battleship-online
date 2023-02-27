@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector, useGameStateActions } from '@/hook/_index';
 import { useShootHandler } from './use-shoot';
 import { IShoot } from '@/store/reducers/types/socket';
-import { WINNER } from './_constants';
 
 export const useGameoverHandler = () => {
   const { t } = useTranslation();
@@ -18,9 +17,9 @@ export const useGameoverHandler = () => {
 
     if (winner) {
       if (winner === userName) {
-        setWinner(t(WINNER.win));
+        setWinner(t('winWin'));
       } else {
-        setWinner(t(WINNER.lose(winner)));
+        setWinner(t('winLose'));
       }
     }
   };

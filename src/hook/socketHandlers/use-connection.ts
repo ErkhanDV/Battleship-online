@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   useAppSelector,
   useGameStateActions,
@@ -5,9 +6,9 @@ import {
 } from '@/hook/_index';
 import { PERSON } from '@/store/_constants';
 import { IStartGame, IConnect } from '@/store/reducers/types/socket';
-import { WINNER } from './_constants';
 
 export const useConnectionHandler = () => {
+  const { t } = useTranslation();
   const {
     setIsAbleShoot,
     setWinner,
@@ -50,7 +51,7 @@ export const useConnectionHandler = () => {
     setIsGameFinded(isGameFinded);
 
     if (data.isReconnect && user.name !== userName) {
-      setWinner(WINNER.reconnect);
+      setWinner(t('winReconnect'));
 
       setTimeout(() => {
         setWinner('');
