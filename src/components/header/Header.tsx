@@ -1,7 +1,14 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
+import {
+  useLogInActions,
+  useAppSelector,
+  useCheckAuth,
+  useChatActions,
+  useGameStateActions,
+  useGameShipsActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
@@ -17,6 +24,10 @@ const Header: FC = () => {
   const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
+  const { resetGameChat } = useChatActions();
+  const { resetGameState } = useGameStateActions();
+  const { resetGameShips } = useGameShipsActions();
+
   const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
     const { isAuthorized } = state.logInSlice;
     const { userName } = state.logInSlice;
@@ -61,6 +72,9 @@ const Header: FC = () => {
     if (isAuthorized) {
       if (gameInfo) {
         sendSocket(SOCKETMETHOD.exit);
+        resetGameChat();
+        resetGameState();
+        resetGameShips();
       }
       checkAuth();
 

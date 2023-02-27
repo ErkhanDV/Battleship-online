@@ -1,7 +1,14 @@
 import { FC, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLogInActions, useCheckAuth, useAppSelector } from '@/hook/_index';
+import {
+  useLogInActions,
+  useCheckAuth,
+  useAppSelector,
+  useChatActions,
+  useGameStateActions,
+  useGameShipsActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
@@ -17,6 +24,9 @@ const Friend: FC = () => {
   const [gameTryConnect, setGameTryConnect] = useState(false);
 
   const { setModalOpen, setModalChildren } = useLogInActions();
+  const { resetGameChat } = useChatActions();
+  const { resetGameState } = useGameStateActions();
+  const { resetGameShips } = useGameShipsActions();
 
   const { isModalOpen, isAuthorized, gameInfo } = useAppSelector((state) => {
     const { isModalOpen, isAuthorized } = state.logInSlice;
@@ -41,6 +51,9 @@ const Friend: FC = () => {
       let error: string | undefined;
       if (gameInfo) {
         sendSocket(SOCKETMETHOD.exit);
+        resetGameChat();
+        resetGameState();
+        resetGameShips();
       }
 
       if (mode === 'create') {
@@ -92,7 +105,7 @@ const Friend: FC = () => {
       </button>
       <span>{t('or')}</span>
       <button className="login_button" onClick={() => playHandler('create')}>
-        {t('create game')}
+        {t('create')}
       </button>
     </form>
   );
