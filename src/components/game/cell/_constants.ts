@@ -3,4 +3,5 @@ export enum CELLCLASS {
   shoot = ' hit',
   miss = ' miss',
   boat = ' ship-cell',
+  destroyed = ' destroyed',
 }

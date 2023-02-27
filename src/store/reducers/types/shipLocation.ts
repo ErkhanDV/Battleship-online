@@ -21,7 +21,11 @@ export interface IPersonState extends IPerson {
   state: IPlayerState;
 }
 
-export interface IShoot extends IPerson {
+export interface IShoot extends ICheckShoot {
+  index: number;
+}
+
+export interface ICheckShoot extends IPerson {
   cell: number;
 }
 

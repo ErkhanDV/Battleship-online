@@ -1,5 +1,6 @@
 import usePopUp from '@/hook/storeActions/use-popup-actions';
 import { useAppSelector } from '@/hook/use-redux';
+// import { useEffect } from 'react';
 import './PopUp.scss';
 
 const PopUp = () => {
@@ -8,11 +9,18 @@ const PopUp = () => {
   );
 
   const { setVision } = usePopUp();
-  setTimeout(() => {
+  // useEffect(() => {
+  const timer = setTimeout(() => {
     setVision(false);
-  }, 2000);
+    clearTimeout(timer);
+  }, 1000);
+  // }, [isVision]);
 
-  return <h3 className={`popup ${isVision && 'open'}`}>{popUpMessage}</h3>;
+  return (
+    <div className={`popup ${isVision && 'open'}`}>
+      <h3>{popUpMessage}</h3>
+    </div>
+  );
 };
 
 export default PopUp;

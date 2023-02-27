@@ -77,7 +77,11 @@ export const computerMove = (
   availableCells: number[],
   hitted: number,
   turnToDestroy: number,
-  addNotAllowed: (person: keyof IGameShips, notAllowed: number[]) => void,
+  addNotAllowed: (
+    person: keyof IGameShips,
+    notAllowed: number[],
+    decks: number,
+  ) => void,
   setIsAbleShoot: (state: boolean) => void,
   checkShoot: (person: keyof IGameShips, cell: number) => void,
   setAvailableShoots: (cells: number[]) => {
@@ -124,7 +128,7 @@ export const computerMove = (
     );
     setHitted(-1);
     setTurnToDestroy(0);
-    addNotAllowed('user', ship.occupiedCells);
+    addNotAllowed('user', ship.occupiedCells, ship.decks);
     cloneUser.notAllowed.push(...ship.occupiedCells);
     if (
       cloneUser.ships.filter((ship) => ship.decks === ship.woundedCells.length)
