@@ -64,7 +64,9 @@ const Chat: FC = () => {
     }
   };
 
-  const sendHandler = () => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const sendName = userName ? userName : 'Unknown user';
     const mail = {
       name: sendName,
@@ -76,11 +78,6 @@ const Chat: FC = () => {
 
     sendSocket(SOCKETMETHOD.chat, { mail });
     setText('');
-  };
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    sendHandler();
   };
 
   return (
@@ -126,9 +123,9 @@ const Chat: FC = () => {
           className="chat_write"
           type="text"
           value={text}
-          placeholder={t('Write your message...') as string}
+          placeholder={t('send') as string}
         />
-        <button className="chat_button" onClick={sendHandler} type="button">
+        <button className="chat_button" type="submit">
           {t('send')}
         </button>
       </form>

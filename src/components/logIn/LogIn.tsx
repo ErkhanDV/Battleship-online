@@ -25,7 +25,9 @@ const LogIn: FC = () => {
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setLoginValue(target.value);
 
-  const logInHandler = async () => {
+  const formHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const response: IUser = await authService.login(loginValue.trim());
     if (typeof response === 'string') {
       setValidation(response);
@@ -39,11 +41,6 @@ const LogIn: FC = () => {
     }
   };
 
-  const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    logInHandler();
-  };
-
   return (
     <form onSubmit={formHandler} className="login">
       <h2 className="login_title">{t('authorization')}</h2>
@@ -55,7 +52,7 @@ const LogIn: FC = () => {
         placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
-      <button className="login_button" onClick={logInHandler}>
+      <button type="submit" className="login_button">
         {t('login')}
       </button>
     </form>
