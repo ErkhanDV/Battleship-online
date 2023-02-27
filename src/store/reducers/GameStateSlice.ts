@@ -9,6 +9,7 @@ const initialState: IGameState = {
   isAbleShoot: false,
   isReady: false,
   winner: '',
+  gameDifficult: 0,
 };
 
 export const gameStateSlice = createSlice({
@@ -44,6 +45,10 @@ export const gameStateSlice = createSlice({
     },
 
     resetGameState: () => initialState,
+
+    setGameDifficult(state, action: PayloadAction<number>) {
+      state.gameDifficult = action.payload;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   setReady,
   setWinner,
   resetGameState,
+  setGameDifficult,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

@@ -14,8 +14,9 @@ export const useGameShipsActions = () => {
     person: keyof IGameShips,
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
-  const checkShoot = (person: keyof IGameShips, cell: number) =>
+  const checkShoot = (person: keyof IGameShips, cell: number) => {
     dispatch(shipActions.addShoot({ person, cell }));
+  };
 
   const addShip = (person: keyof IGameShips, ship: IShip) =>
     dispatch(shipActions.addShip({ person, ship }));
@@ -27,6 +28,10 @@ export const useGameShipsActions = () => {
 
   const resetGameShips = () => dispatch(shipActions.resetGameShips());
 
+  const addNotAllowed = (person: keyof IGameShips, notAllowed: number[]) => {
+    dispatch(shipActions.addNotAllowed({ person, notAllowed }));
+  };
+
   return {
     updateShipsLocationState,
     checkShoot,
@@ -34,5 +39,6 @@ export const useGameShipsActions = () => {
     resetShips,
     setRandomShips,
     resetGameShips,
+    addNotAllowed,
   };
 };
