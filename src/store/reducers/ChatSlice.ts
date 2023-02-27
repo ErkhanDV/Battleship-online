@@ -20,11 +20,11 @@ const chatSlice = createSlice({
       state.common.push(action.payload);
     },
 
-    resetGameChat(state, action: PayloadAction) {
+    resetGameChat(state) {
       state.game = [];
     },
 
-    resetCommonChat(state, action: PayloadAction) {
+    resetCommonChat(state) {
       state.common = [];
     },
 

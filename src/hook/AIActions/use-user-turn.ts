@@ -1,4 +1,4 @@
-import { IPlayerState, IShip } from '@/store/reducers/types/shipLocation';
+import { IPlayerState } from '@/store/reducers/types/shipLocation';
 import { useAppSelector } from '../use-redux';
 import { useGameShipsActions, useGameStateActions } from '../_index';
 import { useComputerTurn } from './use-computer-turn';

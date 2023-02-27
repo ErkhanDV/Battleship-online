@@ -17,3 +17,8 @@ export enum CHAT {
   common = 'common',
   game = 'game',
 }
+
+export enum MODAL {
+  log = 'log',
+  settings = 'settings',
+}

@@ -8,7 +8,6 @@ import {
   IRandomState,
   IShip,
   IAddNotAllowed,
-  ISPShoot,
 } from './types/shipLocation';
 import { SHIPS } from '../_constants';
 

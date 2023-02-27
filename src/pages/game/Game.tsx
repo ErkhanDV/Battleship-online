@@ -13,28 +13,32 @@ import {
   Gameover,
 } from '@/components/game/_index';
 
-import './game.scss';
-import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
-import { SOCKETMETHOD } from '@/services/axios/_constants';
-import { Chat } from '@/components/_index';
 import { useComputerTurn } from '@/hook/AIActions/use-computer-turn';
+
+import { Chat } from '@/components/_index';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
+import { GAMEMODE } from '@/router/_constants';
+import './Game.scss';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const { sendSocket } = useContext(SocketContext);
   const { t } = useTranslation();
   const { setRandomShips } = useGameShipsActions();
 
-  const { userName } = useAppSelector((state) => state.logInSlice);
-  const { isReady, winner, gameDifficult } = useAppSelector(
-    (state) => state.gameStateSlice,
-  );
-  const { user } = useAppSelector((state) => state.gameShipsSlice);
+  const { userName, isReady, user, gameDifficult } = useAppSelector((state) => {
+    const { userName } = state.logInSlice;
+    const { isReady, gameDifficult } = state.gameStateSlice;
+    const { user } = state.gameShipsSlice;
+
+    return { userName, isReady, gameDifficult, user };
+  });
 
   const [isOnline, setIsOnline] = useState(false);
   const isFilled = user.ships.length < 10;
 
   useEffect(() => {
-    setIsOnline(mode === 'online' ? true : false);
+    setIsOnline(mode === GAMEMODE.MP ? true : false);
   }, [mode]);
 
   useEffect(() => {
@@ -51,8 +55,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     setGameDifficult,
   } = useGameStateActions();
   const { computerTurn } = useComputerTurn();
-
-  const { gameShipsSlice } = useAppSelector((state) => state);
 
   const readyHandler = () => {
     setIsReady(true);
@@ -71,10 +73,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
 
   const gameDifficultHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGameDifficult(Number(e.target.value));
-  };
-
-  const exitHandler = () => {
-    sendSocket(SOCKETMETHOD.exit);
   };
 
   return (
@@ -101,7 +99,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             onClick={readyHandler}
             className="button-render"
           >
-            {isOnline ? t('ready') : t('start')}
+            {isOnline ? t(GAMEMODE.ready) : t(GAMEMODE.start)}
           </button>
         ) : null}
         <div className="game_fields">
@@ -109,11 +107,11 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
             <h2 className="field_name">{userName}</h2>
             <Field isRival={false} isOnline={isOnline} />
           </div>
+          <ShipStation />
           <RivalField isOnline={isOnline} />
+          <Gameover />
         </div>
-        <ShipStation />
         <Chat />
-        <Gameover />
       </main>
     </div>
   );

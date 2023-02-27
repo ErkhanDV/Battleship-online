@@ -8,7 +8,7 @@ import { getRandomNum } from '@/lib/utils/getRandomNum';
 import { computerMove, getPossibleCells } from './computerMove';
 
 export const useComputerTurn = () => {
-  let { user } = useAppSelector((state) => state.gameShipsSlice);
+  const { user } = useAppSelector((state) => state.gameShipsSlice);
 
   const { checkShoot, addNotAllowed } = useGameShipsActions();
   const { setIsAbleShoot } = useGameStateActions();

@@ -4,3 +4,10 @@ export enum ROUTE {
   rules = '/rules',
   single = '/gameSP',
 }
+
+export enum GAMEMODE {
+  SP = 'single',
+  MP = 'online',
+  ready = 'ready',
+  start = 'start',
+}

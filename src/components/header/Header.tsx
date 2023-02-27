@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, FC } from 'react';
-import { Link, useNavigate, NavLink } from 'react-router-dom';
+import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
@@ -7,22 +7,27 @@ import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
 import './Header.scss';
+import { MODAL } from '@/store/_constants';
 
 const Header: FC = () => {
+  const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
   const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
-  const { userName, isAuthorized } = useAppSelector(
-    (state) => state.logInSlice,
-  );
+  const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
+    const { isAuthorized } = state.logInSlice;
+    const { userName } = state.logInSlice;
+    const { gameInfo } = state.gameStateSlice;
+
+    return { isAuthorized, userName, gameInfo };
+  });
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
   const [logStatus, setlogStatus] = useState('LogIn');
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     setlogStatus(isAuthorized ? `${userName}: logout` : 'Login');
@@ -45,9 +50,11 @@ const Header: FC = () => {
     if (isAuthorized) {
       setUserName('');
       await authService.logout();
-      sendSocket(SOCKETMETHOD.exit);
+
+      if (gameInfo) sendSocket(SOCKETMETHOD.exit);
+      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     } else {
-      modalHandler('log');
+      modalHandler(MODAL.log);
     }
   };
 
@@ -60,7 +67,7 @@ const Header: FC = () => {
       }
     } else {
       setGameTryConnect(true);
-      modalHandler('log');
+      modalHandler(MODAL.log);
     }
   };
 
@@ -75,7 +82,7 @@ const Header: FC = () => {
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
           <li className="navigation_item">
-            <NavLink to="/" className="navigation_link">
+            <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}
             </NavLink>
           </li>
@@ -103,7 +110,7 @@ const Header: FC = () => {
           <li className="navigation_item">
             <span
               className="navigation_link"
-              onClick={() => modalHandler('settings')}
+              onClick={() => modalHandler(MODAL.settings)}
             >
               {t('settings')}
             </span>

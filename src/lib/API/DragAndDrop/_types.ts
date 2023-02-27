@@ -1,17 +1,17 @@
 import { DragEvent } from 'react';
 
-import { IAddShip, IGameShips, IShip } from '@/store/reducers/types/shipLocation';
+import { IAddShip, IShip } from '@/store/reducers/types/shipLocation';
 
 export type IDragHandler = (
   event: DragEvent<HTMLDivElement>,
-  horizontalRotation: Boolean,
+  horizontalRotation: boolean,
   shipLength: number | null,
   settedShips?: IShip[],
 ) => void;
 
 export type IDropHandler = (
   event: DragEvent<HTMLDivElement>,
-  horizontalRotation: Boolean,
+  horizontalRotation: boolean,
   shipLength: number | null,
   callback: (
     ship: IShip,
