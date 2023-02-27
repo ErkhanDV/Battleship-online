@@ -60,8 +60,6 @@ export const useSocket = () => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
 
-        console.log('соббщение', data);
-
         switch (method) {
           case connect:
             connectHandler(data);

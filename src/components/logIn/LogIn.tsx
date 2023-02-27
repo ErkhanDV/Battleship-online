@@ -1,14 +1,17 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { authService } from '@/services/axios/Auth';
 import { useLogInActions, useAppSelector } from '@/hook/_index';
-import { useTranslation } from 'react-i18next';
+import { SocketContext } from '@/context/Context';
 
 import './Login.scss';
 
 import { IUser } from '@/services/axios/_types';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const LogIn: FC = () => {
+  const { sendSocket } = useContext(SocketContext);
   const [loginValue, setLoginValue] = useState('');
   const [validation, setValidation] = useState('');
   const { setUserName, setModalOpen } = useLogInActions();
@@ -37,6 +40,7 @@ const LogIn: FC = () => {
     if (response.name) {
       setLoginValue('');
       setUserName(response.name);
+      sendSocket(SOCKETMETHOD.setName, { socketName: response.name });
       setModalOpen(false);
     }
   };

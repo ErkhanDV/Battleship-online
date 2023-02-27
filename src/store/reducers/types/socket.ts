@@ -65,7 +65,16 @@ export interface ISendChat {
   mail: IChatMessage;
 }
 
-export type TSendData = ISendConnect | ISendReady | ISendShoot | ISendChat;
+export interface ISendSocketName {
+  socketName: string;
+}
+
+export type TSendData =
+  | ISendConnect
+  | ISendReady
+  | ISendShoot
+  | ISendChat
+  | ISendSocketName;
 
 export type TSocketMessage = IStartGame &
   IReady &
