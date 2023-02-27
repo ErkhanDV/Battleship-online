@@ -27,6 +27,9 @@ export const useGameStateActions = () => {
   const setWinner = (name: string) =>
     dispatch(gameStateActions.setWinner(name));
 
+  const setInvite = (server: string) =>
+    dispatch(gameStateActions.setInvite(server));
+
   const resetGameState = () => dispatch(gameStateActions.resetGameState());
 
   return {
@@ -37,6 +40,7 @@ export const useGameStateActions = () => {
     setIsAbleShoot,
     setIsGameFinded,
     setIsStarted,
+    setInvite,
     resetGameState,
   };
 };

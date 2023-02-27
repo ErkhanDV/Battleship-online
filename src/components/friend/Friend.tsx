@@ -1,15 +1,17 @@
 import { FC, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
 import {
   useLogInActions,
-  useCheckAuth,
   useAppSelector,
   useChatActions,
   useGameStateActions,
   useGameShipsActions,
 } from '@/hook/_index';
+import { gameService } from '@/services/axios/Game';
 import { SocketContext } from '@/context/Context';
+
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
@@ -17,11 +19,9 @@ const Friend: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { sendSocket } = useContext(SocketContext);
-  const { checkAuth } = useCheckAuth(sendSocket);
 
   const [friend, setFriend] = useState('');
   const [validation, setValidation] = useState('');
-  const [gameTryConnect, setGameTryConnect] = useState(false);
 
   const { setModalOpen, setModalChildren } = useLogInActions();
   const { resetGameChat } = useChatActions();
@@ -36,19 +36,16 @@ const Friend: FC = () => {
   });
 
   useEffect(() => {
-    if (!gameTryConnect) {
-      setValidation('');
-      setFriend('');
-    }
+    setValidation('');
+    setFriend('');
   }, [isModalOpen]);
 
   const inputHandler = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => setFriend(target.value);
 
-  const playHandler = async (mode: string) => {
+  const playHandler = async () => {
     if (isAuthorized) {
-      let error: string | undefined;
       if (gameInfo) {
         sendSocket(SOCKETMETHOD.exit);
         resetGameChat();
@@ -56,30 +53,28 @@ const Friend: FC = () => {
         resetGameShips();
       }
 
-      if (mode === 'create') {
-        error = await checkAuth('', true);
-      } else {
-        if (!friend) {
-          setValidation('Enter friend`s name');
-          return;
-        }
-        error = await checkAuth(friend.trim(), true);
-      }
-
-      if (error && typeof error === 'string') {
-        setValidation(error);
+      if (!friend) {
+        setValidation('Enter friend`s name');
+        return;
+      } else if (friend.length <= 2) {
+        setValidation('Name is too short');
         return;
       } else {
+        sendSocket(SOCKETMETHOD.invite, { friend });
+
+        const response = await gameService.startGame('', true);
+
+        if (response && typeof response !== 'string') {
+          sendSocket(SOCKETMETHOD.connect, response);
+        }
+
         setModalOpen(false);
 
         if (location.pathname !== ROUTE.game) {
           navigate(ROUTE.game);
         }
       }
-    }
-
-    if (!isAuthorized) {
-      setGameTryConnect(true);
+    } else {
       setModalOpen(true);
       setModalChildren('log');
     }
@@ -100,12 +95,8 @@ const Friend: FC = () => {
         placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
-      <button className="login_button" onClick={() => playHandler('connect')}>
+      <button className="login_button" onClick={() => playHandler()}>
         {t('connect')}
-      </button>
-      <span>{t('or')}</span>
-      <button className="login_button" onClick={() => playHandler('create')}>
-        {t('create')}
       </button>
     </form>
   );

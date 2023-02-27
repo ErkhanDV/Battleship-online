@@ -3,6 +3,7 @@ import { IGameState, IStartGame } from './types/socket';
 
 const initialState: IGameState = {
   gameInfo: null,
+  invite: '',
   opponentName: 'Unknown',
   isGameFinded: false,
   isStarted: false,
@@ -43,6 +44,10 @@ export const gameStateSlice = createSlice({
       state.winner = action.payload;
     },
 
+    setInvite(state, action: PayloadAction<string>) {
+      state.invite = action.payload;
+    },
+
     resetGameState: () => initialState,
   },
 });
@@ -55,6 +60,7 @@ export const {
   setAbleShoot,
   setReady,
   setWinner,
+  setInvite,
   resetGameState,
 } = gameStateSlice.actions;
 

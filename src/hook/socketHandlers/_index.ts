@@ -6,6 +6,7 @@ import { useExitHandler } from './use-exit';
 import { useChatHandler } from './use-chat';
 import { useMailingHandler } from './use-mailing';
 import { useDisconnectHandler } from './use-disconnect';
+import { useInviteHandler } from './use-invite';
 
 export const useSocketHandlers = () => {
   const { connectHandler } = useConnectionHandler();
@@ -16,6 +17,7 @@ export const useSocketHandlers = () => {
   const { exitHandler } = useExitHandler();
   const { chatHandler } = useChatHandler();
   const { mailingHandler } = useMailingHandler();
+  const { inviteHandler } = useInviteHandler();
 
   return {
     connectHandler,
@@ -26,5 +28,6 @@ export const useSocketHandlers = () => {
     exitHandler,
     chatHandler,
     mailingHandler,
+    inviteHandler,
   };
 };

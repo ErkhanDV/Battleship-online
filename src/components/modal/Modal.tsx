@@ -1,7 +1,11 @@
 import { FC } from 'react';
-import { useAppSelector, useLogInActions } from '@/hook/_index';
+
 import './Modal.scss';
-import { LogIn, Settings, Friend } from '../_index';
+
+import { LogIn, Settings, Friend, Invite } from '../_index';
+
+import { useAppSelector, useLogInActions } from '@/hook/_index';
+
 import { MODAL } from '@/store/_constants';
 
 const Modal: FC = () => {
@@ -24,8 +28,8 @@ const Modal: FC = () => {
       modalComponent = <Friend />;
       break;
 
-    default:
-      break;
+    case MODAL.invite:
+      modalComponent = <Invite />;
   }
 
   return (

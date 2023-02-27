@@ -10,6 +10,7 @@ export interface IGameState {
   isAbleShoot: boolean;
   isReady: boolean;
   winner: string;
+  invite: string;
 }
 
 export interface IConnect {
@@ -48,6 +49,11 @@ export interface IMailing {
   chatMessage: IChatMessage[];
 }
 
+export interface IInvite {
+  friend: string;
+  server: string;
+}
+
 export interface ISendConnect {
   gameId: string;
   user: IPlayer;
@@ -69,12 +75,17 @@ export interface ISendSocketName {
   socketName: string;
 }
 
+export interface ISendInvite {
+  friend: string;
+}
+
 export type TSendData =
   | ISendConnect
   | ISendReady
   | ISendShoot
   | ISendChat
-  | ISendSocketName;
+  | ISendSocketName
+  | ISendInvite;
 
 export type TSocketMessage = IStartGame &
   IReady &
@@ -82,7 +93,8 @@ export type TSocketMessage = IStartGame &
   IShoot &
   IMessage &
   IMailing &
-  IExit;
+  IExit &
+  IInvite;
 
 export type TSendSocket = <T extends TSendData>(
   method: string,

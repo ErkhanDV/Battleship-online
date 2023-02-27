@@ -1,25 +1,26 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import './Header.scss';
+
 import {
   useLogInActions,
   useAppSelector,
-  useCheckAuth,
   useChatActions,
   useGameStateActions,
   useGameShipsActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-import { authService } from '@/services/axios/_index';
+import { authService, gameService } from '@/services/axios/_index';
+
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
-import './Header.scss';
 import { MODAL } from '@/store/_constants';
 
 const Header: FC = () => {
   const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
-  const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -60,8 +61,11 @@ const Header: FC = () => {
   const logHandler = async () => {
     if (isAuthorized) {
       setUserName('');
+      sendSocket(SOCKETMETHOD.setName, { socketName: '' });
+
       await authService.logout();
       if (gameInfo) sendSocket(SOCKETMETHOD.exit);
+
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     } else {
       modalHandler(MODAL.log);
@@ -76,7 +80,12 @@ const Header: FC = () => {
         resetGameState();
         resetGameShips();
       }
-      checkAuth();
+
+      const response = await gameService.startGame();
+
+      if (response && typeof response !== 'string') {
+        sendSocket(SOCKETMETHOD.connect, response);
+      }
 
       if (location.pathname !== ROUTE.game) {
         navigate(ROUTE.game);
