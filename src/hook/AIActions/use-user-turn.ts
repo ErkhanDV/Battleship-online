@@ -22,11 +22,13 @@ export const useUserTurn = () => {
       const index = ships.findIndex((ship) =>
         ship.shipLocation.includes(shoot),
       );
+
       if (index !== -1) {
         const ship = cloneRival.ships[index];
         ship.woundedCells.push(shoot);
+
         if (ship.woundedCells.length === ship.decks) {
-          addNotAllowed('rival', ship.occupiedCells);
+          addNotAllowed('rival', ship.occupiedCells, ship.decks);
         }
         if (
           cloneRival.ships.filter(

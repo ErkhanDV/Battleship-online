@@ -20,6 +20,7 @@ import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
 import { GAMEMODE } from '@/router/_constants';
 import './Game.scss';
+import PopUp from '@/components/popup/PopUp';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const { sendSocket } = useContext(SocketContext);
@@ -103,6 +104,7 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           </button>
         ) : null}
         <div className="game_fields">
+          <PopUp />
           <div className="field">
             <h2 className="field_name">{userName}</h2>
             <Field isRival={false} isOnline={isOnline} />

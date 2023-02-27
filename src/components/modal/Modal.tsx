@@ -3,6 +3,7 @@ import { useAppSelector, useLogInActions } from '@/hook/_index';
 import './Modal.scss';
 import { LogIn, Settings } from '../_index';
 import SinglePlayerGameOver from '../game/singleplayerGameOver/spGameOver';
+import ShipHit from '../game/shipHit/ShipHit';
 
 const Modal: FC = () => {
   const { setModalOpen } = useLogInActions();
@@ -14,8 +15,10 @@ const Modal: FC = () => {
       <LogIn />
     ) : modalChildren === 'settings' ? (
       <Settings />
-    ) : (
+    ) : modalChildren === 'spgameover' ? (
       <SinglePlayerGameOver />
+    ) : (
+      <ShipHit />
     );
 
   return (

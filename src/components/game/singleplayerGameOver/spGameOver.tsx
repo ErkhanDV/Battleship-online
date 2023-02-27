@@ -9,7 +9,9 @@ const SinglePlayerGameOver = () => {
   const { resetGameShips } = useGameShipsActions();
   const { setIsReady } = useGameStateActions();
   const { setModalOpen } = useLogInActions();
+  
   const navigate = useNavigate();
+
   const toMainPageHandler = () => {
     resetGameShips();
     setIsReady(false);

@@ -26,12 +26,17 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
   });
 
   const classList = useMemo(() => {
-    const { shoot, initial, miss, boat } = CELLCLASS;
+    const { shoot, initial, miss, boat, destroyed } = CELLCLASS;
     let classList = initial as string;
 
     personState.ships.forEach((ship) => {
       classList += ship.woundedCells.includes(coordinate) ? shoot : '';
       classList += ship.shipLocation.includes(coordinate) ? boat : '';
+      classList +=
+        ship.woundedCells.includes(coordinate) &&
+        ship.woundedCells.length === ship.decks
+          ? destroyed
+          : '';
     });
 
     personState.misses.forEach((id) => {

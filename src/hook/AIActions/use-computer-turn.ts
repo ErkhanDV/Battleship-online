@@ -53,7 +53,7 @@ export const useComputerTurn = () => {
         setHitted,
         setTurnToDestroy,
       );
-    }, 500);
+    }, 2500);
   };
 
   return { computerTurn };
