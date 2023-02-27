@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLogInActions, useCheckAuth, useAppSelector } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
+// import { gameService } from '@/services/axios/Game';
 import { ROUTE } from '@/router/_constants';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const Friend: FC = () => {
   const { t } = useTranslation();
@@ -16,9 +18,13 @@ const Friend: FC = () => {
   const [gameTryConnect, setGameTryConnect] = useState(false);
 
   const { setModalOpen, setModalChildren } = useLogInActions();
-  const { isModalOpen, isAuthorized } = useAppSelector(
-    (state) => state.logInSlice,
-  );
+
+  const { isModalOpen, isAuthorized, gameInfo } = useAppSelector((state) => {
+    const { isModalOpen, isAuthorized } = state.logInSlice;
+    const { gameInfo } = state.gameStateSlice;
+
+    return { isModalOpen, isAuthorized, gameInfo };
+  });
 
   useEffect(() => {
     if (!gameTryConnect) {
@@ -34,6 +40,11 @@ const Friend: FC = () => {
   const playHandler = async (mode: string) => {
     if (isAuthorized) {
       let error: string | undefined;
+      if (gameInfo) {
+        sendSocket(SOCKETMETHOD.exit);
+      }
+
+      // await gameService.dropGame();
 
       if (mode === 'create') {
         error = await checkAuth('', true);
@@ -79,11 +90,12 @@ const Friend: FC = () => {
         placeholder={`${t('enterName')}`}
       />
       <div className="login_validation">{validation}</div>
-      <button className="login_button" onClick={() => playHandler('create')}>
-        {t('create')}
-      </button>
       <button className="login_button" onClick={() => playHandler('connect')}>
         {t('connect')}
+      </button>
+      <span>{t('or')}</span>
+      <button className="login_button" onClick={() => playHandler('create')}>
+        {t('create game')}
       </button>
     </form>
   );

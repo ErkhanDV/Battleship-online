@@ -59,6 +59,11 @@ const Header: FC = () => {
 
   const gameHandler = async () => {
     if (isAuthorized) {
+      if (gameInfo) {
+        sendSocket(SOCKETMETHOD.exit);
+      }
+
+      // await gameService.dropGame();
       checkAuth();
 
       if (location.pathname !== ROUTE.game) {
@@ -89,23 +94,19 @@ const Header: FC = () => {
           <li className="navigation_item item-dropdown">
             <span className="navigation_link">{t('game')}</span>
             <ul className="navigation_dropdown">
-              <li className="dropdown-item">
-                <span className="navigation_link" onClick={gameHandler}>
-                  {t('vsRandom')}
-                </span>
+              <li onClick={gameHandler} className="dropdown-item">
+                <span className="navigation_link">{t('vsRandom')}</span>
               </li>
               <li className="dropdown-item">
                 <NavLink to={ROUTE.single} className="navigation_link">
                   {t('vsComputer')}
                 </NavLink>
               </li>
-              <li className="dropdown-item">
-                <span
-                  className="navigation_link"
-                  onClick={() => modalHandler(MODAL.friend)}
-                >
-                  {t('vsFriend')}
-                </span>
+              <li
+                onClick={() => modalHandler(MODAL.friend)}
+                className="dropdown-item"
+              >
+                <span className="navigation_link">{t('vsFriend')}</span>
               </li>
             </ul>
           </li>
@@ -114,13 +115,11 @@ const Header: FC = () => {
               {t('rules')}
             </NavLink>
           </li>
-          <li className="navigation_item">
-            <span
-              className="navigation_link"
-              onClick={() => modalHandler(MODAL.settings)}
-            >
-              {t('settings')}
-            </span>
+          <li
+            onClick={() => modalHandler(MODAL.settings)}
+            className="navigation_item"
+          >
+            <span className="navigation_link">{t('settings')}</span>
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
             <span className="navigation_link">{logStatus}</span>

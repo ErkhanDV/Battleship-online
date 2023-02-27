@@ -29,6 +29,7 @@ export const useCheckAuth = (sendSocket: TSendSocket) => {
           if (isWithFriend) {
             response = await gameService.startGame(friendName, isWithFriend);
           } else {
+            console.log('random');
             response = await gameService.startGame();
           }
 
