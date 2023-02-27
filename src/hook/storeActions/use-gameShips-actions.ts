@@ -41,8 +41,12 @@ export const useGameShipsActions = () => {
 
   const resetShips = () => dispatch(shipActions.resetShips());
 
-  const setRandomShips = (person: keyof IGameShips, ships?: number[]) =>
+  const setRandomShips = (person: keyof IGameShips, ships?: number[]) => {
+    if (user.ships.length === 10) {
+      resetShips();
+    }
     dispatch(shipActions.setRandomShips({ person, ships }));
+  };
 
   const resetGameShips = () => dispatch(shipActions.resetGameShips());
 
