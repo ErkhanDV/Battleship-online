@@ -27,8 +27,6 @@ export const getPossibleCells = (
       possibleCells.push(shoot + 1);
     }
   } else {
-    // console.log(shoots);
-
     const sortedShoots = [...shoots].sort((a, b) => a - b);
     const tail = sortedShoots[0];
     const head = sortedShoots[sortedShoots.length - 1];
@@ -96,16 +94,17 @@ export const computerMove = (
     payload: number;
     type: 'AIState/setTurnToDestroy';
   },
+  setWinner: (name: string) => {
+    payload: string;
+    type: 'gameState/setWinner';
+  },
 ) => {
-  // console.log('Shoot: ', shoot);
-
   const cloneUser: IPlayerState = JSON.parse(JSON.stringify(user));
   const shipIndex = cloneUser.ships.findIndex((ship) =>
     ship.shipLocation.includes(shoot),
   );
   if (shipIndex === -1) {
     if (hitted !== -1) {
-      // console.log('Up turn to destroy: ', turnToDestroy + 1);
       setTurnToDestroy(turnToDestroy + 1);
     }
     setIsAbleShoot(true);
@@ -123,9 +122,6 @@ export const computerMove = (
   checkShoot('user', shoot);
 
   if (ship.decks === ship.woundedCells.length) {
-    console.log(
-      `${ship.decks}-deck${ship.decks === 1 ? '' : 's'} ship was Killd`,
-    );
     setHitted(-1);
     setTurnToDestroy(0);
     addNotAllowed('user', ship.occupiedCells, ship.decks);
@@ -134,7 +130,7 @@ export const computerMove = (
       cloneUser.ships.filter((ship) => ship.decks === ship.woundedCells.length)
         .length === 10
     ) {
-      console.log('Computer WIN!');
+      setWinner('Computer');
       return;
     }
     const newShoot = getShootTarget(updatedAvailableCells);
@@ -151,26 +147,16 @@ export const computerMove = (
         setAvailableShoots,
         setHitted,
         setTurnToDestroy,
+        setWinner,
       );
     }, 500);
   } else {
     if (ship.woundedCells.length === 1) {
-      // console.log(
-      //   'Possible shoots: ',
-      //   getPossibleCells([shoot], cloneUser.notAllowed, cloneUser.misses),
-      // );
-
       const newShoot = getPossibleCells(
         [shoot],
         cloneUser.notAllowed,
         cloneUser.misses,
       )[0];
-      // console.log(
-      //   'turn to destroy: ',
-      //   turnToDestroy,
-      //   'Shoots possible: ',
-      //   newShoot,
-      // );
       const hitted = shipIndex;
       setTimeout(() => {
         computerMove(
@@ -185,6 +171,7 @@ export const computerMove = (
           setAvailableShoots,
           setHitted,
           setTurnToDestroy,
+          setWinner,
         );
       }, 500);
     } else if (ship.woundedCells.length > 1) {
@@ -206,6 +193,7 @@ export const computerMove = (
           setAvailableShoots,
           setHitted,
           setTurnToDestroy,
+          setWinner,
         );
       }, 500);
     }

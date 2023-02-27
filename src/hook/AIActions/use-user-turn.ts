@@ -9,7 +9,7 @@ export const useUserTurn = () => {
 
   const { checkShoot, addNotAllowed } = useGameShipsActions();
   const { computerTurn } = useComputerTurn();
-  const { setIsAbleShoot } = useGameStateActions();
+  const { setIsAbleShoot, setWinner } = useGameStateActions();
 
   const userTurn = (shoot: number) => {
     if (
@@ -35,7 +35,7 @@ export const useUserTurn = () => {
             (ship) => ship.decks === ship.woundedCells.length,
           ).length === 10
         ) {
-          console.log('You are WIN!');
+          setWinner('You');
         }
       } else {
         setIsAbleShoot(false);
