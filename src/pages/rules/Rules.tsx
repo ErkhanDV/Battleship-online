@@ -14,13 +14,19 @@ const Rules = () => {
       </section>
       <section className="rules_section">
         <h2 className="rules_subtitle">{t('arrange')}</h2>
-        <p className="rules_paragrath">{t('arrangeFirst')}</p>
-        <p className="rules_paragrath">{t('arrangeSecond')}</p>
+        <p className="rules_paragrath">{t('arrangeParagraph')}</p>
+      </section>
+      <section className="rules_section">
+        <h2 className="rules_subtitle">{t('Ship types')}</h2>
+        <p className="rules_paragrath">{t('Ship types paragraph')}</p>
       </section>
       <section className="rules_section">
         <h2 className="rules_subtitle">{t('shipAttack')}</h2>
-        <p className="rules_paragrath">{t('shipAttackFirst')}</p>
-        <p className="rules_paragrath">{t('shipAttackSecond')}</p>
+        <p className="rules_paragrath">{t('shipAttack paragraph')}</p>
+      </section>
+      <section className="rules_section">
+        <h2 className="rules_subtitle">{t('game progress')}</h2>
+        <p className="rules_paragrath">{t('game progress paragraph')}</p>
       </section>
       <section className="rules_section">
         <h2 className="rules_subtitle">{t('battleWinner')}</h2>

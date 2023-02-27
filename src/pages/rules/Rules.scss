@@ -1,5 +1,4 @@
 @import '../../scss/variables.scss';
-@import '../../scss/index.scss';
 
 .rules {
   display: flex;
@@ -47,5 +46,25 @@
     padding: 20px;
     border: 1px dashed $primary-color-50;
     line-height: 1.4;
+  }
+}
+
+@media (max-width: 1040px) {
+  .rules_section {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .rules {
+    &_section {
+      padding: 20px;
+    }
+    &_subtitle {
+      font-size: 20px;
+    }
+    &_paragrath {
+      font-size: 14px;
+    }
   }
 }

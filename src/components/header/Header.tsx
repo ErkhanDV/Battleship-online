@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext, FC } from 'react';
 import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import './Header.scss';
+
 import { useLogInActions, useAppSelector, useCheckAuth } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { authService } from '@/services/axios/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
-import './Header.scss';
 import { MODAL } from '@/store/_constants';
 
 const Header: FC = () => {
@@ -14,7 +16,7 @@ const Header: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
   const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
@@ -86,7 +88,6 @@ const Header: FC = () => {
               {t('home')}
             </NavLink>
           </li>
-
           <li className="navigation_item item-dropdown">
             <span className="navigation_link">{t('game')}</span>
             <ul className="navigation_dropdown">

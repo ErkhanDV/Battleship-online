@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '@/hook/_index';
 import { type FC } from 'react';
 import './Gameover.scss';
@@ -12,10 +12,10 @@ const Gameover: FC = () => {
   if (winner) {
     return (
       <div className="gameover">
-        <span className='winner'>{winner}</span>
+        <span className="winner">{winner}</span>
         <NavLink to={ROUTE.home} className="home">
-              {t('home')}
-            </NavLink>
+          {t('home')}
+        </NavLink>
       </div>
     );
   } else {
