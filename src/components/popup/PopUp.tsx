@@ -1,14 +1,18 @@
+import usePopUp from '@/hook/storeActions/use-popup-actions';
+import { useAppSelector } from '@/hook/use-redux';
 import './PopUp.scss';
 
-const PopUp = (modalChildren: string) => {
-  const popUpMessage =
-    modalChildren === 'miss'
-      ? 'Промах'
-      : modalChildren === 'hit'
-      ? 'Попал!'
-      : 'Корабль убит!';
+const PopUp = () => {
+  const { isVision, popUpMessage } = useAppSelector(
+    (state) => state.PopUpSlice,
+  );
 
-  return <h3 className={`popup ${isPopupOpen && 'open'}`}>{popUpMessage}</h3>;
+  const { setVision } = usePopUp();
+  setTimeout(() => {
+    setVision(false);
+  }, 2000);
+
+  return <h3 className={`popup ${isVision && 'open'}`}>{popUpMessage}</h3>;
 };
 
 export default PopUp;
