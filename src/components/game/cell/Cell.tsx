@@ -31,7 +31,8 @@ const Cell: FC<ICell> = ({ coordinate, isRival }) => {
 
     personState.ships.forEach((ship) => {
       classList += ship.woundedCells.includes(coordinate) ? shoot : '';
-      classList += ship.shipLocation.includes(coordinate) ? boat : '';
+      classList +=
+        ship.shipLocation.includes(coordinate) && !isRival ? boat : '';
       classList +=
         ship.woundedCells.includes(coordinate) &&
         ship.woundedCells.length === ship.decks

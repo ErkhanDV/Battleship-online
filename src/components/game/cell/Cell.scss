@@ -13,7 +13,7 @@
 
 .hit {
   position: relative;
-  background: red;
+  background-color: $background-color-100;
   overflow: hidden;
   &::after,
   &::before {
