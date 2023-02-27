@@ -9,6 +9,7 @@ import { computerMove, getPossibleCells } from './computerMove';
 
 export const useComputerTurn = () => {
   const { user } = useAppSelector((state) => state.gameShipsSlice);
+  const { gameDifficult } = useAppSelector((state) => state.gameStateSlice);
 
   const { checkShoot, addNotAllowed } = useGameShipsActions();
   const { setIsAbleShoot, setWinner } = useGameStateActions();
@@ -21,7 +22,7 @@ export const useComputerTurn = () => {
     const index = getRandomNum(0, availableShoots.length - 1);
     return availableShoots[index];
   };
-
+  console.log(gameDifficult);
   const computerTurn = () => {
     const getShoot = () => {
       if (turnToDestroy !== 0) {
@@ -43,6 +44,7 @@ export const useComputerTurn = () => {
         availableShoots,
         hitted,
         turnToDestroy,
+        gameDifficult,
         addNotAllowed,
         setIsAbleShoot,
         checkShoot,

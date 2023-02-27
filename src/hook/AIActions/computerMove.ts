@@ -75,6 +75,7 @@ export const computerMove = (
   availableCells: number[],
   hitted: number,
   turnToDestroy: number,
+  gameDifficult: number,
   addNotAllowed: (
     person: keyof IGameShips,
     notAllowed: number[],
@@ -141,6 +142,7 @@ export const computerMove = (
         updatedAvailableCells,
         -1,
         0,
+        gameDifficult,
         addNotAllowed,
         setIsAbleShoot,
         checkShoot,
@@ -152,11 +154,16 @@ export const computerMove = (
     }, 500);
   } else {
     if (ship.woundedCells.length === 1) {
-      const newShoot = getPossibleCells(
-        [shoot],
-        cloneUser.notAllowed,
-        cloneUser.misses,
-      )[0];
+      const newShoot =
+        gameDifficult === 2
+          ? ship.shipLocation.filter(
+              (cell) => !ship.woundedCells.includes(cell),
+            )[0]
+          : getPossibleCells(
+              [shoot],
+              cloneUser.notAllowed,
+              cloneUser.misses,
+            )[0];
       const hitted = shipIndex;
       setTimeout(() => {
         computerMove(
@@ -165,6 +172,7 @@ export const computerMove = (
           updatedAvailableCells,
           hitted,
           turnToDestroy,
+          gameDifficult,
           addNotAllowed,
           setIsAbleShoot,
           checkShoot,
@@ -175,11 +183,16 @@ export const computerMove = (
         );
       }, 500);
     } else if (ship.woundedCells.length > 1) {
-      const availableShoots = getPossibleCells(
-        ship.woundedCells,
-        cloneUser.notAllowed,
-        cloneUser.misses,
-      );
+      const availableShoots =
+        gameDifficult === 2
+          ? ship.shipLocation.filter(
+              (cell) => !ship.woundedCells.includes(cell),
+            )
+          : getPossibleCells(
+              ship.woundedCells,
+              cloneUser.notAllowed,
+              cloneUser.misses,
+            );
       setTimeout(() => {
         computerMove(
           cloneUser,
@@ -187,6 +200,7 @@ export const computerMove = (
           updatedAvailableCells,
           hitted,
           turnToDestroy,
+          gameDifficult,
           addNotAllowed,
           setIsAbleShoot,
           checkShoot,
