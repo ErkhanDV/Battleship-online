@@ -14,7 +14,7 @@ const Header: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { checkAuth } = useCheckAuth(sendSocket);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
   const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
@@ -50,7 +50,6 @@ const Header: FC = () => {
     if (isAuthorized) {
       setUserName('');
       await authService.logout();
-
       if (gameInfo) sendSocket(SOCKETMETHOD.exit);
       if (location.pathname === ROUTE.game) navigate(ROUTE.home);
     } else {
@@ -92,13 +91,21 @@ const Header: FC = () => {
             <ul className="navigation_dropdown">
               <li className="dropdown-item">
                 <span className="navigation_link" onClick={gameHandler}>
-                  {t('vsPlayer')}
+                  {t('vsRandom')}
                 </span>
               </li>
               <li className="dropdown-item">
                 <NavLink to={ROUTE.single} className="navigation_link">
                   {t('vsComputer')}
                 </NavLink>
+              </li>
+              <li className="dropdown-item">
+                <span
+                  className="navigation_link"
+                  onClick={() => modalHandler(MODAL.friend)}
+                >
+                  {t('vsFriend')}
+                </span>
               </li>
             </ul>
           </li>

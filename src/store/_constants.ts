@@ -14,4 +14,5 @@ export enum CHAT {
 export enum MODAL {
   log = 'log',
   settings = 'settings',
+  friend = 'friend',
 }

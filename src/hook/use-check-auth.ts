@@ -4,38 +4,50 @@ import { authService, gameService } from '@/services/axios/_index';
 import { useLogInActions } from '@/hook/_index';
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
-import { TSendSocket } from '@/store/reducers/types/socket';
+import { IStartGame, TSendSocket } from '@/store/reducers/types/socket';
 
 export const useCheckAuth = (sendSocket: TSendSocket) => {
   const navigate = useNavigate();
   const { setUserName } = useLogInActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
 
-  const checkAuth = async () => {
-    if (localStorage.getItem('token') && !checkInProccess) {
-      setCheckInProccess(true);
+  const checkAuth = async (friendName = '', isWithFriend = false) => {
+    try {
+      if (localStorage.getItem('token') && !checkInProccess) {
+        setCheckInProccess(true);
 
-      const auth = await authService.checkAuth();
+        const auth = await authService.checkAuth();
 
-      setCheckInProccess(false);
+        setCheckInProccess(false);
 
-      if (auth) {
-        setUserName(auth.name);
+        if (auth) {
+          await setUserName(auth.name);
 
-        if (location.pathname === ROUTE.game) {
-          const response = await gameService.startGame();
+          // if (location.pathname === ROUTE.game) {
+          let response: string | IStartGame | undefined;
 
-          if (response) {
-            sendSocket(SOCKETMETHOD.connect, response);
+          if (isWithFriend) {
+            response = await gameService.startGame(friendName, isWithFriend);
+          } else {
+            response = await gameService.startGame();
           }
+
+          if (typeof response === 'string') {
+            return response;
+          } else {
+            if (response) sendSocket(SOCKETMETHOD.connect, response);
+          }
+          // }
+        } else {
+          if (location.pathname === ROUTE.game) navigate(ROUTE.home);
         }
-      } else {
+      }
+
+      if (!localStorage.getItem('token') && !checkInProccess) {
         if (location.pathname === ROUTE.game) navigate(ROUTE.home);
       }
-    }
-
-    if (!localStorage.getItem('token') && !checkInProccess) {
-      if (location.pathname === ROUTE.game) navigate(ROUTE.home);
+    } catch (error) {
+      console.log(error);
     }
   };
 
