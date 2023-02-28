@@ -29,6 +29,17 @@
       transform: scale(1.05);
     }
   }
+  &_online {
+    padding: 0.1rem 0.5rem;
+    font-size: 20px;
+    color: $primary-color-100;
+    border-radius: 4px;
+    background: $primary-corner-gradient {
+      repeat: no-repeat;
+      size: 10px 8px;
+      color: $primary-color-25;
+    }
+  }
   &_link {
     text-decoration: none;
   }

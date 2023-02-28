@@ -17,6 +17,7 @@ export const useSocket = () => {
     chatHandler,
     mailingHandler,
     inviteHandler,
+    onlineHandler,
   } = useSocketHandlers();
 
   const { setGameInfo } = useGameStateActions();
@@ -37,6 +38,7 @@ export const useSocket = () => {
     chat,
     mailing,
     invite,
+    online,
   } = SOCKETMETHOD;
 
   useEffect(() => {
@@ -59,6 +61,10 @@ export const useSocket = () => {
 
         case mailing:
           mailingHandler(data);
+          break;
+
+        case online:
+          onlineHandler(data);
           break;
       }
     };
@@ -105,6 +111,10 @@ export const useSocket = () => {
 
           case invite:
             inviteHandler(data);
+            break;
+
+          case online:
+            onlineHandler(data);
             break;
         }
       };

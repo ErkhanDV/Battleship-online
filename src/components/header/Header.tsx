@@ -29,13 +29,16 @@ const Header: FC = () => {
   const { resetGameState } = useGameStateActions();
   const { resetGameShips } = useGameShipsActions();
 
-  const { userName, isAuthorized, gameInfo } = useAppSelector((state) => {
-    const { isAuthorized } = state.logInSlice;
-    const { userName } = state.logInSlice;
-    const { gameInfo } = state.gameStateSlice;
+  const { userName, isAuthorized, gameInfo, onlinePlayers } = useAppSelector(
+    (state) => {
+      const { isAuthorized } = state.logInSlice;
+      const { userName } = state.logInSlice;
+      const { gameInfo } = state.gameStateSlice;
+      const { onlinePlayers } = state.logInSlice;
 
-    return { isAuthorized, userName, gameInfo };
-  });
+      return { isAuthorized, userName, gameInfo, onlinePlayers };
+    },
+  );
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [gameTryConnect, setGameTryConnect] = useState(false);
@@ -106,6 +109,7 @@ const Header: FC = () => {
       </Link>
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
+          <li className="header_online">Players online: {onlinePlayers}</li>
           <li className="navigation_item">
             <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}
