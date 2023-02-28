@@ -13,6 +13,7 @@
   border-bottom: 1px dotted $primary-color-100;
   z-index: 100;
   &_logo {
+    position: relative;
     margin: 16px 0;
     padding: 6px 12px 4px;
     color: $text-color-100;
@@ -28,6 +29,13 @@
     &:hover {
       transform: scale(1.05);
     }
+  }
+  &_online {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 16px;
+    color: $primary-color-100;
   }
   &_link {
     text-decoration: none;
@@ -234,6 +242,18 @@
   }
 }
 
+.link-login {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  font-size: 16px;
+  color: $text-color-100;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @media (max-width: 480px) {
   .header {
     padding: 6px 20px;
@@ -245,6 +265,12 @@
       top: 30px;
       width: 24px;
       height: 16px;
+    }
+    &_online {
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+      font-size: 12px;
     }
   }
   .logo-image {

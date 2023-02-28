@@ -44,6 +44,10 @@ export interface IInvite {
   server: string;
 }
 
+export interface IOnline {
+  count: number;
+}
+
 export interface ISendConnect {
   gameId: string;
   user: IPlayer;
@@ -84,7 +88,8 @@ export type TSocketMessage = IStartGame &
   IMessage &
   IMailing &
   IExit &
-  IInvite;
+  IInvite &
+  IOnline;
 
 export type TSendSocket = <T extends TSendData>(
   method: string,
