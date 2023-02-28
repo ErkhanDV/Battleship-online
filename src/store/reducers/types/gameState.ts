@@ -16,6 +16,8 @@ export interface IGameState {
   isAbleShoot: boolean;
   isReady: boolean;
   winner: string;
+  winnerClassList: string;
   invite: string;
   gameDifficult: number;
+  status: string;
 }

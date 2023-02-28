@@ -1,7 +1,10 @@
-import { IPlayerState } from '@/store/reducers/types/shipLocation';
-import { useAppSelector } from '../use-redux';
+import { useAppSelector } from '@/hook/_index';
 import { useGameShipsActions, useGameStateActions } from '../_index';
 import { useComputerTurn } from './use-computer-turn';
+
+import { PERSON } from '@/store/_constants';
+
+import { IPlayerState } from '@/store/reducers/types/shipLocation';
 
 export const useUserTurn = () => {
   const { rival } = useAppSelector((state) => state.gameShipsSlice);
@@ -17,7 +20,7 @@ export const useUserTurn = () => {
       !notAllowed.includes(shoot) &&
       !ships.some((ship) => ship.woundedCells.includes(shoot))
     ) {
-      checkShoot('rival', shoot);
+      checkShoot(PERSON.rival, shoot);
       const cloneRival: IPlayerState = JSON.parse(JSON.stringify(rival));
       const index = ships.findIndex((ship) =>
         ship.shipLocation.includes(shoot),
@@ -28,14 +31,14 @@ export const useUserTurn = () => {
         ship.woundedCells.push(shoot);
 
         if (ship.woundedCells.length === ship.decks) {
-          addNotAllowed('rival', ship.occupiedCells, ship.decks);
+          addNotAllowed(PERSON.rival, ship.occupiedCells, ship.decks);
         }
         if (
           cloneRival.ships.filter(
             (ship) => ship.decks === ship.woundedCells.length,
           ).length === 10
         ) {
-          setWinner('You');
+          setWinner(PERSON.you);
         }
       } else {
         setIsAbleShoot(false);
