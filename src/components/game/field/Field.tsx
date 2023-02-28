@@ -27,7 +27,6 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     const shoot = Number((target as HTMLDivElement).id);
 
     if (isAbleShoot && isStarted && isRival) {
-      // if (sound) Sound('shot');
       if (isOnline && sendSocket && (target as HTMLDivElement).id) {
         sendSocket(SOCKETMETHOD.shoot, { shoot: shoot });
       } else if ((target as HTMLDivElement).id) {

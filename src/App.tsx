@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import AppRouter from '@/router/AppRouter';
+
+import { Header, Footer, Background, Modal } from '@/components/_index';
+
 import {
   useSocket,
   useCheckAuth,
@@ -10,10 +13,10 @@ import {
   useGameShipsActions,
 } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
-import { Header, Footer, Background, Modal } from '@/components/_index';
+import { checkLocalStorage } from './lib/utils/checkLocalStorage';
+
 import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from './services/axios/_constants';
-import { checkLocalStorage } from './lib/utils/checkLocalStorage';
 
 const App = () => {
   const location = useLocation();

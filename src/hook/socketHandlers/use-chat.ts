@@ -17,7 +17,9 @@ export const useChatHandler = () => {
   const chatHandler = (data: IMessage) => {
     if (data.mail.chatName === CHAT.game) {
       if (gameInfo?.gameId === data.mail.gameId) {
-        if (sound) Sound('chat');
+        if (sound) {
+          Sound('chat');
+        }
 
         pushGameMessage(data.mail);
         if (userName !== data.mail.name) setUnreadGame();
@@ -25,7 +27,9 @@ export const useChatHandler = () => {
     }
 
     if (data.mail.chatName === CHAT.common) {
-      if (sound) Sound('chat');
+      if (sound) {
+        Sound('chat');
+      }
 
       pushCommonMessage(data.mail);
       if (userName !== data.mail.name) setUnreadCommon();

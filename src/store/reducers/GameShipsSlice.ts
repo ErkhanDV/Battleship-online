@@ -48,10 +48,16 @@ const gameShipsSlice = createSlice({
         coordinates.includes(cell),
       );
       if (index !== -1) {
-        if (sound) Sound('shot');
+        if (sound) {
+          Sound('shot');
+        }
+
         state[person].ships[index].woundedCells.push(cell);
       } else {
-        if (sound) Sound('bulk');
+        if (sound) {
+          Sound('bulk');
+        }
+
         state[person].misses.push(cell);
       }
     },
