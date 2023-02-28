@@ -14,6 +14,10 @@ export const useGameStateActions = () => {
   const setIsReady = (state: boolean) =>
     dispatch(gameStateActions.setReady(state));
 
+  const setOpponentReady = (state: boolean) => {
+    dispatch(gameStateActions.setOpponentReady(state));
+  };
+
   const setIsAbleShoot = (state: boolean) => {
     dispatch(gameStateActions.setAbleShoot(state));
   };
@@ -46,6 +50,7 @@ export const useGameStateActions = () => {
     setGameInfo,
     setOpponentName,
     setIsReady,
+    setOpponentReady,
     setIsAbleShoot,
     setIsGameFinded,
     setIsStarted,

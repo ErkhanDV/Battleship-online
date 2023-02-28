@@ -11,14 +11,15 @@ import { IReady } from '@/store/reducers/types/socket';
 
 export const useReadyHandler = () => {
   const { t } = useTranslation();
-  const { setIsStarted, setStatus } = useGameStateActions();
+  const { setIsStarted, setStatus, setOpponentReady } = useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
   const { userName } = useAppSelector((state) => state.logInSlice);
 
   const readyHandler = (data: IReady) => {
     console.log('ready');
     const { isStarted, field, user } = data;
-    setIsStarted(!!isStarted);
+
+    setIsStarted(isStarted);
 
     if (isStarted) {
       setStatus(t('gameStart'));
@@ -29,6 +30,7 @@ export const useReadyHandler = () => {
     }
 
     if (user !== userName) {
+      setOpponentReady(true);
       updateShipsLocationState(field, PERSON.rival);
     } else {
       updateShipsLocationState(field, PERSON.user);
