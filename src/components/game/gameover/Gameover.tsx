@@ -45,10 +45,10 @@ const Gameover = ({ isOnline }: { isOnline: boolean }) => {
   }
 
   const title = meWin
-    ? 'Поздравляем с победой!'
+    ? t('Congratulations on the victory!')
     : isOnline
-    ? `На этот раз повезло ${winner}`
-    : 'Тебя обыграл искусственный разум';
+    ? `${t('This time lucky')} ${winner}`
+    : t('Youve been beaten by artificial intelligence');
 
   const homeButtonHandler = () => {
     resetGameShips();
