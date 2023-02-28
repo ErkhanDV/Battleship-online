@@ -67,6 +67,10 @@ const Chat: FC = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!text) {
+      return;
+    }
+
     const sendName = userName ? userName : 'Unknown user';
     const mail = {
       name: sendName,
@@ -107,7 +111,7 @@ const Chat: FC = () => {
         <Welcome />
         {(currentChat === CHAT.common || !gameInfo ? common : game).map(
           (mail, i, messages) => (
-            <div key={mail.date.toString()}>
+            <div key={i}>
               {messages.length - i === currUnread ? (
                 <div className="unread_line">new messages</div>
               ) : null}
