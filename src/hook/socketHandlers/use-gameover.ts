@@ -20,6 +20,8 @@ export const useGameoverHandler = () => {
     setIsAbleShoot(false);
 
     if (winner) {
+      setWinner(winner);
+
       if (winner === userName) {
         setWinner(t('winWin'));
         setClassList(GAMEOVERCLASS.win);
