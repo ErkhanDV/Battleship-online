@@ -29,7 +29,7 @@ export const useShootHandler = () => {
       //   }
       // });
     } else {
-      setIsAbleShoot(!isAbleShoot ? true : false);
+      setIsAbleShoot(!isAbleShoot);
       checkShoot(PERSON.user, shoot);
 
       // rivalState.ships.forEach((ship) => {
