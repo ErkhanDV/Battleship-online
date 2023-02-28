@@ -23,6 +23,7 @@ export interface IPersonState extends IPerson {
 
 export interface IShoot extends IPerson {
   cell: number;
+  sound: boolean;
 }
 
 export interface ISPShoot extends IShoot {
