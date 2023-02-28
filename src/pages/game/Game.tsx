@@ -1,5 +1,10 @@
 import { useContext, useEffect, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { Chat, Status, PopUp } from '@/components/_index';
+
+import './Game.scss';
+
 import {
   useAppSelector,
   useGameShipsActions,
@@ -12,15 +17,11 @@ import {
   ShipStation,
   Gameover,
 } from '@/components/game/_index';
-
 import { useComputerTurn } from '@/hook/AIActions/use-computer-turn';
 
-import { Chat } from '@/components/_index';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { GAMEDIFFICULTS, PERSON } from '@/store/_constants';
 import { GAMEMODE } from '@/router/_constants';
-import './Game.scss';
-import PopUp from '@/components/popup/PopUp';
 
 const Game: FC<{ mode: string }> = ({ mode }) => {
   const { sendSocket } = useContext(SocketContext);
@@ -108,12 +109,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
         </div>
         <div className="game_fields">
           <div className="field">
-            <h2 className="field_name">{userName || 'You'}</h2>
+            <h2 className="field_name">{userName || PERSON.you}</h2>
             <Field isRival={false} isOnline={isOnline} />
           </div>
           <ShipStation />
           <RivalField isOnline={isOnline} />
           <Gameover isOnline={isOnline} />
+          <Status />
           <PopUp />
         </div>
       </main>

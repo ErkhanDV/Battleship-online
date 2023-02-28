@@ -22,7 +22,6 @@ export const useComputerTurn = () => {
     const index = getRandomNum(0, availableShoots.length - 1);
     return availableShoots[index];
   };
-  console.log(gameDifficult);
   const computerTurn = () => {
     const getShoot = () => {
       if (turnToDestroy !== 0) {

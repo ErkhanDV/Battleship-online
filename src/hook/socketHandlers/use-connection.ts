@@ -11,11 +11,11 @@ export const useConnectionHandler = () => {
   const { t } = useTranslation();
   const {
     setIsAbleShoot,
-    setWinner,
     setIsGameFinded,
     setIsReady,
     setIsStarted,
     setOpponentName,
+    setStatus,
   } = useGameStateActions();
   const { updateShipsLocationState } = useGameShipsActions();
   const { userName } = useAppSelector((state) => state.logInSlice);
@@ -54,11 +54,11 @@ export const useConnectionHandler = () => {
     setIsStarted(isStarted);
 
     if (data.isReconnect && user.name !== userName) {
-      setWinner(t('winReconnect'));
+      setStatus(t('winReconnect'));
 
       setTimeout(() => {
-        setWinner('');
-      }, 1000);
+        setStatus('');
+      }, 2000);
     }
 
     console.log('connection');

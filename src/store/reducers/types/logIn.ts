@@ -3,4 +3,5 @@ export interface ILogIn {
   isAuthorized: boolean;
   isModalOpen: boolean;
   modalChildren: string;
+  onlinePlayers: number;
 }

@@ -17,6 +17,7 @@ export enum SOCKETMETHOD {
   mailing = 'mailing',
   setName = 'setsocketname',
   invite = 'invite',
+  online = 'online',
 }
 
 export enum STATUS {

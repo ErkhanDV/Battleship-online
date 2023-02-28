@@ -7,6 +7,8 @@ import LogIn from './logIn/LogIn';
 import Chat from './chat/Chat';
 import Friend from './friend/Friend';
 import Invite from './invite/Invite';
+import Status from './status/Status';
+import PopUp from './popup/PopUp';
 
 export {
   Background,
@@ -18,4 +20,6 @@ export {
   Chat,
   Friend,
   Invite,
+  Status,
+  PopUp,
 };

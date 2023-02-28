@@ -5,6 +5,8 @@ export const GAMEDIFFICULTS = ['Difficult', 'Medium', 'Hard'];
 export enum PERSON {
   user = 'user',
   rival = 'rival',
+  computer = 'Computer',
+  you = 'You',
 }
 
 export enum CHAT {
