@@ -14,7 +14,7 @@ const Status: FC = () => {
   if (status)
     return (
       <div className="status">
-        <p className="status_value">status</p>
+        <p className="status_value">{status}</p>
         <NavLink to={ROUTE.home} className="home-button">
           {t('home')}
         </NavLink>

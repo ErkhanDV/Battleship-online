@@ -13,6 +13,7 @@ export const useConnectionHandler = () => {
     setIsAbleShoot,
     setIsGameFinded,
     setIsReady,
+    setIsStarted,
     setOpponentName,
     setStatus,
   } = useGameStateActions();
@@ -22,6 +23,7 @@ export const useConnectionHandler = () => {
   const connectHandler = (data: IStartGame & IConnect) => {
     const {
       isAbleShoot,
+      isStarted,
       isGameFinded,
       field,
       user,
@@ -49,6 +51,7 @@ export const useConnectionHandler = () => {
     }
 
     setIsGameFinded(isGameFinded);
+    setIsStarted(isStarted);
 
     if (data.isReconnect && user.name !== userName) {
       setStatus(t('winReconnect'));

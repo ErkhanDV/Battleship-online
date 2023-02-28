@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/hook/_index';
+import { useAppDispatch } from '@/hook/_index';
 import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,
@@ -10,30 +10,33 @@ import usePopUp from './use-popup-actions';
 export const useGameShipsActions = () => {
   const dispatch = useAppDispatch();
   const { setVision, setPopUpMessage } = usePopUp();
-  const { user, rival } = useAppSelector((state) => state.gameShipsSlice);
 
   const updateShipsLocationState = (
     state: IPlayerState,
     person: keyof IGameShips,
   ) => dispatch(shipActions.updateShipsState({ state, person }));
 
+  // const checkShoot = (person: keyof IGameShips, cell: number) => {
+  //   const personKey = person === 'user' ? user : rival;
+  //   const ships = personKey.ships.map((ship) => ship.shipLocation);
+  //   const index = ships.findIndex((coordinates) => coordinates.includes(cell));
+  //   if (index !== -1) {
+  //     if (person === 'rival') {
+  //       setVision(true), setPopUpMessage('Попал!');
+  //     }
+
+  //     dispatch(shipActions.addShoot({ person, cell, index }));
+  //   } else {
+  //     if (person === 'rival') {
+  //       setVision(true), setPopUpMessage('Промах!');
+  //     }
+
+  //     dispatch(shipActions.addMiss({ person, cell }));
+  //   }
+  // };
+
   const checkShoot = (person: keyof IGameShips, cell: number) => {
-    const personKey = person === 'user' ? user : rival;
-    const ships = personKey.ships.map((ship) => ship.shipLocation);
-    const index = ships.findIndex((coordinates) => coordinates.includes(cell));
-    if (index !== -1) {
-      if (person === 'rival') {
-        setVision(true), setPopUpMessage('Попал!');
-      }
-
-      dispatch(shipActions.addShoot({ person, cell, index }));
-    } else {
-      if (person === 'rival') {
-        setVision(true), setPopUpMessage('Промах!');
-      }
-
-      dispatch(shipActions.addMiss({ person, cell }));
-    }
+    dispatch(shipActions.addShoot({ person, cell }));
   };
 
   const addShip = (person: keyof IGameShips, ship: IShip) =>

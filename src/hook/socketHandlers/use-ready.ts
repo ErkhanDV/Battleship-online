@@ -18,6 +18,8 @@ export const useReadyHandler = () => {
     setIsStarted(!!isStarted);
     if (user !== userName) {
       updateShipsLocationState(field, PERSON.rival);
+    } else {
+      updateShipsLocationState(field, PERSON.user);
     }
   };
 

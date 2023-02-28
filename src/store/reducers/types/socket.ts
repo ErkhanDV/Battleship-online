@@ -7,6 +7,7 @@ export interface IConnect {
   isGameFinded: boolean;
   isAbleShoot: boolean;
   isReconnect: boolean;
+  isStarted: boolean;
   field?: IPlayerState;
   opponentName?: string;
   opponentField?: IPlayerState;
