@@ -1,5 +1,5 @@
 import usePopUp from '@/hook/storeActions/use-popup-actions';
-import { useAppSelector } from '@/hook/use-redux';
+import { useAppSelector } from '@/hook/_index';
 // import { useEffect } from 'react';
 import './PopUp.scss';
 

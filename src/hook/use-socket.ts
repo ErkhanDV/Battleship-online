@@ -44,7 +44,10 @@ export const useSocket = () => {
   useEffect(() => {
     socket.current = new WebSocket(SOCKET);
 
-    socket.current.onopen = () => console.log('socket opened');
+    socket.current.onopen = () => {
+      sendSocket(SOCKETMETHOD.setName, { socketName: userName });
+      console.log('socket opened');
+    };
 
     socket.current.onmessage = (response) => {
       const data: TSocketMessage = JSON.parse(response.data);

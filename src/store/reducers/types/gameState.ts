@@ -15,6 +15,7 @@ export interface IGameState {
   isStarted: boolean;
   isAbleShoot: boolean;
   isReady: boolean;
+  opponentIsReady: boolean;
   winner: string;
   winnerClassList: string;
   invite: string;

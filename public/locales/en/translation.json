@@ -54,8 +54,9 @@
   "welcomeSecond": "The locations of the fleets are concealed from the other player. Players alternate turns calling \"shots\" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.",
   "rulesOfTheGame": "Rules of the game",
 
-  "profile": "Gaming profile",
-  "loginPlease": "Please login to your account.",
+  "profile": "Play BattleShip",
+  "youCanPlay": "You can play BattleShip with artificial intelligence, random player or your friend.",
+  "loginPlease": "To play online with a random player, please login to your account. To play with a friend, enter his nickname.",
 
   "authorization": "Authorization",
   "enterName": "Enter name",
@@ -85,6 +86,9 @@
   "winExit": "The enemy has left the battle",
   "winWin": "You have sunk all enemy ships",
   "winLose": "Enemy has destroyed all your ships",
+  "gameStart": "The battle has begun!",
+  "fieldWait": "Waiting for opponent",
+  "fieldReady": "READY",
 
   "Congratulations on the victory!": "Congratulations on the victory!",
   "This time lucky": "На этот раз повезло",

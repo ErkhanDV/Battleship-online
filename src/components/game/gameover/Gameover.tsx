@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ResultTable } from '../_index';
@@ -22,20 +22,29 @@ const Gameover = ({ isOnline }: { isOnline: boolean }) => {
       return { user, rival, userName, opponentName, winner, winnerClassList };
     });
 
-  const { setWinner, setClassList } = useGameStateActions();
+  const { setClassList } = useGameStateActions();
+
+  const [winText, setWinText] = useState('');
 
   useEffect(() => {
     if (isOnline) {
+      if (winner === userName) {
+        setWinText(t('winWin') as string);
+        setClassList(GAMEOVERCLASS.win);
+      } else {
+        setWinText(t('winLose') as string);
+        setClassList(GAMEOVERCLASS.lose);
+      }
       return;
     }
 
     if (winner === PERSON.you) {
-      setWinner(t('winWin'));
+      setWinText(t('winWin') as string);
       setClassList(GAMEOVERCLASS.win);
     }
 
     if (winner === PERSON.computer) {
-      setWinner(t('winLose'));
+      setWinText(t('winLose') as string);
       setClassList(GAMEOVERCLASS.lose);
     }
   }, [winner]);
@@ -43,7 +52,7 @@ const Gameover = ({ isOnline }: { isOnline: boolean }) => {
   if (winner) {
     return (
       <div className={`gameover ${winnerClassList}`}>
-        <h3>{winner}</h3>
+        <h3>{winText}</h3>
         <div className="gamers-table">
           <ResultTable user={rival} name={isOnline ? userName : 'You'} />
           <ResultTable

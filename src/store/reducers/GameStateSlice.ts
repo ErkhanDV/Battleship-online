@@ -10,6 +10,7 @@ const initialState: IGameState = {
   isStarted: false,
   isAbleShoot: false,
   isReady: false,
+  opponentIsReady: false,
   winner: '',
   winnerClassList: '',
   gameDifficult: 0,
@@ -42,6 +43,10 @@ export const gameStateSlice = createSlice({
 
     setReady(state, action: PayloadAction<boolean>) {
       state.isReady = action.payload;
+    },
+
+    setOpponentReady(state, action: PayloadAction<boolean>) {
+      state.opponentIsReady = action.payload;
     },
 
     setWinner(state, action: PayloadAction<string>) {
@@ -81,6 +86,7 @@ export const {
   setGameDifficult,
   setStatus,
   setWinnerClassList,
+  setOpponentReady,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

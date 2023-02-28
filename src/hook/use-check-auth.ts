@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useLogInActions } from '@/hook/_index';
 import { authService, gameService } from '@/services/axios/_index';
@@ -10,6 +10,8 @@ import { TSendSocket } from '@/store/reducers/types/socket';
 
 export const useCheckAuth = (sendSocket: TSendSocket) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { setUserName } = useLogInActions();
   const [checkInProccess, setCheckInProccess] = useState(false);
 
@@ -24,7 +26,7 @@ export const useCheckAuth = (sendSocket: TSendSocket) => {
 
         if (auth) {
           await setUserName(auth.name);
-          sendSocket(SOCKETMETHOD.setName, { socketName: auth.name });
+
 
           if (location.pathname === ROUTE.game) {
             const response = await gameService.startGame();
