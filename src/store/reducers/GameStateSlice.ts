@@ -11,7 +11,9 @@ const initialState: IGameState = {
   isAbleShoot: false,
   isReady: false,
   winner: '',
+  winnerClassList: '',
   gameDifficult: 0,
+  status: '',
 };
 
 export const gameStateSlice = createSlice({
@@ -46,6 +48,10 @@ export const gameStateSlice = createSlice({
       state.winner = action.payload;
     },
 
+    setWinnerClassList(state, action: PayloadAction<string>) {
+      state.winnerClassList = action.payload;
+    },
+
     setInvite(state, action: PayloadAction<string>) {
       state.invite = action.payload;
     },
@@ -54,6 +60,10 @@ export const gameStateSlice = createSlice({
 
     setGameDifficult(state, action: PayloadAction<number>) {
       state.gameDifficult = action.payload;
+    },
+
+    setStatus(state, action: PayloadAction<string>) {
+      state.status = action.payload;
     },
   },
 });
@@ -69,6 +79,8 @@ export const {
   setInvite,
   resetGameState,
   setGameDifficult,
+  setStatus,
+  setWinnerClassList,
 } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

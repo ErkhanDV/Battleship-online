@@ -1,75 +1,59 @@
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  useAppSelector,
-  useGameShipsActions,
-  useGameStateActions,
-} from '@/hook/_index';
+
+import { ResultTable } from '../_index';
+
 import './Gameover.scss';
+
+import { useAppSelector, useGameStateActions } from '@/hook/_index';
+
 import { ROUTE } from '@/router/_constants';
-import ResultTable from '../resultTable/resultTable';
-import { useEffect, useState } from 'react';
+import { GAMEOVERCLASS } from './_constants';
+import { PERSON } from '@/store/_constants';
 
 const Gameover = ({ isOnline }: { isOnline: boolean }) => {
   const { t } = useTranslation();
-  const { user, rival, userName, opponentName, winner } = useAppSelector(
-    (state) => {
+  const { user, rival, userName, opponentName, winner, winnerClassList } =
+    useAppSelector((state) => {
       const { user, rival } = state.gameShipsSlice;
-      const { opponentName, winner } = state.gameStateSlice;
+      const { opponentName, winner, winnerClassList } = state.gameStateSlice;
       const { userName } = state.logInSlice;
-      return { user, rival, userName, opponentName, winner };
-    },
-  );
-  const { resetGameShips } = useGameShipsActions();
-  const { resetGameState } = useGameStateActions();
+      return { user, rival, userName, opponentName, winner, winnerClassList };
+    });
 
-  const [meWin, setMeWin] = useState<boolean>(false);
+  const { setWinner, setClassList } = useGameStateActions();
 
   useEffect(() => {
     if (isOnline) {
-      if (winner === userName) {
-        setMeWin(true);
-      }
+      return;
     }
-    if (winner === 'You') {
-      setMeWin(true);
+
+    if (winner === PERSON.you) {
+      setWinner(t('winWin'));
+      setClassList(GAMEOVERCLASS.win);
+    }
+
+    if (winner === PERSON.computer) {
+      setWinner(t('winLose'));
+      setClassList(GAMEOVERCLASS.lose);
     }
   }, [winner]);
 
-  let classList = 'gameover';
-
-  if (meWin) {
-    classList += ' winner-background';
-  } else {
-    classList += ' looser-background';
-  }
-
-  const title = meWin
-    ? 'Поздравляем с победой!'
-    : isOnline
-    ? `На этот раз повезло ${winner}`
-    : 'Тебя обыграл искусственный разум';
-
-  const homeButtonHandler = () => {
-    resetGameShips();
-    resetGameState();
-  };
-
   if (winner) {
     return (
-      <div className={classList}>
-        <h3>{title}</h3>
+      <div className={`gameover ${winnerClassList}`}>
+        <h3>{winner}</h3>
         <div className="gamers-table">
           <ResultTable user={rival} name={isOnline ? userName : 'You'} />
           <ResultTable
             user={user}
-            name={isOnline ? opponentName : 'Computer'}
+            name={isOnline ? opponentName : PERSON.computer}
           />
         </div>
-        <NavLink to={ROUTE.home} className="home" onClick={homeButtonHandler}>
+        <NavLink to={ROUTE.home} className="home-button">
           {t('home')}
         </NavLink>
-        {/* <button>Сыграть еще раз</button> */}
       </div>
     );
   } else {

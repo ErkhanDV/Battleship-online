@@ -1,4 +1,7 @@
 import { getRandomNum } from '@/lib/utils/getRandomNum';
+
+import { PERSON } from '@/store/_constants';
+
 import { IGameShips, IPlayerState } from '@/store/reducers/types/shipLocation';
 
 export const getPossibleCells = (
@@ -109,7 +112,7 @@ export const computerMove = (
     }
     setIsAbleShoot(true);
     setAvailableShoots(changeAvailableShoots(availableCells, shoot));
-    checkShoot('user', shoot);
+    checkShoot(PERSON.user, shoot);
     return;
   }
 
@@ -119,18 +122,18 @@ export const computerMove = (
     (cell) => !ship.occupiedCells.includes(cell) && cell !== shoot,
   );
   setHitted(shipIndex);
-  checkShoot('user', shoot);
+  checkShoot(PERSON.user, shoot);
 
   if (ship.decks === ship.woundedCells.length) {
     setHitted(-1);
     setTurnToDestroy(0);
-    addNotAllowed('user', ship.occupiedCells, ship.decks);
+    addNotAllowed(PERSON.user, ship.occupiedCells, ship.decks);
     cloneUser.notAllowed.push(...ship.occupiedCells);
     if (
       cloneUser.ships.filter((ship) => ship.decks === ship.woundedCells.length)
         .length === 10
     ) {
-      setWinner('Computer');
+      setWinner(PERSON.computer);
       return;
     }
     const newShoot = getShootTarget(updatedAvailableCells);

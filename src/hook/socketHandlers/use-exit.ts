@@ -4,7 +4,7 @@ import { IExit } from '@/store/reducers/types/socket';
 
 export const useExitHandler = () => {
   const { t } = useTranslation();
-  const { setWinner } = useGameStateActions();
+  const { setStatus } = useGameStateActions();
   const { userName, isAuthorized } = useAppSelector((state) => state.logInSlice);
 
 
@@ -13,7 +13,7 @@ export const useExitHandler = () => {
 
 
     if (data.user !== userName && isAuthorized) {
-      setWinner(t('winExit'));
+      setStatus(t('winExit'));
     }
   };
 

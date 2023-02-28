@@ -37,10 +37,11 @@ const App = () => {
 
     if (isMatchRoute && gameInfo) {
       sendSocket(SOCKETMETHOD.exit);
-      resetGameChat();
-      resetGameState();
-      resetGameShips();
     }
+
+    resetGameChat();
+    resetGameState();
+    resetGameShips();
   }, [location]);
 
   checkLocalStorage();
