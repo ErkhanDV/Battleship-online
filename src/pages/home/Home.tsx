@@ -15,9 +15,6 @@ const Home: FC = () => {
         <section className="section">
           <h2 className="section_title">{t('Welcome to the BattleShip!')}</h2>
           <p className="section_paragraph">{t('welcomeFirst')}</p>
-          <Link to="/game" className="section_button">
-            {t('playBattleShip')}
-          </Link>
           <p className="section_paragraph">{t('welcomeSecond')}</p>
           <Link to="/rules" className="section_button">
             {t('rulesOfTheGame')}
@@ -25,12 +22,10 @@ const Home: FC = () => {
         </section>
         <section className="section">
           <h2 className="section_title">{t('profile')}</h2>
-          <p className="section_paragraph">Nickname: Billy Herrington</p>
-          <p className="section_paragraph">Rank: Capitan</p>
-          <p className="section_paragraph">Games: 0</p>
-          <p className="section_paragraph">Wins: 0</p>
-          <p className="section_paragraph">Losses: 0</p>
-          <button className="section_button">{t('login')}</button>
+          <p className="section_paragraph">{t('youCanPlay')}</p>
+          <Link to="/gameSP" className="section_button">
+            {`${t('game')} ${t('vsComputer')}`}
+          </Link>
           <p className="section_paragraph">{t('loginPlease')}</p>
         </section>
         <Chat />
