@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hook/_index';
+import { useAppDispatch, useAppSelector } from '@/hook/_index';
 import * as shipActions from '@/store/reducers/GameShipsSlice';
 import {
   IPlayerState,
@@ -10,6 +10,7 @@ import usePopUp from './use-popup-actions';
 export const useGameShipsActions = () => {
   const dispatch = useAppDispatch();
   const { setVision, setPopUpMessage } = usePopUp();
+  const { sound } = useAppSelector((state) => state.appSettingsSlice);
 
   const updateShipsLocationState = (
     state: IPlayerState,
@@ -36,11 +37,11 @@ export const useGameShipsActions = () => {
   // };
 
   const checkShoot = (person: keyof IGameShips, cell: number) => {
-    dispatch(shipActions.addShoot({ person, cell }));
+    dispatch(shipActions.addShoot({ person, cell, sound }));
   };
 
   const addShip = (person: keyof IGameShips, ship: IShip) =>
-    dispatch(shipActions.addShip({ person, ship }));
+    dispatch(shipActions.addShip({ person, ship}));
 
   const resetShips = () => dispatch(shipActions.resetShips());
 

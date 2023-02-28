@@ -9,7 +9,10 @@ import {
   IShip,
   IAddNotAllowed,
 } from './types/shipLocation';
+
 import { SHIPS } from '../_constants';
+
+import Sound from '@/lib/API/Sound/Sound';
 
 const initialState: IGameShips = {
   user: {
@@ -39,14 +42,16 @@ const gameShipsSlice = createSlice({
     // },
 
     addShoot(state, action: PayloadAction<IShoot>) {
-      const { person, cell } = action.payload;
+      const { person, cell, sound } = action.payload;
       const ships = state[person].ships.map((ship) => ship.shipLocation);
       const index = ships.findIndex((coordinates) =>
         coordinates.includes(cell),
       );
       if (index !== -1) {
+        if (sound) Sound('shot');
         state[person].ships[index].woundedCells.push(cell);
       } else {
+        if (sound) Sound('bulk');
         state[person].misses.push(cell);
       }
     },
