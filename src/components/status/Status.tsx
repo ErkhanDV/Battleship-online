@@ -15,9 +15,11 @@ const Status: FC = () => {
     return (
       <div className="status">
         <p className="status_value">{status}</p>
-        <NavLink to={ROUTE.home} className="home-button">
-          {t('home')}
-        </NavLink>
+        {status !== t('gameStart') ? (
+          <NavLink to={ROUTE.home} className="home-button">
+            {t('home')}
+          </NavLink>
+        ) : null}
       </div>
     );
   else {

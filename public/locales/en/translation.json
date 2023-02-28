@@ -85,6 +85,7 @@
   "winExit": "The enemy has left the battle",
   "winWin": "You have sunk all enemy ships",
   "winLose": "Enemy has destroyed all your ships",
+  "gameStart": "The battle has begun!",
 
   "Congratulations on the victory!": "Congratulations on the victory!",
   "This time lucky": "На этот раз повезло",
