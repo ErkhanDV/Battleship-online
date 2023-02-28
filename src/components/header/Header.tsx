@@ -45,7 +45,7 @@ const Header: FC = () => {
   const [logStatus, setlogStatus] = useState('LogIn');
 
   useEffect(() => {
-    setlogStatus(isAuthorized ? `${userName}: logout` : 'Login');
+    setlogStatus(isAuthorized ? `Logout` : 'Login');
 
     (async () => {
       if (isAuthorized && gameTryConnect) {
@@ -105,11 +105,13 @@ const Header: FC = () => {
         <h1 className="header_logo">
           {t('battle')}
           <span className="logo-image">{t('ship')}</span>
+          <span className="header_online">{t('Players online')} {onlinePlayers}</span>
         </h1>
       </Link>
+
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
-          <li className="header_online">Players online: {onlinePlayers}</li>
+
           <li className="navigation_item">
             <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}
@@ -146,7 +148,9 @@ const Header: FC = () => {
             <span className="navigation_link">{t('settings')}</span>
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
-            <span className="navigation_link">{logStatus}</span>
+            <span className="navigation_link">{logStatus}
+            <span className='link-login'>{userName}</span>
+            </span>
           </li>
         </ul>
       </nav>
