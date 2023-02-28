@@ -21,10 +21,22 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     (state) => state.gameStateSlice,
   );
 
+  const { rival } = useAppSelector((state) => state.gameShipsSlice);
+
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
   const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
     const shoot = Number((target as HTMLDivElement).id);
+
+    const isMissAlready = rival.misses.some((miss) => miss === shoot);
+
+    const isDeadAlready = rival.ships.some((ship) => {
+      return ship.woundedCells.some((cell) => cell === shoot);
+    });
+
+    if (isDeadAlready || isMissAlready) {
+      return;
+    }
 
     if (isAbleShoot && isStarted && isRival) {
       if (isOnline && sendSocket && (target as HTMLDivElement).id) {
