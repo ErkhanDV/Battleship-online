@@ -9,9 +9,9 @@ import { useAppSelector } from '@/hook/_index';
 
 const Status: FC = () => {
   const { t } = useTranslation();
-  const { status } = useAppSelector((state) => state.gameStateSlice);
+  const { status, winner } = useAppSelector((state) => state.gameStateSlice);
 
-  if (status)
+  if (status && !winner)
     return (
       <div className="status">
         <p className="status_value">{status}</p>
