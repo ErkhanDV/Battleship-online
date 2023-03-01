@@ -7,7 +7,7 @@
 .message {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: fit-content;
   margin: 10px 0;
   padding: 10px 10px 4px;
   border-radius: 4px;
@@ -31,7 +31,7 @@
 
   &_name {
     position: relative;
-    padding-left: 32px;
+    padding: 0 32px;
     color: $text-color-100;
     overflow: hidden;
     white-space: nowrap;
@@ -70,6 +70,7 @@
   }
 
   &_text {
+    padding: 0 1rem;
     text-align: center;
     line-height: 1.6;
     letter-spacing: 1px;

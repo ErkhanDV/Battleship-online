@@ -8,6 +8,7 @@ const initialState: ILogIn = {
   isModalOpen: false,
   modalChildren: MODAL.log,
   onlinePlayers: 0,
+  onlineNames: [],
 };
 
 const logInSlice = createSlice({
@@ -30,10 +31,19 @@ const logInSlice = createSlice({
     setOnlinePlayers(state, action: PayloadAction<number>) {
       state.onlinePlayers = action.payload;
     },
+
+    setOnlineNames(state, action: PayloadAction<string[]>) {
+      state.onlineNames = action.payload;
+    },
   },
 });
 
-export const { setUserName, setModalOpen, setModalChildren, setOnlinePlayers } =
-  logInSlice.actions;
+export const {
+  setUserName,
+  setModalOpen,
+  setModalChildren,
+  setOnlinePlayers,
+  setOnlineNames,
+} = logInSlice.actions;
 
 export default logInSlice.reducer;
