@@ -9,7 +9,6 @@ export const useInviteHandler = () => {
   const { setInvite } = useGameStateActions();
 
   const inviteHandler = (data: IInvite) => {
-    console.log('invite', data);
     setInvite(data.server);
     setModalChildren(MODAL.invite);
     setModalOpen(true);

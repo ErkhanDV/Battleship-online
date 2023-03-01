@@ -32,8 +32,6 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     }
 
     const shoot = Number((target as HTMLDivElement).id);
-    console.log((target as HTMLDivElement).id);
-
     if (isAbleShoot && isStarted && isRival) {
       const isMissAlready = rival.misses.includes(shoot);
 

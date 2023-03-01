@@ -51,7 +51,6 @@ export const useShootHandler = () => {
       setIsAbleShoot(!isAbleShoot);
       checkShoot(PERSON.user, shoot);
     }
-    console.log('shoot');
   };
 
   return { shootHandler };

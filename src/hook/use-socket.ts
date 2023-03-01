@@ -57,7 +57,6 @@ export const useSocket = () => {
       } else {
         socket.current.onopen = () => {
           sendSocket(SOCKETMETHOD.setName, { socketName: userName });
-          console.log('socket opened');
         };
       }
     }
@@ -68,7 +67,6 @@ export const useSocket = () => {
 
     socket.current.onopen = () => {
       sendSocket(SOCKETMETHOD.setName, { socketName: userName });
-      console.log('socket opened');
     };
 
     socket.current.onmessage = (response) => {

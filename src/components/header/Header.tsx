@@ -4,13 +4,17 @@ import { useTranslation } from 'react-i18next';
 
 import './Header.scss';
 
-import { useLogInActions, useAppSelector } from '@/hook/_index';
+import {
+  useLogInActions,
+  useAppSelector,
+  useGameStateActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { authService, gameService } from '@/services/axios/_index';
 
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 import { ROUTE } from '@/router/_constants';
-import { MODAL } from '@/store/_constants';
+import { MODAL, PERSON } from '@/store/_constants';
 
 const Header: FC = () => {
   const { t } = useTranslation();
@@ -19,6 +23,7 @@ const Header: FC = () => {
   const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
+  const { setGameInfo } = useGameStateActions();
 
   const { userName, isAuthorized, gameInfo, onlinePlayers } = useAppSelector(
     (state) => {
@@ -41,7 +46,7 @@ const Header: FC = () => {
     (async () => {
       if (isAuthorized && gameTryConnect) {
         setGameTryConnect(false);
-        gameHandler();
+        onlineHandler();
       }
     })();
   }, [isAuthorized]);
@@ -66,7 +71,7 @@ const Header: FC = () => {
     }
   };
 
-  const gameHandler = async () => {
+  const onlineHandler = async () => {
     if (isAuthorized) {
       const response = await gameService.startGame();
       if (response && typeof response !== 'string') {
@@ -79,6 +84,17 @@ const Header: FC = () => {
     } else {
       setGameTryConnect(true);
       modalHandler(MODAL.log);
+    }
+  };
+
+  const singleHandler = async () => {
+    setGameInfo({
+      gameId: PERSON.computer,
+      user: { id: PERSON.user, name: userName },
+    });
+
+    if (location.pathname !== ROUTE.single) {
+      navigate(ROUTE.single);
     }
   };
 
@@ -104,13 +120,11 @@ const Header: FC = () => {
           <li className="navigation_item item-dropdown">
             <span className="navigation_link">{t('game')}</span>
             <ul className="navigation_dropdown">
-              <li onClick={gameHandler} className="dropdown-item">
+              <li onClick={onlineHandler} className="dropdown-item">
                 <span className="navigation_link">{t('vsRandom')}</span>
               </li>
-              <li className="dropdown-item">
-                <NavLink to={ROUTE.single} className="navigation_link">
-                  {t('vsComputer')}
-                </NavLink>
+              <li onClick={singleHandler} className="dropdown-item">
+                {t('vsComputer')}
               </li>
               <li
                 onClick={() => modalHandler(MODAL.friend)}

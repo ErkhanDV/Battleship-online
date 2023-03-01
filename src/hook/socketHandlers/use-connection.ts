@@ -60,8 +60,6 @@ export const useConnectionHandler = () => {
         setStatus('');
       }, 2000);
     }
-
-    console.log('connection');
   };
 
   return { connectHandler };
