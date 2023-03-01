@@ -51,6 +51,19 @@ export const useSocket = () => {
   } = SOCKETMETHOD;
 
   useEffect(() => {
+    if (socket.current) {
+      if (socket.current.readyState === 1) {
+        sendSocket(SOCKETMETHOD.setName, { socketName: userName });
+      } else {
+        socket.current.onopen = () => {
+          sendSocket(SOCKETMETHOD.setName, { socketName: userName });
+          console.log('socket opened');
+        };
+      }
+    }
+  }, [userName]);
+
+  useEffect(() => {
     socket.current = new WebSocket(SOCKET);
 
     socket.current.onopen = () => {
