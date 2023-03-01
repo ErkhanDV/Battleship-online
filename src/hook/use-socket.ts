@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useAppSelector, useGameStateActions } from './_index';
+import {
+  useAppSelector,
+  useChatActions,
+  useGameStateActions,
+  useGameShipsActions,
+} from '@/hook/_index';
 import { useSocketHandlers } from './socketHandlers/_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import { TSocketMessage } from '@/store/reducers/types/socket';
@@ -21,6 +26,10 @@ export const useSocket = () => {
   } = useSocketHandlers();
 
   const { setGameInfo } = useGameStateActions();
+  const { resetGameChat } = useChatActions();
+  const { resetGameState } = useGameStateActions();
+  const { resetGameShips } = useGameShipsActions();
+
   const { userName, gameInfo } = useAppSelector((state) => {
     const { userName } = state.logInSlice;
     const { gameInfo } = state.gameStateSlice;
@@ -127,7 +136,14 @@ export const useSocket = () => {
   const sendSocket: TSendSocket = useCallback(
     (method, data) => {
       if (method === SOCKETMETHOD.connect) {
-        setGameInfo(data ? (data as ISendConnect) : null);
+        if (gameInfo) {
+          sendSocket(SOCKETMETHOD.exit);
+          resetGameChat();
+          resetGameState();
+          resetGameShips();
+        }
+
+        setGameInfo(data as ISendConnect);
       }
 
       if (socket.current) {

@@ -30,7 +30,6 @@ export const useCheckAuth = (sendSocket: TSendSocket) => {
 
           if (location.pathname === ROUTE.game) {
             const response = await gameService.startGame();
-
             if (response && typeof response !== 'string') {
               if (response) sendSocket(SOCKETMETHOD.connect, response);
             } else {

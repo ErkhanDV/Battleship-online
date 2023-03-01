@@ -4,13 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import './Header.scss';
 
-import {
-  useLogInActions,
-  useAppSelector,
-  useChatActions,
-  useGameStateActions,
-  useGameShipsActions,
-} from '@/hook/_index';
+import { useLogInActions, useAppSelector } from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 import { authService, gameService } from '@/services/axios/_index';
 
@@ -25,9 +19,6 @@ const Header: FC = () => {
   const location = useLocation();
 
   const { setModalOpen, setModalChildren, setUserName } = useLogInActions();
-  const { resetGameChat } = useChatActions();
-  const { resetGameState } = useGameStateActions();
-  const { resetGameShips } = useGameShipsActions();
 
   const { userName, isAuthorized, gameInfo, onlinePlayers } = useAppSelector(
     (state) => {
@@ -77,15 +68,7 @@ const Header: FC = () => {
 
   const gameHandler = async () => {
     if (isAuthorized) {
-      if (gameInfo) {
-        sendSocket(SOCKETMETHOD.exit);
-        resetGameChat();
-        resetGameState();
-        resetGameShips();
-      }
-
       const response = await gameService.startGame();
-
       if (response && typeof response !== 'string') {
         sendSocket(SOCKETMETHOD.connect, response);
       }
@@ -105,13 +88,14 @@ const Header: FC = () => {
         <h1 className="header_logo">
           {t('battle')}
           <span className="logo-image">{t('ship')}</span>
-          <span className="header_online">{t('Players online')} {onlinePlayers}</span>
+          <span className="header_online">
+            {t('Players online')} {onlinePlayers}
+          </span>
         </h1>
       </Link>
 
       <nav className={`header_navigation ${menuVisible && 'visible'}`}>
         <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
-
           <li className="navigation_item">
             <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}
@@ -148,8 +132,9 @@ const Header: FC = () => {
             <span className="navigation_link">{t('settings')}</span>
           </li>
           <li className="navigation_item" onClick={() => logHandler()}>
-            <span className="navigation_link">{logStatus}
-            <span className='link-login'>{userName}</span>
+            <span className="navigation_link">
+              {logStatus}
+              <span className="link-login">{userName}</span>
             </span>
           </li>
         </ul>
