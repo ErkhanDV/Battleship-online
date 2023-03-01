@@ -46,6 +46,7 @@ export interface IInvite {
 
 export interface IOnline {
   count: number;
+  names: string[];
 }
 
 export interface ISendConnect {

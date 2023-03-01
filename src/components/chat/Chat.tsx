@@ -1,4 +1,11 @@
-import { FC, useState, useContext, useRef, useEffect } from 'react';
+import {
+  FC,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  useCallback,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { SocketContext } from '@/context/Context';
 import { useAppSelector, useChatActions } from '@/hook/_index';
@@ -20,6 +27,7 @@ const Chat: FC = () => {
     gameInfo,
     unreadGame,
     unreadCommon,
+    onlineNames,
   } = useAppSelector((state) => {
     const { game } = state.ChatSlice;
     const { common } = state.ChatSlice;
@@ -28,6 +36,7 @@ const Chat: FC = () => {
     const { gameInfo } = state.gameStateSlice;
     const { unreadGame } = state.ChatSlice;
     const { unreadCommon } = state.ChatSlice;
+    const { onlineNames } = state.logInSlice;
 
     return {
       game,
@@ -37,12 +46,33 @@ const Chat: FC = () => {
       gameInfo,
       unreadGame,
       unreadCommon,
+      onlineNames,
     };
   });
 
   const currUnread = currentChat === CHAT.common ? unreadCommon : unreadGame;
   const [text, setText] = useState('');
   const chatElement = useRef<HTMLDivElement>(null);
+
+  const editedNames = useCallback(() => {
+    if (onlineNames.includes(userName)) {
+      return onlineNames.filter((name) => name !== userName);
+    }
+
+    if (!userName) {
+      let newNames: string[] = [];
+
+      onlineNames.forEach((name, i) => {
+        if (name === 'Unknown user') {
+          newNames = [...onlineNames];
+          newNames.splice(i, 1);
+          return;
+        }
+      });
+
+      return newNames;
+    }
+  }, [onlineNames]);
 
   useEffect(() => {
     if (chatElement.current) {
@@ -87,6 +117,7 @@ const Chat: FC = () => {
   return (
     <div className="chat">
       <h2 className="section_title">{t('chat')}</h2>
+
       <button
         className={`chat_button ${currentChat === CHAT.common && 'active'}`}
         onClick={() => changeChat(CHAT.common)}
@@ -107,19 +138,30 @@ const Chat: FC = () => {
         <span className="unread"> {unreadGame ? `: ${unreadGame}` : ''}</span>
       </button>
 
-      <div ref={chatElement} className="chat_messages">
-        <Welcome />
-        {(currentChat === CHAT.common || !gameInfo ? common : game).map(
-          (mail, i, messages) => (
-            <div key={i}>
-              {messages.length - i === currUnread ? (
-                <div className="unread_line">new messages</div>
-              ) : null}
-              <Message mail={mail} />
-            </div>
-          ),
-        )}
+      <div className="chat_wrapper">
+        <div ref={chatElement} className="chat_messages">
+          <Welcome />
+          {(currentChat === CHAT.common || !gameInfo ? common : game).map(
+            (mail, i, messages) => (
+              <div key={i}>
+                {messages.length - i === currUnread ? (
+                  <div className="unread_line">new messages</div>
+                ) : null}
+                <Message mail={mail} />
+              </div>
+            ),
+          )}
+        </div>
+        <div className="chat_online">
+          <h4 className="chat_online_header">{t("usersOnline")}</h4>
+          <div className="chat_online_list">
+            {editedNames.length ? editedNames()?.map((name, i) => (
+              <div key={i}>{name}</div>
+            )) : t('emptyOnline')}
+          </div>
+        </div>
       </div>
+
       <form onSubmit={submitHandler} className="chat_input">
         <input
           onFocus={focusHandler}

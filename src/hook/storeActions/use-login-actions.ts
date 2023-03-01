@@ -17,10 +17,15 @@ export const useLogInActions = () => {
     dispatch(logInActions.setOnlinePlayers(count));
   };
 
+  const setOnlineNames = (names: string[]) => {
+    dispatch(logInActions.setOnlineNames(names));
+  };
+
   return {
     setUserName,
     setModalOpen,
     setModalChildren,
     setOnlinePlayers,
+    setOnlineNames,
   };
 };

@@ -43,6 +43,8 @@
   "admiral": "Адмирал",
   "welcomeMessage": "Привет! Приятного общения :)",
   "Write your message...": "Напишите ваше сообщение...",
+  "usersOnline": "Игроки онлайн:",
+  "emptyOnline": "Никого нет",
 
   "battleship": "Морской бой",
   "createdBy": "Создано",

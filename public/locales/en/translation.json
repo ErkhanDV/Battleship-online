@@ -43,10 +43,12 @@
   "admiral": "Admiral:",
   "welcomeMessage": "Hello! Have a nice chat :)",
   "Write your message...": "Write your message...",
+  "usersOnline": "Users online:",
 
   "battleship": "BattleShip Online",
   "createdBy": "Created by",
   "powerRangers": "Power Rangers",
+  "emptyOnline": "Nobody here",
 
   "Welcome to the BattleShip!": "Welcome to the BattleShip!",
   "welcomeFirst": "This is a strategy type guessing game for two players. It is played on ruled grids on which each player's fleet of warships are marked.",
