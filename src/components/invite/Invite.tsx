@@ -39,7 +39,6 @@ const Invite: FC = () => {
 
         return;
       }
-
       if (response && typeof response !== 'string') {
         sendSocket(SOCKETMETHOD.connect, response);
       }

@@ -2,13 +2,7 @@ import { FC, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import {
-  useLogInActions,
-  useAppSelector,
-  useChatActions,
-  useGameStateActions,
-  useGameShipsActions,
-} from '@/hook/_index';
+import { useLogInActions, useAppSelector } from '@/hook/_index';
 import { gameService } from '@/services/axios/Game';
 import { SocketContext } from '@/context/Context';
 
@@ -24,11 +18,8 @@ const Friend: FC = () => {
   const [validation, setValidation] = useState('');
 
   const { setModalOpen, setModalChildren } = useLogInActions();
-  const { resetGameChat } = useChatActions();
-  const { resetGameState } = useGameStateActions();
-  const { resetGameShips } = useGameShipsActions();
 
-  const { isModalOpen, isAuthorized, gameInfo } = useAppSelector((state) => {
+  const { isModalOpen, isAuthorized } = useAppSelector((state) => {
     const { isModalOpen, isAuthorized } = state.logInSlice;
     const { gameInfo } = state.gameStateSlice;
 
@@ -46,13 +37,6 @@ const Friend: FC = () => {
 
   const playHandler = async () => {
     if (isAuthorized) {
-      if (gameInfo) {
-        sendSocket(SOCKETMETHOD.exit);
-        resetGameChat();
-        resetGameState();
-        resetGameShips();
-      }
-
       if (!friend) {
         setValidation('Enter friend`s name');
         return;
@@ -63,7 +47,6 @@ const Friend: FC = () => {
         sendSocket(SOCKETMETHOD.invite, { friend });
 
         const response = await gameService.startGame('', true);
-
         if (response && typeof response !== 'string') {
           sendSocket(SOCKETMETHOD.connect, response);
         }

@@ -32,19 +32,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const isMatchRoute = [ROUTE.home, ROUTE.rules, ROUTE.single].some(
-      (route) => {
-        return route === location.pathname;
-      },
+    const isMatchRoute = [ROUTE.home, ROUTE.rules, ROUTE.single].includes(
+      location.pathname,
     );
 
     if (isMatchRoute && gameInfo) {
       sendSocket(SOCKETMETHOD.exit);
-    }
 
-    resetGameChat();
-    resetGameState();
-    resetGameShips();
+      resetGameChat();
+      resetGameState();
+      resetGameShips();
+    }
   }, [location]);
 
   checkLocalStorage();
