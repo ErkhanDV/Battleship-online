@@ -153,11 +153,11 @@ const Chat: FC = () => {
           )}
         </div>
         <div className="chat_online">
-          <h4 className="chat_online_header">{t("usersOnline")}</h4>
+          <h4 className="chat_online_header">{t('usersOnline')}</h4>
           <div className="chat_online_list">
-            {editedNames.length ? editedNames()?.map((name, i) => (
-              <div key={i}>{name}</div>
-            )) : t('emptyOnline')}
+            {!(onlineNames.length <= 1)
+              ? editedNames()?.map((name, i) => <div key={i}>{name}</div>)
+              : t('emptyOnline')}
           </div>
         </div>
       </div>
