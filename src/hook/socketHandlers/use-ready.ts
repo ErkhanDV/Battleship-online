@@ -16,7 +16,6 @@ export const useReadyHandler = () => {
   const { userName } = useAppSelector((state) => state.logInSlice);
 
   const readyHandler = (data: IReady) => {
-    console.log('ready');
     const { isStarted, field, user } = data;
 
     setIsStarted(isStarted);

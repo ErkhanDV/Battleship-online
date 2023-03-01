@@ -34,8 +34,6 @@ export const useChatHandler = () => {
       pushCommonMessage(data.mail);
       if (userName !== data.mail.name) setUnreadCommon();
     }
-
-    console.log('chat');
   };
 
   return { chatHandler };

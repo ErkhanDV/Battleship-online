@@ -6,7 +6,6 @@ export const useOnlineHandler = () => {
   const { setOnlinePlayers, setOnlineNames } = useLogInActions();
 
   const onlineHandler = ({ count, names }: IOnline) => {
-    console.log("setOnline");
     setOnlineNames(names);
     setOnlinePlayers(count);
   };

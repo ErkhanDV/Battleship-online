@@ -6,8 +6,6 @@ export const useMailingHandler = () => {
   const { pushCommonMessage, pushGameMessage } = useChatActions();
 
   const mailingHandler = (data: IMailing) => {
-    console.log('mailing');
-
     data.chatMessage.forEach((message) => {
       if (data.chatName === CHAT.common) {
         pushCommonMessage(message);
