@@ -9,6 +9,15 @@ App [BattleShip](http://ru.battleship-game.org/) clone.
 ### Technologies used:
 
 - React
+- Redux Toolkit
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT
+- Axios
+- Web Socket
+- i18next
 - TypeScript
-- SPA
-- SCSS
+- SASS
+
