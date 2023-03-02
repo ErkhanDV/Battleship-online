@@ -99,6 +99,8 @@ export const useSocket = () => {
         const data: TSocketMessage = JSON.parse(response.data);
         const { method } = data;
 
+        console.log(data);
+
         switch (method) {
           case connect:
             connectHandler(data);
@@ -133,7 +135,7 @@ export const useSocket = () => {
             break;
 
           case invite:
-            inviteHandler(data);
+            inviteHandler(data, sendSocket);
             break;
 
           case online:

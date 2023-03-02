@@ -6,6 +6,7 @@ import appSettingsSlice from './AppSettingsSlice';
 import ChatSlice from './ChatSlice';
 import AIStateSlice from './AIState';
 import PopUpSlice from './PopUpSlice';
+import InviteStateSlice from './InviteStateSlice';
 
 export {
   gameShipsSlice,
@@ -16,4 +17,6 @@ export {
   ChatSlice,
   AIStateSlice,
   PopUpSlice,
+  InviteStateSlice
+  
 };

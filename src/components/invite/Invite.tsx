@@ -1,12 +1,11 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
   useAppSelector,
   useLogInActions,
-  useGameStateActions,
+  useInviteStateActions,
 } from '@/hook/_index';
-import { gameService } from '@/services/axios/Game';
 import { SocketContext } from '@/context/Context';
 
 import { ROUTE } from '@/router/_constants';
@@ -16,32 +15,24 @@ const Invite: FC = () => {
   const navigate = useNavigate();
   const { sendSocket } = useContext(SocketContext);
   const { setModalOpen } = useLogInActions();
-  const { setInvite } = useGameStateActions();
+  const { setInvite } = useInviteStateActions();
 
-  const { invite } = useAppSelector((state) => state.gameStateSlice);
-  const { isAuthorized } = useAppSelector((state) => state.logInSlice);
-
-  const [validation, setValidation] = useState('');
+  const { invite } = useAppSelector((state) => state.InviteStateSlice);
+  const { isAuthorized, userName } = useAppSelector(
+    (state) => state.logInSlice,
+  );
 
   const acceptHandler = async () => {
     if (isAuthorized) {
-      const response = await gameService.startGame(invite, true);
+      const message = {
+        server: invite,
+        friend: userName,
+        isDeclined: false,
+        isFinded: true,
+        isAproved: true,
+      };
 
-      setInvite('');
-
-      if (typeof response === 'string') {
-        setValidation(response);
-
-        setTimeout(() => {
-          setValidation('');
-          setModalOpen(false);
-        }, 2000);
-
-        return;
-      }
-      if (response && typeof response !== 'string') {
-        sendSocket(SOCKETMETHOD.connect, response);
-      }
+      sendSocket(SOCKETMETHOD.invite, message);
 
       setModalOpen(false);
 
@@ -52,6 +43,14 @@ const Invite: FC = () => {
   };
 
   const declineHandler = () => {
+    const message = {
+      server: invite,
+      friend: userName,
+      isDeclined: true,
+      isFinded: true,
+    };
+
+    sendSocket(SOCKETMETHOD.invite, message);
     setModalOpen(false);
     setInvite('');
     return;
@@ -66,7 +65,6 @@ const Invite: FC = () => {
       <button className="login_button" onClick={declineHandler}>
         Decline
       </button>
-      <span className="login_validation">{validation}</span>
     </div>
   );
 };

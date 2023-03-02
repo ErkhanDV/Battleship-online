@@ -1,29 +1,44 @@
 import { FC, useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { useLogInActions, useAppSelector } from '@/hook/_index';
-import { gameService } from '@/services/axios/Game';
+import {
+  useLogInActions,
+  useAppSelector,
+  useInviteStateActions,
+} from '@/hook/_index';
 import { SocketContext } from '@/context/Context';
 
-import { ROUTE } from '@/router/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const Friend: FC = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { sendSocket } = useContext(SocketContext);
 
   const [friend, setFriend] = useState('');
   const [validation, setValidation] = useState('');
 
   const { setModalOpen, setModalChildren } = useLogInActions();
+  const { setInviteInProgress } = useInviteStateActions();
 
-  const { isModalOpen, isAuthorized } = useAppSelector((state) => {
-    const { isModalOpen, isAuthorized } = state.logInSlice;
+  const {
+    isModalOpen,
+    isAuthorized,
+    userName,
+    inviteValidation,
+    inviteInProgress,
+  } = useAppSelector((state) => {
+    const { isModalOpen, isAuthorized, userName } = state.logInSlice;
     const { gameInfo } = state.gameStateSlice;
+    const { inviteValidation, inviteInProgress } = state.InviteStateSlice;
 
-    return { isModalOpen, isAuthorized, gameInfo };
+    return {
+      isModalOpen,
+      isAuthorized,
+      gameInfo,
+      userName,
+      inviteValidation,
+      inviteInProgress,
+    };
   });
 
   useEffect(() => {
@@ -33,34 +48,38 @@ const Friend: FC = () => {
 
   const inputHandler = ({
     target,
-  }: React.ChangeEvent<HTMLInputElement>): void => setFriend(target.value);
+  }: React.ChangeEvent<HTMLInputElement>): void =>
+    setFriend(target.value.trim());
 
   const playHandler = async () => {
     if (isAuthorized) {
       if (!friend) {
         setValidation('Enter friend`s name');
         return;
-      } else if (friend.length <= 2) {
+      } else if (friend.length <= 3) {
         setValidation('Name is too short');
         return;
       } else {
-        sendSocket(SOCKETMETHOD.invite, { friend });
+        const message = { server: userName, friend };
 
-        const response = await gameService.startGame('', true);
-        if (response && typeof response !== 'string') {
-          sendSocket(SOCKETMETHOD.connect, response);
-        }
-
-        setModalOpen(false);
-
-        if (location.pathname !== ROUTE.game) {
-          navigate(ROUTE.game);
-        }
+        sendSocket(SOCKETMETHOD.invite, message);
       }
     } else {
       setModalOpen(true);
       setModalChildren('log');
     }
+  };
+
+  const cancelHandler = () => {
+    const message = {
+      server: userName,
+      friend,
+      isFinded: true,
+      isDeclined: true,
+    };
+
+    sendSocket(SOCKETMETHOD.invite, message);
+    setInviteInProgress(false);
   };
 
   const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,17 +89,30 @@ const Friend: FC = () => {
   return (
     <form onSubmit={formHandler} className="login">
       <h2 className="friend_title">{t('friendGame')}</h2>
-      <input
-        className="login_input"
-        onChange={inputHandler}
-        value={friend}
-        type="text"
-        placeholder={`${t('enterName')}`}
-      />
+      {!inviteInProgress ? (
+        <input
+          className="login_input"
+          onChange={inputHandler}
+          value={friend}
+          type="text"
+          placeholder={`${t('enterName')}`}
+        />
+      ) : null}
+
       <div className="login_validation">{validation}</div>
-      <button className="login_button" onClick={() => playHandler()}>
-        {t('connect')}
-      </button>
+      {inviteValidation ? (
+        <div className="login_validation">{inviteValidation}</div>
+      ) : null}
+
+      {!inviteInProgress ? (
+        <button className="login_button" onClick={() => playHandler()}>
+          {t('connect')}
+        </button>
+      ) : (
+        <button className="login_button" onClick={() => cancelHandler()}>
+          {t('cancel')}
+        </button>
+      )}
     </form>
   );
 };
