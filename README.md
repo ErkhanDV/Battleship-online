@@ -12,3 +12,9 @@ App [BattleShip](http://ru.battleship-game.org/) clone.
 - TypeScript
 - SPA
 - SCSS
+- MongoDB
+- Mongoose
+- Express
+- Node.js
+- Web Socket
+- JWT
