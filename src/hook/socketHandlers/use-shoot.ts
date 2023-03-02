@@ -21,7 +21,6 @@ export const useShootHandler = () => {
   // const [stopUseEffect, setStopUseEffect] = useState(false);
 
   // useEffect(() => {
-  //   console.log('useEffect', stopUseEffect);
   //   if (!stopUseEffect) {
   //     userState.ships.forEach(async (ship) => {
   //       if (ship.decks === ship.woundedCells.length) {
@@ -41,9 +40,7 @@ export const useShootHandler = () => {
   //   }
   // }, [userState.ships, rivalState.ships]);
 
-  const shootHandler = (data: IShoot) => {
-    const { user, shoot, isAbleShoot } = data;
-
+  const shootHandler = ({ user, shoot, isAbleShoot }: IShoot) => {
     if (user === userName) {
       setIsAbleShoot(isAbleShoot);
       checkShoot(PERSON.rival, shoot);
