@@ -18,7 +18,7 @@ const Friend: FC = () => {
   const [validation, setValidation] = useState('');
 
   const { setModalOpen, setModalChildren } = useLogInActions();
-  const { setInviteInProgress } = useInviteStateActions();
+  const { setInviteInProgress, setInviteTo } = useInviteStateActions();
 
   const {
     isModalOpen,
@@ -61,6 +61,7 @@ const Friend: FC = () => {
         return;
       } else {
         const message = { server: userName, friend };
+        setInviteTo(friend)
 
         sendSocket(SOCKETMETHOD.invite, message);
       }

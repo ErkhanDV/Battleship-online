@@ -33,7 +33,7 @@ export const useInviteHandler = () => {
   ) => {
     if (isAproved) {
       const response = await gameService.startGame(
-        server === userName ? userName : '',
+        server === userName ? '' : server,
         true,
       );
 
@@ -44,9 +44,10 @@ export const useInviteHandler = () => {
       if (location.pathname !== ROUTE.game) {
         navigate(ROUTE.game);
       }
-
       setModalOpen(false);
       resetInviteState();
+
+      return;
     }
 
     if (friend === userName && !isDeclined) {
@@ -71,7 +72,7 @@ export const useInviteHandler = () => {
     }
 
     if (userName === friend && isDeclined) {
-      setInvite('');
+      resetInviteState();
       setModalOpen(false);
     }
 
@@ -82,7 +83,7 @@ export const useInviteHandler = () => {
       setTimeout(() => {
         setInviteValidation('');
         resetInviteState();
-      }, 3000);
+      }, 2000);
     }
   };
 

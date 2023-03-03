@@ -5,6 +5,7 @@ const initialState: IInviteState = {
   invite: '',
   inviteValidation: '',
   inviteInProgress: false,
+  inviteTo: '',
 };
 
 export const inviteStateSlice = createSlice({
@@ -13,6 +14,10 @@ export const inviteStateSlice = createSlice({
   reducers: {
     setInvite(state, action: PayloadAction<string>) {
       state.invite = action.payload;
+    },
+
+    setInviteTo(state, action: PayloadAction<string>) {
+      state.inviteTo = action.payload;
     },
 
     setInviteValidation(state, action: PayloadAction<string>) {
@@ -29,6 +34,7 @@ export const inviteStateSlice = createSlice({
 
 export const {
   setInvite,
+  setInviteTo,
   setInviteValidation,
   setInviteInProgress,
   resetInviteState,

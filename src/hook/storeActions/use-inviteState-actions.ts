@@ -13,6 +13,9 @@ export const useInviteStateActions = () => {
   const setInviteInProgress = (state: boolean) =>
     dispatch(inviteStateActions.setInviteInProgress(state));
 
+  const setInviteTo = (user: string) =>
+    dispatch(inviteStateActions.setInviteTo(user));
+
   const resetInviteState = () =>
     dispatch(inviteStateActions.resetInviteState());
   return {
@@ -20,5 +23,6 @@ export const useInviteStateActions = () => {
     setInviteValidation,
     setInviteInProgress,
     resetInviteState,
+    setInviteTo,
   };
 };

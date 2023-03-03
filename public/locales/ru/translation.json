@@ -92,6 +92,9 @@
   "fieldWait": "Ожидание оппонента",
   "fieldReady": "ГОТОВ",
 
+  "inviteNotFound": "User is not found",
+  "inviteDeclined": "Invite declined",
+
   "Congratulations on the victory!": "Поздравляем с победой!",
   "This time lucky": "На этот раз повезло",
   "Youve been beaten by artificial intelligence": "You've been beaten by artificial intelligence"

@@ -17,12 +17,12 @@ import { SOCKETMETHOD } from '@/services/axios/_constants';
 const Modal: FC = () => {
   const { sendSocket } = useContext(SocketContext);
   const { setModalOpen } = useLogInActions();
-  const { setInvite } = useInviteStateActions();
+  const { setInvite, resetInviteState } = useInviteStateActions();
 
   const { modalChildren, isModalOpen, userName } = useAppSelector(
     (state) => state.logInSlice,
   );
-  const { invite, inviteInProgress } = useAppSelector(
+  const { invite, inviteInProgress, inviteTo } = useAppSelector(
     (state) => state.InviteStateSlice,
   );
 
@@ -61,7 +61,7 @@ const Modal: FC = () => {
     if (inviteInProgress) {
       const message = {
         server: userName,
-        friend: friend,
+        friend: inviteTo,
         isDeclined: true,
         isFinded: true,
       };
@@ -69,14 +69,19 @@ const Modal: FC = () => {
       sendSocket(SOCKETMETHOD.invite, message);
     }
 
+    resetInviteState();
+
     setModalOpen(false);
   };
 
   return (
-    <div className={`modal ${isModalOpen && 'open'}`} onClick={closeHandler}>
+    <div
+      className={`modal ${isModalOpen && 'open'}`}
+      onMouseDown={closeHandler}
+    >
       <div
         className={`modal_content ${isModalOpen && 'open'}`}
-        onClick={(event) => event.stopPropagation()}
+        onMouseDown={(event) => event.stopPropagation()}
       >
         {modalComponent}
       </div>
