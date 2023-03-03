@@ -1,7 +1,7 @@
-import { useContext, FC } from 'react';
+import { useContext, FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SocketContext } from '@/context/Context';
-import { useAppSelector } from '@/hook/_index';
+import { useAppSelector, useGameStateActions } from '@/hook/_index';
 import { useUserTurn } from '@/hook/AIActions/use-user-turn';
 
 import Cell from '@/components/game/cell/Cell';
@@ -17,6 +17,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
 }) => {
   const { sendSocket } = useContext(SocketContext);
   const { userTurn } = useUserTurn();
+  const { setOpponentReady, setIsGameFinded } = useGameStateActions();
   const { t } = useTranslation();
 
   const { isAbleShoot, isGameFinded, isStarted, opponentIsReady } =
@@ -25,6 +26,13 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
   const { rival } = useAppSelector((state) => state.gameShipsSlice);
 
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
+
+  useEffect(() => {
+    if (!isOnline) {
+      setOpponentReady(true);
+      setIsGameFinded(true);
+    }
+  });
 
   const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
     if (!(target as HTMLDivElement).id) {
@@ -58,7 +66,7 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
-      {isGameFinded || !isRival ? null : (
+      {isGameFinded || !isRival || isOnline ? null : (
         <div className="connection">{t('fieldWait')}</div>
       )}
       {opponentIsReady && !isStarted && isRival ? (
