@@ -92,13 +92,9 @@
   "fieldWait": "Ожидание оппонента",
   "fieldReady": "ГОТОВ",
 
-  "inviteNotFound": "User is not found",
-  "inviteDeclined": "Invite declined",
-  "inviteYourName": "Don't play with me, buddy",
-  "inviteEnterName": "Enter name",
-  "inviteShort": "Name is too short",
-
-  "Congratulations on the victory!": "Поздравляем с победой!",
-  "This time lucky": "На этот раз повезло",
-  "Youve been beaten by artificial intelligence": "You've been beaten by artificial intelligence"
+  "inviteNotFound": "Пользователь не найден",
+  "inviteDeclined": "Предложение отклонено",
+  "inviteYourName": "Не шути со мной",
+  "inviteEnterName": "Введите имя",
+  "inviteShort": "Имя слишком короткое"
 }
