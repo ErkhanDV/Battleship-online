@@ -62,10 +62,6 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     }
   };
 
- 
-
-  console.log(isRival);
-
   return (
     <div onClick={shootHandler} className={bgClass}>
       {FIELD.map((_, index) => (

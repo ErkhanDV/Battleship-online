@@ -32,21 +32,32 @@ export const useInviteHandler = () => {
     sendSocket: TSendSocket,
   ) => {
     if (isAproved) {
-      const response = await gameService.startGame(
-        server === userName ? '' : server,
-        true,
-      );
+      if (server === userName) {
+        const response = await gameService.startGame('', true);
 
-      if (response && typeof response !== 'string') {
-        sendSocket(SOCKETMETHOD.connect, response);
-      }
+        if (response && typeof response !== 'string') {
+          sendSocket(SOCKETMETHOD.connect, response);
+        }
 
-      if (location.pathname !== ROUTE.game) {
-        navigate(ROUTE.game);
+        if (location.pathname !== ROUTE.game) {
+          navigate(ROUTE.game);
+        }
+        setModalOpen(false);
+      } else {
+        setTimeout(async () => {
+          const response = await gameService.startGame(server, true);
+
+          if (response && typeof response !== 'string') {
+            sendSocket(SOCKETMETHOD.connect, response);
+          }
+
+          if (location.pathname !== ROUTE.game) {
+            navigate(ROUTE.game);
+          }
+          setModalOpen(false);
+        }, 3000);
       }
-      setModalOpen(false);
       resetInviteState();
-
       return;
     }
 
