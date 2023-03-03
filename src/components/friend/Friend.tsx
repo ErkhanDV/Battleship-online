@@ -56,11 +56,7 @@ const Friend: FC = () => {
 
   const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const value = target.value.trim();
-    if (value !== userName) {
-      setInviteTo(value);
-    } else {
-      setValidation(t('inviteYourName') as string);
-    }
+    setInviteTo(value);
   };
 
   const playHandler = async () => {
@@ -68,9 +64,11 @@ const Friend: FC = () => {
       if (!inviteTo) {
         setValidation(t('inviteEnterName') as string);
         return;
-      } else if (inviteTo.length <= 3) {
+      } else if (inviteTo.length <= 2) {
         setValidation(t('inviteShort') as string);
         return;
+      } else if (inviteTo === userName) {
+        setValidation(t('inviteYourName') as string);
       } else {
         const message = { server: userName, friend: inviteTo };
 
