@@ -94,6 +94,9 @@
 
   "inviteNotFound": "User is not found",
   "inviteDeclined": "Invite declined",
+  "inviteYourName": "Don't play with me, buddy",
+  "inviteEnterName": "Enter name",
+  "inviteShort": "Name is too short",
 
   "Congratulations on the victory!": "Поздравляем с победой!",
   "This time lucky": "На этот раз повезло",

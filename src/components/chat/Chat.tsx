@@ -7,18 +7,30 @@ import {
   useCallback,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SocketContext } from '@/context/Context';
-import { useAppSelector, useChatActions } from '@/hook/_index';
+
 import Welcome from './welcome/Welcome';
 import Message from './message/Message';
-import { SOCKETMETHOD } from '@/services/axios/_constants';
-import { CHAT } from '@/store/_constants';
+
 import './Chat.scss';
+
+import { SocketContext } from '@/context/Context';
+import {
+  useAppSelector,
+  useChatActions,
+  useInviteStateActions,
+  useLogInActions,
+} from '@/hook/_index';
+
+import { SOCKETMETHOD } from '@/services/axios/_constants';
+import { CHAT, MODAL } from '@/store/_constants';
 
 const Chat: FC = () => {
   const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
   const { changeChat, setUnreadCommon, setUnreadGame } = useChatActions();
+  const { setInviteTo } = useInviteStateActions();
+  const { setModalOpen, setModalChildren } = useLogInActions();
+
   const {
     currentChat,
     game,
@@ -114,6 +126,12 @@ const Chat: FC = () => {
     setText('');
   };
 
+  const inviteHandler = (name: string) => {
+    setModalOpen(true);
+    setModalChildren(MODAL.friend)
+    setInviteTo(name);
+  };
+
   return (
     <div className="chat">
       <h2 className="section_title">{t('chat')}</h2>
@@ -156,7 +174,15 @@ const Chat: FC = () => {
           <h4 className="chat_online_header">{t('usersOnline')}</h4>
           <div className="chat_online_list">
             {!(onlineNames.length <= 1)
-              ? editedNames()?.map((name, i) => <div key={i}>{name}</div>)
+              ? editedNames()?.map((name, i) => (
+                  <div
+                    onClick={() => inviteHandler(name)}
+                    className="chat_online_name"
+                    key={i}
+                  >
+                    {name}
+                  </div>
+                ))
               : t('emptyOnline')}
           </div>
         </div>

@@ -1,4 +1,7 @@
 import { FC, useState, useContext, useEffect } from 'react';
+
+import { Spinner } from '../_index';
+
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -14,7 +17,7 @@ const Friend: FC = () => {
   const { t } = useTranslation();
   const { sendSocket } = useContext(SocketContext);
 
-  const [friend, setFriend] = useState('');
+  // const [friend, setFriend] = useState('');
   const [validation, setValidation] = useState('');
 
   const { setModalOpen, setModalChildren } = useLogInActions();
@@ -26,10 +29,12 @@ const Friend: FC = () => {
     userName,
     inviteValidation,
     inviteInProgress,
+    inviteTo,
   } = useAppSelector((state) => {
     const { isModalOpen, isAuthorized, userName } = state.logInSlice;
     const { gameInfo } = state.gameStateSlice;
-    const { inviteValidation, inviteInProgress } = state.InviteStateSlice;
+    const { inviteValidation, inviteInProgress, inviteTo } =
+      state.InviteStateSlice;
 
     return {
       isModalOpen,
@@ -38,30 +43,36 @@ const Friend: FC = () => {
       userName,
       inviteValidation,
       inviteInProgress,
+      inviteTo,
     };
   });
 
   useEffect(() => {
-    setValidation('');
-    setFriend('');
+    if (!isModalOpen) {
+      setValidation('');
+      setInviteTo('');
+    }
   }, [isModalOpen]);
 
-  const inputHandler = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void =>
-    setFriend(target.value.trim());
+  const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const value = target.value.trim();
+    if (value !== userName) {
+      setInviteTo(value);
+    } else {
+      setValidation(t('inviteYourName') as string);
+    }
+  };
 
   const playHandler = async () => {
     if (isAuthorized) {
-      if (!friend) {
-        setValidation('Enter friend`s name');
+      if (!inviteTo) {
+        setValidation(t('inviteEnterName') as string);
         return;
-      } else if (friend.length <= 3) {
-        setValidation('Name is too short');
+      } else if (inviteTo.length <= 3) {
+        setValidation(t('inviteShort') as string);
         return;
       } else {
-        const message = { server: userName, friend };
-        setInviteTo(friend)
+        const message = { server: userName, friend: inviteTo };
 
         sendSocket(SOCKETMETHOD.invite, message);
       }
@@ -74,7 +85,7 @@ const Friend: FC = () => {
   const cancelHandler = () => {
     const message = {
       server: userName,
-      friend,
+      friend: inviteTo,
       isFinded: true,
       isDeclined: true,
     };
@@ -94,11 +105,12 @@ const Friend: FC = () => {
         <input
           className="login_input"
           onChange={inputHandler}
-          value={friend}
+          value={inviteTo}
           type="text"
           placeholder={`${t('enterName')}`}
         />
       ) : null}
+      <Spinner />
 
       <div className="login_validation">{validation}</div>
       {inviteValidation ? (

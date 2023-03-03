@@ -82,7 +82,6 @@ export const useInviteHandler = () => {
 
       setTimeout(() => {
         setInviteValidation('');
-        resetInviteState();
       }, 2000);
     }
   };
