@@ -9,6 +9,7 @@ import { useSocketHandlers } from './socketHandlers/_index';
 import { SOCKET, SOCKETMETHOD } from '@/services/axios/_constants';
 import { TSocketMessage } from '@/store/reducers/types/socket';
 import { ISendConnect, TSendSocket } from '@/store/reducers/types/socket';
+import { PERSON } from '@/store/_constants';
 
 export const useSocket = () => {
   const socket = useRef<WebSocket>();
@@ -148,11 +149,14 @@ export const useSocket = () => {
     (method, data) => {
       if (method === SOCKETMETHOD.connect) {
         if (gameInfo) {
-          sendSocket(SOCKETMETHOD.exit);
-          resetGameChat();
-          resetGameState();
-          resetGameShips();
+          if (gameInfo.gameId !== PERSON.computer) {
+            sendSocket(SOCKETMETHOD.exit);
+          }
         }
+
+        resetGameChat();
+        resetGameState();
+        resetGameShips();
 
         setGameInfo(data as ISendConnect);
       }

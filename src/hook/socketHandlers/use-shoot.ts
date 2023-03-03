@@ -21,13 +21,13 @@ export const useShootHandler = () => {
   useEffect(() => {
     userState.ships.forEach(async (ship) => {
       if (ship.decks === ship.woundedCells.length) {
-        addNotAllowed(PERSON.user, ship.occupiedCells, ship.decks);
+        addNotAllowed(PERSON.user, ship.occupiedCells);
       }
     });
 
     rivalState.ships.forEach(async (ship) => {
       if (ship.decks === ship.woundedCells.length) {
-        addNotAllowed(PERSON.rival, ship.occupiedCells, ship.decks);
+        addNotAllowed(PERSON.rival, ship.occupiedCells);
       }
     });
   }, [userState.ships, rivalState.ships]);

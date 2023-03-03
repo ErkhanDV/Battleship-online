@@ -5,7 +5,6 @@ import logInSlice from './LogInSlice';
 import appSettingsSlice from './AppSettingsSlice';
 import ChatSlice from './ChatSlice';
 import AIStateSlice from './AIState';
-import PopUpSlice from './PopUpSlice';
 import InviteStateSlice from './InviteStateSlice';
 
 export {
@@ -16,7 +15,5 @@ export {
   appSettingsSlice,
   ChatSlice,
   AIStateSlice,
-  PopUpSlice,
   InviteStateSlice
-  
 };

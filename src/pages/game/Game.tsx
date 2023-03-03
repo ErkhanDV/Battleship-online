@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Chat, Status, PopUp } from '@/components/_index';
+import { Chat, Status } from '@/components/_index';
 
 import './Game.scss';
 
@@ -56,8 +56,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   //     setIsGameFinded(true);
   //   }
   // });
-
-
 
   const readyHandler = () => {
     setIsReady(true);
@@ -117,7 +115,6 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
           <RivalField isOnline={isOnline} />
           <Gameover isOnline={isOnline} />
           <Status />
-          <PopUp />
         </div>
       </main>
       <Chat />

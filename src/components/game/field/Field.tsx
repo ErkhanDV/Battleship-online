@@ -8,7 +8,7 @@ import Cell from '@/components/game/cell/Cell';
 
 import './Field.scss';
 
-import { FIELD } from '@/store/_constants';
+import { FIELD, PERSON } from '@/store/_constants';
 import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
@@ -24,15 +24,16 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     useAppSelector((state) => state.gameStateSlice);
 
   const { rival } = useAppSelector((state) => state.gameShipsSlice);
+  const { gameInfo } = useAppSelector((state) => state.gameStateSlice);
 
   const bgClass = `battleground ${!isAbleShoot && isRival ? 'inactive' : ''}`;
 
   useEffect(() => {
-    if (!isOnline) {
+    if (!gameInfo || gameInfo.gameId === PERSON.computer) {
       setOpponentReady(true);
       setIsGameFinded(true);
     }
-  });
+  }, [gameInfo]);
 
   const shootHandler = ({ target }: React.MouseEvent<HTMLDivElement>): void => {
     if (!(target as HTMLDivElement).id) {
@@ -61,14 +62,18 @@ const Field: FC<{ isRival: boolean; isOnline: boolean }> = ({
     }
   };
 
+ 
+
+  console.log(isRival);
+
   return (
     <div onClick={shootHandler} className={bgClass}>
       {FIELD.map((_, index) => (
         <Cell key={index} coordinate={index} isRival={isRival} />
       ))}
-      {isGameFinded || !isRival || isOnline ? null : (
+      { isRival && !isGameFinded && isOnline ? (
         <div className="connection">{t('fieldWait')}</div>
-      )}
+      ) : null}
       {opponentIsReady && !isStarted && isRival ? (
         <div className="connection">{t('fieldReady')}</div>
       ) : null}

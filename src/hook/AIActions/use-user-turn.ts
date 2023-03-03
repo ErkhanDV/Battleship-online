@@ -31,7 +31,7 @@ export const useUserTurn = () => {
         ship.woundedCells.push(shoot);
 
         if (ship.woundedCells.length === ship.decks) {
-          addNotAllowed(PERSON.rival, ship.occupiedCells, ship.decks);
+          addNotAllowed(PERSON.rival, ship.occupiedCells);
         }
         if (
           cloneRival.ships.filter(
