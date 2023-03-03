@@ -27,6 +27,14 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
   const { sendSocket } = useContext(SocketContext);
   const { t } = useTranslation();
   const { setRandomShips } = useGameShipsActions();
+  const {
+    setIsReady,
+    // setIsGameFinded,
+    setIsAbleShoot,
+    setIsStarted,
+    setGameDifficult,
+  } = useGameStateActions();
+  const { computerTurn } = useComputerTurn();
 
   const { userName, isReady, user, gameDifficult } = useAppSelector((state) => {
     const { userName } = state.logInSlice;
@@ -43,20 +51,13 @@ const Game: FC<{ mode: string }> = ({ mode }) => {
     setIsOnline(mode === GAMEMODE.MP ? true : false);
   }, [mode]);
 
-  useEffect(() => {
-    if (!isOnline) {
-      setIsGameFinded(true);
-    }
-  });
+  // useEffect(() => {
+  //   if (!isOnline) {
+  //     setIsGameFinded(true);
+  //   }
+  // });
 
-  const {
-    setIsReady,
-    setIsGameFinded,
-    setIsAbleShoot,
-    setIsStarted,
-    setGameDifficult,
-  } = useGameStateActions();
-  const { computerTurn } = useComputerTurn();
+
 
   const readyHandler = () => {
     setIsReady(true);
