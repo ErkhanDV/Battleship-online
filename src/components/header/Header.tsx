@@ -110,8 +110,17 @@ const Header: FC = () => {
         </h1>
       </Link>
 
-      <nav className={`header_navigation ${menuVisible && 'visible'}`}>
-        <ul className="navigation_list" onClick={() => setMenuVisible(false)}>
+      <nav
+        onClick={() => setMenuVisible(!menuVisible)}
+        className={`header_navigation ${menuVisible && 'visible'}`}
+      >
+        <ul
+          className="navigation_list"
+          onClick={(event) => {
+            event.stopPropagation();
+            setMenuVisible(false);
+          }}
+        >
           <li className="navigation_item">
             <NavLink to={ROUTE.home} className="navigation_link">
               {t('home')}

@@ -8,7 +8,7 @@ import Chat from './chat/Chat';
 import Friend from './friend/Friend';
 import Invite from './invite/Invite';
 import Status from './status/Status';
-import PopUp from './popup/PopUp';
+import Spinner from './spinner/Spinner';
 
 export {
   Background,
@@ -21,5 +21,5 @@ export {
   Friend,
   Invite,
   Status,
-  PopUp,
+  Spinner,
 };

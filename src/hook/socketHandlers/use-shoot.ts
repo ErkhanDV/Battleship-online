@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   useAppSelector,
@@ -12,38 +12,27 @@ import { IShoot } from '@/store/reducers/types/socket';
 
 export const useShootHandler = () => {
   const { setIsAbleShoot } = useGameStateActions();
-  const { checkShoot } = useGameShipsActions();
+  const { checkShoot, addNotAllowed } = useGameShipsActions();
 
   const { userName } = useAppSelector((state) => state.logInSlice);
-  // const userState = useAppSelector((state) => state.gameShipsSlice.user);
-  // const rivalState = useAppSelector((state) => state.gameShipsSlice.rival);
+  const userState = useAppSelector((state) => state.gameShipsSlice.user);
+  const rivalState = useAppSelector((state) => state.gameShipsSlice.rival);
 
-  // const [stopUseEffect, setStopUseEffect] = useState(false);
+  useEffect(() => {
+    userState.ships.forEach(async (ship) => {
+      if (ship.decks === ship.woundedCells.length) {
+        addNotAllowed(PERSON.user, ship.occupiedCells);
+      }
+    });
 
-  // useEffect(() => {
-  //   console.log('useEffect', stopUseEffect);
-  //   if (!stopUseEffect) {
-  //     userState.ships.forEach(async (ship) => {
-  //       if (ship.decks === ship.woundedCells.length) {
-  //         await setStopUseEffect(true);
-  //         addNotAllowed(PERSON.user, ship.occupiedCells, ship.decks);
-  //         await setStopUseEffect(false);
-  //       }
-  //     });
+    rivalState.ships.forEach(async (ship) => {
+      if (ship.decks === ship.woundedCells.length) {
+        addNotAllowed(PERSON.rival, ship.occupiedCells);
+      }
+    });
+  }, [userState.ships, rivalState.ships]);
 
-  //     rivalState.ships.forEach(async (ship) => {
-  //       if (ship.decks === ship.woundedCells.length) {
-  //         await setStopUseEffect(true);
-  //         addNotAllowed(PERSON.rival, ship.occupiedCells, ship.decks);
-  //         await setStopUseEffect(false);
-  //       }
-  //     });
-  //   }
-  // }, [userState.ships, rivalState.ships]);
-
-  const shootHandler = (data: IShoot) => {
-    const { user, shoot, isAbleShoot } = data;
-
+  const shootHandler = ({ user, shoot, isAbleShoot }: IShoot) => {
     if (user === userName) {
       setIsAbleShoot(isAbleShoot);
       checkShoot(PERSON.rival, shoot);

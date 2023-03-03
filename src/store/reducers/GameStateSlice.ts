@@ -4,7 +4,6 @@ import { IGameState } from './types/gameState';
 
 const initialState: IGameState = {
   gameInfo: null,
-  invite: '',
   opponentName: 'Unknown',
   isGameFinded: false,
   isStarted: false,
@@ -57,12 +56,6 @@ export const gameStateSlice = createSlice({
       state.winnerClassList = action.payload;
     },
 
-    setInvite(state, action: PayloadAction<string>) {
-      state.invite = action.payload;
-    },
-
-    resetGameState: () => initialState,
-
     setGameDifficult(state, action: PayloadAction<number>) {
       state.gameDifficult = action.payload;
     },
@@ -70,6 +63,8 @@ export const gameStateSlice = createSlice({
     setStatus(state, action: PayloadAction<string>) {
       state.status = action.payload;
     },
+
+    resetGameState: () => initialState,
   },
 });
 
@@ -81,7 +76,6 @@ export const {
   setAbleShoot,
   setReady,
   setWinner,
-  setInvite,
   resetGameState,
   setGameDifficult,
   setStatus,

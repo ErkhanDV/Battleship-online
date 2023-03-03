@@ -1,89 +1,83 @@
 import { ModelUser } from "../models/user-model.js";
 import { tokenService } from "./token-service.js";
+import { ApiError } from "../exeptions/api-eror.js";
 
 class UserService {
-  async logIn(name) {
-    const candidate = await ModelUser.findOne({ name });
-
-
-    if (candidate) {
-      throw new Error("Пользователь с таким именем существует");
-    }
-    const user = await ModelUser.create({ name });
+  async updateUser(user) {
     const resUser = {
       name: user.name,
       id: user._id,
     };
     const tokens = tokenService.generateTokens(resUser);
+
     await tokenService.saveToken(user._id, tokens.refreshToken);
 
-    return { ...tokens, ...resUser };
+    if (tokens && resUser) {
+      return { ...tokens, ...resUser };
+    } else {
+      throw ApiError.TokenError();
+    }
+  }
+
+  async logIn(name) {
+    const candidate = await ModelUser.findOne({ name });
+
+    if (candidate) {
+      throw ApiError.DoubleNameError();
+    }
+
+    const user = await ModelUser.create({ name });
+
+    if (user) {
+      return this.updateUser(user);
+    } else {
+      throw ApiError.AuthorizationError("Ошибка создания пользователя");
+    }
   }
 
   async logOut(refreshToken) {
     const userData = tokenService.validateRefreshToken(refreshToken);
+    const user = await ModelUser.findOne({ _id: userData.id });
 
-    const user = await ModelUser.deleteOne({ _id: userData.id });
-    const token = await tokenService.removeToken(refreshToken);
-    return { user, token };
+    if (!user) {
+      throw ApiError.ExitError();
+    } else {
+      await ModelUser.deleteOne({ _id: userData.id });
+      await tokenService.removeToken(refreshToken);
+    }
   }
 
   async refresh(refreshToken) {
     if (!refreshToken) {
-      return res.status(401).json({ message: "Пользователь не авторизован" });
+      throw ApiError.TokenError();
     }
 
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenInDB = await tokenService.findToken(refreshToken);
 
-    if (!userData || !tokenInDB) {
-      return res.status(401).json({ message: "Пользователь не авторизован" });
+    if (!userData) {
+      await tokenService.removeToken(refreshToken);
+      throw ApiError.TokenError();
+    }
+
+    if (userData && !tokenInDB) {
+      throw ApiError.TokenError();
     }
 
     const user = await ModelUser.findById(userData.id);
-    const resUser = {
-      name: user.name,
-      id: user._id,
-    };
 
-    const tokens = tokenService.generateTokens(resUser);
-    await tokenService.saveToken(user._id, tokens.refreshToken);
-
-    return { ...tokens, ...resUser };
+    return this.updateUser(user);
   }
 
   async getUsers() {
     const users = await ModelUser.find();
-    return users;
-  }
 
-  async startGame(refreshToken) {
-    const userData = tokenService.validateRefreshToken(refreshToken);
-    const users = await this.getUsers();
-    const opponent = users.find((user) => !!user.isWaitingGame);
-
-    if (opponent) {
-      await ModelUser.updateOne(
-        { _id: opponent._id },
-        { isWaitingGame: false }
-      );
-    } else {
-      await ModelUser.updateOne({ _id: userData.id }, { isWaitingGame: true });
+    if (!users) {
+      throw ApiError.GetUsersError();
     }
 
-    return opponent;
+    return users;
   }
-
-  game(ws, req) {
-    console.log("вебсокет");
-  }
-
-
-
-
-
-
-
 }
 
 export const userService = new UserService();

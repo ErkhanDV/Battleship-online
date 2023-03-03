@@ -1,18 +1,31 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import './Modal.scss';
 
 import { LogIn, Settings, Friend, Invite } from '../_index';
 
-import { useAppSelector, useLogInActions } from '@/hook/_index';
+import {
+  useAppSelector,
+  useInviteStateActions,
+  useLogInActions,
+} from '@/hook/_index';
+import { SocketContext } from '@/context/Context';
 
 import { MODAL } from '@/store/_constants';
+import { SOCKETMETHOD } from '@/services/axios/_constants';
 
 const Modal: FC = () => {
+  const { sendSocket } = useContext(SocketContext);
   const { setModalOpen } = useLogInActions();
-  const { modalChildren, isModalOpen } = useAppSelector(
+  const { setInvite, resetInviteState } = useInviteStateActions();
+
+  const { modalChildren, isModalOpen, userName } = useAppSelector(
     (state) => state.logInSlice,
   );
+  const { invite, inviteInProgress, inviteTo } = useAppSelector(
+    (state) => state.InviteStateSlice,
+  );
+
   let modalComponent;
 
   switch (modalChildren) {
@@ -32,14 +45,43 @@ const Modal: FC = () => {
       modalComponent = <Invite />;
   }
 
+  const closeHandler = () => {
+    if (invite) {
+      const message = {
+        server: invite,
+        friend: userName,
+        isDeclined: true,
+        isFinded: true,
+      };
+
+      sendSocket(SOCKETMETHOD.invite, message);
+      setInvite('');
+    }
+
+    if (inviteInProgress) {
+      const message = {
+        server: userName,
+        friend: inviteTo,
+        isDeclined: true,
+        isFinded: true,
+      };
+
+      sendSocket(SOCKETMETHOD.invite, message);
+    }
+
+    resetInviteState();
+
+    setModalOpen(false);
+  };
+
   return (
     <div
       className={`modal ${isModalOpen && 'open'}`}
-      onClick={() => setModalOpen(false)}
+      onMouseDown={closeHandler}
     >
       <div
         className={`modal_content ${isModalOpen && 'open'}`}
-        onClick={(event) => event.stopPropagation()}
+        onMouseDown={(event) => event.stopPropagation()}
       >
         {modalComponent}
       </div>

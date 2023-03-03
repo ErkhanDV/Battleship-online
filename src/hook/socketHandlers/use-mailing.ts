@@ -5,13 +5,13 @@ import { useChatActions } from '../_index';
 export const useMailingHandler = () => {
   const { pushCommonMessage, pushGameMessage } = useChatActions();
 
-  const mailingHandler = (data: IMailing) => {
-    data.chatMessage.forEach((message) => {
-      if (data.chatName === CHAT.common) {
+  const mailingHandler = ({ chatMessage, chatName }: IMailing) => {
+    chatMessage.forEach((message) => {
+      if (chatName === CHAT.common) {
         pushCommonMessage(message);
       }
 
-      if (data.chatName === CHAT.game) {
+      if (chatName === CHAT.game) {
         pushGameMessage(message);
       }
     });

@@ -14,25 +14,25 @@ export const useChatHandler = () => {
     return { gameInfo, userName, sound };
   });
 
-  const chatHandler = (data: IMessage) => {
-    if (data.mail.chatName === CHAT.game) {
-      if (gameInfo?.gameId === data.mail.gameId) {
+  const chatHandler = ({ mail }: IMessage) => {
+    if (mail.chatName === CHAT.game) {
+      if (gameInfo?.gameId === mail.gameId) {
         if (sound) {
           Sound('chat');
         }
 
-        pushGameMessage(data.mail);
-        if (userName !== data.mail.name) setUnreadGame();
+        pushGameMessage(mail);
+        if (userName !== mail.name) setUnreadGame();
       }
     }
 
-    if (data.mail.chatName === CHAT.common) {
+    if (mail.chatName === CHAT.common) {
       if (sound) {
         Sound('chat');
       }
 
-      pushCommonMessage(data.mail);
-      if (userName !== data.mail.name) setUnreadCommon();
+      pushCommonMessage(mail);
+      if (userName !== mail.name) setUnreadCommon();
     }
   };
 

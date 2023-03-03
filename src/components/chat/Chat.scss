@@ -102,15 +102,23 @@
       background-color: $primary-color-100;
       border-radius: 4px;
     }
-  }
 
-  &_online_header {
-    margin: 0;
-  }
+    &_header {
+      margin: 0;
+    }
 
-  &_online_list {
-    padding: 0.5rem 0 0.5rem 1rem;
-    overflow-y: auto;
+    &_list {
+      padding: 0.5rem 0 0.5rem 1rem;
+      overflow-y: auto;
+    }
+
+    &_name {
+      transition: all 0.2s;
+    }
+
+    &_name:hover {
+      color: $primary-color-100;
+    }
   }
 
   &_write {
@@ -141,12 +149,13 @@
   .chat_wrapper {
     flex-direction: column;
   }
-  
+
   .chat_messages {
     height: 20rem;
   }
 
   .chat_online {
+    order: -1;
     width: 100%;
     height: 10rem;
   }

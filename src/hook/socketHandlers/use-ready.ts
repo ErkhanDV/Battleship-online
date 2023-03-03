@@ -15,9 +15,7 @@ export const useReadyHandler = () => {
   const { updateShipsLocationState } = useGameShipsActions();
   const { userName } = useAppSelector((state) => state.logInSlice);
 
-  const readyHandler = (data: IReady) => {
-    const { isStarted, field, user } = data;
-
+  const readyHandler = ({ isStarted, field, user }: IReady) => {
     setIsStarted(isStarted);
 
     if (isStarted) {

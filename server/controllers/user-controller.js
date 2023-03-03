@@ -1,41 +1,59 @@
 import { userService } from "../services/user-service.js";
 import { validationResult } from "express-validator";
-import router from "../route/index.js";
+import { ApiError } from "../exeptions/api-eror.js";
 
 export class UserController {
+  setCookies(userData, res, state) {
+    const message =
+      state === "login"
+        ? "Пользователь с таким именем уже существует"
+        : "Пользователь не авторизован";
+
+    if (userData) {
+      return res
+        .status(200)
+        .cookie("refreshToken", userData.refreshToken, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 30,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .json(userData);
+    } else {
+      throw ApiError.AuthorizationError(message);
+    }
+  }
+
   async logIn(req, res, next) {
     try {
       const errors = validationResult(req);
-      console.log(errors);
 
       if (!errors.isEmpty()) {
-        return res.status(403).json({ message: "Имя слишком короткое" });
+        throw ApiError.ShortNameError();
       }
 
       const { name } = req.body;
       const userData = await userService.logIn(name);
 
-      res.cookie("refreshToken", userData.refreshToken, {
-        maxAge: 3600000,
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-      });
-
-      return res.status(200).json(userData);
+      return this.setCookies(userData, res, "login");
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
   async logOut(req, res, next) {
     try {
       const { refreshToken } = req.cookies;
-      const token = await userService.logOut(refreshToken);
+      await userService.logOut(refreshToken);
 
-      res.clearCookie(refreshToken);
-      return res.status(200).json({ message: "Пользователь удален" });
-    } catch (error) {}
+      return res
+        .clearCookie('refreshToken')
+        .status(200)
+        .json({ message: "Пользователь удален" });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async refreshToken(req, res, next) {
@@ -43,42 +61,19 @@ export class UserController {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
 
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 3600000,
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-      });
-
-      return res.status(200).json(userData);
-    } catch (error) {}
+      return this.setCookies(userData, res, "refresh");
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getUsers(req, res, next) {
     try {
       const users = await userService.getUsers();
       return res.status(200).json(users);
-    } catch (error) {}
-  }
-
-  async startGame(req, res, next) {
-    const { refreshToken } = req.cookies;
-    const userToConnect = await userService.startGame(refreshToken);
-    let wsLink;
-
-    if (userToConnect) {
-      wsLink = `/game/:${userToConnect._id}`;
-      router.ws(wsLink, userService.game);
-    } else {
-      wsLink = `/game/:${id}`;
-      router.ws(wsLink, userService.game);
+    } catch (error) {
+      next(error);
     }
-
-    return res.status(200).json(wsLink);
-  }
-
-  game(ws, req) {
-    ws.on();
   }
 }
 

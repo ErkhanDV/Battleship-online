@@ -42,6 +42,9 @@ export interface IMailing {
 export interface IInvite {
   friend: string;
   server: string;
+  isFinded: boolean;
+  isDeclined?: boolean;
+  isAproved?: boolean;
 }
 
 export interface IOnline {
@@ -71,7 +74,10 @@ export interface ISendSocketName {
 }
 
 export interface ISendInvite {
+  server: string;
   friend: string;
+  isDeclined?: boolean;
+  isAproved?: boolean;
 }
 
 export type TSendData =
