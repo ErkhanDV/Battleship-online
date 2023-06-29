@@ -4,7 +4,7 @@ App [BattleShip](http://ru.battleship-game.org/) clone.
 
 ### Deploy
 
-[BattleShip Online](https://battle-ships-pwrrngrs.netlify.app/) https://battle-ships-pwrrngrs.netlify.app/
+https://battleships-online.netlify.app/
 
 ### Technologies used:
 
